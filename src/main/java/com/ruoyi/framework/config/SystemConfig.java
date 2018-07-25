@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "ruoyi")
-public class RuoYiConfig
+public class SystemConfig
 {
     /** 项目名称 */
     private String name;
@@ -58,7 +58,7 @@ public class RuoYiConfig
 
     public void setProfile(String profile)
     {
-        RuoYiConfig.profile = profile;
+    	SystemConfig.profile = profile;
     }
 
 }
