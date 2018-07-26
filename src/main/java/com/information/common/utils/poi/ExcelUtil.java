@@ -38,7 +38,7 @@ import com.information.framework.web.domain.AjaxResult;
 /**
  * Excel相关处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class ExcelUtil<T>
 {

@@ -23,7 +23,7 @@ import com.information.project.system.role.mapper.RoleMenuMapper;
 /**
  * 菜单 业务层处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class MenuServiceImpl implements IMenuService

@@ -23,7 +23,7 @@ import com.information.project.system.role.service.IRoleService;
 /**
  * 角色信息
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/system/role")

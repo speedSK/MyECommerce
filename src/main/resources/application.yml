@@ -1,6 +1,6 @@
 # 项目名称、版本、版权年份
 information:
-  name: RuoYi
+  name: Information
   version: 1.0.0
   copyrightYear: 2018
   profile: D:/profile/
@@ -92,7 +92,7 @@ shiro:
 # 代码生成
 gen: 
   # 作者
-  author: ruoyi
+  author: LiuNing
   # 默认生成包路径 module 需改成自己的模块名称 如 system monitor tool
   packageName: com.information.project.module
   # 自动去除表前缀，默认是true

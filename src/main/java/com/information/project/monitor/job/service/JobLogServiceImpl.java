@@ -10,7 +10,7 @@ import com.information.project.monitor.job.mapper.JobLogMapper;
 /**
  * 定时任务调度日志信息 服务层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class JobLogServiceImpl implements IJobLogService

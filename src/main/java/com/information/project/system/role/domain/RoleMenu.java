@@ -3,7 +3,7 @@ package com.information.project.system.role.domain;
 /**
  * 角色和菜单关联 sys_role_menu
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class RoleMenu
 {

@@ -11,7 +11,7 @@ import com.information.framework.config.SystemConfig;
 /**
  * 文件上传工具类
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class FileUploadUtils
 {

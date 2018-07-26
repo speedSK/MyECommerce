@@ -19,7 +19,7 @@ import com.information.project.system.user.domain.User;
 /**
  * web层通用数据处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class BaseController
 {

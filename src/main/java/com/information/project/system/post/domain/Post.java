@@ -6,7 +6,7 @@ import com.information.framework.web.domain.BaseEntity;
 /**
  * 岗位对象 sys_post
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class Post extends BaseEntity
 {

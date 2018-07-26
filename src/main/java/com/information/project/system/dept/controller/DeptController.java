@@ -21,7 +21,7 @@ import com.information.project.system.dept.service.IDeptService;
 /**
  * 部门信息
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/system/dept")

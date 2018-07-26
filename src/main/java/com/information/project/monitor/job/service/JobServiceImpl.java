@@ -16,7 +16,7 @@ import com.information.project.monitor.job.util.ScheduleUtils;
 /**
  * 定时任务调度信息 服务层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class JobServiceImpl implements IJobService

@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 /**
  * 读取项目相关配置
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Component
-@ConfigurationProperties(prefix = "ruoyi")
+@ConfigurationProperties(prefix = "information")
 public class SystemConfig
 {
     /** 项目名称 */

@@ -6,7 +6,7 @@ import com.information.project.monitor.online.domain.UserOnline;
 /**
  * 在线用户 数据层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public interface UserOnlineMapper
 {

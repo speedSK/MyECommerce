@@ -6,7 +6,7 @@ import com.information.common.constant.Constants;
 /**
  * 表格数据处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class TableSupport
 {

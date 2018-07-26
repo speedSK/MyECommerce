@@ -26,7 +26,7 @@ import com.information.project.tool.gen.util.VelocityInitializer;
 /**
  * 代码生成 服务层处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class GenServiceImpl implements IGenService

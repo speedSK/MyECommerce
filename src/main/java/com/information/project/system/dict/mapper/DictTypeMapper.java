@@ -7,7 +7,7 @@ import com.information.project.system.dict.domain.DictType;
 /**
  * 字典表 数据层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Mapper
 public interface DictTypeMapper

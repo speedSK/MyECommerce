@@ -18,7 +18,7 @@ import com.information.framework.web.domain.AjaxResult;
 /**
  * 登录验证
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 public class LoginController extends BaseController

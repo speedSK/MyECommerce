@@ -9,7 +9,7 @@ import com.information.framework.web.controller.BaseController;
 /**
  * druid 监控
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/monitor/data")

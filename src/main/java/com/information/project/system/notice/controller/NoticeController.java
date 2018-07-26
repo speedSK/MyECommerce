@@ -21,7 +21,7 @@ import com.information.project.system.notice.service.INoticeService;
 /**
  * 公告 信息操作处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/system/notice")

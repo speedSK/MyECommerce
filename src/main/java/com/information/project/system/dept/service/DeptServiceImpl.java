@@ -15,7 +15,7 @@ import com.information.project.system.dept.mapper.DeptMapper;
 /**
  * 部门管理 服务实现
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class DeptServiceImpl implements IDeptService

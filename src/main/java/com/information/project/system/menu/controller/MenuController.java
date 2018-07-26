@@ -22,7 +22,7 @@ import com.information.project.system.role.domain.Role;
 /**
  * 菜单信息
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/system/menu")

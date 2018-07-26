@@ -14,7 +14,7 @@ import com.information.project.system.dict.mapper.DictTypeMapper;
 /**
  * 字典 业务层处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class DictTypeServiceImpl implements IDictTypeService

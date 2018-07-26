@@ -12,7 +12,7 @@ import com.information.common.support.Convert;
 /**
  * 客户端工具类
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class ServletUtils
 {

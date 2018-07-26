@@ -29,7 +29,7 @@ import com.information.project.system.user.domain.User;
 /**
  * 操作日志记录处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Aspect
 @Component

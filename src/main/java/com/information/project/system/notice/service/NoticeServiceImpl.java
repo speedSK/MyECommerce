@@ -12,7 +12,7 @@ import com.information.common.support.Convert;
 /**
  * 公告 服务层实现
  * 
- * @author ruoyi
+ * @author LiuNing
  * @date 2018-06-25
  */
 @Service

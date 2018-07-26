@@ -13,7 +13,7 @@ import com.information.project.system.config.mapper.ConfigMapper;
 /**
  * 参数配置 服务层实现
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class ConfigServiceImpl implements IConfigService

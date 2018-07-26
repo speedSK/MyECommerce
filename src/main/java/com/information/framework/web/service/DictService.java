@@ -7,9 +7,9 @@ import com.information.project.system.dict.domain.DictData;
 import com.information.project.system.dict.service.IDictDataService;
 
 /**
- * RuoYi首创 html调用 thymeleaf 实现字典读取
+ * 首创 html调用 thymeleaf 实现字典读取
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service("dict")
 public class DictService

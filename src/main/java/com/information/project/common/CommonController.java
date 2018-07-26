@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 通用请求处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 public class CommonController

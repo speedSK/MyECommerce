@@ -3,7 +3,7 @@ package com.information.framework.aspectj.lang.constant;
 /**
  * 操作状态
  * 
- * @author ruoyi
+ * @author LiuNing
  *
  */
 public class BusinessStatus

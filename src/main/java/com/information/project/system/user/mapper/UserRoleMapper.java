@@ -6,7 +6,7 @@ import com.information.project.system.user.domain.UserRole;
 /**
  * 用户表 数据层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public interface UserRoleMapper
 {

@@ -11,7 +11,7 @@ import com.information.common.xss.XssFilter;
 /**
  * Filter配置
  *
- * @author ruoyi
+ * @author LiuNing
  */
 @Configuration
 public class FilterConfig

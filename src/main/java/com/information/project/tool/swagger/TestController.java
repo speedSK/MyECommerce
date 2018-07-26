@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 /**
  * swagger 测试方法
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Api("用户信息管理")
 @RestController
@@ -28,7 +28,7 @@ public class TestController extends BaseController
     private final static List<Test> testList = new ArrayList<>();
     {
         testList.add(new Test("1", "admin", "admin123"));
-        testList.add(new Test("2", "ry", "admin123"));
+        testList.add(new Test("2", "information", "admin123"));
     }
 
     @ApiOperation("获取列表")

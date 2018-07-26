@@ -14,12 +14,12 @@ import com.information.project.tool.gen.domain.TableInfo;
 /**
  * 代码生成器 工具类
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class GenUtils
 {
     /** 项目空间路径 */
-    private static final String projectPath = "main/java/com/ruoyi/project";
+    private static final String projectPath = "main/java/com/LiuNing/project";
 
     /** mybatis空间路径 */
     private static final String myBatisPath = "main/resources/mybatis";
@@ -201,6 +201,6 @@ public class GenUtils
     {
         System.out.println(StringUtils.convertToCamelCase("user_name"));
         System.out.println(replaceKeyword("岗位信息表"));
-        System.out.println(getModuleName("com.ruoyi.project.system"));
+        System.out.println(getModuleName("com.information.project.system"));
     }
 }

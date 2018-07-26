@@ -20,7 +20,7 @@ import com.information.project.monitor.logininfor.service.ILogininforService;
 /**
  * 系统访问记录
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/monitor/logininfor")

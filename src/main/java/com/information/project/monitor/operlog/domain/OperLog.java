@@ -8,7 +8,7 @@ import com.information.framework.web.domain.BaseEntity;
 /**
  * 操作日志记录 oper_log
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class OperLog extends BaseEntity
 {

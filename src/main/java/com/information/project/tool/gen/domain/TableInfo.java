@@ -5,9 +5,9 @@ import com.information.common.utils.StringUtils;
 import com.information.framework.web.domain.BaseEntity;
 
 /**
- * ry 数据库表
+ * information 数据库表
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class TableInfo extends BaseEntity
 {

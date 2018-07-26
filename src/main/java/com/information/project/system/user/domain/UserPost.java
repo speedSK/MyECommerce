@@ -3,7 +3,7 @@ package com.information.project.system.user.domain;
 /**
  * 用户和岗位关联 sys_user_post
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class UserPost
 {

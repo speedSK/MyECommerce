@@ -6,7 +6,7 @@ import com.information.project.monitor.job.domain.JobLog;
 /**
  * 调度任务日志信息 数据层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public interface JobLogMapper
 {

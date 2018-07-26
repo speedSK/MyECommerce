@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import com.information.project.system.config.service.IConfigService;
 
 /**
- * RuoYi首创 html调用 thymeleaf 实现参数管理
+ * 首创 html调用 thymeleaf 实现参数管理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service("config")
 public class ConfigService

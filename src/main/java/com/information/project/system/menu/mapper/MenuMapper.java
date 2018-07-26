@@ -6,7 +6,7 @@ import com.information.project.system.menu.domain.Menu;
 /**
  * 菜单表 数据层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public interface MenuMapper
 {

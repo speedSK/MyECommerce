@@ -3,7 +3,7 @@ package com.information.common.constant;
 /**
  * 用户常量信息
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class UserConstants
 {

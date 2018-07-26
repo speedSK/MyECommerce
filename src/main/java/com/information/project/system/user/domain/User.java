@@ -11,7 +11,7 @@ import com.information.project.system.dept.domain.Dept;
 /**
  * 用户对象 sys_user
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class User extends BaseEntity
 {

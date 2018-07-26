@@ -19,7 +19,7 @@ import com.information.project.system.user.domain.User;
 /**
  * 自定义访问控制
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class OnlineSessionFilter extends AccessControlFilter
 {

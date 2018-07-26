@@ -8,7 +8,7 @@ import com.information.framework.web.domain.BaseEntity;
 /**
  * 角色对象 sys_role
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class Role extends BaseEntity
 {

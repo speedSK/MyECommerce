@@ -14,7 +14,7 @@ import com.information.project.system.user.domain.User;
 /**
  * shiro 工具类
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class ShiroUtils
 {

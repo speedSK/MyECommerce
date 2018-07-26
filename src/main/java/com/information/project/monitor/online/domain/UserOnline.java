@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 当前在线会话 sys_user_online
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class UserOnline extends BaseEntity
 {

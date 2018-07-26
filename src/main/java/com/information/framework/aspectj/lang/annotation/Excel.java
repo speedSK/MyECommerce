@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * 自定义注解
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

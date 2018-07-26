@@ -6,7 +6,7 @@ import com.information.project.monitor.job.domain.Job;
 /**
  * 定时任务调度信息信息 服务层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public interface IJobService
 {

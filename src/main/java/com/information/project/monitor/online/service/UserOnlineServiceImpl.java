@@ -13,7 +13,7 @@ import com.information.project.monitor.online.mapper.UserOnlineMapper;
 /**
  * 在线用户 服务层处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class UserOnlineServiceImpl implements IUserOnlineService

@@ -22,7 +22,7 @@ import com.information.project.system.dict.service.IDictDataService;
 /**
  * 数据字典信息
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/system/dict/data")

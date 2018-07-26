@@ -22,7 +22,7 @@ import com.information.project.monitor.operlog.service.IOperLogService;
 /**
  * 操作日志记录
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/monitor/operlog")

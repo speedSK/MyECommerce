@@ -6,7 +6,7 @@ import com.information.project.monitor.job.domain.Job;
 /**
  * 调度任务信息 数据层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public interface JobMapper
 {

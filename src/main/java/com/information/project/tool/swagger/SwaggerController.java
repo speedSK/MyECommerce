@@ -9,7 +9,7 @@ import com.information.framework.web.controller.BaseController;
 /**
  * swagger 接口
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/tool/swagger")

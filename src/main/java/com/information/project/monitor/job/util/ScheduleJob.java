@@ -20,7 +20,7 @@ import com.information.project.monitor.job.service.IJobLogService;
 /**
  * 定时任务
  * 
- * @author ruoyi
+ * @author LiuNing
  *
  */
 public class ScheduleJob extends QuartzJobBean

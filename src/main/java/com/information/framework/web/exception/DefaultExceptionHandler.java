@@ -13,7 +13,7 @@ import com.information.framework.web.domain.AjaxResult;
 /**
  * 自定义异常处理器
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @RestControllerAdvice
 public class DefaultExceptionHandler

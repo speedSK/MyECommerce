@@ -8,17 +8,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * 启动程序
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @SpringBootApplication
 @EnableTransactionManagement
 @MapperScan("com.information.project.*.*.mapper")
-public class RuoYiApplication
+public class InformationApplication
 {
     public static void main(String[] args)
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
-        SpringApplication.run(RuoYiApplication.class, args);
+        SpringApplication.run(InformationApplication.class, args);
         System.out.println("(♥◠‿◠)ﾉﾞ  系统启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
         		"◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◆◆◇◆◆◆◆◆◆◆◆◇◇◇◇◇◇◇ \n" +
         		"◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◇◇◇◆◆◆◆◆◆◇◇◇◇◇◇◇◇ \n" +

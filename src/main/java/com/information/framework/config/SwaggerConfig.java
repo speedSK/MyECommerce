@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * Swagger2的接口配置
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Configuration
 @EnableSwagger2
@@ -36,7 +36,7 @@ public class SwaggerConfig
                 .apiInfo(apiInfo())
                 .select()
                 // 指定当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
+                .apis(RequestHandlerSelectors.basePackage("com.LiuNing.project.tool.swagger"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();

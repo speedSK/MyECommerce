@@ -10,7 +10,7 @@ import com.information.common.support.StrFormatter;
 /**
  * 字符串工具类
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class StringUtils
 {

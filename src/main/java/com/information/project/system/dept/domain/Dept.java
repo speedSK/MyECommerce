@@ -5,7 +5,7 @@ import com.information.framework.web.domain.BaseEntity;
 /**
  * 部门对象 sys_dept
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public class Dept extends BaseEntity
 {

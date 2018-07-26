@@ -23,7 +23,7 @@ import com.information.project.system.user.mapper.UserRoleMapper;
 /**
  * 用户 业务层处理
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Service
 public class UserServiceImpl implements IUserService

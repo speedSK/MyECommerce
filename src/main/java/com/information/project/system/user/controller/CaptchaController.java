@@ -19,7 +19,7 @@ import com.information.framework.web.controller.BaseController;
 /**
  * 图片验证码（支持算术形式）
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 @Controller
 @RequestMapping("/captcha")

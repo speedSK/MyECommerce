@@ -6,7 +6,7 @@ import com.information.project.system.role.domain.Role;
 /**
  * 角色表 数据层
  * 
- * @author ruoyi
+ * @author LiuNing
  */
 public interface RoleMapper
 {

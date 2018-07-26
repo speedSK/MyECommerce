@@ -20,7 +20,7 @@ import com.information.project.monitor.job.domain.Job;
 /**
  * 定时任务工具类
  * 
- * @author ruoyi
+ * @author LiuNing
  *
  */
 public class ScheduleUtils
