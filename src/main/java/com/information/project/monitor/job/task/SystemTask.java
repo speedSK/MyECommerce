@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
  * 
  * @author LiuNing
  */
-@Component("ryTask")
-public class RyTask
+@Component("systemTask")
+public class SystemTask
 {
 
     public void ryParams(String params)
