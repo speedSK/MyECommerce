@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/8/1 10:09:04                            */
+/* Created on:     2018/8/1 10:54:31                            */
 /*==============================================================*/
 
 
@@ -323,6 +323,7 @@ create table bus_user
    dept                 bigint comment '部门',
    pcode                bigint comment '身份',
    password             varchar(32) comment '密码（用于登录）',
+   salt                 varchar(20) comment '盐加密',
    deposit              decimal(9,2) comment '押金',
    balance              decimal(15,2) comment '账户余额',
    already_cost         decimal(9,2) comment '当月已经消费',
