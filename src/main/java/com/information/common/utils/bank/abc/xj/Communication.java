@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.runners.Parameterized.UseParametersRunnerFactory;
+
 import com.information.common.utils.StringUtils;
 
 public class Communication {
@@ -24,7 +26,7 @@ public class Communication {
 	
 	
 	
-	public String connection(String txcode,String tradeno,String userNumber,String userName,String IDnumber,String bankCardNumber,String transAmount){
+	public String connection(String txcode,String tradeno,String userNumber,String userName,String IDnumber,String bankCardNumber,String transAmount,String userMobile){
 		String backMsg="";
 		try {
 			Socket socket = new Socket(IP, Integer.parseInt(PORT));
@@ -32,18 +34,18 @@ public class Communication {
 			
 			String sendMsg = null;
 			if(txcode.equals("1000")){//查询余额交易
-				sendMsg=getBlance();
+				sendMsg=getBlance(txcode, userNumber, bankCardNumber);
 			}else if(txcode.equals("2000")){//转账交易
-				sendMsg=recharge(tradeno, userNumber, userName, IDnumber, bankCardNumber, transAmount);
-			}else if(txcode.equals("2000")){//解约
-				sendMsg=terminateSign();
-			}else if(txcode.equals("2000")){//对总账
+				sendMsg=recharge(txcode,tradeno, userNumber, userName, IDnumber, bankCardNumber, transAmount);
+			}else if(txcode.equals("3000")){//解约
+				sendMsg=terminateSign(txcode,tradeno, userNumber, userName, IDnumber, bankCardNumber, transAmount,userMobile);
+			}/*else if(txcode.equals("2000")){//对总账
 				sendMsg=checkBill();
 			}else if(txcode.equals("2000")){//对明细
 				sendMsg=checkDetail();
-			}
+			}*/
 			//发送报文
-			outputstream.write(sendMsg);
+			outputstream.write(sendMsg.getBytes("gbk"));
 			//接收服务器端返回来的消息
 			DataInputStream datainputstream = new DataInputStream(socket.getInputStream());
 			byte  buf[]=new byte[1024]; 
@@ -51,6 +53,8 @@ public class Communication {
 			backMsg=new String(buf);
 			if(txcode.equals("1000")){
 				backMsg=dealPckbdy1000(backMsg);
+			}else if(txcode.equals("2000")){
+				backMsg=dealPckbdy2000(backMsg, bankno,userName);
 			}else if(txcode.equals("2000")){
 				backMsg=dealPckbdy2000(backMsg, bankno,userName);
 			}
@@ -64,20 +68,6 @@ public class Communication {
 		
 		return backMsg;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 //	1.		一卡通方交易码	4	定值
 //	ASC字符 “3011”
@@ -104,7 +94,7 @@ public class Communication {
 //	右补空格
 
 
-	public String recharge(String tradeno,String userNumber,String userName,String IDnumber,String bankCardNumber,String transAmount){
+	public String recharge(String txcode,String tradeno,String userNumber,String userName,String IDnumber,String bankCardNumber,String transAmount){
 		String result = "";
 		try {
 			//request
@@ -148,19 +138,20 @@ public class Communication {
 //	2.		响应消息	34	回应码的中文描述
 //	3.		账户余额	17	单位：分 右补空格
 
-	public void getBlance(){
+	public String getBlance(String txcode, String userNumber, String bankCardNumber){
+		String result = "";
 		try {
 			//request
 			String len = "0076";
 			String trade_code = "3021";
 			String bank_code = "YKT01";
-			String number = StringUtils.formatStr("", 20);
-			String bank_card_number = StringUtils.formatStr("", 32);
-			String system_flag = StringUtils.formatStr("", 15);;
-			
+			String number = StringUtils.formatStr(userNumber, 20);
+			String bank_card_number = StringUtils.formatStr(bankCardNumber, 32);
+			String system_flag = StringUtils.formatStr(SYSTEM_FLAG, 15);;
+			result = len+trade_code+bank_code+number+bank_card_number+system_flag;
 			
 			//response
-			String result = "";
+//			String result = "";
 			String res_len = result.substring(0,4);
 			String res_date = result.substring(4,10);
 			String res_tradeNo = result.substring(10,44);
@@ -168,7 +159,7 @@ public class Communication {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+		return result;
 	}
 	
 //	1.		一卡通方交易码	4	定值
@@ -265,7 +256,8 @@ public class Communication {
 //	4.		响应消息	34	回应码的中文描述
 //	右补空格
 //
-	public void terminateSign(){
+	public String terminateSign(String txcode, String tradeno, String userNumber, String userName, String iDnumber, String bankCardNumber, String transAmount, String userMobile){
+		String result = "";
 		try {
 			//request
 			String len = "0183";
@@ -273,19 +265,19 @@ public class Communication {
 			String bank_code = "YKT02";
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			String date = sdf.format(new Date());
-			String trade_serial = StringUtils.formatStr("", 32);
+			String trade_serial = StringUtils.formatStr(tradeno, 32);
 			String flag = "0";
-			String number = StringUtils.formatStr("", 20);
-			String name = StringUtils.formatStr("", 20);
-			String id_number = StringUtils.formatStr("", 18);
-			String mobile = "138888888888";
+			String number = StringUtils.formatStr(userNumber, 20);
+			String name = StringUtils.formatStr(tradeno, 20);
+			String id_number = StringUtils.formatStr(userName, 18);
+			String mobile = userMobile;
 			String bank_card_number = StringUtils.formatStr("", 32);
-			String amount = StringUtils.formatStr("", 17);;
-			String system_flag = StringUtils.formatStr("", 15);;
+			String amount = StringUtils.formatStr(bankCardNumber, 17);;
+			String system_flag = StringUtils.formatStr(SYSTEM_FLAG, 15);;
 			
 			
 			//response
-			String result = "";
+//			String result = "";
 			String res_len = result.substring(0,4);
 			String res_date = result.substring(4,12);
 			String res_tradeNo = result.substring(12,44);
@@ -294,6 +286,7 @@ public class Communication {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		return result;
 	}
 	
 //	1.		一卡通方交易码	4	定值
