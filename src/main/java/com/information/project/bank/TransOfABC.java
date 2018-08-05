@@ -10,12 +10,12 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.information.common.utils.SysConfigUtil;
+import com.information.common.utils.spring.SpringUtils;
 import com.information.project.bank.domain.ReceiveFromBankInfo;
 import com.information.project.bank.domain.TransVo;
 import com.information.project.bank.service.BankServiceImpl;
 import com.information.project.bank.service.IBankService;
-import com.information.project.bank.util.SysConfigUtil;
-import com.information.project.bank.util.SpringUtil;
 import com.information.project.bank.util.StringUtil;
 import com.information.project.business.user.domain.BusUserExample;
 import com.information.project.business.user.domain.BusUserExample.Criteria;
@@ -28,7 +28,7 @@ public class TransOfABC {
 	private static String sysFlag = SysConfigUtil.getNodeValue("systemFlag");
 	private static String encodeType = "gbk";
 	//通过springApplicationContextAware获取bean
-	private static IBankService bankService = (IBankService) SpringUtil.getBean(BankServiceImpl.class);
+	private static IBankService bankService = (IBankService) SpringUtils.getBean(BankServiceImpl.class);
 	//通过postContruct注入service
 //	public static TransOfABC transOfABC;
 //	@PostConstruct

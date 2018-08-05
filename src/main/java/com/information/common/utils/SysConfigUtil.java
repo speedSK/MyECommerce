@@ -1,4 +1,4 @@
-package com.information.project.bank.util;
+package com.information.common.utils;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.information.common.utils.spring.SpringUtils;
 import com.information.project.system.config.service.ConfigServiceImpl;
 
 public class SysConfigUtil {
@@ -14,7 +15,7 @@ public class SysConfigUtil {
 	public static String getNodeValue(String nodeProperty) {
 		String result = "";
 		try {
-			ConfigServiceImpl configService = SpringUtil.getBean(ConfigServiceImpl.class);
+			ConfigServiceImpl configService = SpringUtils.getBean(ConfigServiceImpl.class);
 			result = configService.selectConfigByKey(nodeProperty);
 		} catch (Exception var3) {
 			var3.printStackTrace();

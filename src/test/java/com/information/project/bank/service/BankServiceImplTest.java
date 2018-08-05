@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.information.common.utils.SysConfigUtil;
 import com.information.project.bank.TransOfABC;
 import com.information.project.bank.domain.ReceiveFromBankInfo;
-import com.information.project.bank.util.SysConfigUtil;
 import com.information.project.business.user.domain.BusUserExample;
 
 
@@ -25,8 +25,8 @@ public class BankServiceImplTest {
 	public void testQueryUserInfo4Bank() throws Exception {
 //		ReceiveFromBankInfo info = bankService.queryUserInfo4Bank(new BusUserExample());
 //		System.out.println(info.getResponsecode());
-//		System.out.println(SysConfigUtil.getNodeValue("sys.user.initPassword"));
-		System.out.println(TransOfABC.querySign("123".getBytes()));
+		System.out.println(SysConfigUtil.getNodeValue("sys.user.initPassword"));
+//		System.out.println(TransOfABC.querySign("123".getBytes()));
 	}
 
 //	@Test

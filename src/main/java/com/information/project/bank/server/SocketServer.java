@@ -6,7 +6,8 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.information.project.bank.util.SysConfigUtil;
+import com.information.common.utils.SysConfigUtil;
+
 
 
 public class SocketServer {

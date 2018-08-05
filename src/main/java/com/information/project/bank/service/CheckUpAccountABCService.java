@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.information.common.utils.SysConfigUtil;
 import com.information.project.bank.domain.BankCheckdetail;
 import com.information.project.bank.domain.BankCheckdetailExample;
 import com.information.project.bank.domain.BankCheckdetailExample.Criteria;
@@ -21,7 +22,6 @@ import com.information.project.bank.domain.BankRechargeRecordExample;
 import com.information.project.bank.mapper.BankCheckdetailMapper;
 import com.information.project.bank.mapper.BankRechargeRecordMapper;
 import com.information.project.bank.util.StringUtil;
-import com.information.project.bank.util.SysConfigUtil;
 
 public class CheckUpAccountABCService {
 	public static Logger logger = LoggerFactory.getLogger(CheckUpAccountABCService.class.getName());
