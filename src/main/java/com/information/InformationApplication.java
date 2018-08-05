@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.information.project.bank.server.SocketServer;
+
 /**
  * 启动程序
  * 
@@ -17,6 +19,7 @@ public class InformationApplication {
 	public static void main(String[] args) {
 		// System.setProperty("spring.devtools.restart.enabled", "false");
 		SpringApplication.run(InformationApplication.class, args);
+		SocketServer.getInstance();
 		System.out.println(
 				"(♥◠‿◠)ﾉﾞ  系统启动成功   ლ(´ڡ`ლ)ﾞ  \n" + "◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◆◆◇◆◆◆◆◆◆◆◆◇◇◇◇◇◇◇ \n"
 						+ "◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◇◇◇◆◆◆◆◆◆◇◇◇◇◇◇◇◇ \n"
