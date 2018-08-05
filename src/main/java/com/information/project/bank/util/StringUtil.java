@@ -1,5 +1,10 @@
 package com.information.project.bank.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class StringUtil {
 	/**
 	 * 去除开头的0
@@ -196,4 +201,13 @@ public class StringUtil {
 		}
 		return "";
 	}
+	
+	public static String getDateBefore() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(5, -1);
+		Date date = calendar.getTime();
+		DateFormat df = new SimpleDateFormat("yyyyMMdd");
+		return df.format(date);
+	}
+	
 }
