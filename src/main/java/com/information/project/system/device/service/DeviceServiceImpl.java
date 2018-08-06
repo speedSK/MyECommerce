@@ -1,6 +1,14 @@
 package com.information.project.system.device.service;
 
+import java.util.Date;
 import java.util.List;
+
+import com.information.common.constant.Constants;
+import com.information.common.utils.StringUtils;
+import com.information.common.utils.security.ShiroUtils;
+import com.information.project.system.dict.domain.DictData;
+import com.information.project.system.dict.mapper.DictDataMapper;
+import com.information.project.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.information.project.system.device.mapper.DeviceMapper;
@@ -19,6 +27,9 @@ public class DeviceServiceImpl implements IDeviceService
 {
 	@Autowired
 	private DeviceMapper deviceMapper;
+
+	@Autowired
+	private DictDataMapper dictDataMapper;
 
 	/**
      * 查询设备信息
@@ -41,6 +52,9 @@ public class DeviceServiceImpl implements IDeviceService
 	@Override
 	public List<Device> selectDeviceList(Device device)
 	{
+		if(StringUtils.isEmpty(device.getStatus())){
+			device.setStatus(Constants.STATUS_ACTIVE);
+		}
 	    return deviceMapper.selectDeviceList(device);
 	}
 	
@@ -53,7 +67,13 @@ public class DeviceServiceImpl implements IDeviceService
 	@Override
 	public int insertDevice(Device device)
 	{
-	    return deviceMapper.insertDevice(device);
+
+		device.setStatus(Constants.STATUS_ACTIVE);
+
+		device.setCreateBy(ShiroUtils.getUserId().toString());
+		device.setUpdateBy(ShiroUtils.getUserId().toString());
+
+		return deviceMapper.insertDevice(device);
 	}
 	
 	/**
@@ -63,21 +83,43 @@ public class DeviceServiceImpl implements IDeviceService
      * @return 结果
      */
 	@Override
-	public int updateDevice(Device device)
-	{
-	    return deviceMapper.updateDevice(device);
+	public int updateDevice(Device device){
+
+
+		//初始化數據信息
+
+		device.setStatus(Constants.STATUS_ACTIVE);
+
+		device.setUpdateBy(ShiroUtils.getUserId().toString());
+
+
+		return deviceMapper.updateDevice(device);
 	}
 
 	/**
      * 删除设备对象
      * 
      * @param ids 需要删除的数据ID
-     * @return 结果
+     * @return 结果F
      */
 	@Override
 	public int deleteDeviceByIds(String ids)
 	{
-		return deviceMapper.deleteDeviceByIds(Convert.toStrArray(ids));
+
+		String [] idsArray = Convert.toStrArray(ids);
+		for (String id: idsArray) {
+			Device device = deviceMapper.selectDeviceById(Long.valueOf(id));
+			//初始化數據信息
+
+			device.setStatus(Constants.STATUS_REMOVED);
+
+			device.setUpdateBy(ShiroUtils.getUserId().toString());
+
+			deviceMapper.updateDevice(device);
+
+		}
+
+		return 1;
 	}
 	
 }

@@ -27,14 +27,9 @@ public class Device extends BaseEntity
 	private String address;
 	/** 说明 */
 	private String des;
-	/** 操作用户 */
-	private Long operUser;
 	/** 状态 */
 	private String status;
-	/** 创建时间 */
-	private Date createTime;
-	/** 修改时间 */
-	private Date updateTime;
+
 
 	/**
 	 * 设置：主键
@@ -147,23 +142,7 @@ public class Device extends BaseEntity
 	{
 		return des;
 	}
-	
-	/**
-	 * 设置：操作用户
-	 */
-	public void setOperUser(Long operUser) 
-	{
-		this.operUser = operUser;
-	}
-	
-	/**
-	 * 获取：操作用户
-	 */
-	public Long getOperUser() 
-	{
-		return operUser;
-	}
-	
+
 	/**
 	 * 设置：状态
 	 */
@@ -179,37 +158,6 @@ public class Device extends BaseEntity
 	{
 		return status;
 	}
-	
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateTime(Date createTime) 
-	{
-		this.createTime = createTime;
-	}
-	
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateTime() 
-	{
-		return createTime;
-	}
-	
-	/**
-	 * 设置：修改时间
-	 */
-	public void setUpdateTime(Date updateTime) 
-	{
-		this.updateTime = updateTime;
-	}
-	
-	/**
-	 * 获取：修改时间
-	 */
-	public Date getUpdateTime() 
-	{
-		return updateTime;
-	}
+
 	
 }

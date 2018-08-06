@@ -62,4 +62,8 @@ public class Constants
      */
     public static String ISASC = "isAsc";
 
+
+    public static final String STATUS_REMOVED = "0";
+    public static final String STATUS_ACTIVE = "1";
+
 }
