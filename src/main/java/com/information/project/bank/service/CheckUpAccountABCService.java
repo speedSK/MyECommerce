@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.SysConfigUtil;
-import com.information.project.bank.util.StringUtil;
 import com.information.project.business.checkdetail.domain.Checkdetail;
 import com.information.project.business.checkdetail.mapper.CheckdetailMapper;
 import com.information.project.business.rechargeRecord.domain.RechargeRecord;
@@ -67,7 +67,7 @@ public class CheckUpAccountABCService {
 		if (connectFtpServer()) {
 			InputStream ins = null;
 			if (date.equals("")) {
-				date = StringUtil.getDateBefore();
+				date = StringUtils.getDateBefore();
 			}
 
 			String fileName = "ABC_300000025532_qc_" + date + ".txt";
