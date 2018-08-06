@@ -22,6 +22,8 @@
         var editFlag = [[${@permission.hasPermi('system:device:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:device:remove')}]];
         var prefix = ctx + "system/device"
+		var datas = [[${@dict.getType('bus_device_type')}]];
+
 
         $(function() {
             var options = {
@@ -47,7 +49,10 @@
 				},
 				{
 					field : 'type', 
-					title : '类型' 
+					title : '类型' ,
+					formatter: function(value, row, index) {
+		            	return $.table.selectDictLabel(datas, value);
+		            }
 				},
 				{
 					field : 'ip', 

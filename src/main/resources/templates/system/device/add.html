@@ -20,7 +20,9 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">类型：</label>
 				<div class="col-sm-8">
-					<input id="type" name="type" class="form-control" type="text">
+					<select id="type" class="form-control m-b" th:with="type=${@dict.getType('bus_device_type')}">
+						<option th:each="dict : ${type}" th:text="${dict['dictLabel']}" th:value="${dict['dictValue']}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -58,11 +60,46 @@
 				name:{
 					required:true,
 				},
+				ip:{
+				    required:true,
+				    isIP:true
+				}
 			},
 			submitHandler: function(form) {
-				$.operate.save(prefix + "/add", $('#form-device-add').serialize());
+				add();
 			}
 		});
+
+		function add() {
+        	var code = $("input[name='code']").val();
+        	var name = $("input[name='name']").val();
+        	var type = $("#type option:selected").val();
+        	var ip = $("input[name='ip']").val();
+        	var address = $("input[name='address']").val();
+        	var des = $("input[name='des']").val();
+
+        	$.ajax({
+        		cache : true,
+        		type : "POST",
+        		url : ctx + "system/device/add",
+        		data : {
+        			"code": code,
+        			"name": name,
+        			"type": type,
+        			"ip": ip,
+        			"address": address,
+        			"des": des
+        		},
+        		async : false,
+        		error : function(request) {
+        			$.modal.alertError("系统错误");
+        		},
+        		success : function(data) {
+        			$.operate.saveSuccess(data);
+        		}
+        	});
+        }
+
 	</script>
 </body>
 </html>
