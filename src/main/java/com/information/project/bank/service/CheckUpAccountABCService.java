@@ -13,15 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.SysConfigUtil;
-import com.information.project.bank.domain.BankCheckdetail;
-import com.information.project.bank.domain.BankCheckdetailExample;
-import com.information.project.bank.domain.BankCheckdetailExample.Criteria;
-import com.information.project.bank.domain.BankRechargeRecord;
-import com.information.project.bank.domain.BankRechargeRecordExample;
-import com.information.project.bank.mapper.BankCheckdetailMapper;
-import com.information.project.bank.mapper.BankRechargeRecordMapper;
-import com.information.project.bank.util.StringUtil;
+import com.information.project.business.checkdetail.domain.Checkdetail;
+import com.information.project.business.checkdetail.mapper.CheckdetailMapper;
+import com.information.project.business.rechargeRecord.domain.RechargeRecord;
+import com.information.project.business.rechargeRecord.mapper.RechargeRecordMapper;
 
 public class CheckUpAccountABCService {
 	public static Logger logger = LoggerFactory.getLogger(CheckUpAccountABCService.class.getName());
@@ -29,12 +26,12 @@ public class CheckUpAccountABCService {
 	private static String ftpUserName = SysConfigUtil.getNodeValue("ftpUserName");
 	private static String ftpPassword = SysConfigUtil.getNodeValue("ftpPassword");
 	private static int port = Integer.parseInt(SysConfigUtil.getNodeValue("ftpPort"));
-	private static String ftpPath = SysConfigUtil.getNodeValue("ftpPath");
+//	private static String ftpPath = SysConfigUtil.getNodeValue("ftpPath");
 	private static FTPClient ftpClient = null;
 	@Autowired
-	private BankCheckdetailMapper bankCheckdetailMapper;
+	private CheckdetailMapper checkdetailMapper;
 	@Autowired
-	private BankRechargeRecordMapper bankRechargeRecordMapper;
+	private RechargeRecordMapper rechargeRecordMapper;
 
 
 	public static boolean connectFtpServer() {
@@ -70,23 +67,22 @@ public class CheckUpAccountABCService {
 		if (connectFtpServer()) {
 			InputStream ins = null;
 			if (date.equals("")) {
-				date = StringUtil.getDateBefore();
+				date = StringUtils.getDateBefore();
 			}
 
 			String fileName = "ABC_300000025532_qc_" + date + ".txt";
 			ins = ftpClient.retrieveFileStream(fileName);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(ins, "gbk"));
 			String readLine = null;
-			BankCheckdetailExample ex = new BankCheckdetailExample();
-			BankCheckdetail detail = null;
-			Criteria cc = ex.createCriteria();
-			cc.andTransDateEqualTo(date);
-			List<BankCheckdetail> detailList = bankCheckdetailMapper.selectByExample(ex);
+			Checkdetail checkdetail = new Checkdetail();
+			Checkdetail detail = null;
+			checkdetail.setTransDate(date);
+			List<Checkdetail> detailList = checkdetailMapper.selectCheckdetailList(checkdetail);
 			int i;
 			if (!detailList.isEmpty()) {
 				for (i = 0; i < detailList.size(); ++i) {
 					detail = detailList.get(i);
-					bankCheckdetailMapper.deleteByPrimaryKey(detail.getId());
+					checkdetailMapper.deleteCheckdetailById(detail.getId());
 				}
 			}
 
@@ -101,19 +97,16 @@ public class CheckUpAccountABCService {
 					String number = readLine.substring(72, 92).trim();
 					String userType = readLine.substring(92, 93).trim();
 					String txamt = readLine.substring(93, 110).trim();
-					detail = new BankCheckdetail();
+					detail = new Checkdetail();
 					detail.setIdserial(journo);
-					detail.setBankIdserial(bankJourno);
-					detail.setTransDate(txdate);
-					detail.setNumber(number);
-					detail.setAmount(txamt);
-					detail.setUserType(userType);
-					BankCheckdetailExample ex1 = new BankCheckdetailExample();
-					Criteria cc1 = ex1.createCriteria();
-					cc1.andIdserialEqualTo(journo);
-					List<BankCheckdetail> list = this.bankCheckdetailMapper.selectByExample(ex1);
+					List<Checkdetail> list = checkdetailMapper.selectCheckdetailList(detail);
 					if (list.size() <= 0) {
-						this.bankCheckdetailMapper.insertSelective(detail);
+						detail.setBankIdserial(bankJourno);
+						detail.setTransDate(txdate);
+						detail.setNumber(number);
+						detail.setAmount(txamt);
+						detail.setUserType(userType);
+						checkdetailMapper.insertCheckdetail(detail);
 					}
 				}
 			}
@@ -131,38 +124,35 @@ public class CheckUpAccountABCService {
 	}
 
 	@Transactional
-	public String checkSelfRecordAndFileRecord(String tansDate) {
-		BankRechargeRecordExample ex = new BankRechargeRecordExample();
-		com.information.project.bank.domain.BankRechargeRecordExample.Criteria cc = ex.createCriteria();
-		cc.andTransDateEqualTo(tansDate);
-		cc.andCodeEqualTo("1001");
-		cc.andReturnCodeEqualTo("000000");
-		List<BankRechargeRecord> selfList = bankRechargeRecordMapper.selectByExample(ex);
-		if (selfList != null) {
-			for (int i = 0; i < selfList.size(); ++i) {
-				BankRechargeRecord selfRecord = selfList.get(i);
-				BankCheckdetailExample detailEX = new BankCheckdetailExample();
-				BankCheckdetail detail = null;
-				Criteria detailCC = detailEX.createCriteria();
-				detailCC.andTransDateEqualTo(selfRecord.getTransDate());
-				detailCC.andIdserialEqualTo(selfRecord.getTransIdserial());
-				detailCC.andAmountEqualTo(selfRecord.getAmount());
-				List<BankCheckdetail> fileRecordList = bankCheckdetailMapper.selectByExample(detailEX);
+	public String checkSelfRecordAndFileRecord(String transDate) {
+		RechargeRecord rechargeRecord = new RechargeRecord();
+		rechargeRecord.setTransDate(transDate);
+		rechargeRecord.setCode("1001");
+		rechargeRecord.setReturnCode("000000");
+		List<RechargeRecord> rechargeList = rechargeRecordMapper.selectRechargeRecordList(rechargeRecord);
+		if (rechargeList != null) {
+			for (int i = 0; i < rechargeList.size(); ++i) {
+				RechargeRecord record = rechargeList.get(i);
+				Checkdetail detail = null;
+				Checkdetail checkdetail = new Checkdetail();
+				checkdetail.setTransDate(record.getTransDate());
+				checkdetail.setIdserial(record.getTransIdserial());
+				checkdetail.setAmount(record.getAmount());
+				List<Checkdetail> fileRecordList = checkdetailMapper.selectCheckdetailList(checkdetail);
 				if (fileRecordList.size() == 0) {
-					logger.info("系统多于银行的流水号：{}。",selfRecord.getTransIdserial());
-					ex = new BankRechargeRecordExample();
-					com.information.project.bank.domain.BankRechargeRecordExample.Criteria cc1 = ex.createCriteria();
-					cc1.andTransIdserialEqualTo(selfRecord.getTransIdserial());
-					List<BankRechargeRecord> transferList = bankRechargeRecordMapper.selectByExample(ex);
+					logger.info("系统多于银行的流水号：{}。",record.getTransIdserial());
+					rechargeRecord = new RechargeRecord();
+					rechargeRecord.setTransIdserial(record.getTransIdserial());
+					List<RechargeRecord> transferList = rechargeRecordMapper.selectRechargeRecordList(rechargeRecord);
 					if (transferList.size() == 0) {
-						detail = new BankCheckdetail();
-						detail.setNumber(selfRecord.getUserCode());
-						detail.setIdserial(selfRecord.getTransIdserial());
+						detail = new Checkdetail();
+						detail.setNumber(record.getUserCode());
+						detail.setIdserial(record.getTransIdserial());
 						detail.setUserType("1");
-						detail.setAmount(selfRecord.getAmount());
-						detail.setTransDate(selfRecord.getTransDate());
+						detail.setAmount(record.getAmount());
+						detail.setTransDate(record.getTransDate());
 						detail.setCheckStatus("2");//系统多余银行状态
-						bankCheckdetailMapper.insertSelective(detail);
+						checkdetailMapper.insertCheckdetail(detail);
 					}
 				}
 			}
@@ -172,40 +162,35 @@ public class CheckUpAccountABCService {
 	}
 
 	@Transactional
-	public String checkFileRecordAndSelfRecord(String tansDate) {
-		BankCheckdetailExample ex = new BankCheckdetailExample();
-		BankCheckdetail detail = null;
-		Criteria cc = ex.createCriteria();
-		cc.andTransDateEqualTo(tansDate);
-		cc.andCheckStatusEqualTo("1");
-		List<BankCheckdetail> fileRecordList = bankCheckdetailMapper.selectByExample(ex);
-		List<BankRechargeRecord> rechargeRecords;
-		BankRechargeRecord record = null;
+	public String checkFileRecordAndSelfRecord(String transDate) {
+		Checkdetail detail = new Checkdetail();
+		detail.setTransDate(transDate);
+		detail.setCheckStatus("1");
+		List<Checkdetail> fileRecordList = checkdetailMapper.selectCheckdetailList(detail);
+		List<RechargeRecord> rechargeRecords;
+		RechargeRecord record = null;
 		if (fileRecordList.size() > 0) {
 			for (int i = 0; i < fileRecordList.size(); ++i) {
 				detail = fileRecordList.get(i);
-				BankRechargeRecordExample rechargeEX = new BankRechargeRecordExample();
-				com.information.project.bank.domain.BankRechargeRecordExample.Criteria rechargeCC = rechargeEX.createCriteria();
-				rechargeCC.andTransIdserialEqualTo(detail.getIdserial());
-				rechargeCC.andUserCodeEqualTo(detail.getNumber());
-				rechargeCC.andAmountEqualTo(detail.getAmount());
-				rechargeCC.andTransDateEqualTo(detail.getTransDate());
-				rechargeCC.andCodeEqualTo("1001");
-				rechargeCC.andReturnCodeEqualTo("000000");
-				rechargeRecords = bankRechargeRecordMapper.selectByExample(rechargeEX);
+				record.setTransIdserial(detail.getIdserial());
+				record.setUserCode(detail.getNumber());
+				record.setAmount(detail.getAmount());
+				record.setTransDate(detail.getTransDate());
+				record.setCode("1001");
+				record.setReturnCode("000000");
+				rechargeRecords = rechargeRecordMapper.selectRechargeRecordList(record);
 				if (rechargeRecords != null && rechargeRecords.size() > 0) {
 					record = rechargeRecords.get(0);
 					record.setStatus("2");//对账完成
-					bankRechargeRecordMapper.updateByPrimaryKeySelective(record);
+					rechargeRecordMapper.updateRechargeRecord(record);
 				} else {
 					logger.error("银行多于系统的流水号：{}", detail.getIdserial());
-					rechargeEX = new BankRechargeRecordExample();
-					com.information.project.bank.domain.BankRechargeRecordExample.Criteria rechargeCC1 = rechargeEX.createCriteria();
-					rechargeCC1.andBankIdserialEqualTo(detail.getIdserial());
-					List<BankRechargeRecord> checkList = bankRechargeRecordMapper.selectByExample(rechargeEX);
+					record = new RechargeRecord();
+					record.setTransIdserial(detail.getBankIdserial());
+					List<RechargeRecord> checkList = rechargeRecordMapper.selectRechargeRecordList(record);
 					if (checkList.size() <= 0) {
 						detail.setCheckStatus("3");//银行多余系统
-						bankCheckdetailMapper.updateByPrimaryKeySelective(detail);
+						checkdetailMapper.updateCheckdetail(detail);
 					}
 				}
 			}

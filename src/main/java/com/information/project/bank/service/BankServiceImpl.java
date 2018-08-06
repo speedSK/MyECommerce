@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.information.project.bank.domain.ReceiveFromBankInfo;
-import com.information.project.business.user.domain.BusUserExample;
 import com.information.project.business.user.mapper.BusUserMapper;
 
 @Service
@@ -17,10 +16,10 @@ public class BankServiceImpl implements IBankService{
 	private BusUserMapper busUserMapper;
 	
 	@Override
-	public ReceiveFromBankInfo queryUserInfo4Bank(BusUserExample ex) {
+	public ReceiveFromBankInfo queryUserInfo4Bank(BusUser user) {
 		ReceiveFromBankInfo receiveFromBankInfo = new ReceiveFromBankInfo();
 		try {
-			List<BusUser> list = busUserMapper.selectByExample(ex);
+			List<BusUser> list = busUserMapper.selectBusUserList(user);
 			if (list!=null&&list.size()>0) {
 				receiveFromBankInfo.setResponsecode("000000");
 				receiveFromBankInfo.setResponsename("查询成功");
@@ -36,13 +35,13 @@ public class BankServiceImpl implements IBankService{
 	}
 
 	@Override
-	public ReceiveFromBankInfo queryUserSign(BusUserExample ex) {
+	public ReceiveFromBankInfo queryUserSign(BusUser user) {
 		ReceiveFromBankInfo receiveFromBankInfo = new ReceiveFromBankInfo();
 		try {
-			List<BusUser> list = busUserMapper.selectByExample(ex);
+			List<BusUser> list = busUserMapper.selectBusUserList(user);
 			if (list!=null&&list.size()>0) {
-				BusUser user = list.get(0);
-				if ("1".equals(user.getAccStatus())) {
+				BusUser usr = list.get(0);
+				if ("1".equals(usr.getAccStatus())) {
 					receiveFromBankInfo.setResponsecode("000000");
 					receiveFromBankInfo.setResponsename("签约成功");
 				}else {

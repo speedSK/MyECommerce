@@ -10,15 +10,14 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.SysConfigUtil;
 import com.information.common.utils.spring.SpringUtils;
 import com.information.project.bank.domain.ReceiveFromBankInfo;
 import com.information.project.bank.domain.TransVo;
 import com.information.project.bank.service.BankServiceImpl;
 import com.information.project.bank.service.IBankService;
-import com.information.project.bank.util.StringUtil;
-import com.information.project.business.user.domain.BusUserExample;
-import com.information.project.business.user.domain.BusUserExample.Criteria;
+import com.information.project.business.user.domain.BusUser;
 
 public class TransOfABC {
 	
@@ -93,7 +92,7 @@ public class TransOfABC {
 		String yktJourno = getRealString(3, vo.getYktJourno(), 32);
 		String userType = getRealString(3, vo.getUserType(), 1);
 		String yktNo = getRealString(3, vo.getYktNo(), 20);
-		String username = StringUtil.formatStr(vo.getUsername(), 20, encodeType);
+		String username = StringUtils.formatStr(vo.getUsername(), 20, encodeType);
 		String idserial2 = getRealString(3, vo.getIdserial2(), 18);
 		String telphone = vo.getTelphone();
 		String bankCdNo = getRealString(3, vo.getBankCardNo(), 32);
@@ -112,7 +111,7 @@ public class TransOfABC {
 		String txdate = getRealString(3, getCurrentDate(), 8);
 		String yktJourno = getRealString(3, vo.getYktJourno(), 32);
 		String yktNo = getRealString(3, vo.getYktNo(), 20);
-		String username = StringUtil.formatStr(vo.getUsername(), 20, encodeType);
+		String username = StringUtils.formatStr(vo.getUsername(), 20, encodeType);
 		String idserial2 = getRealString(3, vo.getIdserial2(), 18);
 		String bankCdNo = getRealString(3, vo.getBankCardNo(), 32);
 		String txamt = getRealString(3, vo.getTxamt(), 17);
@@ -209,7 +208,7 @@ public class TransOfABC {
 		String responseCode = new String(buf, 4, 6);
 		String responseMsg = new String(buf, 10, 34, encodeType);
 		String accbaltemp = new String(buf, 44, 17);
-		String accbal = StringUtil.fen2Yuan(accbaltemp.trim());
+		String accbal = StringUtils.fen2Yuan(accbaltemp.trim());
 		if (responseCode.equals("000000")) {
 			logger.info("处理查询余额成功报文体3021交易\n报文:{},交易时间{},账户余额{},响应码{},相应信息{}.", new String(buf),getCurrentDateTime(),accbal,responseCode,responseMsg);
 			return responseCode + "|" + responseMsg + "|" + accbaltemp;
@@ -309,7 +308,7 @@ public class TransOfABC {
 	}
 
 	public static byte[] createPckUserSign(ReceiveFromBankInfo receiveFromBankInfo) throws Exception {
-		String resMessage = StringUtil.formatStr(receiveFromBankInfo.getResponsename(), 34, encodeType);
+		String resMessage = StringUtils.formatStr(receiveFromBankInfo.getResponsename(), 34, encodeType);
 		String packgBody = receiveFromBankInfo.getResponsecode() + resMessage;
 		String packgTopLen = getRealString(1, getPackageLen(packgBody), 4);
 		String packgTop = packgTopLen + packgBody;
@@ -318,7 +317,7 @@ public class TransOfABC {
 	}
 
 	public static byte[] createPckSign(ReceiveFromBankInfo receiveFromBankInfo) throws Exception {
-		String resMessage = StringUtil.formatStr(receiveFromBankInfo.getResponsename(), 34, encodeType);
+		String resMessage = StringUtils.formatStr(receiveFromBankInfo.getResponsename(), 34, encodeType);
 		String packgBody = receiveFromBankInfo.getResponsecode() + resMessage;
 		String packgTopLen = getRealString(1, getPackageLen(packgBody), 4);
 		String packgTop = packgTopLen + packgBody;
@@ -329,13 +328,11 @@ public class TransOfABC {
 	public static byte[] queryUserInfoSign(byte[] buf) throws Exception {
 		logger.info("queryUserInfoSign接收报文:" + new String(buf));
 		String idserial = new String(buf, 15, 18);
-		BusUserExample ex = new BusUserExample();
-		Criteria cc = ex.createCriteria();
-		cc.andNumberEqualTo(idserial);
+		BusUser user = new BusUser();
+		user.setNumber(idserial);
 		logger.info("编号：" + idserial + "。");
-
 		try {
-			ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserInfo4Bank(ex);
+			ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserInfo4Bank(user);
 			byte[] pckBody = createPckUserSign(receiveFromBankInfo);
 			if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
 				logger.info("用户:" + idserial + ",发起信息查询成功");
@@ -356,12 +353,11 @@ public class TransOfABC {
 		String idserial2 = new String(buf, 94, 18);
 		String bankcdno = new String(buf, 123, 32);
 		logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno);
-		BusUserExample ex = new BusUserExample();
-		Criteria cc = ex.createCriteria();
-		cc.andNumberEqualTo(idserial);
-		cc.andIdNumberEqualTo(idserial2);
-		cc.andBankCardNumberEqualTo(bankcdno);
-		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(ex);
+		BusUser user = new BusUser();
+		user.setNumber(idserial);
+		user.setIdNumber(idserial2);
+		user.setBankCardNumber(bankcdno);
+		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(user);
 		byte[] pckBody = createPckSign(receiveFromBankInfo);
 		if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
 			logger.info("用户:" + idserial + ",发起签约，签约成功");

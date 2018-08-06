@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.business.checkdetail.mapper.CheckdetailMapper">
+    
+    <resultMap type="Checkdetail" id="CheckdetailResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="idserial"    column="idserial"    />
+        <result property="bankIdserial"    column="bank_idserial"    />
+        <result property="transDate"    column="trans_date"    />
+        <result property="amount"    column="amount"    />
+        <result property="userType"    column="user_type"    />
+        <result property="checkStatus"    column="check_status"    />
+        <result property="operUser"    column="oper_user"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectCheckdetailVo">
+        select id, number, idserial, bank_idserial, trans_date, amount, user_type, check_status, oper_user, create_time from bank_checkdetail
+    </sql>
+	
+    <select id="selectCheckdetailList" parameterType="Checkdetail" resultMap="CheckdetailResult">
+        <include refid="selectCheckdetailVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="number != null and number != ''"> and number = #{number}</if>
+             <if test="idserial != null and idserial != ''"> and idserial = #{idserial}</if>
+             <if test="bankIdserial != null and bankIdserial != ''"> and bank_idserial = #{bankIdserial}</if>
+             <if test="transDate != null and transDate != ''"> and trans_date = #{transDate}</if>
+             <if test="amount != null and amount != ''"> and amount = #{amount}</if>
+             <if test="userType != null and userType != ''"> and user_type = #{userType}</if>
+             <if test="checkStatus != null and checkStatus != ''"> and check_status = #{checkStatus}</if>
+             <if test="operUser != null and operUser != ''"> and oper_user = #{operUser}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCheckdetailById" parameterType="Long" resultMap="CheckdetailResult">
+        <include refid="selectCheckdetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCheckdetail" parameterType="Checkdetail">
+        insert into bank_checkdetail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="number != null and number != '' ">number,</if>
+			<if test="idserial != null and idserial != '' ">idserial,</if>
+			<if test="bankIdserial != null and bankIdserial != '' ">bank_idserial,</if>
+			<if test="transDate != null and transDate != '' ">trans_date,</if>
+			<if test="amount != null and amount != '' ">amount,</if>
+			<if test="userType != null and userType != '' ">user_type,</if>
+			<if test="checkStatus != null and checkStatus != '' ">check_status,</if>
+			<if test="operUser != null and operUser != '' ">oper_user,</if>
+			<if test="createTime != null and createTime != '' ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="number != null and number != ''">#{number},</if>
+			<if test="idserial != null and idserial != ''">#{idserial},</if>
+			<if test="bankIdserial != null and bankIdserial != ''">#{bankIdserial},</if>
+			<if test="transDate != null and transDate != ''">#{transDate},</if>
+			<if test="amount != null and amount != ''">#{amount},</if>
+			<if test="userType != null and userType != ''">#{userType},</if>
+			<if test="checkStatus != null and checkStatus != ''">#{checkStatus},</if>
+			<if test="operUser != null and operUser != ''">#{operUser},</if>
+			<if test="createTime != null and createTime != ''">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCheckdetail" parameterType="Checkdetail">
+        update bank_checkdetail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null  and number != ''  ">number = #{number},</if>
+            <if test="idserial != null  and idserial != ''  ">idserial = #{idserial},</if>
+            <if test="bankIdserial != null  and bankIdserial != ''  ">bank_idserial = #{bankIdserial},</if>
+            <if test="transDate != null  and transDate != ''  ">trans_date = #{transDate},</if>
+            <if test="amount != null  and amount != ''  ">amount = #{amount},</if>
+            <if test="userType != null  and userType != ''  ">user_type = #{userType},</if>
+            <if test="checkStatus != null  and checkStatus != ''  ">check_status = #{checkStatus},</if>
+            <if test="operUser != null  ">oper_user = #{operUser},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCheckdetailById" parameterType="Long">
+        delete from bank_checkdetail where id = #{id}
+    </delete>
+	
+    <delete id="deleteCheckdetailByIds" parameterType="String">
+        delete from bank_checkdetail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
