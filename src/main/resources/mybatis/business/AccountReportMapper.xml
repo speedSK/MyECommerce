@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.business.accountReport.mapper.AccountReportMapper">
+    
+    <resultMap type="AccountReport" id="AccountReportResult">
+        <result property="id"    column="id"    />
+        <result property="reportDate"    column="report_date"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="incomeNum"    column="income_num"    />
+        <result property="incomeSum"    column="income_sum"    />
+        <result property="outcomeNum"    column="outcome_num"    />
+        <result property="outcomeSum"    column="outcome_sum"    />
+    </resultMap>
+	
+	<sql id="selectAccountReportVo">
+        select id, report_date, account_id, income_num, income_sum, outcome_num, outcome_sum from bus_account_report
+    </sql>
+	
+    <select id="selectAccountReportList" parameterType="AccountReport" resultMap="AccountReportResult">
+        <include refid="selectAccountReportVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="reportDate != null and reportDate != ''"> and report_date = #{reportDate}</if>
+             <if test="accountId != null and accountId != ''"> and account_id = #{accountId}</if>
+             <if test="incomeNum != null and incomeNum != ''"> and income_num = #{incomeNum}</if>
+             <if test="incomeSum != null and incomeSum != ''"> and income_sum = #{incomeSum}</if>
+             <if test="outcomeNum != null and outcomeNum != ''"> and outcome_num = #{outcomeNum}</if>
+             <if test="outcomeSum != null and outcomeSum != ''"> and outcome_sum = #{outcomeSum}</if>
+         </where>
+    </select>
+    
+    <select id="selectAccountReportById" parameterType="Long" resultMap="AccountReportResult">
+        <include refid="selectAccountReportVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAccountReport" parameterType="AccountReport">
+        insert into bus_account_report
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="reportDate != null and reportDate != '' ">report_date,</if>
+			<if test="accountId != null and accountId != '' ">account_id,</if>
+			<if test="incomeNum != null and incomeNum != '' ">income_num,</if>
+			<if test="incomeSum != null and incomeSum != '' ">income_sum,</if>
+			<if test="outcomeNum != null and outcomeNum != '' ">outcome_num,</if>
+			<if test="outcomeSum != null and outcomeSum != '' ">outcome_sum,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="reportDate != null and reportDate != ''">#{reportDate},</if>
+			<if test="accountId != null and accountId != ''">#{accountId},</if>
+			<if test="incomeNum != null and incomeNum != ''">#{incomeNum},</if>
+			<if test="incomeSum != null and incomeSum != ''">#{incomeSum},</if>
+			<if test="outcomeNum != null and outcomeNum != ''">#{outcomeNum},</if>
+			<if test="outcomeSum != null and outcomeSum != ''">#{outcomeSum},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateAccountReport" parameterType="AccountReport">
+        update bus_account_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportDate != null  and reportDate != ''  ">report_date = #{reportDate},</if>
+            <if test="accountId != null  ">account_id = #{accountId},</if>
+            <if test="incomeNum != null  ">income_num = #{incomeNum},</if>
+            <if test="incomeSum != null  ">income_sum = #{incomeSum},</if>
+            <if test="outcomeNum != null  ">outcome_num = #{outcomeNum},</if>
+            <if test="outcomeSum != null  ">outcome_sum = #{outcomeSum},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteAccountReportById" parameterType="Long">
+        delete from bus_account_report where id = #{id}
+    </delete>
+	
+    <delete id="deleteAccountReportByIds" parameterType="String">
+        delete from bus_account_report where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

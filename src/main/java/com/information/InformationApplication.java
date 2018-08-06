@@ -19,7 +19,7 @@ public class InformationApplication {
 	public static void main(String[] args) {
 		// System.setProperty("spring.devtools.restart.enabled", "false");
 		SpringApplication.run(InformationApplication.class, args);
-		SocketServer.getInstance();
+//		SocketServer.getInstance();//银行socket服务
 		System.out.println(
 				"(♥◠‿◠)ﾉﾞ  系统启动成功   ლ(´ڡ`ლ)ﾞ  \n" + "◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◆◆◇◆◆◆◆◆◆◆◆◇◇◇◇◇◇◇ \n"
 						+ "◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◇◇◇◆◆◆◆◆◆◇◇◇◇◇◇◇◇ \n"

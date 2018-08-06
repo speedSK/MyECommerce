@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.business.checkbill.mapper.CheckbillMapper">
+    
+    <resultMap type="Checkbill" id="CheckbillResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="bankCode"    column="bank_code"    />
+        <result property="checkDate"    column="check_date"    />
+        <result property="rechargeNum"    column="recharge_num"    />
+        <result property="rechargeSum"    column="recharge_sum"    />
+        <result property="correctionNum"    column="correction_num"    />
+        <result property="correctionSum"    column="correction_sum"    />
+        <result property="closeNum"    column="close_num"    />
+        <result property="closeSum"    column="close_sum"    />
+        <result property="merchantNum"    column="merchant_num"    />
+        <result property="merchantSum"    column="merchant_sum"    />
+        <result property="rechargeCardSum"    column="recharge_card_sum"    />
+        <result property="correctionCardSum"    column="correction_card_sum"    />
+        <result property="closeCardSum"    column="close_card_sum"    />
+        <result property="merchantCardSum"    column="merchant_card_sum"    />
+        <result property="returnCode"    column="return_code"    />
+        <result property="returnMessage"    column="return_message"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectCheckbillVo">
+        select id, code, bank_code, check_date, recharge_num, recharge_sum, correction_num, correction_sum, close_num, close_sum, merchant_num, merchant_sum, recharge_card_sum, correction_card_sum, close_card_sum, merchant_card_sum, return_code, return_message, status, create_time from bank_checkbill
+    </sql>
+	
+    <select id="selectCheckbillList" parameterType="Checkbill" resultMap="CheckbillResult">
+        <include refid="selectCheckbillVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="code != null and code != ''"> and code = #{code}</if>
+             <if test="bankCode != null and bankCode != ''"> and bank_code = #{bankCode}</if>
+             <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate}</if>
+             <if test="rechargeNum != null and rechargeNum != ''"> and recharge_num = #{rechargeNum}</if>
+             <if test="rechargeSum != null and rechargeSum != ''"> and recharge_sum = #{rechargeSum}</if>
+             <if test="correctionNum != null and correctionNum != ''"> and correction_num = #{correctionNum}</if>
+             <if test="correctionSum != null and correctionSum != ''"> and correction_sum = #{correctionSum}</if>
+             <if test="closeNum != null and closeNum != ''"> and close_num = #{closeNum}</if>
+             <if test="closeSum != null and closeSum != ''"> and close_sum = #{closeSum}</if>
+             <if test="merchantNum != null and merchantNum != ''"> and merchant_num = #{merchantNum}</if>
+             <if test="merchantSum != null and merchantSum != ''"> and merchant_sum = #{merchantSum}</if>
+             <if test="rechargeCardSum != null and rechargeCardSum != ''"> and recharge_card_sum = #{rechargeCardSum}</if>
+             <if test="correctionCardSum != null and correctionCardSum != ''"> and correction_card_sum = #{correctionCardSum}</if>
+             <if test="closeCardSum != null and closeCardSum != ''"> and close_card_sum = #{closeCardSum}</if>
+             <if test="merchantCardSum != null and merchantCardSum != ''"> and merchant_card_sum = #{merchantCardSum}</if>
+             <if test="returnCode != null and returnCode != ''"> and return_code = #{returnCode}</if>
+             <if test="returnMessage != null and returnMessage != ''"> and return_message = #{returnMessage}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCheckbillById" parameterType="Long" resultMap="CheckbillResult">
+        <include refid="selectCheckbillVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCheckbill" parameterType="Checkbill">
+        insert into bank_checkbill
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="code != null and code != '' ">code,</if>
+			<if test="bankCode != null and bankCode != '' ">bank_code,</if>
+			<if test="checkDate != null and checkDate != '' ">check_date,</if>
+			<if test="rechargeNum != null and rechargeNum != '' ">recharge_num,</if>
+			<if test="rechargeSum != null and rechargeSum != '' ">recharge_sum,</if>
+			<if test="correctionNum != null and correctionNum != '' ">correction_num,</if>
+			<if test="correctionSum != null and correctionSum != '' ">correction_sum,</if>
+			<if test="closeNum != null and closeNum != '' ">close_num,</if>
+			<if test="closeSum != null and closeSum != '' ">close_sum,</if>
+			<if test="merchantNum != null and merchantNum != '' ">merchant_num,</if>
+			<if test="merchantSum != null and merchantSum != '' ">merchant_sum,</if>
+			<if test="rechargeCardSum != null and rechargeCardSum != '' ">recharge_card_sum,</if>
+			<if test="correctionCardSum != null and correctionCardSum != '' ">correction_card_sum,</if>
+			<if test="closeCardSum != null and closeCardSum != '' ">close_card_sum,</if>
+			<if test="merchantCardSum != null and merchantCardSum != '' ">merchant_card_sum,</if>
+			<if test="returnCode != null and returnCode != '' ">return_code,</if>
+			<if test="returnMessage != null and returnMessage != '' ">return_message,</if>
+			<if test="status != null and status != '' ">status,</if>
+			<if test="createTime != null and createTime != '' ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="code != null and code != ''">#{code},</if>
+			<if test="bankCode != null and bankCode != ''">#{bankCode},</if>
+			<if test="checkDate != null and checkDate != ''">#{checkDate},</if>
+			<if test="rechargeNum != null and rechargeNum != ''">#{rechargeNum},</if>
+			<if test="rechargeSum != null and rechargeSum != ''">#{rechargeSum},</if>
+			<if test="correctionNum != null and correctionNum != ''">#{correctionNum},</if>
+			<if test="correctionSum != null and correctionSum != ''">#{correctionSum},</if>
+			<if test="closeNum != null and closeNum != ''">#{closeNum},</if>
+			<if test="closeSum != null and closeSum != ''">#{closeSum},</if>
+			<if test="merchantNum != null and merchantNum != ''">#{merchantNum},</if>
+			<if test="merchantSum != null and merchantSum != ''">#{merchantSum},</if>
+			<if test="rechargeCardSum != null and rechargeCardSum != ''">#{rechargeCardSum},</if>
+			<if test="correctionCardSum != null and correctionCardSum != ''">#{correctionCardSum},</if>
+			<if test="closeCardSum != null and closeCardSum != ''">#{closeCardSum},</if>
+			<if test="merchantCardSum != null and merchantCardSum != ''">#{merchantCardSum},</if>
+			<if test="returnCode != null and returnCode != ''">#{returnCode},</if>
+			<if test="returnMessage != null and returnMessage != ''">#{returnMessage},</if>
+			<if test="status != null and status != ''">#{status},</if>
+			<if test="createTime != null and createTime != ''">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCheckbill" parameterType="Checkbill">
+        update bank_checkbill
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="bankCode != null  and bankCode != ''  ">bank_code = #{bankCode},</if>
+            <if test="checkDate != null  and checkDate != ''  ">check_date = #{checkDate},</if>
+            <if test="rechargeNum != null  and rechargeNum != ''  ">recharge_num = #{rechargeNum},</if>
+            <if test="rechargeSum != null  and rechargeSum != ''  ">recharge_sum = #{rechargeSum},</if>
+            <if test="correctionNum != null  and correctionNum != ''  ">correction_num = #{correctionNum},</if>
+            <if test="correctionSum != null  and correctionSum != ''  ">correction_sum = #{correctionSum},</if>
+            <if test="closeNum != null  and closeNum != ''  ">close_num = #{closeNum},</if>
+            <if test="closeSum != null  and closeSum != ''  ">close_sum = #{closeSum},</if>
+            <if test="merchantNum != null  and merchantNum != ''  ">merchant_num = #{merchantNum},</if>
+            <if test="merchantSum != null  and merchantSum != ''  ">merchant_sum = #{merchantSum},</if>
+            <if test="rechargeCardSum != null  and rechargeCardSum != ''  ">recharge_card_sum = #{rechargeCardSum},</if>
+            <if test="correctionCardSum != null  and correctionCardSum != ''  ">correction_card_sum = #{correctionCardSum},</if>
+            <if test="closeCardSum != null  and closeCardSum != ''  ">close_card_sum = #{closeCardSum},</if>
+            <if test="merchantCardSum != null  and merchantCardSum != ''  ">merchant_card_sum = #{merchantCardSum},</if>
+            <if test="returnCode != null  and returnCode != ''  ">return_code = #{returnCode},</if>
+            <if test="returnMessage != null  and returnMessage != ''  ">return_message = #{returnMessage},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCheckbillById" parameterType="Long">
+        delete from bank_checkbill where id = #{id}
+    </delete>
+	
+    <delete id="deleteCheckbillByIds" parameterType="String">
+        delete from bank_checkbill where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

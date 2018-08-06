@@ -1,6 +1,5 @@
 package com.information.project.business.user.mapper;
 
-import com.information.project.business.user.domain.BusUserExample;
 import com.information.project.business.user.domain.BusUser;
 
 import java.util.List;
@@ -60,8 +59,5 @@ public interface BusUserMapper
      * @return 结果
      */
 	public int deleteBusUserByIds(String[] ids);
-
-	List<BusUser> selectByExample(BusUserExample example);
-
 	
 }

@@ -17,8 +17,7 @@ import com.information.project.bank.domain.TransVo;
 import com.information.project.bank.service.BankServiceImpl;
 import com.information.project.bank.service.IBankService;
 import com.information.project.bank.util.StringUtil;
-import com.information.project.business.user.domain.BusUserExample;
-import com.information.project.business.user.domain.BusUserExample.Criteria;
+import com.information.project.business.user.domain.BusUser;
 
 public class TransOfABC {
 	
@@ -329,13 +328,11 @@ public class TransOfABC {
 	public static byte[] queryUserInfoSign(byte[] buf) throws Exception {
 		logger.info("queryUserInfoSign接收报文:" + new String(buf));
 		String idserial = new String(buf, 15, 18);
-		BusUserExample ex = new BusUserExample();
-		Criteria cc = ex.createCriteria();
-		cc.andNumberEqualTo(idserial);
+		BusUser user = new BusUser();
+		user.setNumber(idserial);
 		logger.info("编号：" + idserial + "。");
-
 		try {
-			ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserInfo4Bank(ex);
+			ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserInfo4Bank(user);
 			byte[] pckBody = createPckUserSign(receiveFromBankInfo);
 			if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
 				logger.info("用户:" + idserial + ",发起信息查询成功");
@@ -356,12 +353,11 @@ public class TransOfABC {
 		String idserial2 = new String(buf, 94, 18);
 		String bankcdno = new String(buf, 123, 32);
 		logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno);
-		BusUserExample ex = new BusUserExample();
-		Criteria cc = ex.createCriteria();
-		cc.andNumberEqualTo(idserial);
-		cc.andIdNumberEqualTo(idserial2);
-		cc.andBankCardNumberEqualTo(bankcdno);
-		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(ex);
+		BusUser user = new BusUser();
+		user.setNumber(idserial);
+		user.setIdNumber(idserial2);
+		user.setBankCardNumber(bankcdno);
+		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(user);
 		byte[] pckBody = createPckSign(receiveFromBankInfo);
 		if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
 			logger.info("用户:" + idserial + ",发起签约，签约成功");
