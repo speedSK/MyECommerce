@@ -1,17 +1,15 @@
-package com.information.project.business.user.mapper;
+package com.information.project.business.user.service;
 
-import com.information.project.business.user.domain.BusUserExample;
 import com.information.project.business.user.domain.BusUser;
-
 import java.util.List;
 
 /**
- * 业务（犯人） 数据层
+ * 业务（犯人） 服务层
  * 
  * @author LiuNing
  * @date 2018-08-06
  */
-public interface BusUserMapper 
+public interface IBusUserService
 {
 	/**
      * 查询业务（犯人）信息
@@ -44,24 +42,13 @@ public interface BusUserMapper
      * @return 结果
      */
 	public int updateBusUser(BusUser user);
-	
+		
 	/**
-     * 删除业务（犯人）
-     * 
-     * @param id 业务（犯人）ID
-     * @return 结果
-     */
-	public int deleteBusUserById(Long id);
-	
-	/**
-     * 批量删除业务（犯人）
+     * 删除业务（犯人）信息
      * 
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-	public int deleteBusUserByIds(String[] ids);
-
-	List<BusUser> selectByExample(BusUserExample example);
-
+	public int deleteBusUserByIds(String ids);
 	
 }

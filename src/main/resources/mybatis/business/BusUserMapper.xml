@@ -1,557 +1,232 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.information.project.business.user.mapper.BusUserMapper">
-  <resultMap id="BaseResultMap" type="com.information.project.business.user.domain.BusUser">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="number" jdbcType="VARCHAR" property="number" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="sex" jdbcType="CHAR" property="sex" />
-    <result column="age" jdbcType="INTEGER" property="age" />
-    <result column="nation" jdbcType="BIGINT" property="nation" />
-    <result column="id_number" jdbcType="VARCHAR" property="idNumber" />
-    <result column="bank_card_number" jdbcType="VARCHAR" property="bankCardNumber" />
-    <result column="photo" jdbcType="VARCHAR" property="photo" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="area" jdbcType="VARCHAR" property="area" />
-    <result column="build" jdbcType="VARCHAR" property="build" />
-    <result column="room" jdbcType="VARCHAR" property="room" />
-    <result column="bed" jdbcType="VARCHAR" property="bed" />
-    <result column="dept" jdbcType="BIGINT" property="dept" />
-    <result column="pcode" jdbcType="BIGINT" property="pcode" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="salt" jdbcType="VARCHAR" property="salt" />
-    <result column="deposit" jdbcType="DECIMAL" property="deposit" />
-    <result column="balance" jdbcType="DECIMAL" property="balance" />
-    <result column="already_cost" jdbcType="DECIMAL" property="alreadyCost" />
-    <result column="acc_status" jdbcType="CHAR" property="accStatus" />
-    <result column="status" jdbcType="CHAR" property="status" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="oper_user" jdbcType="BIGINT" property="operUser" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
+    
+    <resultMap type="BusUser" id="BusUserResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="nation"    column="nation"    />
+        <result property="idNumber"    column="id_number"    />
+        <result property="bankCardNumber"    column="bank_card_number"    />
+        <result property="photo"    column="photo"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="area"    column="area"    />
+        <result property="build"    column="build"    />
+        <result property="room"    column="room"    />
+        <result property="bed"    column="bed"    />
+        <result property="dept"    column="dept"    />
+        <result property="pcode"    column="pcode"    />
+        <result property="password"    column="password"    />
+        <result property="salt"    column="salt"    />
+        <result property="deposit"    column="deposit"    />
+        <result property="balance"    column="balance"    />
+        <result property="alreadyCost"    column="already_cost"    />
+        <result property="accStatus"    column="acc_status"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+        <result property="operUser"    column="oper_user"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectBusUserVo">
+        select id, number, name, sex, age, nation, id_number, bank_card_number, photo, mobile, area, build, room, bed, dept, pcode, password, salt, deposit, balance, already_cost, acc_status, status, remark, oper_user, create_time, update_time from bus_user
+    </sql>
+	
+    <select id="selectBusUserList" parameterType="BusUser" resultMap="BusUserResult">
+        <include refid="selectBusUserVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="number != null and number != ''"> and number = #{number}</if>
+             <if test="name != null and name != ''"> and name = #{name}</if>
+             <if test="sex != null and sex != ''"> and sex = #{sex}</if>
+             <if test="age != null and age != ''"> and age = #{age}</if>
+             <if test="nation != null and nation != ''"> and nation = #{nation}</if>
+             <if test="idNumber != null and idNumber != ''"> and id_number = #{idNumber}</if>
+             <if test="bankCardNumber != null and bankCardNumber != ''"> and bank_card_number = #{bankCardNumber}</if>
+             <if test="photo != null and photo != ''"> and photo = #{photo}</if>
+             <if test="mobile != null and mobile != ''"> and mobile = #{mobile}</if>
+             <if test="area != null and area != ''"> and area = #{area}</if>
+             <if test="build != null and build != ''"> and build = #{build}</if>
+             <if test="room != null and room != ''"> and room = #{room}</if>
+             <if test="bed != null and bed != ''"> and bed = #{bed}</if>
+             <if test="dept != null and dept != ''"> and dept = #{dept}</if>
+             <if test="pcode != null and pcode != ''"> and pcode = #{pcode}</if>
+             <if test="password != null and password != ''"> and password = #{password}</if>
+             <if test="salt != null and salt != ''"> and salt = #{salt}</if>
+             <if test="deposit != null and deposit != ''"> and deposit = #{deposit}</if>
+             <if test="balance != null and balance != ''"> and balance = #{balance}</if>
+             <if test="alreadyCost != null and alreadyCost != ''"> and already_cost = #{alreadyCost}</if>
+             <if test="accStatus != null and accStatus != ''"> and acc_status = #{accStatus}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+             <if test="operUser != null and operUser != ''"> and oper_user = #{operUser}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectBusUserById" parameterType="Long" resultMap="BusUserResult">
+        <include refid="selectBusUserVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBusUser" parameterType="BusUser">
+        insert into bus_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="number != null and number != '' ">number,</if>
+			<if test="name != null and name != '' ">name,</if>
+			<if test="sex != null and sex != '' ">sex,</if>
+			<if test="age != null and age != '' ">age,</if>
+			<if test="nation != null and nation != '' ">nation,</if>
+			<if test="idNumber != null and idNumber != '' ">id_number,</if>
+			<if test="bankCardNumber != null and bankCardNumber != '' ">bank_card_number,</if>
+			<if test="photo != null and photo != '' ">photo,</if>
+			<if test="mobile != null and mobile != '' ">mobile,</if>
+			<if test="area != null and area != '' ">area,</if>
+			<if test="build != null and build != '' ">build,</if>
+			<if test="room != null and room != '' ">room,</if>
+			<if test="bed != null and bed != '' ">bed,</if>
+			<if test="dept != null and dept != '' ">dept,</if>
+			<if test="pcode != null and pcode != '' ">pcode,</if>
+			<if test="password != null and password != '' ">password,</if>
+			<if test="salt != null and salt != '' ">salt,</if>
+			<if test="deposit != null and deposit != '' ">deposit,</if>
+			<if test="balance != null and balance != '' ">balance,</if>
+			<if test="alreadyCost != null and alreadyCost != '' ">already_cost,</if>
+			<if test="accStatus != null and accStatus != '' ">acc_status,</if>
+			<if test="status != null and status != '' ">status,</if>
+			<if test="remark != null and remark != '' ">remark,</if>
+			<if test="operUser != null and operUser != '' ">oper_user,</if>
+			<if test="createTime != null and createTime != '' ">create_time,</if>
+			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="number != null and number != ''">#{number},</if>
+			<if test="name != null and name != ''">#{name},</if>
+			<if test="sex != null and sex != ''">#{sex},</if>
+			<if test="age != null and age != ''">#{age},</if>
+			<if test="nation != null and nation != ''">#{nation},</if>
+			<if test="idNumber != null and idNumber != ''">#{idNumber},</if>
+			<if test="bankCardNumber != null and bankCardNumber != ''">#{bankCardNumber},</if>
+			<if test="photo != null and photo != ''">#{photo},</if>
+			<if test="mobile != null and mobile != ''">#{mobile},</if>
+			<if test="area != null and area != ''">#{area},</if>
+			<if test="build != null and build != ''">#{build},</if>
+			<if test="room != null and room != ''">#{room},</if>
+			<if test="bed != null and bed != ''">#{bed},</if>
+			<if test="dept != null and dept != ''">#{dept},</if>
+			<if test="pcode != null and pcode != ''">#{pcode},</if>
+			<if test="password != null and password != ''">#{password},</if>
+			<if test="salt != null and salt != ''">#{salt},</if>
+			<if test="deposit != null and deposit != ''">#{deposit},</if>
+			<if test="balance != null and balance != ''">#{balance},</if>
+			<if test="alreadyCost != null and alreadyCost != ''">#{alreadyCost},</if>
+			<if test="accStatus != null and accStatus != ''">#{accStatus},</if>
+			<if test="status != null and status != ''">#{status},</if>
+			<if test="remark != null and remark != ''">#{remark},</if>
+			<if test="operUser != null and operUser != ''">#{operUser},</if>
+			<if test="createTime != null and createTime != ''">#{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBusUser" parameterType="BusUser">
+        update bus_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null  and number != ''  ">number = #{number},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="sex != null  and sex != ''  ">sex = #{sex},</if>
+            <if test="age != null  ">age = #{age},</if>
+            <if test="nation != null  ">nation = #{nation},</if>
+            <if test="idNumber != null  and idNumber != ''  ">id_number = #{idNumber},</if>
+            <if test="bankCardNumber != null  and bankCardNumber != ''  ">bank_card_number = #{bankCardNumber},</if>
+            <if test="photo != null  and photo != ''  ">photo = #{photo},</if>
+            <if test="mobile != null  and mobile != ''  ">mobile = #{mobile},</if>
+            <if test="area != null  and area != ''  ">area = #{area},</if>
+            <if test="build != null  and build != ''  ">build = #{build},</if>
+            <if test="room != null  and room != ''  ">room = #{room},</if>
+            <if test="bed != null  and bed != ''  ">bed = #{bed},</if>
+            <if test="dept != null  ">dept = #{dept},</if>
+            <if test="pcode != null  ">pcode = #{pcode},</if>
+            <if test="password != null  and password != ''  ">password = #{password},</if>
+            <if test="salt != null  and salt != ''  ">salt = #{salt},</if>
+            <if test="deposit != null  ">deposit = #{deposit},</if>
+            <if test="balance != null  ">balance = #{balance},</if>
+            <if test="alreadyCost != null  ">already_cost = #{alreadyCost},</if>
+            <if test="accStatus != null  and accStatus != ''  ">acc_status = #{accStatus},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="operUser != null  ">oper_user = #{operUser},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBusUserById" parameterType="Long">
+        delete from bus_user where id = #{id}
+    </delete>
+	
+    <delete id="deleteBusUserByIds" parameterType="String">
+        delete from bus_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <select id="selectByExample" parameterType="com.information.project.business.user.domain.BusUserExample" resultMap="BusUserResult">
+        select
+        <if test="distinct">
+            distinct
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
+        <include refid="selectBusUserVo" />
+        from bus_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, number, name, sex, age, nation, id_number, bank_card_number, photo, mobile, area, 
-    build, room, bed, dept, pcode, password, salt, deposit, balance, already_cost, acc_status, 
-    status, remark, oper_user, create_time, update_time
-  </sql>
-  <select id="selectByExample" parameterType="com.information.project.business.user.domain.BusUserExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from bus_user
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from bus_user
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from bus_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.information.project.business.user.domain.BusUserExample">
-    delete from bus_user
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.information.project.business.user.domain.BusUser">
-    insert into bus_user (id, number, name, 
-      sex, age, nation, id_number, 
-      bank_card_number, photo, mobile, 
-      area, build, room, 
-      bed, dept, pcode, password, 
-      salt, deposit, balance, 
-      already_cost, acc_status, status, 
-      remark, oper_user, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=CHAR}, #{age,jdbcType=INTEGER}, #{nation,jdbcType=BIGINT}, #{idNumber,jdbcType=VARCHAR}, 
-      #{bankCardNumber,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{build,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, 
-      #{bed,jdbcType=VARCHAR}, #{dept,jdbcType=BIGINT}, #{pcode,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR}, 
-      #{salt,jdbcType=VARCHAR}, #{deposit,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, 
-      #{alreadyCost,jdbcType=DECIMAL}, #{accStatus,jdbcType=CHAR}, #{status,jdbcType=CHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{operUser,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.information.project.business.user.domain.BusUser">
-    insert into bus_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="number != null">
-        number,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="age != null">
-        age,
-      </if>
-      <if test="nation != null">
-        nation,
-      </if>
-      <if test="idNumber != null">
-        id_number,
-      </if>
-      <if test="bankCardNumber != null">
-        bank_card_number,
-      </if>
-      <if test="photo != null">
-        photo,
-      </if>
-      <if test="mobile != null">
-        mobile,
-      </if>
-      <if test="area != null">
-        area,
-      </if>
-      <if test="build != null">
-        build,
-      </if>
-      <if test="room != null">
-        room,
-      </if>
-      <if test="bed != null">
-        bed,
-      </if>
-      <if test="dept != null">
-        dept,
-      </if>
-      <if test="pcode != null">
-        pcode,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="salt != null">
-        salt,
-      </if>
-      <if test="deposit != null">
-        deposit,
-      </if>
-      <if test="balance != null">
-        balance,
-      </if>
-      <if test="alreadyCost != null">
-        already_cost,
-      </if>
-      <if test="accStatus != null">
-        acc_status,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="operUser != null">
-        oper_user,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="number != null">
-        #{number,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=CHAR},
-      </if>
-      <if test="age != null">
-        #{age,jdbcType=INTEGER},
-      </if>
-      <if test="nation != null">
-        #{nation,jdbcType=BIGINT},
-      </if>
-      <if test="idNumber != null">
-        #{idNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="bankCardNumber != null">
-        #{bankCardNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="photo != null">
-        #{photo,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        #{area,jdbcType=VARCHAR},
-      </if>
-      <if test="build != null">
-        #{build,jdbcType=VARCHAR},
-      </if>
-      <if test="room != null">
-        #{room,jdbcType=VARCHAR},
-      </if>
-      <if test="bed != null">
-        #{bed,jdbcType=VARCHAR},
-      </if>
-      <if test="dept != null">
-        #{dept,jdbcType=BIGINT},
-      </if>
-      <if test="pcode != null">
-        #{pcode,jdbcType=BIGINT},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null">
-        #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="deposit != null">
-        #{deposit,jdbcType=DECIMAL},
-      </if>
-      <if test="balance != null">
-        #{balance,jdbcType=DECIMAL},
-      </if>
-      <if test="alreadyCost != null">
-        #{alreadyCost,jdbcType=DECIMAL},
-      </if>
-      <if test="accStatus != null">
-        #{accStatus,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="operUser != null">
-        #{operUser,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.information.project.business.user.domain.BusUserExample" resultType="java.lang.Long">
-    select count(*) from bus_user
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update bus_user
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.number != null">
-        number = #{record.number,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=CHAR},
-      </if>
-      <if test="record.age != null">
-        age = #{record.age,jdbcType=INTEGER},
-      </if>
-      <if test="record.nation != null">
-        nation = #{record.nation,jdbcType=BIGINT},
-      </if>
-      <if test="record.idNumber != null">
-        id_number = #{record.idNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.bankCardNumber != null">
-        bank_card_number = #{record.bankCardNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.photo != null">
-        photo = #{record.photo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.mobile != null">
-        mobile = #{record.mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="record.area != null">
-        area = #{record.area,jdbcType=VARCHAR},
-      </if>
-      <if test="record.build != null">
-        build = #{record.build,jdbcType=VARCHAR},
-      </if>
-      <if test="record.room != null">
-        room = #{record.room,jdbcType=VARCHAR},
-      </if>
-      <if test="record.bed != null">
-        bed = #{record.bed,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dept != null">
-        dept = #{record.dept,jdbcType=BIGINT},
-      </if>
-      <if test="record.pcode != null">
-        pcode = #{record.pcode,jdbcType=BIGINT},
-      </if>
-      <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
-      </if>
-      <if test="record.salt != null">
-        salt = #{record.salt,jdbcType=VARCHAR},
-      </if>
-      <if test="record.deposit != null">
-        deposit = #{record.deposit,jdbcType=DECIMAL},
-      </if>
-      <if test="record.balance != null">
-        balance = #{record.balance,jdbcType=DECIMAL},
-      </if>
-      <if test="record.alreadyCost != null">
-        already_cost = #{record.alreadyCost,jdbcType=DECIMAL},
-      </if>
-      <if test="record.accStatus != null">
-        acc_status = #{record.accStatus,jdbcType=CHAR},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=CHAR},
-      </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.operUser != null">
-        oper_user = #{record.operUser,jdbcType=BIGINT},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update bus_user
-    set id = #{record.id,jdbcType=BIGINT},
-      number = #{record.number,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=CHAR},
-      age = #{record.age,jdbcType=INTEGER},
-      nation = #{record.nation,jdbcType=BIGINT},
-      id_number = #{record.idNumber,jdbcType=VARCHAR},
-      bank_card_number = #{record.bankCardNumber,jdbcType=VARCHAR},
-      photo = #{record.photo,jdbcType=VARCHAR},
-      mobile = #{record.mobile,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=VARCHAR},
-      build = #{record.build,jdbcType=VARCHAR},
-      room = #{record.room,jdbcType=VARCHAR},
-      bed = #{record.bed,jdbcType=VARCHAR},
-      dept = #{record.dept,jdbcType=BIGINT},
-      pcode = #{record.pcode,jdbcType=BIGINT},
-      password = #{record.password,jdbcType=VARCHAR},
-      salt = #{record.salt,jdbcType=VARCHAR},
-      deposit = #{record.deposit,jdbcType=DECIMAL},
-      balance = #{record.balance,jdbcType=DECIMAL},
-      already_cost = #{record.alreadyCost,jdbcType=DECIMAL},
-      acc_status = #{record.accStatus,jdbcType=CHAR},
-      status = #{record.status,jdbcType=CHAR},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      oper_user = #{record.operUser,jdbcType=BIGINT},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.information.project.business.user.domain.BusUser">
-    update bus_user
-    <set>
-      <if test="number != null">
-        number = #{number,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=CHAR},
-      </if>
-      <if test="age != null">
-        age = #{age,jdbcType=INTEGER},
-      </if>
-      <if test="nation != null">
-        nation = #{nation,jdbcType=BIGINT},
-      </if>
-      <if test="idNumber != null">
-        id_number = #{idNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="bankCardNumber != null">
-        bank_card_number = #{bankCardNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="photo != null">
-        photo = #{photo,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        mobile = #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        area = #{area,jdbcType=VARCHAR},
-      </if>
-      <if test="build != null">
-        build = #{build,jdbcType=VARCHAR},
-      </if>
-      <if test="room != null">
-        room = #{room,jdbcType=VARCHAR},
-      </if>
-      <if test="bed != null">
-        bed = #{bed,jdbcType=VARCHAR},
-      </if>
-      <if test="dept != null">
-        dept = #{dept,jdbcType=BIGINT},
-      </if>
-      <if test="pcode != null">
-        pcode = #{pcode,jdbcType=BIGINT},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null">
-        salt = #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="deposit != null">
-        deposit = #{deposit,jdbcType=DECIMAL},
-      </if>
-      <if test="balance != null">
-        balance = #{balance,jdbcType=DECIMAL},
-      </if>
-      <if test="alreadyCost != null">
-        already_cost = #{alreadyCost,jdbcType=DECIMAL},
-      </if>
-      <if test="accStatus != null">
-        acc_status = #{accStatus,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=CHAR},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="operUser != null">
-        oper_user = #{operUser,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.information.project.business.user.domain.BusUser">
-    update bus_user
-    set number = #{number,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=CHAR},
-      age = #{age,jdbcType=INTEGER},
-      nation = #{nation,jdbcType=BIGINT},
-      id_number = #{idNumber,jdbcType=VARCHAR},
-      bank_card_number = #{bankCardNumber,jdbcType=VARCHAR},
-      photo = #{photo,jdbcType=VARCHAR},
-      mobile = #{mobile,jdbcType=VARCHAR},
-      area = #{area,jdbcType=VARCHAR},
-      build = #{build,jdbcType=VARCHAR},
-      room = #{room,jdbcType=VARCHAR},
-      bed = #{bed,jdbcType=VARCHAR},
-      dept = #{dept,jdbcType=BIGINT},
-      pcode = #{pcode,jdbcType=BIGINT},
-      password = #{password,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      deposit = #{deposit,jdbcType=DECIMAL},
-      balance = #{balance,jdbcType=DECIMAL},
-      already_cost = #{alreadyCost,jdbcType=DECIMAL},
-      acc_status = #{accStatus,jdbcType=CHAR},
-      status = #{status,jdbcType=CHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      oper_user = #{operUser,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
 </mapper>

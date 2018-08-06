@@ -2,11 +2,11 @@ package com.information.project.bank.service;
 
 import java.util.List;
 
+import com.information.project.business.user.domain.BusUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.information.project.bank.domain.ReceiveFromBankInfo;
-import com.information.project.business.user.domain.BusUser;
 import com.information.project.business.user.domain.BusUserExample;
 import com.information.project.business.user.mapper.BusUserMapper;
 

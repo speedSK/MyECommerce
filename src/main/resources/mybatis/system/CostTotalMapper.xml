@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.system.costTotal.mapper.CostTotalMapper">
+    
+    <resultMap type="CostTotal" id="CostTotalResult">
+        <result property="id"    column="id"    />
+        <result property="pId"    column="p_id"    />
+        <result property="costTotal"    column="cost_total"    />
+        <result property="opserUser"    column="opser_user"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectCostTotalVo">
+        select id, p_id, cost_total, opser_user, status, create_time, update_time from bus_cost_total
+    </sql>
+	
+    <select id="selectCostTotalList" parameterType="CostTotal" resultMap="CostTotalResult">
+        <include refid="selectCostTotalVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="pId != null and pId != ''"> and p_id = #{pId}</if>
+             <if test="costTotal != null and costTotal != ''"> and cost_total = #{costTotal}</if>
+             <if test="opserUser != null and opserUser != ''"> and opser_user = #{opserUser}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCostTotalById" parameterType="Long" resultMap="CostTotalResult">
+        <include refid="selectCostTotalVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCostTotal" parameterType="CostTotal">
+        insert into bus_cost_total
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="pId != null and pId != '' ">p_id,</if>
+			<if test="costTotal != null and costTotal != '' ">cost_total,</if>
+			<if test="opserUser != null and opserUser != '' ">opser_user,</if>
+			<if test="status != null and status != '' ">status,</if>
+			<if test="createTime != null and createTime != '' ">create_time,</if>
+			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="pId != null and pId != ''">#{pId},</if>
+			<if test="costTotal != null and costTotal != ''">#{costTotal},</if>
+			<if test="opserUser != null and opserUser != ''">#{opserUser},</if>
+			<if test="status != null and status != ''">#{status},</if>
+			<if test="createTime != null and createTime != ''">#{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCostTotal" parameterType="CostTotal">
+        update bus_cost_total
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pId != null  ">p_id = #{pId},</if>
+            <if test="costTotal != null  ">cost_total = #{costTotal},</if>
+            <if test="opserUser != null  ">opser_user = #{opserUser},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCostTotalById" parameterType="Long">
+        delete from bus_cost_total where id = #{id}
+    </delete>
+	
+    <delete id="deleteCostTotalByIds" parameterType="String">
+        delete from bus_cost_total where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

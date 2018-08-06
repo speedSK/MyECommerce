@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.business.tradeRecord.mapper.TradeRecordMapper">
+    
+    <resultMap type="TradeRecord" id="TradeRecordResult">
+        <result property="id"    column="id"    />
+        <result property="idserial"    column="idserial"    />
+        <result property="tradeCode"    column="trade_code"    />
+        <result property="relationId"    column="relation_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="amount"    column="amount"    />
+        <result property="fromAcc"    column="from_acc"    />
+        <result property="toAcc"    column="to_acc"    />
+        <result property="remark"    column="remark"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectTradeRecordVo">
+        select id, idserial, trade_code, relation_id, user_id, amount, from_acc, to_acc, remark, status, create_time from bus_trade_record
+    </sql>
+	
+    <select id="selectTradeRecordList" parameterType="TradeRecord" resultMap="TradeRecordResult">
+        <include refid="selectTradeRecordVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="idserial != null and idserial != ''"> and idserial = #{idserial}</if>
+             <if test="tradeCode != null and tradeCode != ''"> and trade_code = #{tradeCode}</if>
+             <if test="relationId != null and relationId != ''"> and relation_id = #{relationId}</if>
+             <if test="userId != null and userId != ''"> and user_id = #{userId}</if>
+             <if test="amount != null and amount != ''"> and amount = #{amount}</if>
+             <if test="fromAcc != null and fromAcc != ''"> and from_acc = #{fromAcc}</if>
+             <if test="toAcc != null and toAcc != ''"> and to_acc = #{toAcc}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectTradeRecordById" parameterType="Long" resultMap="TradeRecordResult">
+        <include refid="selectTradeRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTradeRecord" parameterType="TradeRecord">
+        insert into bus_trade_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="idserial != null and idserial != '' ">idserial,</if>
+			<if test="tradeCode != null and tradeCode != '' ">trade_code,</if>
+			<if test="relationId != null and relationId != '' ">relation_id,</if>
+			<if test="userId != null and userId != '' ">user_id,</if>
+			<if test="amount != null and amount != '' ">amount,</if>
+			<if test="fromAcc != null and fromAcc != '' ">from_acc,</if>
+			<if test="toAcc != null and toAcc != '' ">to_acc,</if>
+			<if test="remark != null and remark != '' ">remark,</if>
+			<if test="status != null and status != '' ">status,</if>
+			<if test="createTime != null and createTime != '' ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="idserial != null and idserial != ''">#{idserial},</if>
+			<if test="tradeCode != null and tradeCode != ''">#{tradeCode},</if>
+			<if test="relationId != null and relationId != ''">#{relationId},</if>
+			<if test="userId != null and userId != ''">#{userId},</if>
+			<if test="amount != null and amount != ''">#{amount},</if>
+			<if test="fromAcc != null and fromAcc != ''">#{fromAcc},</if>
+			<if test="toAcc != null and toAcc != ''">#{toAcc},</if>
+			<if test="remark != null and remark != ''">#{remark},</if>
+			<if test="status != null and status != ''">#{status},</if>
+			<if test="createTime != null and createTime != ''">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTradeRecord" parameterType="TradeRecord">
+        update bus_trade_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="idserial != null  and idserial != ''  ">idserial = #{idserial},</if>
+            <if test="tradeCode != null  and tradeCode != ''  ">trade_code = #{tradeCode},</if>
+            <if test="relationId != null  and relationId != ''  ">relation_id = #{relationId},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="amount != null  ">amount = #{amount},</if>
+            <if test="fromAcc != null  and fromAcc != ''  ">from_acc = #{fromAcc},</if>
+            <if test="toAcc != null  and toAcc != ''  ">to_acc = #{toAcc},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteTradeRecordById" parameterType="Long">
+        delete from bus_trade_record where id = #{id}
+    </delete>
+	
+    <delete id="deleteTradeRecordByIds" parameterType="String">
+        delete from bus_trade_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

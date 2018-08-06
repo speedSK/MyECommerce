@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.business.orderDetail.mapper.OrderDetailMapper">
+    
+    <resultMap type="OrderDetail" id="OrderDetailResult">
+        <result property="id"    column="id"    />
+        <result property="goodsId"    column="goods_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="num"    column="num"    />
+        <result property="sum"    column="sum"    />
+        <result property="detailStatus"    column="detail_status"    />
+    </resultMap>
+	
+	<sql id="selectOrderDetailVo">
+        select id, goods_id, order_id, num, sum, detail_status from bus_order_detail
+    </sql>
+	
+    <select id="selectOrderDetailList" parameterType="OrderDetail" resultMap="OrderDetailResult">
+        <include refid="selectOrderDetailVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="goodsId != null and goodsId != ''"> and goods_id = #{goodsId}</if>
+             <if test="orderId != null and orderId != ''"> and order_id = #{orderId}</if>
+             <if test="num != null and num != ''"> and num = #{num}</if>
+             <if test="sum != null and sum != ''"> and sum = #{sum}</if>
+             <if test="detailStatus != null and detailStatus != ''"> and detail_status = #{detailStatus}</if>
+         </where>
+    </select>
+    
+    <select id="selectOrderDetailById" parameterType="Long" resultMap="OrderDetailResult">
+        <include refid="selectOrderDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderDetail" parameterType="OrderDetail">
+        insert into bus_order_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="goodsId != null and goodsId != '' ">goods_id,</if>
+			<if test="orderId != null and orderId != '' ">order_id,</if>
+			<if test="num != null and num != '' ">num,</if>
+			<if test="sum != null and sum != '' ">sum,</if>
+			<if test="detailStatus != null and detailStatus != '' ">detail_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="goodsId != null and goodsId != ''">#{goodsId},</if>
+			<if test="orderId != null and orderId != ''">#{orderId},</if>
+			<if test="num != null and num != ''">#{num},</if>
+			<if test="sum != null and sum != ''">#{sum},</if>
+			<if test="detailStatus != null and detailStatus != ''">#{detailStatus},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateOrderDetail" parameterType="OrderDetail">
+        update bus_order_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsId != null  and goodsId != ''  ">goods_id = #{goodsId},</if>
+            <if test="orderId != null  ">order_id = #{orderId},</if>
+            <if test="num != null  ">num = #{num},</if>
+            <if test="sum != null  ">sum = #{sum},</if>
+            <if test="detailStatus != null  and detailStatus != ''  ">detail_status = #{detailStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteOrderDetailById" parameterType="Long">
+        delete from bus_order_detail where id = #{id}
+    </delete>
+	
+    <delete id="deleteOrderDetailByIds" parameterType="String">
+        delete from bus_order_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
