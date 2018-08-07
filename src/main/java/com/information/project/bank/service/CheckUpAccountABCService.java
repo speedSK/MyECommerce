@@ -17,8 +17,8 @@ import com.information.common.utils.StringUtils;
 import com.information.common.utils.SysConfigUtil;
 import com.information.project.business.checkdetail.domain.Checkdetail;
 import com.information.project.business.checkdetail.mapper.CheckdetailMapper;
-import com.information.project.business.rechargeRecord.domain.RechargeRecord;
-import com.information.project.business.rechargeRecord.mapper.RechargeRecordMapper;
+import com.information.project.business.transactionRecord.domain.TransactionRecord;
+import com.information.project.business.transactionRecord.mapper.TransactionRecordMapper;
 
 public class CheckUpAccountABCService {
 	public static Logger logger = LoggerFactory.getLogger(CheckUpAccountABCService.class.getName());
@@ -31,7 +31,7 @@ public class CheckUpAccountABCService {
 	@Autowired
 	private CheckdetailMapper checkdetailMapper;
 	@Autowired
-	private RechargeRecordMapper rechargeRecordMapper;
+	private TransactionRecordMapper transactionRecordMapper;
 
 
 	public static boolean connectFtpServer() {
@@ -125,14 +125,14 @@ public class CheckUpAccountABCService {
 
 	@Transactional
 	public String checkSelfRecordAndFileRecord(String transDate) {
-		RechargeRecord rechargeRecord = new RechargeRecord();
+		TransactionRecord rechargeRecord = new TransactionRecord();
 		rechargeRecord.setTransDate(transDate);
 		rechargeRecord.setCode("1001");
 		rechargeRecord.setReturnCode("000000");
-		List<RechargeRecord> rechargeList = rechargeRecordMapper.selectRechargeRecordList(rechargeRecord);
+		List<TransactionRecord> rechargeList = transactionRecordMapper.selectTransactionRecordList(rechargeRecord);
 		if (rechargeList != null) {
 			for (int i = 0; i < rechargeList.size(); ++i) {
-				RechargeRecord record = rechargeList.get(i);
+				TransactionRecord record = rechargeList.get(i);
 				Checkdetail detail = null;
 				Checkdetail checkdetail = new Checkdetail();
 				checkdetail.setTransDate(record.getTransDate());
@@ -141,9 +141,9 @@ public class CheckUpAccountABCService {
 				List<Checkdetail> fileRecordList = checkdetailMapper.selectCheckdetailList(checkdetail);
 				if (fileRecordList.size() == 0) {
 					logger.info("系统多于银行的流水号：{}。",record.getTransIdserial());
-					rechargeRecord = new RechargeRecord();
+					rechargeRecord = new TransactionRecord();
 					rechargeRecord.setTransIdserial(record.getTransIdserial());
-					List<RechargeRecord> transferList = rechargeRecordMapper.selectRechargeRecordList(rechargeRecord);
+					List<TransactionRecord> transferList = transactionRecordMapper.selectTransactionRecordList(rechargeRecord);
 					if (transferList.size() == 0) {
 						detail = new Checkdetail();
 						detail.setNumber(record.getUserCode());
@@ -167,8 +167,8 @@ public class CheckUpAccountABCService {
 		detail.setTransDate(transDate);
 		detail.setCheckStatus("1");
 		List<Checkdetail> fileRecordList = checkdetailMapper.selectCheckdetailList(detail);
-		List<RechargeRecord> rechargeRecords;
-		RechargeRecord record = null;
+		List<TransactionRecord> rechargeRecords;
+		TransactionRecord record = null;
 		if (fileRecordList.size() > 0) {
 			for (int i = 0; i < fileRecordList.size(); ++i) {
 				detail = fileRecordList.get(i);
@@ -178,16 +178,16 @@ public class CheckUpAccountABCService {
 				record.setTransDate(detail.getTransDate());
 				record.setCode("1001");
 				record.setReturnCode("000000");
-				rechargeRecords = rechargeRecordMapper.selectRechargeRecordList(record);
+				rechargeRecords = transactionRecordMapper.selectTransactionRecordList(record);
 				if (rechargeRecords != null && rechargeRecords.size() > 0) {
 					record = rechargeRecords.get(0);
 					record.setStatus("2");//对账完成
-					rechargeRecordMapper.updateRechargeRecord(record);
+					transactionRecordMapper.updateTransactionRecord(record);
 				} else {
 					logger.error("银行多于系统的流水号：{}", detail.getIdserial());
-					record = new RechargeRecord();
+					record = new TransactionRecord();
 					record.setTransIdserial(detail.getBankIdserial());
-					List<RechargeRecord> checkList = rechargeRecordMapper.selectRechargeRecordList(record);
+					List<TransactionRecord> checkList = transactionRecordMapper.selectTransactionRecordList(record);
 					if (checkList.size() <= 0) {
 						detail.setCheckStatus("3");//银行多余系统
 						checkdetailMapper.updateCheckdetail(detail);
