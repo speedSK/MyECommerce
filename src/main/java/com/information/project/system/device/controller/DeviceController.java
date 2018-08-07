@@ -65,7 +65,7 @@ public class DeviceController extends BaseController
 	/**
 	 * 新增保存设备
 	 */
-	@RequiresPermissions("system:device:add")
+	@RequiresPermissions("sgitystem:device:add")
 	@Log(title = "设备", action = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
