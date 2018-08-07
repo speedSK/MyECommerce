@@ -49,6 +49,7 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 	@Override
 	public List<GoodCategory> selectGoodCategoryList(GoodCategory goodCategory)
 	{
+		goodCategory.setStatus(Constants.STATUS_ACTIVE);
 	    return goodCategoryMapper.selectGoodCategoryList(goodCategory);
 	}
 	
@@ -136,7 +137,11 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 
 	@Override
 	public int deleteGoodCategoryById(Long id) {
-		return goodCategoryMapper.deleteGoodCategoryById(id);
+		GoodCategory goodCategory = new GoodCategory ();
+		goodCategory.setId(id);
+		goodCategory.setStatus(Constants.STATUS_REMOVED);
+		goodCategory.setUpdateBy(ShiroUtils.getUserId().toString());
+		return goodCategoryMapper.updateGoodCategory(goodCategory);
 	}
 
 
@@ -155,10 +160,12 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 			deptMap.put("id", goodCategory.getId());
 			deptMap.put("pId", goodCategory.getParentId());
 			deptMap.put("title", goodCategory.getCategoryName());
+			deptMap.put("name", goodCategory.getCategoryName());
 
 			trees.add(deptMap);
 		}
 		return trees;
 	}
+
 
 }
