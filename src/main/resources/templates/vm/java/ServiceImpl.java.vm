@@ -85,7 +85,9 @@ public class ${className}ServiceImpl implements I${className}Service
 	{
 	    String [] idsArray = Convert.toStrArray(ids);
         for (String id: idsArray) {
-            ${className} ${classname} = ${classname}Mapper.select${className}ById(Long.valueOf(id));
+
+            ${className} ${classname} = new ${className}();
+            ${classname}.setId(Long.valueOf(id));
             //初始化數據信息
 
             ${classname}.setStatus(Constants.STATUS_REMOVED);

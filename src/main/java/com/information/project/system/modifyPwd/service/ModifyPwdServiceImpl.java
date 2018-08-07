@@ -1,5 +1,7 @@
 package com.information.project.system.modifyPwd.service;
 
+import com.information.common.constant.Constants;
+import com.information.common.utils.security.ShiroUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import com.information.common.support.Convert;
  * 密码修改申请 服务层实现
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 @Service
 public class ModifyPwdServiceImpl implements IModifyPwdService 
@@ -53,6 +55,9 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 	@Override
 	public int insertModifyPwd(ModifyPwd modifyPwd)
 	{
+	    modifyPwd.setStatus(Constants.STATUS_ACTIVE);
+
+        modifyPwd.setCreateBy(ShiroUtils.getUserId().toString());
 	    return modifyPwdMapper.insertModifyPwd(modifyPwd);
 	}
 	
@@ -65,6 +70,7 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 	@Override
 	public int updateModifyPwd(ModifyPwd modifyPwd)
 	{
+	    modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
 	    return modifyPwdMapper.updateModifyPwd(modifyPwd);
 	}
 
@@ -77,7 +83,52 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 	@Override
 	public int deleteModifyPwdByIds(String ids)
 	{
-		return modifyPwdMapper.deleteModifyPwdByIds(Convert.toStrArray(ids));
+	    String [] idsArray = Convert.toStrArray(ids);
+        for (String id: idsArray) {
+            ModifyPwd modifyPwd = modifyPwdMapper.selectModifyPwdById(Long.valueOf(id));
+            //初始化數據信息
+
+            modifyPwd.setStatus(Constants.STATUS_REMOVED);
+
+            modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
+
+            modifyPwdMapper.updateModifyPwd(modifyPwd);
+
+        }
+
+        return 1;
 	}
-	
+
+
+	/**
+	 * 审核密码修改申请对象
+	 *
+	 * @param ids 需要审核的数据ID
+	 * @return 结果
+	 */
+	@Override
+	public int reviewModifyPwdByIds(String ids,String agreest ,String des  )
+	{
+		String [] idsArray = Convert.toStrArray(ids);
+		for (String id: idsArray) {
+			ModifyPwd modifyPwd = new ModifyPwd() ;
+			modifyPwd.setId(Long.valueOf(id));
+
+			//初始化數據信息
+
+			modifyPwd.setAgreest(agreest);
+			modifyPwd.setDes(des);
+
+			modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
+
+			modifyPwdMapper.updateModifyPwd(modifyPwd);
+
+			//修改用户密码
+
+
+
+		}
+
+		return 1;
+	}
 }

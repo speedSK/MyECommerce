@@ -22,7 +22,7 @@ import com.information.framework.web.domain.AjaxResult;
  * 密码修改申请 信息操作处理
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 @Controller
 @RequestMapping("/system/modifyPwd")
@@ -52,61 +52,20 @@ public class ModifyPwdController extends BaseController
         List<ModifyPwd> list = modifyPwdService.selectModifyPwdList(modifyPwd);
 		return getDataTable(list);
 	}
-	
-	/**
-	 * 新增密码修改申请
-	 */
-	@GetMapping("/add")
-	public String add()
-	{
-	    return prefix + "/add";
-	}
-	
-	/**
-	 * 新增保存密码修改申请
-	 */
-	@RequiresPermissions("system:modifyPwd:add")
-	@Log(title = "密码修改申请", action = BusinessType.INSERT)
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(ModifyPwd modifyPwd)
-	{		
-		return toAjax(modifyPwdService.insertModifyPwd(modifyPwd));
-	}
+
 
 	/**
-	 * 修改密码修改申请
+	 * 密码修改审核申请
 	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap)
+	@RequiresPermissions("system:modifyPwd:review")
+	@Log(title = "密码审核申请", action = BusinessType.GRANT)
+	@PostMapping( "/review")
+	@ResponseBody
+	public AjaxResult review(String ids,String agreest ,String des)
 	{
-		ModifyPwd modifyPwd = modifyPwdService.selectModifyPwdById(id);
-		mmap.put("modifyPwd", modifyPwd);
-	    return prefix + "/edit";
+		return toAjax(modifyPwdService.reviewModifyPwdByIds(ids,agreest,des));
 	}
-	
-	/**
-	 * 修改保存密码修改申请
-	 */
-	@RequiresPermissions("system:modifyPwd:edit")
-	@Log(title = "密码修改申请", action = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(ModifyPwd modifyPwd)
-	{		
-		return toAjax(modifyPwdService.updateModifyPwd(modifyPwd));
-	}
-	
-	/**
-	 * 删除密码修改申请
-	 */
-	@RequiresPermissions("system:modifyPwd:remove")
-	@Log(title = "密码修改申请", action = BusinessType.DELETE)
-	@PostMapping( "/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids)
-	{		
-		return toAjax(modifyPwdService.deleteModifyPwdByIds(ids));
-	}
-	
+
+
+
 }

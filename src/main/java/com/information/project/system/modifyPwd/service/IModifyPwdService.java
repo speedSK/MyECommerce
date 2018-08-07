@@ -7,7 +7,7 @@ import java.util.List;
  * 密码修改申请 服务层
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 public interface IModifyPwdService 
 {
@@ -50,5 +50,13 @@ public interface IModifyPwdService
      * @return 结果
      */
 	public int deleteModifyPwdByIds(String ids);
-	
+
+	/**
+	 * 密码修改申请信息
+	 *
+	 * @param ids 需要review的数据ID
+	 * @return 结果
+	 */
+
+	public int reviewModifyPwdByIds(String ids,String agreest ,String des);
 }

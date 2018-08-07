@@ -7,7 +7,7 @@ import java.util.List;
  * 密码修改申请 数据层
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 public interface ModifyPwdMapper 
 {

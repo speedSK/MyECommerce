@@ -1,13 +1,12 @@
 package com.information.project.system.modifyPwd.domain;
 
 import com.information.framework.web.domain.BaseEntity;
-import java.util.Date;
 
 /**
  * 密码修改申请表 bus_modify_pwd
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 public class ModifyPwd extends BaseEntity
 {
@@ -17,18 +16,18 @@ public class ModifyPwd extends BaseEntity
 	private Long id;
 	/** 用户id */
 	private Long userid;
-	/** 新秘密 */
+	/** 编号 */
+	private String number;
+	/** 姓名 */
+	private String name;
+	/** 新密码 */
 	private String newPwd;
 	/** 是否同意 */
 	private String agreest;
-	/** 状态 */
+
 	private String status;
-	/** 操作人 */
-	private Long operUser;
-	/** 创建时间 */
-	private Date createTime;
-	/** 修改时间 */
-	private Date updateTime;
+
+	private String des;
 
 	/**
 	 * 设置：主键
@@ -63,7 +62,39 @@ public class ModifyPwd extends BaseEntity
 	}
 	
 	/**
-	 * 设置：新秘密
+	 * 设置：编号
+	 */
+	public void setNumber(String number) 
+	{
+		this.number = number;
+	}
+	
+	/**
+	 * 获取：编号
+	 */
+	public String getNumber() 
+	{
+		return number;
+	}
+	
+	/**
+	 * 设置：姓名
+	 */
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	
+	/**
+	 * 获取：姓名
+	 */
+	public String getName() 
+	{
+		return name;
+	}
+	
+	/**
+	 * 设置：新密码
 	 */
 	public void setNewPwd(String newPwd) 
 	{
@@ -71,7 +102,7 @@ public class ModifyPwd extends BaseEntity
 	}
 	
 	/**
-	 * 获取：新秘密
+	 * 获取：新密码
 	 */
 	public String getNewPwd() 
 	{
@@ -93,69 +124,20 @@ public class ModifyPwd extends BaseEntity
 	{
 		return agreest;
 	}
-	
-	/**
-	 * 设置：状态
-	 */
-	public void setStatus(String status) 
-	{
-		this.status = status;
-	}
-	
-	/**
-	 * 获取：状态
-	 */
-	public String getStatus() 
-	{
+
+	public String getStatus() {
 		return status;
 	}
-	
-	/**
-	 * 设置：操作人
-	 */
-	public void setOperUser(Long operUser) 
-	{
-		this.operUser = operUser;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
-	/**
-	 * 获取：操作人
-	 */
-	public Long getOperUser() 
-	{
-		return operUser;
+
+	public String getDes() {
+		return des;
 	}
-	
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateTime(Date createTime) 
-	{
-		this.createTime = createTime;
+
+	public void setDes(String des) {
+		this.des = des;
 	}
-	
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateTime() 
-	{
-		return createTime;
-	}
-	
-	/**
-	 * 设置：修改时间
-	 */
-	public void setUpdateTime(Date updateTime) 
-	{
-		this.updateTime = updateTime;
-	}
-	
-	/**
-	 * 获取：修改时间
-	 */
-	public Date getUpdateTime() 
-	{
-		return updateTime;
-	}
-	
 }

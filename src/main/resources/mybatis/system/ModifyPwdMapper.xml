@@ -7,16 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="ModifyPwd" id="ModifyPwdResult">
         <result property="id"    column="id"    />
         <result property="userid"    column="userid"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
         <result property="newPwd"    column="new_pwd"    />
         <result property="agreest"    column="agreest"    />
         <result property="status"    column="status"    />
-        <result property="operUser"    column="oper_user"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
 	<sql id="selectModifyPwdVo">
-        select id, userid, new_pwd, agreest, status, oper_user, create_time, update_time from bus_modify_pwd
+        select id, userid, number, name, new_pwd, agreest from bus_modify_pwd
     </sql>
 	
     <select id="selectModifyPwdList" parameterType="ModifyPwd" resultMap="ModifyPwdResult">
@@ -24,12 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="id != null and id != ''"> and id = #{id}</if>
              <if test="userid != null and userid != ''"> and userid = #{userid}</if>
+             <if test="number != null and number != ''"> and number = #{number}</if>
+             <if test="name != null and name != ''"> and name = #{name}</if>
              <if test="newPwd != null and newPwd != ''"> and new_pwd = #{newPwd}</if>
              <if test="agreest != null and agreest != ''"> and agreest = #{agreest}</if>
              <if test="status != null and status != ''"> and status = #{status}</if>
-             <if test="operUser != null and operUser != ''"> and oper_user = #{operUser}</if>
-             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
-             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
          </where>
     </select>
     
@@ -43,22 +41,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != '' ">id,</if>
 			<if test="userid != null and userid != '' ">userid,</if>
+			<if test="number != null and number != '' ">number,</if>
+			<if test="name != null and name != '' ">name,</if>
 			<if test="newPwd != null and newPwd != '' ">new_pwd,</if>
 			<if test="agreest != null and agreest != '' ">agreest,</if>
-			<if test="status != null and status != '' ">status,</if>
-			<if test="operUser != null and operUser != '' ">oper_user,</if>
-			<if test="createTime != null and createTime != '' ">create_time,</if>
-			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+			<if test="status != null and status != '' ">agreest,</if>
+            create_time
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != ''">#{id},</if>
 			<if test="userid != null and userid != ''">#{userid},</if>
+			<if test="number != null and number != ''">#{number},</if>
+			<if test="name != null and name != ''">#{name},</if>
 			<if test="newPwd != null and newPwd != ''">#{newPwd},</if>
 			<if test="agreest != null and agreest != ''">#{agreest},</if>
 			<if test="status != null and status != ''">#{status},</if>
-			<if test="operUser != null and operUser != ''">#{operUser},</if>
-			<if test="createTime != null and createTime != ''">#{createTime},</if>
-			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            sysdate()
          </trim>
     </insert>
 	 
@@ -66,12 +64,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update bus_modify_pwd
         <trim prefix="SET" suffixOverrides=",">
             <if test="userid != null  ">userid = #{userid},</if>
+            <if test="number != null  and number != ''  ">number = #{number},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
             <if test="newPwd != null  and newPwd != ''  ">new_pwd = #{newPwd},</if>
             <if test="agreest != null  and agreest != ''  ">agreest = #{agreest},</if>
             <if test="status != null  and status != ''  ">status = #{status},</if>
-            <if test="operUser != null  ">oper_user = #{operUser},</if>
-            <if test="createTime != null  ">create_time = #{createTime},</if>
-            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            update_time = sysdate()
         </trim>
         where id = #{id}
     </update>

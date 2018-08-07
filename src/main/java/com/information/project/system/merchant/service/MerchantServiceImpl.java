@@ -97,7 +97,8 @@ public class MerchantServiceImpl implements IMerchantService
 	{
 		String [] idsArray = Convert.toStrArray(ids);
 		for (String id: idsArray) {
-			Merchant merchant = merchantMapper.selectMerchantById(Long.valueOf(id));
+			Merchant merchant = new Merchant();
+			merchant.setId(Long.valueOf(id));
 			//初始化數據信息
 
 			merchant.setStatus(Constants.STATUS_REMOVED);

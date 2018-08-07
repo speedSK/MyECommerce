@@ -106,8 +106,8 @@ public class DeviceServiceImpl implements IDeviceService
 
 		String [] idsArray = Convert.toStrArray(ids);
 		for (String id: idsArray) {
-			Device device = deviceMapper.selectDeviceById(Long.valueOf(id));
-			//初始化數據信息
+			Device device = new Device();
+			device.setId(Long.valueOf(id));
 
 			device.setStatus(Constants.STATUS_REMOVED);
 
