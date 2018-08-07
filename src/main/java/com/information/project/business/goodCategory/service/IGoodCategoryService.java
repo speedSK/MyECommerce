@@ -2,12 +2,13 @@ package com.information.project.business.goodCategory.service;
 
 import com.information.project.business.goodCategory.domain.GoodCategory;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品分类 服务层
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 public interface IGoodCategoryService 
 {
@@ -50,5 +51,39 @@ public interface IGoodCategoryService
      * @return 结果
      */
 	public int deleteGoodCategoryByIds(String ids);
+
+
+
+	/**
+	 * 校验分類名称是否唯一
+	 *
+	 * @param goodCategory 分類信息
+	 * @return 结果
+	 */
+	public String checkGoodCategoryNameUnique(GoodCategory goodCategory);
+
+
+	/**
+	 * 查询所有分類信息
+	 *
+	 * @return 分類列表
+	 */
+	public List<Map<String,Object>> goodCategoryTreeData();
+
+	/**
+	 * 查询分類数量
+	 *
+	 * @param parentId 分類父ID
+	 * @return 结果
+	 */
+	public int  selectCountGoodCategoryByParentId(Long parentId);
 	
+	/**
+	 * 删除分類管理信息
+	 *
+	 * @param id 分類ID
+	 * @return 结果
+	 */
+	public int deleteGoodCategoryById(Long id);
+
 }

@@ -9,15 +9,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="categoryCode"    column="category_code"    />
         <result property="categoryName"    column="category_name"    />
         <result property="parentId"    column="parent_id"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="icon"    column="icon"    />
+        <result property="visible"    column="visible"    />
         <result property="status"    column="status"    />
         <result property="des"    column="des"    />
-        <result property="operUser"    column="oper_user"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
 	<sql id="selectGoodCategoryVo">
-        select id, category_code, category_name, parent_id, status, des, oper_user, create_time, update_time from bus_good_category
+        select id, category_code, category_name, parent_id, order_num, icon, visible, status, des from bus_good_category
     </sql>
 	
     <select id="selectGoodCategoryList" parameterType="GoodCategory" resultMap="GoodCategoryResult">
@@ -27,11 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="categoryCode != null and categoryCode != ''"> and category_code = #{categoryCode}</if>
              <if test="categoryName != null and categoryName != ''"> and category_name = #{categoryName}</if>
              <if test="parentId != null and parentId != ''"> and parent_id = #{parentId}</if>
+             <if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum}</if>
+             <if test="icon != null and icon != ''"> and icon = #{icon}</if>
+             <if test="visible != null and visible != ''"> and visible = #{visible}</if>
              <if test="status != null and status != ''"> and status = #{status}</if>
              <if test="des != null and des != ''"> and des = #{des}</if>
-             <if test="operUser != null and operUser != ''"> and oper_user = #{operUser}</if>
-             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
-             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
          </where>
     </select>
     
@@ -47,22 +47,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="categoryCode != null and categoryCode != '' ">category_code,</if>
 			<if test="categoryName != null and categoryName != '' ">category_name,</if>
 			<if test="parentId != null and parentId != '' ">parent_id,</if>
+			<if test="orderNum != null and orderNum != '' ">order_num,</if>
+			<if test="icon != null and icon != '' ">icon,</if>
+			<if test="visible != null and visible != '' ">visible,</if>
 			<if test="status != null and status != '' ">status,</if>
 			<if test="des != null and des != '' ">des,</if>
-			<if test="operUser != null and operUser != '' ">oper_user,</if>
-			<if test="createTime != null and createTime != '' ">create_time,</if>
-			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+            create_time
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != ''">#{id},</if>
 			<if test="categoryCode != null and categoryCode != ''">#{categoryCode},</if>
 			<if test="categoryName != null and categoryName != ''">#{categoryName},</if>
 			<if test="parentId != null and parentId != ''">#{parentId},</if>
+			<if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+			<if test="icon != null and icon != ''">#{icon},</if>
+			<if test="visible != null and visible != ''">#{visible},</if>
 			<if test="status != null and status != ''">#{status},</if>
 			<if test="des != null and des != ''">#{des},</if>
-			<if test="operUser != null and operUser != ''">#{operUser},</if>
-			<if test="createTime != null and createTime != ''">#{createTime},</if>
-			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            sysdate()
          </trim>
     </insert>
 	 
@@ -72,11 +74,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="categoryCode != null  and categoryCode != ''  ">category_code = #{categoryCode},</if>
             <if test="categoryName != null  and categoryName != ''  ">category_name = #{categoryName},</if>
             <if test="parentId != null  ">parent_id = #{parentId},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
+            <if test="icon != null  and icon != ''  ">icon = #{icon},</if>
+            <if test="visible != null  and visible != ''  ">visible = #{visible},</if>
             <if test="status != null  and status != ''  ">status = #{status},</if>
             <if test="des != null  and des != ''  ">des = #{des},</if>
-            <if test="operUser != null  ">oper_user = #{operUser},</if>
-            <if test="createTime != null  ">create_time = #{createTime},</if>
-            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            update_time = sysdate()
         </trim>
         where id = #{id}
     </update>
@@ -91,5 +94,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-    
+
+
+
+
+
+
+
+
 </mapper>

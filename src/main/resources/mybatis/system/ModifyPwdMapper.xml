@@ -13,10 +13,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="agreest"    column="agreest"    />
         <result property="status"    column="status"    />
         <result property="des"    column="des"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
 	<sql id="selectModifyPwdVo">
-        select id, userid, number, name, new_pwd, agreest ,des from bus_modify_pwd
+        select id, userid, number, name, new_pwd, agreest ,des,status, create_time, update_time from bus_modify_pwd
     </sql>
 	
     <select id="selectModifyPwdList" parameterType="ModifyPwd" resultMap="ModifyPwdResult">
@@ -30,6 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="agreest != null and agreest != ''"> and agreest = #{agreest}</if>
              <if test="status != null and status != ''"> and status = #{status}</if>
              <if test="des != null and des != ''"> and des = #{des}</if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
          </where>
     </select>
     

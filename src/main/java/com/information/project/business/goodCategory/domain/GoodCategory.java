@@ -1,13 +1,12 @@
 package com.information.project.business.goodCategory.domain;
 
 import com.information.framework.web.domain.BaseEntity;
-import java.util.Date;
 
 /**
  * 商品分类表 bus_good_category
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 public class GoodCategory extends BaseEntity
 {
@@ -21,16 +20,16 @@ public class GoodCategory extends BaseEntity
 	private String categoryName;
 	/** 父级id */
 	private Long parentId;
+	/** 显示顺序 */
+	private Integer orderNum;
+	/** 菜单图标 */
+	private String icon;
+	/** 菜单状态 */
+	private String visible;
 	/** 状态 */
 	private String status;
 	/** 描述 */
 	private String des;
-	/** 操作人 */
-	private Long operUser;
-	/** 创建时间 */
-	private Date createTime;
-	/** 修改时间 */
-	private Date updateTime;
 
 	/**
 	 * 设置：主键
@@ -97,6 +96,54 @@ public class GoodCategory extends BaseEntity
 	}
 	
 	/**
+	 * 设置：显示顺序
+	 */
+	public void setOrderNum(Integer orderNum) 
+	{
+		this.orderNum = orderNum;
+	}
+	
+	/**
+	 * 获取：显示顺序
+	 */
+	public Integer getOrderNum() 
+	{
+		return orderNum;
+	}
+	
+	/**
+	 * 设置：菜单图标
+	 */
+	public void setIcon(String icon) 
+	{
+		this.icon = icon;
+	}
+	
+	/**
+	 * 获取：菜单图标
+	 */
+	public String getIcon() 
+	{
+		return icon;
+	}
+	
+	/**
+	 * 设置：菜单状态
+	 */
+	public void setVisible(String visible) 
+	{
+		this.visible = visible;
+	}
+	
+	/**
+	 * 获取：菜单状态
+	 */
+	public String getVisible() 
+	{
+		return visible;
+	}
+	
+	/**
 	 * 设置：状态
 	 */
 	public void setStatus(String status) 
@@ -126,54 +173,6 @@ public class GoodCategory extends BaseEntity
 	public String getDes() 
 	{
 		return des;
-	}
-	
-	/**
-	 * 设置：操作人
-	 */
-	public void setOperUser(Long operUser) 
-	{
-		this.operUser = operUser;
-	}
-	
-	/**
-	 * 获取：操作人
-	 */
-	public Long getOperUser() 
-	{
-		return operUser;
-	}
-	
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateTime(Date createTime) 
-	{
-		this.createTime = createTime;
-	}
-	
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateTime() 
-	{
-		return createTime;
-	}
-	
-	/**
-	 * 设置：修改时间
-	 */
-	public void setUpdateTime(Date updateTime) 
-	{
-		this.updateTime = updateTime;
-	}
-	
-	/**
-	 * 获取：修改时间
-	 */
-	public Date getUpdateTime() 
-	{
-		return updateTime;
 	}
 	
 }
