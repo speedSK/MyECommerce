@@ -64,7 +64,7 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 	@Override
 	public int updateModifyPwd(ModifyPwd modifyPwd)
 	{
-		if( 0 != modifyPwd.getUserid() &&   !StringUtils.isEmpty(modifyPwd.getNewPwd())   ){
+		if( 0 != modifyPwd.getUserid() &&  !"0".equals(modifyPwd.getAgreest())  &&   !StringUtils.isEmpty(modifyPwd.getNewPwd())   ){
 			modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
 			modifyPwdMapper.updateModifyPwd(modifyPwd);
 
@@ -74,14 +74,10 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 			buser.setId(modifyPwd.getUserid());
 			buser.setPassword(modifyPwd.getNewPwd());
 			busUserMapper.updateBusUser(buser) ;
-			return 1 ;
-		}else{
-			return  0 ;
-		}
 
+		}
+		return 1 ;
 
 	}
-
-
 
 }
