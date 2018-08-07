@@ -1,4 +1,4 @@
-package com.information.project.business.rechargeRecord.controller;
+package com.information.project.business.transactionRecord.controller;
 
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
-import com.information.project.business.rechargeRecord.domain.RechargeRecord;
-import com.information.project.business.rechargeRecord.service.IRechargeRecordService;
+import com.information.project.business.transactionRecord.domain.TransactionRecord;
+import com.information.project.business.transactionRecord.service.ITransactionRecordService;
 import com.information.framework.web.controller.BaseController;
 import com.information.framework.web.page.TableDataInfo;
 import com.information.framework.web.domain.AjaxResult;
@@ -22,34 +22,34 @@ import com.information.framework.web.domain.AjaxResult;
  * 银行转账 信息操作处理
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
 @Controller
-@RequestMapping("/business/rechargeRecord")
-public class RechargeRecordController extends BaseController
+@RequestMapping("/business/transactionRecord")
+public class TransactionRecordController extends BaseController
 {
-    private String prefix = "business/rechargeRecord";
+    private String prefix = "business/transactionRecord";
 	
 	@Autowired
-	private IRechargeRecordService rechargeRecordService;
+	private ITransactionRecordService transactionRecordService;
 	
-	@RequiresPermissions("business:rechargeRecord:view")
+	@RequiresPermissions("business:transactionRecord:view")
 	@GetMapping()
-	public String rechargeRecord()
+	public String transactionRecord()
 	{
-	    return prefix + "/rechargeRecord";
+	    return prefix + "/transactionRecord";
 	}
 	
 	/**
 	 * 查询银行转账列表
 	 */
-	@RequiresPermissions("business:rechargeRecord:list")
+	@RequiresPermissions("business:transactionRecord:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(RechargeRecord rechargeRecord)
+	public TableDataInfo list(TransactionRecord transactionRecord)
 	{
 		startPage();
-        List<RechargeRecord> list = rechargeRecordService.selectRechargeRecordList(rechargeRecord);
+        List<TransactionRecord> list = transactionRecordService.selectTransactionRecordList(transactionRecord);
 		return getDataTable(list);
 	}
 	
@@ -65,13 +65,13 @@ public class RechargeRecordController extends BaseController
 	/**
 	 * 新增保存银行转账
 	 */
-	@RequiresPermissions("business:rechargeRecord:add")
+	@RequiresPermissions("business:transactionRecord:add")
 	@Log(title = "银行转账", action = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(RechargeRecord rechargeRecord)
+	public AjaxResult addSave(TransactionRecord transactionRecord)
 	{		
-		return toAjax(rechargeRecordService.insertRechargeRecord(rechargeRecord));
+		return toAjax(transactionRecordService.insertTransactionRecord(transactionRecord));
 	}
 
 	/**
@@ -80,33 +80,33 @@ public class RechargeRecordController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap)
 	{
-		RechargeRecord rechargeRecord = rechargeRecordService.selectRechargeRecordById(id);
-		mmap.put("rechargeRecord", rechargeRecord);
+		TransactionRecord transactionRecord = transactionRecordService.selectTransactionRecordById(id);
+		mmap.put("transactionRecord", transactionRecord);
 	    return prefix + "/edit";
 	}
 	
 	/**
 	 * 修改保存银行转账
 	 */
-	@RequiresPermissions("business:rechargeRecord:edit")
+	@RequiresPermissions("business:transactionRecord:edit")
 	@Log(title = "银行转账", action = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(RechargeRecord rechargeRecord)
+	public AjaxResult editSave(TransactionRecord transactionRecord)
 	{		
-		return toAjax(rechargeRecordService.updateRechargeRecord(rechargeRecord));
+		return toAjax(transactionRecordService.updateTransactionRecord(transactionRecord));
 	}
 	
 	/**
 	 * 删除银行转账
 	 */
-	@RequiresPermissions("business:rechargeRecord:remove")
+	@RequiresPermissions("business:transactionRecord:remove")
 	@Log(title = "银行转账", action = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{		
-		return toAjax(rechargeRecordService.deleteRechargeRecordByIds(ids));
+		return toAjax(transactionRecordService.deleteTransactionRecordByIds(ids));
 	}
 	
 }

@@ -1,15 +1,15 @@
-package com.information.project.business.rechargeRecord.domain;
+package com.information.project.business.transactionRecord.domain;
 
 import com.information.framework.web.domain.BaseEntity;
 import java.util.Date;
 
 /**
- * 银行转账表 bank_recharge_record
+ * 银行转账表 bank_transaction_record
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-07
  */
-public class RechargeRecord extends BaseEntity
+public class TransactionRecord extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -41,8 +41,14 @@ public class RechargeRecord extends BaseEntity
 	private String returnMessage;
 	/** 银行流水号 */
 	private String bankIdserial;
+	/** 创建人 */
+	private String createBy;
 	/** 创建时间 */
 	private Date createTime;
+	/** 修改人 */
+	private String updateBy;
+	/** 修改时间 */
+	private Date updateTime;
 
 	/**
 	 * 设置：主键
@@ -269,6 +275,22 @@ public class RechargeRecord extends BaseEntity
 	}
 	
 	/**
+	 * 设置：创建人
+	 */
+	public void setCreateBy(String createBy) 
+	{
+		this.createBy = createBy;
+	}
+	
+	/**
+	 * 获取：创建人
+	 */
+	public String getCreateBy() 
+	{
+		return createBy;
+	}
+	
+	/**
 	 * 设置：创建时间
 	 */
 	public void setCreateTime(Date createTime) 
@@ -282,6 +304,38 @@ public class RechargeRecord extends BaseEntity
 	public Date getCreateTime() 
 	{
 		return createTime;
+	}
+	
+	/**
+	 * 设置：修改人
+	 */
+	public void setUpdateBy(String updateBy) 
+	{
+		this.updateBy = updateBy;
+	}
+	
+	/**
+	 * 获取：修改人
+	 */
+	public String getUpdateBy() 
+	{
+		return updateBy;
+	}
+	
+	/**
+	 * 设置：修改时间
+	 */
+	public void setUpdateTime(Date updateTime) 
+	{
+		this.updateTime = updateTime;
+	}
+	
+	/**
+	 * 获取：修改时间
+	 */
+	public Date getUpdateTime() 
+	{
+		return updateTime;
 	}
 	
 }
