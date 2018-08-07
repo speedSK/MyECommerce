@@ -27,14 +27,7 @@ public interface IModifyPwdService
      */
 	public List<ModifyPwd> selectModifyPwdList(ModifyPwd modifyPwd);
 	
-	/**
-     * 新增密码修改申请
-     * 
-     * @param modifyPwd 密码修改申请信息
-     * @return 结果
-     */
-	public int insertModifyPwd(ModifyPwd modifyPwd);
-	
+
 	/**
      * 修改密码修改申请
      * 
@@ -43,20 +36,5 @@ public interface IModifyPwdService
      */
 	public int updateModifyPwd(ModifyPwd modifyPwd);
 		
-	/**
-     * 删除密码修改申请信息
-     * 
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-	public int deleteModifyPwdByIds(String ids);
 
-	/**
-	 * 密码修改申请信息
-	 *
-	 * @param ids 需要review的数据ID
-	 * @return 结果
-	 */
-
-	public int reviewModifyPwdByIds(String ids,String agreest ,String des);
 }

@@ -1,8 +1,12 @@
 package com.information.project.system.modifyPwd.service;
 
 import com.information.common.constant.Constants;
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.security.ShiroUtils;
 import java.util.List;
+
+import com.information.project.business.user.domain.BusUser;
+import com.information.project.business.user.mapper.BusUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.information.project.system.modifyPwd.mapper.ModifyPwdMapper;
@@ -21,6 +25,10 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 {
 	@Autowired
 	private ModifyPwdMapper modifyPwdMapper;
+
+
+	@Autowired
+	private BusUserMapper busUserMapper;
 
 	/**
      * 查询密码修改申请信息
@@ -43,24 +51,10 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 	@Override
 	public List<ModifyPwd> selectModifyPwdList(ModifyPwd modifyPwd)
 	{
+		modifyPwd.setStatus(Constants.STATUS_ACTIVE);
 	    return modifyPwdMapper.selectModifyPwdList(modifyPwd);
 	}
-	
-    /**
-     * 新增密码修改申请
-     * 
-     * @param modifyPwd 密码修改申请信息
-     * @return 结果
-     */
-	@Override
-	public int insertModifyPwd(ModifyPwd modifyPwd)
-	{
-	    modifyPwd.setStatus(Constants.STATUS_ACTIVE);
 
-        modifyPwd.setCreateBy(ShiroUtils.getUserId().toString());
-	    return modifyPwdMapper.insertModifyPwd(modifyPwd);
-	}
-	
 	/**
      * 修改密码修改申请
      * 
@@ -70,65 +64,24 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 	@Override
 	public int updateModifyPwd(ModifyPwd modifyPwd)
 	{
-	    modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
-	    return modifyPwdMapper.updateModifyPwd(modifyPwd);
-	}
-
-	/**
-     * 删除密码修改申请对象
-     * 
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-	@Override
-	public int deleteModifyPwdByIds(String ids)
-	{
-	    String [] idsArray = Convert.toStrArray(ids);
-        for (String id: idsArray) {
-            ModifyPwd modifyPwd = modifyPwdMapper.selectModifyPwdById(Long.valueOf(id));
-            //初始化數據信息
-
-            modifyPwd.setStatus(Constants.STATUS_REMOVED);
-
-            modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
-
-            modifyPwdMapper.updateModifyPwd(modifyPwd);
-
-        }
-
-        return 1;
-	}
-
-
-	/**
-	 * 审核密码修改申请对象
-	 *
-	 * @param ids 需要审核的数据ID
-	 * @return 结果
-	 */
-	@Override
-	public int reviewModifyPwdByIds(String ids,String agreest ,String des  )
-	{
-		String [] idsArray = Convert.toStrArray(ids);
-		for (String id: idsArray) {
-			ModifyPwd modifyPwd = new ModifyPwd() ;
-			modifyPwd.setId(Long.valueOf(id));
-
-			//初始化數據信息
-
-			modifyPwd.setAgreest(agreest);
-			modifyPwd.setDes(des);
-
+		if( 0 != modifyPwd.getUserid() &&   !StringUtils.isEmpty(modifyPwd.getNewPwd())   ){
 			modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
-
 			modifyPwdMapper.updateModifyPwd(modifyPwd);
 
-			//修改用户密码
+			//修改密码
 
-
-
+			BusUser buser = new BusUser();
+			buser.setId(modifyPwd.getUserid());
+			buser.setPassword(modifyPwd.getNewPwd());
+			busUserMapper.updateBusUser(buser) ;
+			return 1 ;
+		}else{
+			return  0 ;
 		}
 
-		return 1;
+
 	}
+
+
+
 }

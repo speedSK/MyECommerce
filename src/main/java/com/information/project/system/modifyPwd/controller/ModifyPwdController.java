@@ -55,17 +55,27 @@ public class ModifyPwdController extends BaseController
 
 
 	/**
-	 * 密码修改审核申请
+	 * 修改密码修改申请
 	 */
-	@RequiresPermissions("system:modifyPwd:review")
-	@Log(title = "密码审核申请", action = BusinessType.GRANT)
-	@PostMapping( "/review")
-	@ResponseBody
-	public AjaxResult review(String ids,String agreest ,String des)
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap)
 	{
-		return toAjax(modifyPwdService.reviewModifyPwdByIds(ids,agreest,des));
+		ModifyPwd modifyPwd = modifyPwdService.selectModifyPwdById(id);
+		mmap.put("modifyPwd", modifyPwd);
+		return prefix + "/review";
 	}
 
+	/**
+	 * 修改保存密码修改申请
+	 */
+	@RequiresPermissions("system:modifyPwd:review")
+	@Log(title = "密码修改申请", action = BusinessType.UPDATE)
+	@PostMapping("/review")
+	@ResponseBody
+	public AjaxResult reviewSave(ModifyPwd modifyPwd)
+	{
+		return toAjax(modifyPwdService.updateModifyPwd(modifyPwd));
+	}
 
 
 }

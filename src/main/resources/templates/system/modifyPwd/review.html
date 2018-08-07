@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-modifyPwd-edit" th:object="${modifyPwd}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+            <input id="userid" name="id" th:field="*{userid}"  type="hidden">
+            <input id="newPwd" name="id" th:field="*{newPwd}"  type="hidden">
+
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">编号：</label>
+                <div class="col-sm-8">
+                    <input id="number" name="number" th:field="*{number}" readonly="readonly" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">姓名：</label>
+                <div class="col-sm-8">
+                    <input id="name" name="name" th:field="*{name}" class="form-control" readonly="readonly" type="text">
+                </div>
+            </div>
+
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">是否同意：</label>
+                <div class="col-sm-8">
+                    <select id="agreest" class="form-control m-b" th:with="type=${@dict.getType('bus_modify_pwd')}">
+                        <option th:each="dict : ${type}" th:text="${dict['dictLabel']}" th:value="${dict['dictValue']}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">说明：</label>
+                <div class="col-sm-8">
+                    <input id="des" name="des" th:field="*{des}" class="form-control" type="text">
+                </div>
+            </div>
+
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button onclick="$.modal.close()" class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/modifyPwd"
+		$("#form-modifyPwd-edit").validate({
+			rules:{
+				des:{
+					maxlength: 40,
+				},
+			},
+			submitHandler: function(form) {
+				review();
+			}
+		});
+
+
+		function review() {
+        	var id = $("input[name='id']").val();
+        	var userid = $("input[name='userid']").val();
+        	var agreest = $("#agreest option:selected").val();
+        	var des = $("input[name='des']").val();
+        	var newPwd = $("input[name='newPwd']").val();
+
+        	$.ajax({
+        		cache : true,
+        		type : "POST",
+        		url : ctx + "system/modifyPwd/review",
+        		data : {
+        			"id": id,
+        			"userid": userid,
+        			"agreest": agreest,
+        			"newPwd": newPwd,
+        			"des": des
+        		},
+        		async : false,
+        		error : function(request) {
+        			$.modal.alertError("系统错误");
+        		},
+        		success : function(data) {
+        			$.operate.saveSuccess(data);
+        		}
+        	});
+        }
+
+
+	</script>
+</body>
+</html>
