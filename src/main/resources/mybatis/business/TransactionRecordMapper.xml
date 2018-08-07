@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.information.project.business.rechargeRecord.mapper.RechargeRecordMapper">
+<mapper namespace="com.information.project.business.transactionRecord.mapper.TransactionRecordMapper">
     
-    <resultMap type="RechargeRecord" id="RechargeRecordResult">
+    <resultMap type="TransactionRecord" id="TransactionRecordResult">
         <result property="id"    column="id"    />
         <result property="code"    column="code"    />
         <result property="bankCode"    column="bank_code"    />
@@ -19,15 +19,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="returnCode"    column="return_code"    />
         <result property="returnMessage"    column="return_message"    />
         <result property="bankIdserial"    column="bank_idserial"    />
+        <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
-	<sql id="selectRechargeRecordVo">
-        select id, code, bank_code, trans_date, trans_idserial, user_code, user_name, di_number, bank_number, amount, status, return_code, return_message, bank_idserial, create_time from bank_recharge_record
+	<sql id="selectTransactionRecordVo">
+        select id, code, bank_code, trans_date, trans_idserial, user_code, user_name, di_number, bank_number, amount, status, return_code, return_message, bank_idserial, create_by, create_time, update_by, update_time from bank_transaction_record
     </sql>
 	
-    <select id="selectRechargeRecordList" parameterType="RechargeRecord" resultMap="RechargeRecordResult">
-        <include refid="selectRechargeRecordVo"/>
+    <select id="selectTransactionRecordList" parameterType="TransactionRecord" resultMap="TransactionRecordResult">
+        <include refid="selectTransactionRecordVo"/>
         <where>  
             <if test="id != null and id != ''"> and id = #{id}</if>
              <if test="code != null and code != ''"> and code = #{code}</if>
@@ -43,17 +46,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="returnCode != null and returnCode != ''"> and return_code = #{returnCode}</if>
              <if test="returnMessage != null and returnMessage != ''"> and return_message = #{returnMessage}</if>
              <if test="bankIdserial != null and bankIdserial != ''"> and bank_idserial = #{bankIdserial}</if>
-             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+             <if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+             <if test="params != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+             <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
          </where>
     </select>
     
-    <select id="selectRechargeRecordById" parameterType="Long" resultMap="RechargeRecordResult">
-        <include refid="selectRechargeRecordVo"/>
+    <select id="selectTransactionRecordById" parameterType="Long" resultMap="TransactionRecordResult">
+        <include refid="selectTransactionRecordVo"/>
         where id = #{id}
     </select>
         
-    <insert id="insertRechargeRecord" parameterType="RechargeRecord">
-        insert into bank_recharge_record
+    <insert id="insertTransactionRecord" parameterType="TransactionRecord">
+        insert into bank_transaction_record
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != '' ">id,</if>
 			<if test="code != null and code != '' ">code,</if>
@@ -69,7 +80,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="returnCode != null and returnCode != '' ">return_code,</if>
 			<if test="returnMessage != null and returnMessage != '' ">return_message,</if>
 			<if test="bankIdserial != null and bankIdserial != '' ">bank_idserial,</if>
+			<if test="createBy != null and createBy != '' ">create_by,</if>
 			<if test="createTime != null and createTime != '' ">create_time,</if>
+			<if test="updateBy != null and updateBy != '' ">update_by,</if>
+			<if test="updateTime != null and updateTime != '' ">update_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != ''">#{id},</if>
@@ -86,12 +100,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="returnCode != null and returnCode != ''">#{returnCode},</if>
 			<if test="returnMessage != null and returnMessage != ''">#{returnMessage},</if>
 			<if test="bankIdserial != null and bankIdserial != ''">#{bankIdserial},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
 			<if test="createTime != null and createTime != ''">#{createTime},</if>
+			<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
          </trim>
     </insert>
 	 
-    <update id="updateRechargeRecord" parameterType="RechargeRecord">
-        update bank_recharge_record
+    <update id="updateTransactionRecord" parameterType="TransactionRecord">
+        update bank_transaction_record
         <trim prefix="SET" suffixOverrides=",">
             <if test="code != null  and code != ''  ">code = #{code},</if>
             <if test="bankCode != null  and bankCode != ''  ">bank_code = #{bankCode},</if>
@@ -106,17 +123,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="returnCode != null  and returnCode != ''  ">return_code = #{returnCode},</if>
             <if test="returnMessage != null  and returnMessage != ''  ">return_message = #{returnMessage},</if>
             <if test="bankIdserial != null  and bankIdserial != ''  ">bank_idserial = #{bankIdserial},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
             <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
         </trim>
         where id = #{id}
     </update>
 
-	<delete id="deleteRechargeRecordById" parameterType="Long">
-        delete from bank_recharge_record where id = #{id}
+	<delete id="deleteTransactionRecordById" parameterType="Long">
+        delete from bank_transaction_record where id = #{id}
     </delete>
 	
-    <delete id="deleteRechargeRecordByIds" parameterType="String">
-        delete from bank_recharge_record where id in 
+    <delete id="deleteTransactionRecordByIds" parameterType="String">
+        delete from bank_transaction_record where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
