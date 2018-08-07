@@ -66,4 +66,10 @@ public class Constants
     public static final String STATUS_REMOVED = "0";
     public static final String STATUS_ACTIVE = "1";
 
+
+    public static final String ACCOUNT_ACTIVE_1 = "1";
+    public static final String ACCOUNT_ACTIVE_2 = "2";
+    public static final String ACCOUNT_ACTIVE_3 = "3";
+
+
 }

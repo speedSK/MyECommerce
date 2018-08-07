@@ -71,7 +71,7 @@ public class DeviceServiceImpl implements IDeviceService
 		device.setStatus(Constants.STATUS_ACTIVE);
 
 		device.setCreateBy(ShiroUtils.getUserId().toString());
-		device.setUpdateBy(ShiroUtils.getUserId().toString());
+
 
 		return deviceMapper.insertDevice(device);
 	}
@@ -87,8 +87,6 @@ public class DeviceServiceImpl implements IDeviceService
 
 
 		//初始化數據信息
-
-		device.setStatus(Constants.STATUS_ACTIVE);
 
 		device.setUpdateBy(ShiroUtils.getUserId().toString());
 
