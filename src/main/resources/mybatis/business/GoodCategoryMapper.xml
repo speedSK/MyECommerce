@@ -106,7 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectGoodCategoryAll" resultMap="GoodCategoryResult">
         <include refid="selectGoodCategoryVo"/>
-        where category_name=#{categoryName}  and status = '1'
+        where status = '1'
     </select>
 
     <select id="checkGoodCategoryNameUnique" parameterType="String" resultMap="GoodCategoryResult">
