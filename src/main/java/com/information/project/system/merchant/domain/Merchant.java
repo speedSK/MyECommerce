@@ -3,7 +3,7 @@ package com.information.project.system.merchant.domain;
 import com.information.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
-import java.util.Date;
+
 
 /**
  * 商户表 bus_merchant

@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="$column.attrname != null and $column.attrname != '' ">$column.columnName,</if>
 #end
 #end
+            create_time
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 #foreach($column in $columns)
@@ -43,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="$column.attrname != null and $column.attrname != ''">#{$column.attrname},</if>
 #end			
 #end
+            sysdate()
          </trim>
     </insert>
 	 
@@ -54,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="$column.attrname != null #if($column.attrType == 'String' ) and $column.attrname != '' #end ">$column.columnName = #{$column.attrname},</if>
 #end
 #end
+            update_time = sysdate()
         </trim>
         where ${primaryKey.columnName} = #{${primaryKey.attrname}}
     </update>
