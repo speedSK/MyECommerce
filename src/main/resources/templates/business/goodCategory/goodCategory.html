@@ -1,87 +1,133 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    <div class="container-div">
+
+<div class="container-div">
+	<div class="row">
+		<div class="col-sm-12 select-info">
+			<form id="menu-form">
+				<div class="select-list gd">
+					<ul>
+						<li>
+							分类名称：<input type="text" name="categoryName"/>
+						</li>
+						<li>
+							分类状态：
+							<select name="visible" th:with="type=${@dict.getType('sys_show_hide')}">
+								<option value="">所有</option>
+								<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+							</select>
+						</li>
+						<li>
+							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search($('form').attr('id'))"><i class="fa fa-search"></i>&nbsp;搜索</a>
+						</li>
+					</ul>
+				</div>
+			</form>
+		</div>
+
 		<div class="btn-group hidden-xs" id="toolbar" role="group">
-			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:goodCategory:add">
+			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add(0)" shiro:hasPermission="business:goodCategory:add">
 				<i class="fa fa-plus"></i> 新增
 			</a>
-			<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="business:goodCategory:remove">
-				<i class="fa fa-trash-o"></i> 删除
-			</a>
 		</div>
-			
 		<div class="col-sm-12 select-info table-striped">
 			<table id="bootstrap-table" data-mobile-responsive="true"></table>
 		</div>
-    </div>
-    <div th:include="include :: footer"></div>
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('business:goodCategory:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('business:goodCategory:remove')}]];
-        var prefix = ctx + "business/goodCategory"
+	</div>
+</div>
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                modalName: "商品分类",
-                columns: [{
-		            checkbox: true
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+		var addFlag = [[${@permission.hasPermi('business:goodCategory:add')}]];
+		var editFlag = [[${@permission.hasPermi('business:goodCategory:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('business:goodCategory:remove')}]];
+		var datas = [[${@dict.getType('sys_show_hide')}]];
+		var prefix = ctx + "business/goodCategory"
+
+		$(function() {
+		    var options = {
+		        id: "id",
+		        parentId: "parentId",
+		        expandAll: false,
+		        url: prefix + "/list",
+		        createUrl: prefix + "/add/{id}",
+		        updateUrl: prefix + "/edit/{id}",
+		        removeUrl: prefix + "/remove/{id}",
+		        modalName: "分类",
+		        columns: [{
+		            title: '分类名称',
+		            field: 'categoryName',
+		            width: '20%',
+		            formatter: function(row, index) {
+		                if (row.icon == null || row == "") {
+		                    return row.categoryName;
+		                } else {
+		                    return '<i class="' + row.icon + '"></i> <span class="nav-label">' + row.categoryName + '</span>';
+		                }
+		            }
 		        },
-				{
-					field : 'id', 
-					title : '主键' 
-				},
-				{
-					field : 'categoryCode', 
-					title : '分类编码' 
-				},
-				{
-					field : 'categoryName', 
-					title : '分类名称' 
-				},
-				{
-					field : 'parentId', 
-					title : '父级id' 
-				},
-				{
-					field : 'orderNum', 
-					title : '显示顺序' 
-				},
-				{
-					field : 'icon', 
-					title : '菜单图标' 
-				},
-				{
-					field : 'visible', 
-					title : '菜单状态' 
-				},
-				{
-					field : 'status', 
-					title : '状态' 
-				},
-				{
-					field : 'des', 
-					title : '描述' 
-				},
+		        {
+		            field: 'categoryCode',
+		            title: '分类编码',
+		            width: '20%',
+		            align: "center"
+		        },
+		        {
+		            field: 'orderNum',
+		            title: '排序',
+		            width: '10%',
+		            align: "center"
+		        },
+		        {
+		            field: 'visible',
+		            title: '可见',
+		            width: '10%',
+		            align: "center",
+		            formatter: function(row, index) {
+		            	return $.table.selectDictLabel(datas, row.visible);
+		            }
+		        },
+		        {
+		            field: 'des',
+		            title: '描述',
+		            width: '15%',
+		            align: "center"
+		        },
 		        {
 		            title: '操作',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-						return actions.join('');
+		            width: '20%',
+		            align: "center",
+		            formatter: function(row, index) {
+		                var actions = [];
+		                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		                actions.push('<a class="btn btn-info btn-xs ' + addFlag + '" href="#" onclick="$.operate.add(\'' + row.id + '\')"><i class="fa fa-plus"></i>新增</a> ');
+		                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+		                return actions.join('');
 		            }
 		        }]
-            };
-            $.table.init(options);
-        });
-    </script>
+		    };
+		    $.treeTable.init(options);
+		});
+
+		function remove(id) {
+			$.modal.confirm("确定删除该条" + $.table._option.modalName + "信息吗？", function() {
+				$.ajax({
+					type : 'post',
+					url: prefix + "/remove/" + id,
+					success : function(result) {
+						if (result.code == web_status.SUCCESS) {
+		                	$.modal.alertSuccess(result.msg);
+		                	$.treeTable.refresh();
+		                } else {
+		                	$.modal.alertError(result.msg);
+		                }
+					}
+				});
+			});
+		}
+	</script>
 </body>
 </html>
