@@ -1,4 +1,4 @@
-package com.information.project.system.account.controller;
+package com.information.project.system.merchant.controller;
 
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
-import com.information.project.system.account.domain.Account;
-import com.information.project.system.account.service.IAccountService;
+import com.information.project.system.merchant.domain.Merchant;
+import com.information.project.system.merchant.service.IMerchantService;
 import com.information.framework.web.controller.BaseController;
 import com.information.framework.web.page.TableDataInfo;
 import com.information.framework.web.domain.AjaxResult;
@@ -25,31 +25,31 @@ import com.information.framework.web.domain.AjaxResult;
  * @date 2018-08-07
  */
 @Controller
-@RequestMapping("/system/account")
-public class AccountController extends BaseController
+@RequestMapping("/system/merchant")
+public class MerchantController extends BaseController
 {
-    private String prefix = "system/account";
+    private String prefix = "system/merchant";
 	
 	@Autowired
-	private IAccountService accountService;
+	private IMerchantService merchantService;
 	
-	@RequiresPermissions("system:account:view")
+	@RequiresPermissions("system:merchant:view")
 	@GetMapping()
-	public String account()
+	public String merchant()
 	{
-	    return prefix + "/account";
+	    return prefix + "/merchant";
 	}
 	
 	/**
 	 * 查询商户列表
 	 */
-	@RequiresPermissions("system:account:list")
+	@RequiresPermissions("system:merchant:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(Account account)
+	public TableDataInfo list(Merchant merchant)
 	{
 		startPage();
-        List<Account> list = accountService.selectAccountList(account);
+        List<Merchant> list = merchantService.selectMerchantList(merchant);
 		return getDataTable(list);
 	}
 	
@@ -65,13 +65,13 @@ public class AccountController extends BaseController
 	/**
 	 * 新增保存商户
 	 */
-	@RequiresPermissions("system:account:add")
+	@RequiresPermissions("system:merchant:add")
 	@Log(title = "商户", action = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(Account account)
+	public AjaxResult addSave(Merchant merchant)
 	{		
-		return toAjax(accountService.insertAccount(account));
+		return toAjax(merchantService.insertMerchant(merchant));
 	}
 
 	/**
@@ -80,33 +80,33 @@ public class AccountController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap)
 	{
-		Account account = accountService.selectAccountById(id);
-		mmap.put("account", account);
+		Merchant merchant = merchantService.selectMerchantById(id);
+		mmap.put("merchant", merchant);
 	    return prefix + "/edit";
 	}
 	
 	/**
 	 * 修改保存商户
 	 */
-	@RequiresPermissions("system:account:edit")
+	@RequiresPermissions("system:merchant:edit")
 	@Log(title = "商户", action = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(Account account)
+	public AjaxResult editSave(Merchant merchant)
 	{		
-		return toAjax(accountService.updateAccount(account));
+		return toAjax(merchantService.updateMerchant(merchant));
 	}
 	
 	/**
 	 * 删除商户
 	 */
-	@RequiresPermissions("system:account:remove")
+	@RequiresPermissions("system:merchant:remove")
 	@Log(title = "商户", action = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{		
-		return toAjax(accountService.deleteAccountByIds(ids));
+		return toAjax(merchantService.deleteMerchantByIds(ids));
 	}
 	
 }

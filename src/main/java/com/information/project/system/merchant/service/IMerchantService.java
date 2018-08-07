@@ -1,6 +1,6 @@
-package com.information.project.system.account.service;
+package com.information.project.system.merchant.service;
 
-import com.information.project.system.account.domain.Account;
+import com.information.project.system.merchant.domain.Merchant;
 import java.util.List;
 
 /**
@@ -9,7 +9,7 @@ import java.util.List;
  * @author LiuNing
  * @date 2018-08-07
  */
-public interface IAccountService 
+public interface IMerchantService 
 {
 	/**
      * 查询商户信息
@@ -17,31 +17,31 @@ public interface IAccountService
      * @param id 商户ID
      * @return 商户信息
      */
-	public Account selectAccountById(Long id);
+	public Merchant selectMerchantById(Long id);
 	
 	/**
      * 查询商户列表
      * 
-     * @param account 商户信息
+     * @param merchant 商户信息
      * @return 商户集合
      */
-	public List<Account> selectAccountList(Account account);
+	public List<Merchant> selectMerchantList(Merchant merchant);
 	
 	/**
      * 新增商户
      * 
-     * @param account 商户信息
+     * @param merchant 商户信息
      * @return 结果
      */
-	public int insertAccount(Account account);
+	public int insertMerchant(Merchant merchant);
 	
 	/**
      * 修改商户
      * 
-     * @param account 商户信息
+     * @param merchant 商户信息
      * @return 结果
      */
-	public int updateAccount(Account account);
+	public int updateMerchant(Merchant merchant);
 		
 	/**
      * 删除商户信息
@@ -49,6 +49,6 @@ public interface IAccountService
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-	public int deleteAccountByIds(String ids);
+	public int deleteMerchantByIds(String ids);
 	
 }
