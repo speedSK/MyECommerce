@@ -50,5 +50,6 @@ public interface IMerchantService
      * @return 结果
      */
 	public int deleteMerchantByIds(String ids);
-	
+
+	public List<Merchant> selectMerchantAll();
 }

@@ -5,58 +5,64 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-goods-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">分类id：</label>
-				<div class="col-sm-8">
-					<input id="categoryId" name="categoryId" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">商户id：</label>
-				<div class="col-sm-8">
-					<input id="merchantId" name="merchantId" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
+			<input name="categoryId"  type="hidden" id="treeId"/>
+
+			<div class="form-group">
 				<label class="col-sm-3 control-label">编码：</label>
 				<div class="col-sm-8">
 					<input id="code" name="code" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">名称：</label>
 				<div class="col-sm-8">
 					<input id="name" name="name" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">价格：</label>
 				<div class="col-sm-8">
 					<input id="price" name="price" class="form-control" type="text">
 				</div>
 			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">分类名称：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="categoryName" onclick="selectGoodCategoryTree()" readonly="true" id="treeName">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">商户：</label>
+				<div class="col-sm-8">
+					<select id="merchantId" name="merchantId" class="form-control select2-hidden-accessible" multiple="">
+						<option th:each="merchant:${merchants}" th:value="${merchant.id}" th:text="${merchant.merchantName}">1</option>
+					</select>
+
+				</div>
+			</div>
+
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">显示顺序：</label>
 				<div class="col-sm-8">
 					<input id="orderNum" name="orderNum" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">分类状态：</label>
+				<div class="col-sm-8" th:with="type=${@dict.getType('bus_show_hide')}">
+					<div th:each="dict : ${type}" th:class="${dict['cssClass']}">
+						<input type="radio" th:id="${dict['dictCode']}" name="visible" th:value="${dict['dictValue']}" th:checked="${dict['isDefault'] == 'Y' ? true : false}">
+						<label th:for="${dict['dictCode']}" th:text="${dict['dictLabel']}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">图片：</label>
 				<div class="col-sm-8">
-					<input id="image" name="image" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">分类状态：</label>
-				<div class="col-sm-8">
-					<input id="visible" name="visible" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">状态：</label>
-				<div class="col-sm-8">
-					<input id="status" name="status" class="form-control" type="text">
+					<input id="image" name="image" class="form-control" type="file">
 				</div>
 			</div>
 			<div class="form-group">
@@ -68,18 +74,45 @@
 		</form>
 	</div>
     <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs/select/select2.js}"></script>
     <script type="text/javascript">
 		var prefix = ctx + "business/goods"
 		$("#form-goods-add").validate({
 			rules:{
-				xxxx:{
+				name:{
 					required:true,
-				},
+				},merchantId:{
+					required:true,
+				},categoryName:{
+					required:true,
+				},orderNum:{
+        			required:true,
+        			digits:true
+        		},price:{
+        			required:true,
+        			number:true
+        		}
+
 			},
 			submitHandler: function(form) {
 				$.operate.save(prefix + "/add", $('#form-goods-add').serialize());
 			}
 		});
+
+
+		/*分类管理-新增-选择分类树*/
+        function selectGoodCategoryTree() {
+        	var goodCategoryId = $("#treeId").val();
+        	if(goodCategoryId > 0) {
+        		var url = ctx + "business/goodCategory/selectGoodCategoryTree/" + goodCategoryId;
+        		$.modal.open("选择分类", url, '380', '380');
+        	}
+        	else {
+                var url = ctx + "business/goodCategory/selectGoodCategoryTree/1";
+                $.modal.open("选择分类", url, '380', '380');
+            }
+        }
+
 	</script>
 </body>
 </html>

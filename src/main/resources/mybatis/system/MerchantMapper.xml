@@ -119,5 +119,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+
+
+
+    <select id="selectMerchantAll" resultMap="MerchantResult">
+        <include refid="selectMerchantVo"/>
+        where status = '1' and flag = '3'
+    </select>
+
+
     
 </mapper>

@@ -1,6 +1,8 @@
 package com.information.project.business.goods.controller;
 
 import java.util.List;
+
+import com.information.project.system.merchant.service.IMerchantService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,9 @@ public class GoodsController extends BaseController
 	
 	@Autowired
 	private IGoodsService goodsService;
+
+	@Autowired
+	private IMerchantService merchantService;
 	
 	@RequiresPermissions("business:goods:view")
 	@GetMapping()
@@ -57,9 +62,12 @@ public class GoodsController extends BaseController
 	 * 新增商品
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap mmap)
 	{
-	    return prefix + "/add";
+
+		mmap.put("merchants", merchantService.selectMerchantAll());
+
+		return prefix + "/add";
 	}
 	
 	/**

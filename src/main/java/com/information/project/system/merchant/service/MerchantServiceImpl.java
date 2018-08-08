@@ -112,5 +112,10 @@ public class MerchantServiceImpl implements IMerchantService
 		return 1;
 
 	}
-	
+
+	@Override
+	public List<Merchant> selectMerchantAll() {
+		return merchantMapper.selectMerchantAll();
+	}
+
 }
