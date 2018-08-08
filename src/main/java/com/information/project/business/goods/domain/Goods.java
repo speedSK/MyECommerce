@@ -2,14 +2,11 @@ package com.information.project.business.goods.domain;
 
 import com.information.framework.web.domain.BaseEntity;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 /**
  * 商品表 bus_goods
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-08
  */
 public class Goods extends BaseEntity
 {
@@ -17,28 +14,24 @@ public class Goods extends BaseEntity
 	
 	/** 主键 */
 	private Long id;
+	/** 分类id */
+	private Long categoryId;
+	/** 商户id */
+	private Long merchantId;
 	/** 编码 */
 	private String code;
 	/** 名称 */
 	private String name;
 	/** 价格 */
 	private BigDecimal price;
+	/** 显示顺序 */
+	private Integer orderNum;
 	/** 图片 */
 	private String image;
-	/** 商户id */
-	private Long merchantId;
-	/** 描述 */
-	private String des;
-	/** 商品上架状态 */
-	private String gooodsStatus;
+	/** 分类状态 */
+	private String visible;
 	/** 状态 */
 	private String status;
-	/** 操作人 */
-	private Long operUser;
-	/** 创建时间 */
-	private Date createTime;
-	/** 修改时间 */
-	private Date updateTime;
 
 	/**
 	 * 设置：主键
@@ -54,6 +47,38 @@ public class Goods extends BaseEntity
 	public Long getId() 
 	{
 		return id;
+	}
+	
+	/**
+	 * 设置：分类id
+	 */
+	public void setCategoryId(Long categoryId) 
+	{
+		this.categoryId = categoryId;
+	}
+	
+	/**
+	 * 获取：分类id
+	 */
+	public Long getCategoryId() 
+	{
+		return categoryId;
+	}
+	
+	/**
+	 * 设置：商户id
+	 */
+	public void setMerchantId(Long merchantId) 
+	{
+		this.merchantId = merchantId;
+	}
+	
+	/**
+	 * 获取：商户id
+	 */
+	public Long getMerchantId() 
+	{
+		return merchantId;
 	}
 	
 	/**
@@ -105,6 +130,22 @@ public class Goods extends BaseEntity
 	}
 	
 	/**
+	 * 设置：显示顺序
+	 */
+	public void setOrderNum(Integer orderNum) 
+	{
+		this.orderNum = orderNum;
+	}
+	
+	/**
+	 * 获取：显示顺序
+	 */
+	public Integer getOrderNum() 
+	{
+		return orderNum;
+	}
+	
+	/**
 	 * 设置：图片
 	 */
 	public void setImage(String image) 
@@ -121,51 +162,19 @@ public class Goods extends BaseEntity
 	}
 	
 	/**
-	 * 设置：商户id
+	 * 设置：分类状态
 	 */
-	public void setMerchantId(Long merchantId) 
+	public void setVisible(String visible) 
 	{
-		this.merchantId = merchantId;
+		this.visible = visible;
 	}
 	
 	/**
-	 * 获取：商户id
+	 * 获取：分类状态
 	 */
-	public Long getMerchantId() 
+	public String getVisible() 
 	{
-		return merchantId;
-	}
-	
-	/**
-	 * 设置：描述
-	 */
-	public void setDes(String des) 
-	{
-		this.des = des;
-	}
-	
-	/**
-	 * 获取：描述
-	 */
-	public String getDes() 
-	{
-		return des;
-	}
-	
-	/**
-	 * 设置：商品上架状态
-	 */
-	public void setGooodsStatus(String gooodsStatus) 
-	{
-		this.gooodsStatus = gooodsStatus;
-	}
-	
-	/**
-	 * 获取：商品上架状态
-	 */
-	public String getGooodsStatus() 
-	{
-		return gooodsStatus;
+		return visible;
 	}
 	
 	/**
@@ -182,54 +191,6 @@ public class Goods extends BaseEntity
 	public String getStatus() 
 	{
 		return status;
-	}
-	
-	/**
-	 * 设置：操作人
-	 */
-	public void setOperUser(Long operUser) 
-	{
-		this.operUser = operUser;
-	}
-	
-	/**
-	 * 获取：操作人
-	 */
-	public Long getOperUser() 
-	{
-		return operUser;
-	}
-	
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateTime(Date createTime) 
-	{
-		this.createTime = createTime;
-	}
-	
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateTime() 
-	{
-		return createTime;
-	}
-	
-	/**
-	 * 设置：修改时间
-	 */
-	public void setUpdateTime(Date updateTime) 
-	{
-		this.updateTime = updateTime;
-	}
-	
-	/**
-	 * 获取：修改时间
-	 */
-	public Date getUpdateTime() 
-	{
-		return updateTime;
 	}
 	
 }

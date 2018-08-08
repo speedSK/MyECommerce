@@ -6,39 +6,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="Goods" id="GoodsResult">
         <result property="id"    column="id"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="merchantId"    column="merchant_id"    />
         <result property="code"    column="code"    />
         <result property="name"    column="name"    />
         <result property="price"    column="price"    />
+        <result property="orderNum"    column="order_num"    />
         <result property="image"    column="image"    />
-        <result property="merchantId"    column="merchant_id"    />
-        <result property="des"    column="des"    />
-        <result property="gooodsStatus"    column="gooods_status"    />
+        <result property="visible"    column="visible"    />
         <result property="status"    column="status"    />
-        <result property="operUser"    column="oper_user"    />
+        <result property="remark"    column="remark"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
 	<sql id="selectGoodsVo">
-        select id, code, name, price, image, merchant_id, des, gooods_status, status, oper_user, create_time, update_time from bus_goods
+        select id, category_id, merchant_id, code, name, price, order_num, image, visible, status , remark , create_time, update_time  from bus_goods
     </sql>
 	
     <select id="selectGoodsList" parameterType="Goods" resultMap="GoodsResult">
         <include refid="selectGoodsVo"/>
         <where>  
             <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="categoryId != null and categoryId != ''"> and category_id = #{categoryId}</if>
+             <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId}</if>
              <if test="code != null and code != ''"> and code = #{code}</if>
              <if test="name != null and name != ''"> and name = #{name}</if>
              <if test="price != null and price != ''"> and price = #{price}</if>
+             <if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum}</if>
              <if test="image != null and image != ''"> and image = #{image}</if>
-             <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId}</if>
-             <if test="des != null and des != ''"> and des = #{des}</if>
-             <if test="gooodsStatus != null and gooodsStatus != ''"> and gooods_status = #{gooodsStatus}</if>
+             <if test="visible != null and visible != ''"> and visible = #{visible}</if>
              <if test="status != null and status != ''"> and status = #{status}</if>
-             <if test="operUser != null and operUser != ''"> and oper_user = #{operUser}</if>
-             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
-             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
-         </where>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+        </where>
     </select>
     
     <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult">
@@ -50,48 +52,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into bus_goods
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != '' ">id,</if>
+			<if test="categoryId != null and categoryId != '' ">category_id,</if>
+			<if test="merchantId != null and merchantId != '' ">merchant_id,</if>
 			<if test="code != null and code != '' ">code,</if>
 			<if test="name != null and name != '' ">name,</if>
 			<if test="price != null and price != '' ">price,</if>
+			<if test="orderNum != null and orderNum != '' ">order_num,</if>
 			<if test="image != null and image != '' ">image,</if>
-			<if test="merchantId != null and merchantId != '' ">merchant_id,</if>
-			<if test="des != null and des != '' ">des,</if>
-			<if test="gooodsStatus != null and gooodsStatus != '' ">gooods_status,</if>
+			<if test="visible != null and visible != '' ">visible,</if>
 			<if test="status != null and status != '' ">status,</if>
-			<if test="operUser != null and operUser != '' ">oper_user,</if>
-			<if test="createTime != null and createTime != '' ">create_time,</if>
-			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+            create_time
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != ''">#{id},</if>
+			<if test="categoryId != null and categoryId != ''">#{categoryId},</if>
+			<if test="merchantId != null and merchantId != ''">#{merchantId},</if>
 			<if test="code != null and code != ''">#{code},</if>
 			<if test="name != null and name != ''">#{name},</if>
 			<if test="price != null and price != ''">#{price},</if>
+			<if test="orderNum != null and orderNum != ''">#{orderNum},</if>
 			<if test="image != null and image != ''">#{image},</if>
-			<if test="merchantId != null and merchantId != ''">#{merchantId},</if>
-			<if test="des != null and des != ''">#{des},</if>
-			<if test="gooodsStatus != null and gooodsStatus != ''">#{gooodsStatus},</if>
+			<if test="visible != null and visible != ''">#{visible},</if>
 			<if test="status != null and status != ''">#{status},</if>
-			<if test="operUser != null and operUser != ''">#{operUser},</if>
-			<if test="createTime != null and createTime != ''">#{createTime},</if>
-			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            sysdate()
          </trim>
     </insert>
 	 
     <update id="updateGoods" parameterType="Goods">
         update bus_goods
         <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId != null  ">category_id = #{categoryId},</if>
+            <if test="merchantId != null  ">merchant_id = #{merchantId},</if>
             <if test="code != null  and code != ''  ">code = #{code},</if>
             <if test="name != null  and name != ''  ">name = #{name},</if>
             <if test="price != null  ">price = #{price},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
             <if test="image != null  and image != ''  ">image = #{image},</if>
-            <if test="merchantId != null  ">merchant_id = #{merchantId},</if>
-            <if test="des != null  and des != ''  ">des = #{des},</if>
-            <if test="gooodsStatus != null  and gooodsStatus != ''  ">gooods_status = #{gooodsStatus},</if>
+            <if test="visible != null  and visible != ''  ">visible = #{visible},</if>
             <if test="status != null  and status != ''  ">status = #{status},</if>
-            <if test="operUser != null  ">oper_user = #{operUser},</if>
-            <if test="createTime != null  ">create_time = #{createTime},</if>
-            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            update_time = sysdate()
         </trim>
         where id = #{id}
     </update>

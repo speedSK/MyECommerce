@@ -22,7 +22,7 @@ import com.information.framework.web.domain.AjaxResult;
  * 商品 信息操作处理
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-08
  */
 @Controller
 @RequestMapping("/business/goods")

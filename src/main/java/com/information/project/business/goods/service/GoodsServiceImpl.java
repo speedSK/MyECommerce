@@ -1,5 +1,7 @@
 package com.information.project.business.goods.service;
 
+import com.information.common.constant.Constants;
+import com.information.common.utils.security.ShiroUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import com.information.common.support.Convert;
  * 商品 服务层实现
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-08
  */
 @Service
 public class GoodsServiceImpl implements IGoodsService 
@@ -53,6 +55,9 @@ public class GoodsServiceImpl implements IGoodsService
 	@Override
 	public int insertGoods(Goods goods)
 	{
+	    goods.setStatus(Constants.STATUS_ACTIVE);
+
+        goods.setCreateBy(ShiroUtils.getUserId().toString());
 	    return goodsMapper.insertGoods(goods);
 	}
 	
@@ -65,6 +70,7 @@ public class GoodsServiceImpl implements IGoodsService
 	@Override
 	public int updateGoods(Goods goods)
 	{
+	    goods.setUpdateBy(ShiroUtils.getUserId().toString());
 	    return goodsMapper.updateGoods(goods);
 	}
 
@@ -77,7 +83,22 @@ public class GoodsServiceImpl implements IGoodsService
 	@Override
 	public int deleteGoodsByIds(String ids)
 	{
-		return goodsMapper.deleteGoodsByIds(Convert.toStrArray(ids));
+	    String [] idsArray = Convert.toStrArray(ids);
+        for (String id: idsArray) {
+
+            Goods goods = new Goods();
+            goods.setId(Long.valueOf(id));
+            //初始化數據信息
+
+            goods.setStatus(Constants.STATUS_REMOVED);
+
+            goods.setUpdateBy(ShiroUtils.getUserId().toString());
+
+            goodsMapper.updateGoods(goods);
+
+        }
+
+        return 1;
 	}
 	
 }
