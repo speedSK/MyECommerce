@@ -2,6 +2,8 @@ package com.information.project.business.goods.domain;
 
 import com.information.framework.web.domain.BaseEntity;
 
+import java.math.BigDecimal;
+
 /**
  * 商品表 bus_goods
  * 
