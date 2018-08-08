@@ -25,8 +25,7 @@ public class Device extends BaseEntity
 	private String ip;
 	/** 位置 */
 	private String address;
-	/** 说明 */
-	private String des;
+
 	/** 状态 */
 	private String status;
 
@@ -125,22 +124,6 @@ public class Device extends BaseEntity
 	public String getAddress() 
 	{
 		return address;
-	}
-	
-	/**
-	 * 设置：说明
-	 */
-	public void setDes(String des) 
-	{
-		this.des = des;
-	}
-	
-	/**
-	 * 获取：说明
-	 */
-	public String getDes() 
-	{
-		return des;
 	}
 
 	/**
