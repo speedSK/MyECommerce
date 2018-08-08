@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="merchantName"    column="merchant_name"    />
         <result property="mobile"    column="mobile"    />
         <result property="address"    column="address"    />
-        <result property="des"    column="des"    />
+        <result property="remark"    column="remark"    />
         <result property="accountCode"    column="account_code"    />
         <result property="accountName"    column="account_name"    />
         <result property="balance"    column="balance"    />
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectMerchantVo">
-        select id, merchant_code, merchant_name, mobile, address, des, account_code, account_name, balance, flag, status, create_by, create_time, update_by, update_time from bus_merchant
+        select id, merchant_code, merchant_name, mobile, address, remark, account_code, account_name, balance, flag, status, create_by, create_time, update_by, update_time from bus_merchant
     </sql>
 	
     <select id="selectMerchantList" parameterType="Merchant" resultMap="MerchantResult">
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="merchantName != null and merchantName != ''"> and merchant_name = #{merchantName}</if>
              <if test="mobile != null and mobile != ''"> and mobile = #{mobile}</if>
              <if test="address != null and address != ''"> and address = #{address}</if>
-             <if test="des != null and des != ''"> and des = #{des}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
              <if test="accountCode != null and accountCode != ''"> and account_code = #{accountCode}</if>
              <if test="accountName != null and accountName != ''"> and account_name = #{accountName}</if>
              <if test="balance != null and balance != ''"> and balance = #{balance}</if>
@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="merchantName != null and merchantName != '' ">merchant_name,</if>
 			<if test="mobile != null and mobile != '' ">mobile,</if>
 			<if test="address != null and address != '' ">address,</if>
-			<if test="des != null and des != '' ">des,</if>
+			<if test="remark != null and remark != '' ">remark,</if>
 			<if test="accountCode != null and accountCode != '' ">account_code,</if>
 			<if test="accountName != null and accountName != '' ">account_name,</if>
 			<if test="balance != null and balance != '' ">balance,</if>
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="merchantName != null and merchantName != ''">#{merchantName},</if>
 			<if test="mobile != null and mobile != ''">#{mobile},</if>
 			<if test="address != null and address != ''">#{address},</if>
-			<if test="des != null and des != ''">#{des},</if>
+			<if test="remark != null and remark != ''">#{remark},</if>
 			<if test="accountCode != null and accountCode != ''">#{accountCode},</if>
 			<if test="accountName != null and accountName != ''">#{accountName},</if>
 			<if test="balance != null and balance != ''">#{balance},</if>
@@ -97,7 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="merchantName != null  and merchantName != ''  ">merchant_name = #{merchantName},</if>
             <if test="mobile != null  and mobile != ''  ">mobile = #{mobile},</if>
             <if test="address != null  and address != ''  ">address = #{address},</if>
-            <if test="des != null  and des != ''  ">des = #{des},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="accountCode != null  and accountCode != ''  ">account_code = #{accountCode},</if>
             <if test="accountName != null  and accountName != ''  ">account_name = #{accountName},</if>
             <if test="balance != null  ">balance = #{balance},</if>

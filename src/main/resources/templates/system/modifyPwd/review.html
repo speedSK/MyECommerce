@@ -33,7 +33,7 @@
             <div class="form-group">	
                 <label class="col-sm-3 control-label">说明：</label>
                 <div class="col-sm-8">
-                    <input id="des" name="des" th:field="*{des}" class="form-control" type="text">
+                    <input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
 		var prefix = ctx + "system/modifyPwd"
 		$("#form-modifyPwd-edit").validate({
 			rules:{
-				des:{
+				remark:{
 					maxlength: 40,
 				},
 			},
@@ -64,7 +64,7 @@
         	var id = $("input[name='id']").val();
         	var userid = $("input[name='userid']").val();
         	var agreest = $("#agreest option:selected").val();
-        	var des = $("input[name='des']").val();
+        	var remark = $("input[name='remark']").val();
         	var newPwd = $("input[name='newPwd']").val();
 
         	$.ajax({
@@ -76,7 +76,7 @@
         			"userid": userid,
         			"agreest": agreest,
         			"newPwd": newPwd,
-        			"des": des
+        			"remark": remark
         		},
         		async : false,
         		error : function(request) {

@@ -27,8 +27,6 @@ public class ModifyPwd extends BaseEntity
 
 	private String status;
 
-	private String des;
-
 	/**
 	 * 设置：主键
 	 */
@@ -133,11 +131,4 @@ public class ModifyPwd extends BaseEntity
 		this.status = status;
 	}
 
-	public String getDes() {
-		return des;
-	}
-
-	public void setDes(String des) {
-		this.des = des;
-	}
 }

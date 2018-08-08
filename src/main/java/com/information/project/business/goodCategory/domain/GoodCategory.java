@@ -28,8 +28,6 @@ public class GoodCategory extends BaseEntity
 	private String visible;
 	/** 状态 */
 	private String status;
-	/** 描述 */
-	private String des;
 
 	/**
 	 * 设置：主键
@@ -158,21 +156,6 @@ public class GoodCategory extends BaseEntity
 	{
 		return status;
 	}
-	
-	/**
-	 * 设置：描述
-	 */
-	public void setDes(String des) 
-	{
-		this.des = des;
-	}
-	
-	/**
-	 * 获取：描述
-	 */
-	public String getDes() 
-	{
-		return des;
-	}
+
 	
 }

@@ -25,8 +25,6 @@ public class Merchant extends BaseEntity
 	private String mobile;
 	/** 地址 */
 	private String address;
-	/** 描述 */
-	private String des;
 	/** 账户编号 */
 	private String accountCode;
 	/** 账号名称 */
@@ -116,22 +114,6 @@ public class Merchant extends BaseEntity
 	public String getAddress() 
 	{
 		return address;
-	}
-	
-	/**
-	 * 设置：描述
-	 */
-	public void setDes(String des) 
-	{
-		this.des = des;
-	}
-	
-	/**
-	 * 获取：描述
-	 */
-	public String getDes() 
-	{
-		return des;
 	}
 	
 	/**
