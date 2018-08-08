@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 select-info">
+				<form id="role-form">
+					<div class="select-list gd">
+						<ul>
+							<li>
+								角色编号：<input type="text" name="roleName"/>
+							</li>
+							<li>
+								银行余额：<input type="text" name="roleKey"/>
+							</li>
+							
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" href="javascript:cash()"><i class="fa fa-search"></i>&nbsp;现金充值查询</a>
+								<a class="btn btn-primary btn-rounded btn-sm" href="javascript:bankRecharge()"><i class="fa fa-search"></i>&nbsp;银行余额查询</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+		
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script th:inline="javascript">
+		/*现金充值*/
+		function cash() {
+			var url = ctx + "business/singleRecharge/cash/" + 1;
+			$.modal.open("现金充值", url);
+		}
+		/*银行充值*/
+		function bankRecharge() {
+			var url = ctx + "business/singleRecharge/bankRecharge/" + 1;
+			$.modal.open("银行充值", url);
+		}
+	</script>
+</body>
+</html>

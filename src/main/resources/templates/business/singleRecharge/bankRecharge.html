@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-bankRecharge" th:object="${user}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">编号：</label>
+                <div class="col-sm-8">
+                    <input id="number" name="number" th:field="*{number}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">姓名：</label>
+                <div class="col-sm-8">
+                    <input id="name" name="name" th:field="*{name}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">性别：</label>
+                <div class="col-sm-8">
+                    <input id="sex" name="sex" th:field="*{sex}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">年龄：</label>
+                <div class="col-sm-8">
+                    <input id="age" name="age" th:field="*{age}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">民族：</label>
+                <div class="col-sm-8">
+                    <input id="nation" name="nation" th:field="*{nation}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">身份证号：</label>
+                <div class="col-sm-8">
+                    <input id="idNumber" name="idNumber" th:field="*{idNumber}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">银行卡号：</label>
+                <div class="col-sm-8">
+                    <input id="bankCardNumber" name="bankCardNumber" th:field="*{bankCardNumber}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">监区：</label>
+                <div class="col-sm-8">
+                    <input id="area" name="area" th:field="*{area}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">楼号：</label>
+                <div class="col-sm-8">
+                    <input id="build" name="build" th:field="*{build}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">房间：</label>
+                <div class="col-sm-8">
+                    <input id="room" name="room" th:field="*{room}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">床号：</label>
+                <div class="col-sm-8">
+                    <input id="bed" name="bed" th:field="*{bed}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">账户余额：</label>
+                <div class="col-sm-8">
+                    <input id="balance" name="balance" th:field="*{balance}" readonly="true" class="form-control" type="text">
+                </div>
+            </div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">充值</button>
+					<button onclick="$.modal.close()" class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "business/singleRecharge"
+		$("#form-bankRecharge").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			submitHandler: function(form) {
+				$.operate.save(prefix + "/bankRecharge", $('#form-bankRecharge').serialize());
+			}
+		});
+	</script>
+</body>
+</html>
