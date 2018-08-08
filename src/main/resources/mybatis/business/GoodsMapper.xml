@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Goods" id="GoodsResult">
         <result property="id"    column="id"    />
         <result property="categoryId"    column="category_id"    />
+        <result property="categoryName"    column="category_name"    />
         <result property="merchantId"    column="merchant_id"    />
         <result property="code"    column="code"    />
         <result property="name"    column="name"    />
@@ -31,7 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="categoryId != null and categoryId != ''"> and category_id = #{categoryId}</if>
              <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId}</if>
              <if test="code != null and code != ''"> and code = #{code}</if>
-             <if test="name != null and name != ''"> and name = #{name}</if>
+             <if test="name != null and name != ''"> and name like  concat('%', #{name}, '%') </if>
+             <if test="searchValue != null and searchValue != ''"> and name like  concat('%', #{searchValue}, '%') </if>
              <if test="price != null and price != ''"> and price = #{price}</if>
              <if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum}</if>
              <if test="image != null and image != ''"> and image = #{image}</if>
@@ -44,7 +46,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult">
-        <include refid="selectGoodsVo"/>
+        select t.id, t.category_id, t.merchant_id, t.code, t.name, t.price, t.order_num, t.image, t.visible, t.status , t.remark , t.create_time, t.update_time ,
+        (select category_name from bus_good_category where id = t.category_id) category_name
+        from bus_goods t
         where id = #{id}
     </select>
         

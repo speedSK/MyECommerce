@@ -18,6 +18,8 @@ public class Goods extends BaseEntity
 	private Long id;
 	/** 分类id */
 	private Long categoryId;
+	/** 分类name */
+	private String categoryName;
 	/** 商户id */
 	private Long merchantId;
 	/** 编码 */
@@ -194,5 +196,12 @@ public class Goods extends BaseEntity
 	{
 		return status;
 	}
-	
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 }

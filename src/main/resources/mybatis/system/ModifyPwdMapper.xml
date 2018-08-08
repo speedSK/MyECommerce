@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null and id != ''"> and id = #{id}</if>
              <if test="userid != null and userid != ''"> and userid = #{userid}</if>
              <if test="number != null and number != ''"> and number = #{number}</if>
+             <if test="searchValue != null and searchValue != ''"> and number like  concat('%', #{searchValue}, '%') </if>
              <if test="name != null and name != ''"> and name = #{name}</if>
              <if test="newPwd != null and newPwd != ''"> and new_pwd = #{newPwd}</if>
              <if test="agreest != null and agreest != ''"> and agreest = #{agreest}</if>

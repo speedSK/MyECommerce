@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null and id != ''"> and id = #{id}</if>
              <if test="merchantCode != null and merchantCode != ''"> and merchant_code = #{merchantCode}</if>
              <if test="merchantName != null and merchantName != ''"> and merchant_name = #{merchantName}</if>
+             <if test="searchValue != null and searchValue != ''"> and merchant_name like  concat('%', #{searchValue}, '%') </if>
              <if test="mobile != null and mobile != ''"> and mobile = #{mobile}</if>
              <if test="address != null and address != ''"> and address = #{address}</if>
              <if test="remark != null and remark != ''"> and remark = #{remark}</if>
@@ -97,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="merchantName != null  and merchantName != ''  ">merchant_name = #{merchantName},</if>
             <if test="mobile != null  and mobile != ''  ">mobile = #{mobile},</if>
             <if test="address != null  and address != ''  ">address = #{address},</if>
-            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="remark != null  and remark != ''  ">des = #{des},</if>
             <if test="accountCode != null  and accountCode != ''  ">account_code = #{accountCode},</if>
             <if test="accountName != null  and accountName != ''  ">account_name = #{accountName},</if>
             <if test="balance != null  ">balance = #{balance},</if>
@@ -120,14 +121,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-
-
-
     <select id="selectMerchantAll" resultMap="MerchantResult">
         <include refid="selectMerchantVo"/>
         where status = '1' and flag = '3'
     </select>
 
 
-    
+
 </mapper>

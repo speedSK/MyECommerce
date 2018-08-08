@@ -20,6 +20,8 @@ public class GoodCategory extends BaseEntity
 	private String categoryName;
 	/** 父级id */
 	private Long parentId;
+	/** 父级name */
+	private String parentName;
 	/** 显示顺序 */
 	private Integer orderNum;
 	/** 菜单图标 */
@@ -157,5 +159,11 @@ public class GoodCategory extends BaseEntity
 		return status;
 	}
 
-	
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
 }

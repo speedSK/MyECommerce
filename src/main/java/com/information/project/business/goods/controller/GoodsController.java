@@ -90,6 +90,8 @@ public class GoodsController extends BaseController
 	{
 		Goods goods = goodsService.selectGoodsById(id);
 		mmap.put("goods", goods);
+		mmap.put("merchants", merchantService.selectMerchantAll());
+
 	    return prefix + "/edit";
 	}
 	
