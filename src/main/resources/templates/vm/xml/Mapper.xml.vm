@@ -8,10 +8,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #foreach ($column in $columns)
         <result property="${column.attrname}"    column="${column.columnName}"    />
 #end
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
 	<sql id="select${className}Vo">
-        select#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end from ${tableName}
+        select#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end , remark , create_time, update_time  from ${tableName}
     </sql>
 	
     <select id="select${className}List" parameterType="${className}" resultMap="${className}Result">
@@ -20,6 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #foreach($column in $columns)
             <if test="$column.attrname != null and $column.attrname.trim() != ''"> and $column.columnName = #{$column.attrname}</if>
  #end
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
         </where>
     </select>
     
