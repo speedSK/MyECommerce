@@ -36,7 +36,8 @@
         			showToggle: $.common.visible(options.showToggle),   // 是否显示详细视图和列表视图的切换按钮
         			showExport: $.common.visible(options.showExport),   // 是否支持导出文件
                     queryParams: $.table._params,                       // 传递参数（*）
-                    columns: options.columns                            // 显示列信息（*）
+                    columns: options.columns,                           // 显示列信息（*）
+                    responseHandler: $.table.responseHandler            // 回调函数
                 });
             },
             // 查询条件
@@ -50,12 +51,22 @@
         			isAsc:          params.order
         		}; 
             },
+            // 请求获取数据后处理回调函数
+            responseHandler: function(res) {
+                if (res.code == 0) {
+                    return { rows: res.rows, total: res.total };
+                } else {
+                	$.modal.alertWarning(res.msg);
+                	return { rows: [], total: 0 };
+                }
+            },
             // 搜索
-            search: function(form) {
+            search: function(formId) {
+            	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
     		    var params = $("#bootstrap-table").bootstrapTable('getOptions');
     		    params.queryParams = function(params) {
     		        var search = {};
-    		        $.each($("#" + form).serializeArray(), function(i, field) {
+    		        $.each($("#" + currentId).serializeArray(), function(i, field) {
     		            search[field.name] = field.value;
     		        });
     		        search.pageSize = params.limit;
@@ -68,13 +79,16 @@
     		    $("#bootstrap-table").bootstrapTable('refresh', params);
     		},
     		// 下载
-    		exportExcel: function(form) {
-    			$.post($.table._option.exportUrl, $("#" + form).serializeArray(), function(result) {
+    		exportExcel: function(formId) {
+    			var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+    			$.modal.loading("正在导出数据，请稍后...");
+    			$.post($.table._option.exportUrl, $("#" + currentId).serializeArray(), function(result) {
     				if (result.code == web_status.SUCCESS) {
     			        window.location.href = ctx + "common/download?fileName=" + result.msg + "&delete=" + true;
     				} else {
     					$.modal.alertError(result.msg);
     				}
+    				$.modal.closeLoading();
     			});
     		},
             // 刷新
@@ -130,9 +144,10 @@
                 $.treeTable._treeTable = treeTable;
             },
             // 条件查询
-            search: function(form) {
+            search: function(formId) {
+            	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
             	var params = {};
-            	$.each($("#" + form).serializeArray(), function(i, field) {
+            	$.each($("#" + currentId).serializeArray(), function(i, field) {
             		params[field.name] = field.value;
 		        });
             	$.treeTable._treeTable.bootstrapTreeTable('refresh', params);
@@ -256,6 +271,11 @@
             },
             // 弹出层指定宽度
             open: function (title, url, width, height) {
+            	//如果是移动端，就使用自适应大小弹窗
+            	if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+            	    width = 'auto';
+            	    height = 'auto';
+            	}
             	if ($.common.isEmpty(title)) {
                     title = false;
                 };
@@ -281,6 +301,11 @@
             },
             // 弹出层全屏
             openFull: function (title, url, width, height) {
+            	//如果是移动端，就使用自适应大小弹窗
+            	if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+            	    width = 'auto';
+            	    height = 'auto';
+            	}
             	if ($.common.isEmpty(title)) {
                     title = false;
                 };

@@ -26,6 +26,4 @@ public class BusinessType
     public static final String FORCE = "7";
     /** 生成代码 */
     public static final String GENCODE = "8";
-
-
 }

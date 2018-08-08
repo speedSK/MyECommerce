@@ -1,7 +1,5 @@
 package ${package}.service;
 
-import com.information.common.constant.Constants;
-import com.information.common.utils.security.ShiroUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,9 +53,6 @@ public class ${className}ServiceImpl implements I${className}Service
 	@Override
 	public int insert${className}(${className} ${classname})
 	{
-	    ${classname}.setStatus(Constants.STATUS_ACTIVE);
-
-        ${classname}.setCreateBy(ShiroUtils.getUserId().toString());
 	    return ${classname}Mapper.insert${className}(${classname});
 	}
 	
@@ -70,7 +65,6 @@ public class ${className}ServiceImpl implements I${className}Service
 	@Override
 	public int update${className}(${className} ${classname})
 	{
-	    ${classname}.setUpdateBy(ShiroUtils.getUserId().toString());
 	    return ${classname}Mapper.update${className}(${classname});
 	}
 
@@ -83,22 +77,7 @@ public class ${className}ServiceImpl implements I${className}Service
 	@Override
 	public int delete${className}ByIds(String ids)
 	{
-	    String [] idsArray = Convert.toStrArray(ids);
-        for (String id: idsArray) {
-
-            ${className} ${classname} = new ${className}();
-            ${classname}.setId(Long.valueOf(id));
-            //初始化數據信息
-
-            ${classname}.setStatus(Constants.STATUS_REMOVED);
-
-            ${classname}.setUpdateBy(ShiroUtils.getUserId().toString());
-
-            ${classname}Mapper.update${className}(${classname});
-
-        }
-
-        return 1;
+		return ${classname}Mapper.delete${className}ByIds(Convert.toStrArray(ids));
 	}
 	
 }

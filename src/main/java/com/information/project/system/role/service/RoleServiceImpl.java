@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.information.common.constant.UserConstants;
 import com.information.common.support.Convert;
 import com.information.common.utils.StringUtils;
@@ -20,7 +21,7 @@ import com.information.project.system.user.mapper.UserRoleMapper;
 /**
  * 角色 业务层处理
  * 
- * @author LiuNing
+ * @author Liunning
  */
 @Service
 public class RoleServiceImpl implements IRoleService
@@ -83,7 +84,7 @@ public class RoleServiceImpl implements IRoleService
         {
             for (Role userRole : userRoles)
             {
-                if (role.getRoleId() == userRole.getRoleId())
+                if (role.getRoleId().longValue() == userRole.getRoleId().longValue())
                 {
                     role.setFlag(true);
                     break;
@@ -186,7 +187,7 @@ public class RoleServiceImpl implements IRoleService
     /**
      * 新增角色菜单信息
      * 
-     * @param user 角色对象
+     * @param role 角色对象
      */
     public int insertRoleMenu(Role role)
     {
@@ -223,6 +224,24 @@ public class RoleServiceImpl implements IRoleService
             return UserConstants.ROLE_NAME_NOT_UNIQUE;
         }
         return UserConstants.ROLE_NAME_UNIQUE;
+    }
+    
+    /**
+     * 校验角色权限是否唯一
+     * 
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    public String checkRoleKeyUnique(Role role)
+    {
+        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
+        Role info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
+        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
+        {
+            return UserConstants.ROLE_KEY_NOT_UNIQUE;
+        }
+        return UserConstants.ROLE_KEY_UNIQUE;
     }
 
     /**

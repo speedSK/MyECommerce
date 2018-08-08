@@ -2,13 +2,14 @@ package com.information.project.business.goods.controller;
 
 import java.util.List;
 
-import com.information.common.utils.FileUploadUtils;
 import com.information.project.system.merchant.service.IMerchantService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import com.information.common.utils.file.FileUploadUtils;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
 import com.information.project.business.goods.domain.Goods;

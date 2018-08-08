@@ -1,20 +1,31 @@
-# 项目名称、版本、版权年份
-information:
-  name: Information
-  version: 1.0.0
+# 项目相关配置
+ruoyi:
+  #名称
+  name: Inormation
+  #版本
+  version: 2.3.0
+  #版权年份
   copyrightYear: 2018
-  profile: /app/profile/
-
+  #头像上传路径
+  profile: D:/profile/
 #开发环境配置
 server:
-  #端口
-  port: 8080
+  #服务端口
+  port: 80
+  servlet:
+    # 项目contextPath
+    context-path: /
   tomcat:
-    uri-encoding: utf-8
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
 #日志配置
 logging:
   level:
-    com.information: debug
+    com.ruoyi: debug
     org.springframework: WARN
     org.spring.springboot.dao: debug
 #用户配置
@@ -41,7 +52,6 @@ spring:
      multipart:
        max-file-size:  30MB
        max-request-size:  30MB
-
   devtools:
     restart:
       #禁用devtools模块的热部署功能
@@ -49,7 +59,7 @@ spring:
 # MyBatis
 mybatis:
     # 搜索指定包别名
-    typeAliasesPackage: com.information.project
+    typeAliasesPackage: com.ruoyi.project
     # 配置mapper的扫描，找到所有的mapper.xml映射文件
     mapperLocations: classpath:mybatis/**/*Mapper.xml
     # 加载全局的配置文件
@@ -94,8 +104,8 @@ gen:
   # 作者
   author: LiuNing
   # 默认生成包路径 module 需改成自己的模块名称 如 system monitor tool
-  packageName: com.information.project.business
+  packageName: com.ruoyi.project.module
   # 自动去除表前缀，默认是true
   autoRemovePre: true
   # 表前缀(类名不会包含表前缀)
-  tablePrefix: bus_
+  tablePrefix: sys_

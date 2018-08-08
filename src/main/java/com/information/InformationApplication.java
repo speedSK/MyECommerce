@@ -3,7 +3,7 @@ package com.information;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 import com.information.project.bank.server.SocketServer;
 
@@ -12,8 +12,7 @@ import com.information.project.bank.server.SocketServer;
  * 
  * @author LiuNing
  */
-@SpringBootApplication
-@EnableTransactionManagement
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 @MapperScan("com.information.project.*.*.mapper")
 public class InformationApplication {
 	public static void main(String[] args) {

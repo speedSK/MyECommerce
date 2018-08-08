@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.poi.ExcelUtil;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
@@ -51,6 +53,7 @@ public class DictTypeController extends BaseController
     }
 
     @Log(title = "字典类型", action = BusinessType.EXPORT)
+    @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(DictType dictType) throws Exception
@@ -146,7 +149,7 @@ public class DictTypeController extends BaseController
     public String checkDictTypeUnique(DictType dictType)
     {
         String uniqueFlag = "0";
-        if (dictType != null)
+        if (StringUtils.isNotNull(dictType))
         {
             uniqueFlag = dictTypeService.checkDictTypeUnique(dictType);
         }

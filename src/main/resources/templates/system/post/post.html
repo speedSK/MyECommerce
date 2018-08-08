@@ -9,7 +9,7 @@
 		<div class="row">
 			<div class="col-sm-12 select-info">
 				<form id="post-form">
-					<div class="select-list gd">
+					<div class="select-list">
 						<ul>
 							<li>
 								岗位编码：<input type="text" name="postCode"/>
@@ -24,8 +24,8 @@
 								</select>
 							</li>
 							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search($('form').attr('id'))"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							    <a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel($('form').attr('id'))"><i class="fa fa-download"></i>&nbsp;下载</a>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="system:post:export"><i class="fa fa-download"></i>&nbsp;导出</a>
 							</li>
 						</ul>
 					</div>
@@ -33,12 +33,12 @@
 			</div>
 			
 			<div class="btn-group hidden-xs" id="toolbar" role="group">
-				<button class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="system:post:add">
+				<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="system:post:add">
 	                <i class="fa fa-plus"></i> 新增
-	            </button>
-				<button class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="system:post:remove">
+	            </a>
+				<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="system:post:remove">
 		            <i class="fa fa-trash-o"></i> 删除
-		        </button>
+		        </a>
 	        </div>
 	        
 	        <div class="col-sm-12 select-info table-striped">

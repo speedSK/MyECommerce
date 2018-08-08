@@ -1,6 +1,7 @@
 package com.information.project.system.post.controller;
 
 import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.poi.ExcelUtil;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
@@ -51,6 +54,7 @@ public class PostController extends BaseController
     }
 
     @Log(title = "岗位管理", action = BusinessType.EXPORT)
+    @RequiresPermissions("system:post:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(Post post) throws Exception
@@ -124,6 +128,36 @@ public class PostController extends BaseController
     public AjaxResult editSave(Post post)
     {
         return toAjax(postService.updatePost(post));
+    }
+
+    /**
+     * 校验岗位名称
+     */
+    @PostMapping("/checkPostNameUnique")
+    @ResponseBody
+    public String checkPostNameUnique(Post post)
+    {
+        String uniqueFlag = "0";
+        if (StringUtils.isNotNull(post))
+        {
+            uniqueFlag = postService.checkPostNameUnique(post);
+        }
+        return uniqueFlag;
+    }
+
+    /**
+     * 校验岗位编码
+     */
+    @PostMapping("/checkPostCodeUnique")
+    @ResponseBody
+    public String checkPostCodeUnique(Post post)
+    {
+        String uniqueFlag = "0";
+        if (StringUtils.isNotNull(post))
+        {
+            uniqueFlag = postService.checkPostCodeUnique(post);
+        }
+        return uniqueFlag;
     }
 
 }

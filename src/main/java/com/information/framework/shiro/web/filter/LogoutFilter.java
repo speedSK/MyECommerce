@@ -46,7 +46,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
             String redirectUrl = getRedirectUrl(request, response, subject);
             try
             {
-                User user = (User) ShiroUtils.getSubjct().getPrincipal();
+                User user = ShiroUtils.getUser();
                 if (StringUtils.isNotNull(user))
                 {
                     String loginName = user.getLoginName();
@@ -64,7 +64,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
         }
         catch (Exception e)
         {
-            log.debug("Encountered session exception during logout.  This can generally safely be ignored.", e);
+            log.error("Encountered session exception during logout.  This can generally safely be ignored.", e);
         }
         return false;
     }

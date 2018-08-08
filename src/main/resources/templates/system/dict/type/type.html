@@ -9,7 +9,7 @@
 		<div class="row">
 			<div class="col-sm-12 select-info">
 				<form id="type-form">
-					<div class="select-list gd">
+					<div class="select-list">
 						<ul>
 							<li>
 								字典名称：<input type="text" name="dictName"/>
@@ -25,13 +25,13 @@
 							</li>
 							<li class="time">
 								<label>创建时间： </label>
-								<input type="text" class="layui-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
 								<span>-</span>
-								<input type="text" class="layui-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
 							</li>
 							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search($('form').attr('id'))"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							    <a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel($('form').attr('id'))"><i class="fa fa-download"></i>&nbsp;下载</a>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="system:dict:export"><i class="fa fa-download"></i>&nbsp;导出</a>
 							</li>
 						</ul>
 					</div>
