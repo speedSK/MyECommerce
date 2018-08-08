@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-uploadRecord-edit" th:object="${uploadRecord}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">功能模块名称：</label>
+                <div class="col-sm-8">
+                    <input id="module" name="module" th:field="*{module}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">上传文件名：</label>
+                <div class="col-sm-8">
+                    <input id="uploadName" name="uploadName" th:field="*{uploadName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">成功条数：</label>
+                <div class="col-sm-8">
+                    <input id="successCount" name="successCount" th:field="*{successCount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">失败文件名：</label>
+                <div class="col-sm-8">
+                    <input id="failName" name="failName" th:field="*{failName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">失败条数：</label>
+                <div class="col-sm-8">
+                    <input id="failCount" name="failCount" th:field="*{failCount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <input id="status" name="status" th:field="*{status}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">创建时间：</label>
+                <div class="col-sm-8">
+                    <input id="createTime" name="createTime" th:field="*{createTime}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">创建人：</label>
+                <div class="col-sm-8">
+                    <input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">修改时间：</label>
+                <div class="col-sm-8">
+                    <input id="updateTime" name="updateTime" th:field="*{updateTime}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">修改人：</label>
+                <div class="col-sm-8">
+                    <input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">
+                </div>
+            </div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button onclick="$.modal.close()" class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "business/uploadRecord"
+		$("#form-uploadRecord-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			submitHandler: function(form) {
+				$.operate.save(prefix + "/edit", $('#form-uploadRecord-edit').serialize());
+			}
+		});
+	</script>
+</body>
+</html>

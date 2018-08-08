@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.business.uploadRecord.mapper.UploadRecordMapper">
+    
+    <resultMap type="UploadRecord" id="UploadRecordResult">
+        <result property="id"    column="id"    />
+        <result property="module"    column="module"    />
+        <result property="uploadName"    column="upload_name"    />
+        <result property="successCount"    column="success_count"    />
+        <result property="failName"    column="fail_name"    />
+        <result property="failCount"    column="fail_count"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectUploadRecordVo">
+        select id, module, upload_name, success_count, fail_name, fail_count, status, remark, create_time, create_by, update_time, update_by , remark , create_time, update_time  from bus_upload_record
+    </sql>
+	
+    <select id="selectUploadRecordList" parameterType="UploadRecord" resultMap="UploadRecordResult">
+        <include refid="selectUploadRecordVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="module != null and module != ''"> and module = #{module}</if>
+             <if test="uploadName != null and uploadName != ''"> and upload_name = #{uploadName}</if>
+             <if test="successCount != null and successCount != ''"> and success_count = #{successCount}</if>
+             <if test="failName != null and failName != ''"> and fail_name = #{failName}</if>
+             <if test="failCount != null and failCount != ''"> and fail_count = #{failCount}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+             <if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+             <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectUploadRecordById" parameterType="Long" resultMap="UploadRecordResult">
+        <include refid="selectUploadRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUploadRecord" parameterType="UploadRecord">
+        insert into bus_upload_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="module != null and module != '' ">module,</if>
+			<if test="uploadName != null and uploadName != '' ">upload_name,</if>
+			<if test="successCount != null and successCount != '' ">success_count,</if>
+			<if test="failName != null and failName != '' ">fail_name,</if>
+			<if test="failCount != null and failCount != '' ">fail_count,</if>
+			<if test="status != null and status != '' ">status,</if>
+			<if test="remark != null and remark != '' ">remark,</if>
+			<if test="createTime != null and createTime != '' ">create_time,</if>
+			<if test="createBy != null and createBy != '' ">create_by,</if>
+			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+			<if test="updateBy != null and updateBy != '' ">update_by,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="module != null and module != ''">#{module},</if>
+			<if test="uploadName != null and uploadName != ''">#{uploadName},</if>
+			<if test="successCount != null and successCount != ''">#{successCount},</if>
+			<if test="failName != null and failName != ''">#{failName},</if>
+			<if test="failCount != null and failCount != ''">#{failCount},</if>
+			<if test="status != null and status != ''">#{status},</if>
+			<if test="remark != null and remark != ''">#{remark},</if>
+			<if test="createTime != null and createTime != ''">#{createTime},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
+			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+			<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            sysdate()
+         </trim>
+    </insert>
+	 
+    <update id="updateUploadRecord" parameterType="UploadRecord">
+        update bus_upload_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="module != null  and module != ''  ">module = #{module},</if>
+            <if test="uploadName != null  and uploadName != ''  ">upload_name = #{uploadName},</if>
+            <if test="successCount != null  ">success_count = #{successCount},</if>
+            <if test="failName != null  and failName != ''  ">fail_name = #{failName},</if>
+            <if test="failCount != null  ">fail_count = #{failCount},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteUploadRecordById" parameterType="Long">
+        delete from bus_upload_record where id = #{id}
+    </delete>
+	
+    <delete id="deleteUploadRecordByIds" parameterType="String">
+        delete from bus_upload_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
