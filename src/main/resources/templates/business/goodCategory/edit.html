@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">菜单状态：</label>
+                <label class="col-sm-3 control-label">分类状态：</label>
                 <div class="col-sm-8" th:with="type=${@dict.getType('bus_show_hide')}">
                     <div th:each="dict : ${type}" th:class="${dict['cssClass']}">
                         <input type="radio" th:id="${dict['dictCode']}" name="visible" th:value="${dict['dictValue']}" th:field="*{visible}">
@@ -99,7 +99,7 @@
         	},
         	messages: {
                 "categoryName": {
-                    remote: "菜单已经存在"
+                    remote: "分类已经存在"
                 }
             },
         	submitHandler:function(form){
@@ -123,15 +123,15 @@
             });
 
         });
-        /*菜单管理-修改-选择菜单树*/
+        /*分类管理-修改-选择分类树*/
         function selectGoodCategoryTree() {
         	var parentId = $("#treeId").val();
         	if(parentId > 0) {
         		var url = prefix + "/selectGoodCategoryTree/" + parentId;
-        		$.modal.open("选择菜单", url, '380', '380');
+        		$.modal.open("选择分类", url, '380', '380');
         	}
         	else {
-        		$.modal.alertError("主菜单不能选择");
+        		$.modal.alertError("主分类不能选择");
         	}
         }
 
