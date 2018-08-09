@@ -12,17 +12,17 @@ import java.util.List;
 public interface PersonMapper 
 {
 	/**
-     * 查询业务（犯人）信息
+     * 查询人员管理
      * 
      * @param id 业务（犯人）ID
-     * @return 业务（犯人）信息
+     * @return 人员管理
      */
 	public Person selectPersonById(Long id);
 	
 	/**
      * 查询业务（犯人）列表
      * 
-     * @param person 业务（犯人）信息
+     * @param person 人员管理
      * @return 业务（犯人）集合
      */
 	public List<Person> selectPersonList(Person person);
@@ -30,7 +30,7 @@ public interface PersonMapper
 	/**
      * 新增业务（犯人）
      * 
-     * @param person 业务（犯人）信息
+     * @param person 人员管理
      * @return 结果
      */
 	public int insertPerson(Person person);
@@ -38,7 +38,7 @@ public interface PersonMapper
 	/**
      * 修改业务（犯人）
      * 
-     * @param person 业务（犯人）信息
+     * @param person 人员管理
      * @return 结果
      */
 	public int updatePerson(Person person);

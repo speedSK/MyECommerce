@@ -41,7 +41,7 @@ public class BankServiceImpl implements IBankService{
 			List<Person> list = personMapper.selectPersonList(person);
 			if (list!=null&&list.size()>0) {
 				Person usr = list.get(0);
-				if ("1".equals(usr.getAccStatus())) {
+				if ("1".equals(usr.getFlag())) {
 					receiveFromBankInfo.setResponsecode("000000");
 					receiveFromBankInfo.setResponsename("签约成功");
 				}else {

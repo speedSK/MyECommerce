@@ -21,7 +21,7 @@ import com.information.framework.web.page.TableDataInfo;
 import com.information.framework.web.domain.AjaxResult;
 
 /**
- * 业务（犯人） 信息操作处理
+ * 人员管理操作处理
  * 
  * @author LiuNing
  * @date 2018-08-09
@@ -90,7 +90,7 @@ public class PersonController extends BaseController
 	{
 		Person person = personService.selectPersonById(id);
 		mmap.put("person", person);
-		mmap.put("posts", postService.selectPostAll());
+		mmap.put("depts", postService.selectPostAll());
 	    return prefix + "/edit";
 	}
 	

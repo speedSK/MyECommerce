@@ -5,7 +5,7 @@ import com.information.framework.web.domain.BaseEntity;
 import java.math.BigDecimal;
 
 /**
- * 业务（犯人）表 bus_person
+ * 人员管理 bus_person
  * 
  * @author LiuNing
  * @date 2018-08-09
@@ -27,7 +27,7 @@ public class Person extends BaseEntity
 	/** 民族 */
 	private Long nation;
 	/** 身份证号 */
-	private String idNumber;
+	private String idcard;
 	/** 银行卡号 */
 	private String bankCardNumber;
 	/** 楼号 */
@@ -59,7 +59,7 @@ public class Person extends BaseEntity
 	/** 当月已经消费 */
 	private BigDecimal alreadyCost;
 	/** 账户状态 */
-	private String accStatus;
+	private String flag;
 	/** 状态 */
 	private String status;
 
@@ -162,19 +162,14 @@ public class Person extends BaseEntity
 	/**
 	 * 设置：身份证号
 	 */
-	public void setIdNumber(String idNumber) 
-	{
-		this.idNumber = idNumber;
+	public String getIdcard() {
+		return idcard;
 	}
-	
-	/**
-	 * 获取：身份证号
-	 */
-	public String getIdNumber() 
-	{
-		return idNumber;
+
+	public void setIdcard(String idcard) {
+		this.idcard = idcard;
 	}
-	
+
 	/**
 	 * 设置：银行卡号
 	 */
@@ -383,23 +378,15 @@ public class Person extends BaseEntity
 	{
 		return alreadyCost;
 	}
-	
-	/**
-	 * 设置：账户状态
-	 */
-	public void setAccStatus(String accStatus) 
-	{
-		this.accStatus = accStatus;
+
+	public String getFlag() {
+		return flag;
 	}
-	
-	/**
-	 * 获取：账户状态
-	 */
-	public String getAccStatus() 
-	{
-		return accStatus;
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
-	
+
 	/**
 	 * 设置：状态
 	 */

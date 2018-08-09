@@ -355,7 +355,7 @@ public class TransOfABC {
 		logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno);
 		Person person = new Person();
 		person.setNumber(idserial);
-		person.setIdNumber(idserial2);
+		person.setIdcard(idserial2);
 		person.setBankCardNumber(bankcdno);
 		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(person);
 		byte[] pckBody = createPckSign(receiveFromBankInfo);

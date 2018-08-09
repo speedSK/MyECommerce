@@ -11,7 +11,7 @@ import com.information.project.business.person.service.IPersonService;
 import com.information.common.support.Convert;
 
 /**
- * 业务（犯人） 服务层实现
+ * 人员管理 服务层实现
  * 
  * @author LiuNing
  * @date 2018-08-09
@@ -23,10 +23,10 @@ public class PersonServiceImpl implements IPersonService
 	private PersonMapper personMapper;
 
 	/**
-     * 查询业务（犯人）信息
+     * 查询人员管理信息
      * 
-     * @param id 业务（犯人）ID
-     * @return 业务（犯人）信息
+     * @param id 人员管理ID
+     * @return 人员管理信息
      */
     @Override
 	public Person selectPersonById(Long id)
@@ -35,10 +35,10 @@ public class PersonServiceImpl implements IPersonService
 	}
 	
 	/**
-     * 查询业务（犯人）列表
+     * 查询人员管理列表
      * 
-     * @param person 业务（犯人）信息
-     * @return 业务（犯人）集合
+     * @param person 人员管理信息
+     * @return 人员管理集合
      */
 	@Override
 	public List<Person> selectPersonList(Person person)
@@ -47,9 +47,9 @@ public class PersonServiceImpl implements IPersonService
 	}
 	
     /**
-     * 新增业务（犯人）
+     * 新增人员管理
      * 
-     * @param person 业务（犯人）信息
+     * @param person 人员管理信息
      * @return 结果
      */
 	@Override
@@ -62,9 +62,9 @@ public class PersonServiceImpl implements IPersonService
 	}
 	
 	/**
-     * 修改业务（犯人）
+     * 修改人员管理
      * 
-     * @param person 业务（犯人）信息
+     * @param person 人员管理信息
      * @return 结果
      */
 	@Override
@@ -75,7 +75,7 @@ public class PersonServiceImpl implements IPersonService
 	}
 
 	/**
-     * 删除业务（犯人）对象
+     * 删除人员管理对象
      * 
      * @param ids 需要删除的数据ID
      * @return 结果
