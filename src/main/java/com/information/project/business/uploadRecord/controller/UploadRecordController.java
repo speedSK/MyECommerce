@@ -134,15 +134,12 @@ public class UploadRecordController extends BaseController
             	ExcelUtil<BatchRechargeVo> util = new ExcelUtil<BatchRechargeVo>(BatchRechargeVo.class);
             	List<BatchRechargeVo> list = util.importExcel("批量充值", file.getInputStream());
             	System.out.println(list.size());
-            	uploadRecordService.saveRecharge(list);
-//                String avatar = FileUploadUtils.upload(file);
-//                user.setAvatar(avatar);
-//                user.setUserId(1l);
-//                if (userService.updateUserInfo(user) > 0)
-//                {
-//                    setUser(userService.selectUserById(user.getUserId()));
-//                    return success();
-//                }
+            	List<BatchRechargeVo> failList = uploadRecordService.saveRecharge(list);
+            	if (!failList.isEmpty()) {
+					return util.exportExcel(failList, "批量充值");
+				} else {
+					return success();
+				}
             }
             return error();
         }

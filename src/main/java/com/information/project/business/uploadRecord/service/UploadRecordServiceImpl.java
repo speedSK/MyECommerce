@@ -2,10 +2,14 @@ package com.information.project.business.uploadRecord.service;
 
 import com.information.common.constant.Constants;
 import com.information.common.utils.security.ShiroUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.information.project.business.uploadRecord.mapper.UploadRecordMapper;
+import com.information.project.business.person.domain.Person;
+import com.information.project.business.person.mapper.PersonMapper;
 import com.information.project.business.uploadRecord.domain.BatchRechargeVo;
 import com.information.project.business.uploadRecord.domain.UploadRecord;
 import com.information.project.business.uploadRecord.service.IUploadRecordService;
@@ -22,6 +26,9 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 {
 	@Autowired
 	private UploadRecordMapper uploadRecordMapper;
+	
+	@Autowired
+	private PersonMapper personMapper;
 
 	/**
      * 查询功能导入记录信息
@@ -103,12 +110,25 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 	}
 
 	@Override
-	public void saveRecharge(List<BatchRechargeVo> list) {
+	public List<BatchRechargeVo> saveRecharge(List<BatchRechargeVo> list) {
+		List<BatchRechargeVo> failList = new ArrayList<>();
 		for (BatchRechargeVo batchRechargeVo : list) {
 			if (batchRechargeVo.getNumber()!=null||batchRechargeVo.getAmount()!=null) {
-				
+				Person person = new Person();
+				person.setNumber(batchRechargeVo.getNumber());
+				person.setStatus(Constants.STATUS_ACTIVE);
+				List<Person> pList = personMapper.selectPersonList(person);
+				if (pList==null||pList.size()==0) {
+					failList.add(batchRechargeVo);
+				} else {
+					person.setBalance(person.getBalance().add(batchRechargeVo.getAmount()));
+					//TODO 计算校验字段
+					
+					personMapper.updatePerson(person);
+				}
 			}
 		}
+		return failList;
 	}
 	
 }

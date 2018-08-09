@@ -52,6 +52,6 @@ public interface IUploadRecordService
      */
 	public int deleteUploadRecordByIds(String ids);
 
-	public void saveRecharge(List<BatchRechargeVo> list);
+	public List<BatchRechargeVo> saveRecharge(List<BatchRechargeVo> list);
 	
 }
