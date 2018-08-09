@@ -125,7 +125,7 @@
                 <label class="col-sm-3 control-label">账户状态：</label>
                 <div class="col-sm-8">
 
-                    <select id="flag" name="flag" class="form-control m-b" th:with="type=${@dict.getType('bus_person_flag')}">
+                    <select id="flag" name="flag" readonly="readonly"   class="form-control m-b" th:with="type=${@dict.getType('bus_person_flag')}">
                         <option th:each="dict : ${type}" th:text="${dict['dictLabel']}" th:value="${dict['dictValue']}" th:field="*{flag}"></option>
                     </select>
                 </div>

@@ -88,7 +88,7 @@ public class PersonController extends BaseController
 	{
 		Person person = personService.selectPersonById(id);
 		mmap.put("person", person);
-		mmap.put("depts", postService.selectPostAll());
+		mmap.put("posts", postService.selectPostAll());
 	    return prefix + "/edit";
 	}
 	
