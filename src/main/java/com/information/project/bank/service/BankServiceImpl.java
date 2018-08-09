@@ -2,24 +2,24 @@ package com.information.project.bank.service;
 
 import java.util.List;
 
-import com.information.project.business.user.domain.BusUser;
+import com.information.project.business.person.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.information.project.bank.domain.ReceiveFromBankInfo;
-import com.information.project.business.user.mapper.BusUserMapper;
+import com.information.project.business.person.mapper.PersonMapper;
 
 @Service
 public class BankServiceImpl implements IBankService{
 	
 	@Autowired
-	private BusUserMapper busUserMapper;
+	private PersonMapper busUserMapper;
 	
 	@Override
-	public ReceiveFromBankInfo queryUserInfo4Bank(BusUser user) {
+	public ReceiveFromBankInfo queryUserInfo4Bank(Person person) {
 		ReceiveFromBankInfo receiveFromBankInfo = new ReceiveFromBankInfo();
 		try {
-			List<BusUser> list = busUserMapper.selectBusUserList(user);
+			List<Person> list = busUserMapper.selectPersonList(person);
 			if (list!=null&&list.size()>0) {
 				receiveFromBankInfo.setResponsecode("000000");
 				receiveFromBankInfo.setResponsename("查询成功");
@@ -35,12 +35,12 @@ public class BankServiceImpl implements IBankService{
 	}
 
 	@Override
-	public ReceiveFromBankInfo queryUserSign(BusUser user) {
+	public ReceiveFromBankInfo queryUserSign(Person person) {
 		ReceiveFromBankInfo receiveFromBankInfo = new ReceiveFromBankInfo();
 		try {
-			List<BusUser> list = busUserMapper.selectBusUserList(user);
+			List<Person> list = busUserMapper.selectPersonList(person);
 			if (list!=null&&list.size()>0) {
-				BusUser usr = list.get(0);
+				Person usr = list.get(0);
 				if ("1".equals(usr.getAccStatus())) {
 					receiveFromBankInfo.setResponsecode("000000");
 					receiveFromBankInfo.setResponsename("签约成功");

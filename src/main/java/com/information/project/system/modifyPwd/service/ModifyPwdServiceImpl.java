@@ -5,8 +5,8 @@ import com.information.common.utils.StringUtils;
 import com.information.common.utils.security.ShiroUtils;
 import java.util.List;
 
-import com.information.project.business.user.domain.BusUser;
-import com.information.project.business.user.mapper.BusUserMapper;
+import com.information.project.business.person.domain.Person;
+import com.information.project.business.person.mapper.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.information.project.system.modifyPwd.mapper.ModifyPwdMapper;
@@ -28,7 +28,7 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 
 
 	@Autowired
-	private BusUserMapper busUserMapper;
+	private PersonMapper busUserMapper;
 
 	/**
      * 查询密码修改申请信息
@@ -70,10 +70,10 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 
 			//修改密码
 
-			BusUser buser = new BusUser();
+			Person buser = new Person();
 			buser.setId(modifyPwd.getUserid());
 			buser.setPassword(modifyPwd.getNewPwd());
-			busUserMapper.updateBusUser(buser) ;
+			busUserMapper.updatePerson(buser) ;
 
 		}
 		return 1 ;
