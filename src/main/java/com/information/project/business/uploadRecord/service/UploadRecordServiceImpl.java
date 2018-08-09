@@ -3,6 +3,7 @@ package com.information.project.business.uploadRecord.service;
 import com.information.common.constant.Constants;
 import com.information.common.utils.security.ShiroUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +122,8 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 				if (pList==null||pList.size()==0) {
 					failList.add(batchRechargeVo);
 				} else {
-					person.setBalance(person.getBalance().add(batchRechargeVo.getAmount()));
+					person = pList.get(0);
+					person.setBalance(person.getBalance().add(new BigDecimal(batchRechargeVo.getAmount())));
 					//TODO 计算校验字段
 					
 					personMapper.updatePerson(person);
