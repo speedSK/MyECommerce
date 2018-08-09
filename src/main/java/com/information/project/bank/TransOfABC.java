@@ -17,7 +17,7 @@ import com.information.project.bank.domain.ReceiveFromBankInfo;
 import com.information.project.bank.domain.TransVo;
 import com.information.project.bank.service.BankServiceImpl;
 import com.information.project.bank.service.IBankService;
-import com.information.project.business.user.domain.BusUser;
+import com.information.project.business.person.domain.Person;
 
 public class TransOfABC {
 	
@@ -328,7 +328,7 @@ public class TransOfABC {
 	public static byte[] queryUserInfoSign(byte[] buf) throws Exception {
 		logger.info("queryUserInfoSign接收报文:" + new String(buf));
 		String idserial = new String(buf, 15, 18);
-		BusUser user = new BusUser();
+		Person user = new Person();
 		user.setNumber(idserial);
 		logger.info("编号：" + idserial + "。");
 		try {
@@ -353,11 +353,11 @@ public class TransOfABC {
 		String idserial2 = new String(buf, 94, 18);
 		String bankcdno = new String(buf, 123, 32);
 		logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno);
-		BusUser user = new BusUser();
-		user.setNumber(idserial);
-		user.setIdNumber(idserial2);
-		user.setBankCardNumber(bankcdno);
-		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(user);
+		Person person = new Person();
+		person.setNumber(idserial);
+		person.setIdNumber(idserial2);
+		person.setBankCardNumber(bankcdno);
+		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(person);
 		byte[] pckBody = createPckSign(receiveFromBankInfo);
 		if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
 			logger.info("用户:" + idserial + ",发起签约，签约成功");

@@ -1,11 +1,11 @@
 package com.information.project.bank.service;
 
 import com.information.project.bank.domain.ReceiveFromBankInfo;
-import com.information.project.business.user.domain.BusUser;
+import com.information.project.business.person.domain.Person;
 
 public interface IBankService {
 
-	public ReceiveFromBankInfo queryUserInfo4Bank(BusUser user);
+	public ReceiveFromBankInfo queryUserInfo4Bank(Person person);
 	
-	public ReceiveFromBankInfo queryUserSign(BusUser user);
+	public ReceiveFromBankInfo queryUserSign(Person person);
 }

@@ -4,17 +4,55 @@
 <head th:include="include :: header"></head>
 <body class="gray-bg">
     <div class="container-div">
-		<div class="btn-group hidden-xs" id="toolbar" role="group">
-			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:uploadRecord:add">
-				<i class="fa fa-plus"></i> 新增
-			</a>
-			<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="business:uploadRecord:remove">
-				<i class="fa fa-trash-o"></i> 删除
-			</a>
-		</div>
+    <div class="row">
+			<div class="col-sm-12 select-info">
+				<form id="role-form">
+					<div class="select-list">
+						<ul>
+							<li>
+								角色名称：<input type="text" name="roleName"/>
+							</li>
+							<li>
+								权限字符：<input type="text" name="roleKey"/>
+							</li>
+							<li>
+								角色状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+									<option value="">所有</option>
+									<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+								</select>
+							</li>
+							<li class="time">
+								<label>创建时间： </label>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="system:role:export"><i class="fa fa-download"></i>&nbsp;导出</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<form id="form_table" action="#" th:action="@{/business/uploadRecord/batchImport}" enctype="multipart/form-data" method="post">
+				<input class="form-input" type="file" name="importfile"></input>
+				<button type="submit" class="btn">开始导入</button>
+				<div class="btn-group hidden-xs" id="toolbar" role="group">
+					<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:uploadRecord:add">
+						<i class="fa fa-plus"></i> 模板下载
+					</a>
+					<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.submit()" shiro:hasPermission="business:uploadRecord:remove">
+						<i class="fa fa-trash-o"></i> 开始导入
+					</a>
+				</div>
+			</form>
 			
-		<div class="col-sm-12 select-info table-striped">
-			<table id="bootstrap-table" data-mobile-responsive="true"></table>
+				
+			<div class="col-sm-12 select-info table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
 		</div>
     </div>
     <div th:include="include :: footer"></div>
