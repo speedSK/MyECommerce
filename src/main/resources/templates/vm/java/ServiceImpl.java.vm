@@ -43,6 +43,7 @@ public class ${className}ServiceImpl implements I${className}Service
 	@Override
 	public List<${className}> select${className}List(${className} ${classname})
 	{
+	    ${classname}.setStatus(Constants.STATUS_ACTIVE);
 	    return ${classname}Mapper.select${className}List(${classname});
 	}
 

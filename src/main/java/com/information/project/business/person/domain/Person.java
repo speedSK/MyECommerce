@@ -45,7 +45,7 @@ public class Person extends BaseEntity
 	/** 部门 */
 	private Long deptId;
 	/** 部门 */
-	private Long deptName;
+	private String deptName;
 	/** 身份 */
 	private Long pcode;
 	/** 密码（用于登录） */
@@ -411,11 +411,11 @@ public class Person extends BaseEntity
 		this.deptId = deptId;
 	}
 
-	public Long getDeptName() {
+	public String getDeptName() {
 		return deptName;
 	}
 
-	public void setDeptName(Long deptName) {
+	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
 }

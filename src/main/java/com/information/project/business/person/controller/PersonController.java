@@ -2,16 +2,13 @@ package com.information.project.business.person.controller;
 
 import java.util.List;
 
+import com.information.common.utils.file.FileUploadUtils;
 import com.information.project.system.post.service.IPostService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
 import com.information.project.business.person.domain.Person;
@@ -19,6 +16,7 @@ import com.information.project.business.person.service.IPersonService;
 import com.information.framework.web.controller.BaseController;
 import com.information.framework.web.page.TableDataInfo;
 import com.information.framework.web.domain.AjaxResult;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 人员管理操作处理
@@ -117,5 +115,45 @@ public class PersonController extends BaseController
 	{		
 		return toAjax(personService.deletePersonByIds(ids));
 	}
-	
+
+
+	/**
+	 * 保存图片
+	 */
+	@Log(title = "商品图片信息", action = BusinessType.UPDATE)
+	@PostMapping("/updateAvatar")
+	@ResponseBody
+	public AjaxResult updateAvatar(Person person, @RequestParam("avatarfile") MultipartFile file)
+	{
+		try
+		{
+			if (!file.isEmpty())
+			{
+				String avatar = FileUploadUtils.upload(file);
+				person.setPhoto(avatar);
+				if (personService.updatePerson(person) > 0)
+				{
+					return success();
+				}
+			}
+			return error();
+		}
+		catch (Exception e)
+		{
+			return error(e.getMessage());
+		}
+	}
+
+	/**
+	 * 修改图片
+	 */
+
+	@GetMapping("/avatar/{id}")
+	public String avatar(@PathVariable("id") Long id, ModelMap mmap)
+	{
+		mmap.put("person", personService.selectPersonById(id));
+		return prefix + "/avatar";
+	}
+
+
 }

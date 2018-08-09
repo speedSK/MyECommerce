@@ -43,7 +43,9 @@ public class PersonServiceImpl implements IPersonService
 	@Override
 	public List<Person> selectPersonList(Person person)
 	{
-	    return personMapper.selectPersonList(person);
+
+		person.setStatus(Constants.STATUS_ACTIVE);
+		return personMapper.selectPersonList(person);
 	}
 	
     /**

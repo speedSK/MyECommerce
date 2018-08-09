@@ -23,7 +23,7 @@ values('设备删除', @parentId, '4',  '#',  'F', '0', 'system:device:remove', 
 
 -- 菜单 SQL
 insert into sys_menu (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('商户管理', '1', '1', '/system/account', 'C', '0', 'system:account:view', '#', 'admin', '2018-03-01', 'information', '2018-03-01', '商户菜单');
+values('商户管理', '1', '1', '/system/merchant', 'C', '0', 'system:merchant:view', '#', 'admin', '2018-03-01', 'information', '2018-03-01', '商户菜单');
 
 -- 按钮父菜单ID
 SELECT @parentId := LAST_INSERT_ID();
