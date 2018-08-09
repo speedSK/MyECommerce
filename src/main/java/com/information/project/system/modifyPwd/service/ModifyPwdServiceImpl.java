@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.information.project.system.modifyPwd.mapper.ModifyPwdMapper;
 import com.information.project.system.modifyPwd.domain.ModifyPwd;
 import com.information.project.system.modifyPwd.service.IModifyPwdService;
-import com.information.common.support.Convert;
 
 /**
  * 密码修改申请 服务层实现
@@ -28,7 +27,7 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 
 
 	@Autowired
-	private PersonMapper busUserMapper;
+	private PersonMapper personMapper;
 
 	/**
      * 查询密码修改申请信息
@@ -73,7 +72,7 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 			Person buser = new Person();
 			buser.setId(modifyPwd.getUserid());
 			buser.setPassword(modifyPwd.getNewPwd());
-			busUserMapper.updatePerson(buser) ;
+			personMapper.updatePerson(buser) ;
 
 		}
 		return 1 ;
