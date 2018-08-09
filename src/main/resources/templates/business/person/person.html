@@ -184,7 +184,7 @@
 					$.table.search();
 				}}
 			}, tree, loadTree = function(){
-				$.get(ctx + "systemgi/dept/treeData", function(data) {
+				$.get(ctx + "system/dept/treeData", function(data) {
 				    tree = $.fn.zTree.init($("#tree"), setting, data); //.expandAll(true);
 				    // 展开第一级节点
 				    var nodes = tree.getNodesByParam("level", 0);
