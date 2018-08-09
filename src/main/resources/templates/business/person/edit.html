@@ -97,7 +97,7 @@
             <div class="form-group">	
                 <label class="col-sm-3 control-label">身份：</label>
                 <div class="col-sm-8">
-                    <select id="pcode" name="pcode" class="form-control select2-hidden-accessible" multiple="">
+                    <select id="pcode" name="pcode" class="form-control m-b" >
                         <option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}"  th:selected="(${post.postId} == *{pcode})"   th:disabled="${post.status == '1'}"></option>
                     </select>
                 </div>
@@ -140,7 +140,6 @@
 		</form>
     </div>
     <div th:include="include::footer"></div>
-    <script th:src="@{/ajax/libs/select/select2.js}"></script>
     <script type="text/javascript">
 		var prefix = ctx + "business/person"
 		$("#form-person-edit").validate({

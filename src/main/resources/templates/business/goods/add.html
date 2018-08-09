@@ -36,7 +36,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">商户：</label>
 				<div class="col-sm-8">
-					<select id="merchantId" name="merchantId" class="form-control select2-hidden-accessible" multiple="">
+					<select id="merchantId" name="merchantId" class="form-control m-b"  >
 						<option th:each="merchant:${merchants}" th:value="${merchant.id}" th:text="${merchant.merchantName}"></option>
 					</select>
 
@@ -69,7 +69,6 @@
 		</form>
 	</div>
     <div th:include="include::footer"></div>
-	<script th:src="@{/ajax/libs/select/select2.js}"></script>
     <script type="text/javascript">
 		var prefix = ctx + "business/goods"
 		$("#form-goods-add").validate({
