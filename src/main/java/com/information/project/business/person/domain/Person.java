@@ -43,7 +43,9 @@ public class Person extends BaseEntity
 	/** 床号 */
 	private String bed;
 	/** 部门 */
-	private Long dept;
+	private Long deptId;
+	/** 部门 */
+	private Long deptName;
 	/** 身份 */
 	private Long pcode;
 	/** 密码（用于登录） */
@@ -285,22 +287,7 @@ public class Person extends BaseEntity
 		return bed;
 	}
 	
-	/**
-	 * 设置：部门
-	 */
-	public void setDept(Long dept) 
-	{
-		this.dept = dept;
-	}
-	
-	/**
-	 * 获取：部门
-	 */
-	public Long getDept() 
-	{
-		return dept;
-	}
-	
+
 	/**
 	 * 设置：身份
 	 */
@@ -428,5 +415,20 @@ public class Person extends BaseEntity
 	{
 		return status;
 	}
-	
+
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
+
+	public Long getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(Long deptName) {
+		this.deptName = deptName;
+	}
 }

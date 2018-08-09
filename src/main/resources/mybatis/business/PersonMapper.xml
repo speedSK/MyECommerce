@@ -19,7 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="area"    column="area"    />
         <result property="room"    column="room"    />
         <result property="bed"    column="bed"    />
-        <result property="dept"    column="dept"    />
+        <result property="deptId"    column="deptId"    />
+        <result property="deptName"    column="deptName"    />
         <result property="pcode"    column="pcode"    />
         <result property="password"    column="password"    />
         <result property="salt"    column="salt"    />
@@ -34,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectPersonVo">
-        select id, number, name, sex, age, nation, id_number, bank_card_number, build, photo, mobile, area, room, bed, dept, pcode, password, salt, deposit, balance, already_cost, acc_status, status , remark , create_time, update_time  from bus_person
+        select id, number, name, sex, age, nation, id_number, bank_card_number, build, photo, mobile, area, room, bed, deptId, pcode, password, salt, deposit, balance, already_cost, acc_status, status , remark , create_time, update_time  from bus_person
     </sql>
 	
     <select id="selectPersonList" parameterType="Person" resultMap="PersonResult">
@@ -54,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="area != null and area != ''"> and area = #{area}</if>
              <if test="room != null and room != ''"> and room = #{room}</if>
              <if test="bed != null and bed != ''"> and bed = #{bed}</if>
-             <if test="dept != null and dept != ''"> and dept = #{dept}</if>
+             <if test="deptId != null and deptId != ''"> and deptId = #{deptId}</if>
              <if test="pcode != null and pcode != ''"> and pcode = #{pcode}</if>
              <if test="password != null and password != ''"> and password = #{password}</if>
              <if test="salt != null and salt != ''"> and salt = #{salt}</if>
@@ -70,7 +71,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectPersonById" parameterType="Long" resultMap="PersonResult">
-        <include refid="selectPersonVo"/>
+
+        select t.id, t.number,  t.name,  t.sex,  t.age,  t.nation,  t.id_number,  t.bank_card_number,  t.build,  t.photo,  t.mobile,  t.area,  t.room,  t.bed,  t.deptId,  t.pcode,  t.password,  t.salt,  t.deposit,  t.balance,  t.already_cost,  t.acc_status,  t.status ,  t.remark ,  t.create_time,  t.update_time ,
+        (select dept_name from sys_dept where dept_id = t.deptId) deptName
+        from bus_person t
         where id = #{id}
     </select>
         
@@ -91,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="area != null and area != '' ">area,</if>
 			<if test="room != null and room != '' ">room,</if>
 			<if test="bed != null and bed != '' ">bed,</if>
-			<if test="dept != null and dept != '' ">dept,</if>
+			<if test="deptId != null and deptId != '' ">deptId,</if>
 			<if test="pcode != null and pcode != '' ">pcode,</if>
 			<if test="password != null and password != '' ">password,</if>
 			<if test="salt != null and salt != '' ">salt,</if>
@@ -117,7 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="area != null and area != ''">#{area},</if>
 			<if test="room != null and room != ''">#{room},</if>
 			<if test="bed != null and bed != ''">#{bed},</if>
-			<if test="dept != null and dept != ''">#{dept},</if>
+			<if test="deptId != null and deptId != ''">#{deptId},</if>
 			<if test="pcode != null and pcode != ''">#{pcode},</if>
 			<if test="password != null and password != ''">#{password},</if>
 			<if test="salt != null and salt != ''">#{salt},</if>
@@ -146,7 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="area != null  and area != ''  ">area = #{area},</if>
             <if test="room != null  and room != ''  ">room = #{room},</if>
             <if test="bed != null  and bed != ''  ">bed = #{bed},</if>
-            <if test="dept != null  ">dept = #{dept},</if>
+            <if test="deptId != null  ">deptId = #{deptId},</if>
             <if test="pcode != null  ">pcode = #{pcode},</if>
             <if test="password != null  and password != ''  ">password = #{password},</if>
             <if test="salt != null  and salt != ''  ">salt = #{salt},</if>

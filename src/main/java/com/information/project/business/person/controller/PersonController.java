@@ -1,6 +1,8 @@
 package com.information.project.business.person.controller;
 
 import java.util.List;
+
+import com.information.project.system.post.service.IPostService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,11 @@ public class PersonController extends BaseController
 	
 	@Autowired
 	private IPersonService personService;
-	
+
+	@Autowired
+	private IPostService postService;
+
+
 	@RequiresPermissions("business:person:view")
 	@GetMapping()
 	public String person()
@@ -57,9 +63,11 @@ public class PersonController extends BaseController
 	 * 新增业务（犯人）
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap mmap)
 	{
-	    return prefix + "/add";
+		mmap.put("posts", postService.selectPostAll());
+
+		return prefix + "/add";
 	}
 	
 	/**
@@ -82,6 +90,7 @@ public class PersonController extends BaseController
 	{
 		Person person = personService.selectPersonById(id);
 		mmap.put("person", person);
+		mmap.put("posts", postService.selectPostAll());
 	    return prefix + "/edit";
 	}
 	
