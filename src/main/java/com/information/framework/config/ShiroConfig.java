@@ -2,9 +2,7 @@ package com.information.framework.config;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javax.servlet.Filter;
-
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -13,12 +11,10 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import com.information.common.utils.StringUtils;
 import com.information.framework.shiro.realm.UserRealm;
 import com.information.framework.shiro.session.OnlineSessionDAO;
@@ -268,13 +264,7 @@ public class ShiroConfig
         shiroFilterFactoryBean.setFilters(filters);
 
         // 所有请求需要认证
-        filterChainDefinitionMap.put("/**", "user");
-        // 系统请求记录当前会话
-        filterChainDefinitionMap.put("/main", "onlineSession,syncOnlineSession");
-        filterChainDefinitionMap.put("/system/**", "onlineSession,syncOnlineSession");
-        filterChainDefinitionMap.put("/monitor/**", "onlineSession,syncOnlineSession");
-        filterChainDefinitionMap.put("/tool/**", "onlineSession,syncOnlineSession");
-        filterChainDefinitionMap.put("/business/**", "onlineSession,syncOnlineSession");
+        filterChainDefinitionMap.put("/**", "user,onlineSession,syncOnlineSession");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
@@ -335,17 +325,6 @@ public class ShiroConfig
         cookieRememberMeManager.setCookie(rememberMeCookie());
         cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));
         return cookieRememberMeManager;
-    }
-
-    /**
-     * 开启Shiro代理
-     */
-    @Bean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator()
-    {
-        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
-        proxyCreator.setProxyTargetClass(true);
-        return proxyCreator;
     }
 
     /**

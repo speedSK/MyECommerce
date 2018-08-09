@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.poi.ExcelUtil;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
@@ -53,6 +55,7 @@ public class RoleController extends BaseController
     }
 
     @Log(title = "角色管理", action = BusinessType.EXPORT)
+    @RequiresPermissions("system:role:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(Role role) throws Exception
@@ -139,9 +142,24 @@ public class RoleController extends BaseController
     public String checkRoleNameUnique(Role role)
     {
         String uniqueFlag = "0";
-        if (role != null)
+        if (StringUtils.isNotNull(role))
         {
             uniqueFlag = roleService.checkRoleNameUnique(role);
+        }
+        return uniqueFlag;
+    }
+    
+    /**
+     * 校验角色权限
+     */
+    @PostMapping("/checkRoleKeyUnique")
+    @ResponseBody
+    public String checkRoleKeyUnique(Role role)
+    {
+        String uniqueFlag = "0";
+        if (StringUtils.isNotNull(role))
+        {
+            uniqueFlag = roleService.checkRoleKeyUnique(role);
         }
         return uniqueFlag;
     }

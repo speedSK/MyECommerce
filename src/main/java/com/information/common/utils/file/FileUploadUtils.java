@@ -1,31 +1,40 @@
-package com.information.common.utils;
+package com.information.common.utils.file;
 
 import java.io.File;
 import java.io.IOException;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.information.common.exception.file.FileNameLengthLimitExceededException;
 import com.information.framework.config.SystemConfig;
 
 /**
  * 文件上传工具类
  * 
- * @author LiuNing
+ * @author Liuning
  */
 public class FileUploadUtils
 {
 
-    // 默认大小 50M
+    /**
+     * 默认大小 50M
+     */
     public static final long DEFAULT_MAX_SIZE = 52428800;
 
-    // 默认上传的地址
+    /**
+     * 默认上传的地址
+     */
     private static String defaultBaseDir = SystemConfig.getProfile();
 
-    // 默认的文件名最大长度
+    /**
+     * 默认的文件名最大长度
+     */
     public static final int DEFAULT_FILE_NAME_LENGTH = 200;
 
-    // 默认文件类型jpg
+    /**
+     * 默认文件类型jpg
+     */
     public static final String IMAGE_JPG_EXTENSION = ".jpg";
 
     private static int counter = 0;

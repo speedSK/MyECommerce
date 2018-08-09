@@ -63,6 +63,8 @@ public interface IRoleService
      * 批量删除角色用户信息
      * 
      * @param ids 需要删除的数据ID
+     * @return 结果
+     * @throws Exception 异常
      */
     public int deleteRoleByIds(String ids) throws Exception;
 
@@ -89,6 +91,14 @@ public interface IRoleService
      * @return 结果
      */
     public String checkRoleNameUnique(Role role);
+    
+    /**
+     * 校验角色权限是否唯一
+     * 
+     * @param role 角色信息
+     * @return 结果
+     */
+    public String checkRoleKeyUnique(Role role);
 
     /**
      * 通过角色ID查询角色使用数量

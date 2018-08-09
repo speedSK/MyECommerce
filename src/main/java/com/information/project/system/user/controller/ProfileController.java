@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import com.information.common.utils.FileUploadUtils;
+
+import com.information.common.utils.file.FileUploadUtils;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
 import com.information.framework.web.controller.BaseController;
@@ -149,7 +150,7 @@ public class ProfileController extends BaseController
         }
         catch (Exception e)
         {
-            log.error("updateAvatar failed!", e);
+            log.error("修改头像失败！", e);
             return error(e.getMessage());
         }
     }
