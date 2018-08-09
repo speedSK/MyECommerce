@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.information.project.business.uploadRecord.mapper.UploadRecordMapper;
+import com.information.project.business.uploadRecord.domain.BatchRechargeVo;
 import com.information.project.business.uploadRecord.domain.UploadRecord;
 import com.information.project.business.uploadRecord.service.IUploadRecordService;
 import com.information.common.support.Convert;
@@ -99,6 +100,15 @@ public class UploadRecordServiceImpl implements IUploadRecordService
         }
 
         return 1;
+	}
+
+	@Override
+	public void saveRecharge(List<BatchRechargeVo> list) {
+		for (BatchRechargeVo batchRechargeVo : list) {
+			if (batchRechargeVo.getNumber()!=null||batchRechargeVo.getAmount()!=null) {
+				
+			}
+		}
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.information.project.business.uploadRecord.service;
 
+import com.information.project.business.uploadRecord.domain.BatchRechargeVo;
 import com.information.project.business.uploadRecord.domain.UploadRecord;
 import java.util.List;
 
@@ -50,5 +51,7 @@ public interface IUploadRecordService
      * @return 结果
      */
 	public int deleteUploadRecordByIds(String ids);
+
+	public void saveRecharge(List<BatchRechargeVo> list);
 	
 }

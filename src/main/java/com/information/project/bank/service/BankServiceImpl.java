@@ -13,13 +13,13 @@ import com.information.project.business.person.mapper.PersonMapper;
 public class BankServiceImpl implements IBankService{
 	
 	@Autowired
-	private PersonMapper busUserMapper;
+	private PersonMapper personMapper;
 	
 	@Override
 	public ReceiveFromBankInfo queryUserInfo4Bank(Person person) {
 		ReceiveFromBankInfo receiveFromBankInfo = new ReceiveFromBankInfo();
 		try {
-			List<Person> list = busUserMapper.selectPersonList(person);
+			List<Person> list = personMapper.selectPersonList(person);
 			if (list!=null&&list.size()>0) {
 				receiveFromBankInfo.setResponsecode("000000");
 				receiveFromBankInfo.setResponsename("查询成功");
@@ -38,7 +38,7 @@ public class BankServiceImpl implements IBankService{
 	public ReceiveFromBankInfo queryUserSign(Person person) {
 		ReceiveFromBankInfo receiveFromBankInfo = new ReceiveFromBankInfo();
 		try {
-			List<Person> list = busUserMapper.selectPersonList(person);
+			List<Person> list = personMapper.selectPersonList(person);
 			if (list!=null&&list.size()>0) {
 				Person usr = list.get(0);
 				if ("1".equals(usr.getFlag())) {
