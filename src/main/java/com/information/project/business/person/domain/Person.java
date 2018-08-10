@@ -47,7 +47,7 @@ public class Person extends BaseEntity
 	/** 部门 */
 	private String deptName;
 	/** 身份 */
-	private Long pcode;
+	private Long identityId;
 	/** 密码（用于登录） */
 	private String password;
 	/** 盐加密 */
@@ -281,24 +281,18 @@ public class Person extends BaseEntity
 	{
 		return bed;
 	}
-	
 
 	/**
 	 * 设置：身份
 	 */
-	public void setPcode(Long pcode) 
-	{
-		this.pcode = pcode;
+	public Long getIdentityId() {
+		return identityId;
 	}
-	
-	/**
-	 * 获取：身份
-	 */
-	public Long getPcode() 
-	{
-		return pcode;
+
+	public void setIdentityId(Long identityId) {
+		this.identityId = identityId;
 	}
-	
+
 	/**
 	 * 设置：密码（用于登录）
 	 */

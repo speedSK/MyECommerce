@@ -97,7 +97,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">身份：</label>
 				<div class="col-sm-8">
-					<select id="pcode" name="pcode" class="form-control m-b"  >
+					<select id="identityId" name="identityId" class="form-control m-b"  >
 						<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}" th:disabled="${post.status == '1'}"></option>
 					</select>
 
