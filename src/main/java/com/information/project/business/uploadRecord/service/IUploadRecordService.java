@@ -1,8 +1,12 @@
 package com.information.project.business.uploadRecord.service;
 
-import com.information.project.business.uploadRecord.domain.BatchRechargeVo;
+import com.information.framework.web.domain.AjaxResult;
 import com.information.project.business.uploadRecord.domain.UploadRecord;
+
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 功能导入记录 服务层
@@ -52,6 +56,6 @@ public interface IUploadRecordService
      */
 	public int deleteUploadRecordByIds(String ids);
 
-	public List<BatchRechargeVo> saveRecharge(List<BatchRechargeVo> list);
+	public AjaxResult saveRecharge(MultipartFile file) throws IOException, Exception;
 	
 }

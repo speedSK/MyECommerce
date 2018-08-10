@@ -8,7 +8,9 @@ public class BatchRechargeVo {
 	private String number;
 	@Excel(name="充值金额")
 	private String amount;
-
+	@Excel(name="失败原因")
+	private String failure;
+	
 	public String getNumber() {
 		return number;
 	}
@@ -23,6 +25,14 @@ public class BatchRechargeVo {
 
 	public void setAmount(String amount) {
 		this.amount = amount;
+	}
+
+	public String getFailure() {
+		return failure;
+	}
+
+	public void setFailure(String failure) {
+		this.failure = failure;
 	}
 	
 	
