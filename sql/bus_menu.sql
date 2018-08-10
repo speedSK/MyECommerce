@@ -44,23 +44,23 @@ values('商户删除', @parentId, '4',  '#',  'F', '0', 'system:merchant:remove'
 
 -- 菜单 SQL
 insert into sys_menu (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('消费限额', '1', '1', '/system/costTotal', 'C', '0', 'system:costTotal:view', '#', 'admin', '2018-03-01', 'information', '2018-03-01', '消费限额菜单');
+values('身份管理', '1', '1', '/system/identity', 'C', '0', 'system:identity:view', '#', 'admin', '2018-03-01', 'information', '2018-03-01', '身份管理菜单');
 
 -- 按钮父菜单ID
 SELECT @parentId := LAST_INSERT_ID();
 
 -- 按钮 SQL
 insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('消费限额查询', @parentId, '1',  '#',  'F', '0', 'system:costTotal:list',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
+values('身份管理查询', @parentId, '1',  '#',  'F', '0', 'system:identity:list',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('消费限额新增', @parentId, '2',  '#',  'F', '0', 'system:costTotal:add',          '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
+values('身份管理新增', @parentId, '2',  '#',  'F', '0', 'system:identity:add',          '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('消费限额修改', @parentId, '3',  '#',  'F', '0', 'system:costTotal:edit',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
+values('身份管理修改', @parentId, '3',  '#',  'F', '0', 'system:identity:edit',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('消费限额删除', @parentId, '4',  '#',  'F', '0', 'system:costTotal:remove',       '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
+values('身份管理删除', @parentId, '4',  '#',  'F', '0', 'system:identity:remove',       '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 
 

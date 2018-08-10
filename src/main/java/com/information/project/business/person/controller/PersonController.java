@@ -3,7 +3,7 @@ package com.information.project.business.person.controller;
 import java.util.List;
 
 import com.information.common.utils.file.FileUploadUtils;
-import com.information.project.system.post.service.IPostService;
+import com.information.project.system.identity.service.IIdentityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +34,7 @@ public class PersonController extends BaseController
 	private IPersonService personService;
 
 	@Autowired
-	private IPostService postService;
+	private IIdentityService identityService;
 
 
 	@RequiresPermissions("business:person:view")
@@ -63,7 +63,7 @@ public class PersonController extends BaseController
 	@GetMapping("/add")
 	public String add(ModelMap mmap)
 	{
-		mmap.put("posts", postService.selectPostAll());
+		mmap.put("identitys", identityService.selectPostAll());
 
 		return prefix + "/add";
 	}
@@ -88,7 +88,7 @@ public class PersonController extends BaseController
 	{
 		Person person = personService.selectPersonById(id);
 		mmap.put("person", person);
-		mmap.put("posts", postService.selectPostAll());
+		mmap.put("identitys", identityService.selectPostAll());
 	    return prefix + "/edit";
 	}
 	

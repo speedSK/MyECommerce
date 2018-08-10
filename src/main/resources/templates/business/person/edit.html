@@ -98,7 +98,7 @@
                 <label class="col-sm-3 control-label">身份：</label>
                 <div class="col-sm-8">
                     <select id="identityId" name="identityId" class="form-control m-b" >
-                        <option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}"  th:selected="(${post.postId} == *{identityId})"   th:disabled="${post.status == '1'}"></option>
+                        <option th:each="identity:${identitys}" th:value="${identity.id}" th:text="${identity.name}"  th:selected="(${identity.identityId} == *{identityId})"  ></option>
                     </select>
                 </div>
             </div>
@@ -176,7 +176,7 @@
         			required:true,
         			number:true
         		},
-				post:{
+				identity:{
         			required:true
         		}
 			},

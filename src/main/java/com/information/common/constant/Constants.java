@@ -63,8 +63,8 @@ public class Constants
     public static String IS_ASC = "isAsc";
 
 
-    public static final String STATUS_REMOVED = "0";
-    public static final String STATUS_ACTIVE = "1";
+    public static final String STATUS_ACTIVE = "0";
+    public static final String STATUS_REMOVED = "1";
 
 
     public static final String ACCOUNT_ACTIVE_1 = "1";  //系统收入账户

@@ -123,7 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectMerchantAll" resultMap="MerchantResult">
         <include refid="selectMerchantVo"/>
-        where status = '1' and flag = '3'
+        where status = '0' and flag = '3'
     </select>
 
 
