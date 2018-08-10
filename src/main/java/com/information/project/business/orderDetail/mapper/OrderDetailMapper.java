@@ -7,7 +7,7 @@ import java.util.List;
  * 订单详情 数据层
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-10
  */
 public interface OrderDetailMapper 
 {
@@ -58,5 +58,6 @@ public interface OrderDetailMapper
      * @return 结果
      */
 	public int deleteOrderDetailByIds(String[] ids);
-	
+
+	public  int updateFlagByOrderId(OrderDetail orderDetail);
 }

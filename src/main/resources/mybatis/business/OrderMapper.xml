@@ -7,81 +7,90 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Order" id="OrderResult">
         <result property="id"    column="id"    />
         <result property="orderCode"    column="order_code"    />
-        <result property="moneySum"    column="money_sum"    />
-        <result property="buyUser"    column="buy_user"    />
-        <result property="orderStatus"    column="order_status"    />
-        <result property="status"    column="status"    />
-        <result property="operUser"    column="oper_user"    />
+        <result property="money"    column="money"    />
+        <result property="personId"    column="person_id"    />
+        <result property="personCode"    column="person_code"    />
+        <result property="personName"    column="person_name"    />
+        <result property="flag"    column="flag"    />
+        <result property="finishUser"    column="finish_user"    />
         <result property="finishTime"    column="finish_time"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
     </resultMap>
-	
+
 	<sql id="selectOrderVo">
-        select id, order_code, money_sum, buy_user, order_status, status, oper_user, finish_time, create_time, update_time from bus_order
+        select id, order_code, money, person_id, person_code, person_name, flag, finish_user, finish_time, status ,remark,create_time,update_time from bus_order
     </sql>
-	
+
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
-        <where>  
+        <where>
             <if test="id != null and id != ''"> and id = #{id}</if>
              <if test="orderCode != null and orderCode != ''"> and order_code = #{orderCode}</if>
-             <if test="moneySum != null and moneySum != ''"> and money_sum = #{moneySum}</if>
-             <if test="buyUser != null and buyUser != ''"> and buy_user = #{buyUser}</if>
-             <if test="orderStatus != null and orderStatus != ''"> and order_status = #{orderStatus}</if>
-             <if test="status != null and status != ''"> and status = #{status}</if>
-             <if test="operUser != null and operUser != ''"> and oper_user = #{operUser}</if>
+             <if test="money != null and money != ''"> and money = #{money}</if>
+             <if test="personId != null and personId != ''"> and person_id = #{personId}</if>
+             <if test="personCode != null and personCode != ''"> and person_code = #{personCode}</if>
+             <if test="personName != null and personName != ''"> and person_name = #{personName}</if>
+             <if test="flag != null and flag != ''"> and flag = #{flag}</if>
+             <if test="finishUser != null and finishUser != ''"> and finish_user = #{finishUser}</if>
              <if test="finishTime != null and finishTime != ''"> and finish_time = #{finishTime}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+              <if test="remark != null and remark != ''"> and remark = #{remark}</if>
              <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
              <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
-         </where>
+        </where>
     </select>
-    
+
     <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertOrder" parameterType="Order">
         insert into bus_order
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != '' ">id,</if>
 			<if test="orderCode != null and orderCode != '' ">order_code,</if>
-			<if test="moneySum != null and moneySum != '' ">money_sum,</if>
-			<if test="buyUser != null and buyUser != '' ">buy_user,</if>
-			<if test="orderStatus != null and orderStatus != '' ">order_status,</if>
-			<if test="status != null and status != '' ">status,</if>
-			<if test="operUser != null and operUser != '' ">oper_user,</if>
+			<if test="money != null and money != '' ">money,</if>
+			<if test="personId != null and personId != '' ">person_id,</if>
+			<if test="personCode != null and personCode != '' ">person_code,</if>
+			<if test="personName != null and personName != '' ">person_name,</if>
+			<if test="flag != null and flag != '' ">flag,</if>
+			<if test="finishUser != null and finishUser != '' ">finish_user,</if>
 			<if test="finishTime != null and finishTime != '' ">finish_time,</if>
-			<if test="createTime != null and createTime != '' ">create_time,</if>
-			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+			<if test="status != null and status != '' ">status,</if>
+            create_time
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != ''">#{id},</if>
 			<if test="orderCode != null and orderCode != ''">#{orderCode},</if>
-			<if test="moneySum != null and moneySum != ''">#{moneySum},</if>
-			<if test="buyUser != null and buyUser != ''">#{buyUser},</if>
-			<if test="orderStatus != null and orderStatus != ''">#{orderStatus},</if>
-			<if test="status != null and status != ''">#{status},</if>
-			<if test="operUser != null and operUser != ''">#{operUser},</if>
+			<if test="money != null and money != ''">#{money},</if>
+			<if test="personId != null and personId != ''">#{personId},</if>
+			<if test="personCode != null and personCode != ''">#{personCode},</if>
+			<if test="personName != null and personName != ''">#{personName},</if>
+			<if test="flag != null and flag != ''">#{flag},</if>
+			<if test="finishUser != null and finishUser != ''">#{finishUser},</if>
 			<if test="finishTime != null and finishTime != ''">#{finishTime},</if>
-			<if test="createTime != null and createTime != ''">#{createTime},</if>
-			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+			<if test="status != null and status != ''">#{status},</if>
+            sysdate()
          </trim>
     </insert>
-	 
+
     <update id="updateOrder" parameterType="Order">
         update bus_order
         <trim prefix="SET" suffixOverrides=",">
             <if test="orderCode != null  and orderCode != ''  ">order_code = #{orderCode},</if>
-            <if test="moneySum != null  ">money_sum = #{moneySum},</if>
-            <if test="buyUser != null  ">buy_user = #{buyUser},</if>
-            <if test="orderStatus != null  and orderStatus != ''  ">order_status = #{orderStatus},</if>
-            <if test="status != null  and status != ''  ">status = #{status},</if>
-            <if test="operUser != null  ">oper_user = #{operUser},</if>
+            <if test="money != null  ">money = #{money},</if>
+            <if test="personId != null  ">person_id = #{personId},</if>
+            <if test="personCode != null  and personCode != ''  ">person_code = #{personCode},</if>
+            <if test="personName != null  and personName != ''  ">person_name = #{personName},</if>
+            <if test="flag != null  and flag != ''  ">flag = #{flag},</if>
+            <if test="finishUser != null  and finishUser != ''  ">finish_user = #{finishUser},</if>
             <if test="finishTime != null  ">finish_time = #{finishTime},</if>
-            <if test="createTime != null  ">create_time = #{createTime},</if>
-            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            update_time = sysdate()
         </trim>
         where id = #{id}
     </update>

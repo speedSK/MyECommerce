@@ -1,5 +1,7 @@
 package com.information.project.business.order.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import com.information.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
@@ -9,7 +11,7 @@ import java.util.Date;
  * 订单表 bus_order
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-10
  */
 public class Order extends BaseEntity
 {
@@ -20,180 +22,125 @@ public class Order extends BaseEntity
 	/** 订单号 */
 	private String orderCode;
 	/** 订单总金额 */
-	private BigDecimal moneySum;
-	/** 购买人 */
-	private Long buyUser;
+	private BigDecimal money;
+	/** 购买人ID */
+	private Long personId;
+	/** 购买人编码 */
+	private String personCode;
+	/** 购买人姓名 */
+	private String personName;
 	/** 订单状态 */
-	private String orderStatus;
-	/** 状态 */
-	private String status;
-	/** 操作人 */
-	private Long operUser;
+	private String flag;
+	/** 完成人员 */
+	private String finishUser;
 	/** 完成时间 */
 	private Date finishTime;
-	/** 创建时间 */
-	private Date createTime;
-	/** 修改时间 */
-	private Date updateTime;
+	/** 状态 */
+	private String status;
 
-	/**
-	 * 设置：主键
-	 */
 	public void setId(Long id) 
 	{
 		this.id = id;
 	}
-	
-	/**
-	 * 获取：主键
-	 */
+
 	public Long getId() 
 	{
 		return id;
 	}
-	
-	/**
-	 * 设置：订单号
-	 */
 	public void setOrderCode(String orderCode) 
 	{
 		this.orderCode = orderCode;
 	}
-	
-	/**
-	 * 获取：订单号
-	 */
+
 	public String getOrderCode() 
 	{
 		return orderCode;
 	}
-	
-	/**
-	 * 设置：订单总金额
-	 */
-	public void setMoneySum(BigDecimal moneySum) 
+	public void setMoney(BigDecimal money) 
 	{
-		this.moneySum = moneySum;
+		this.money = money;
 	}
-	
-	/**
-	 * 获取：订单总金额
-	 */
-	public BigDecimal getMoneySum() 
+
+	public BigDecimal getMoney() 
 	{
-		return moneySum;
+		return money;
 	}
-	
-	/**
-	 * 设置：购买人
-	 */
-	public void setBuyUser(Long buyUser) 
+	public void setPersonId(Long personId) 
 	{
-		this.buyUser = buyUser;
+		this.personId = personId;
 	}
-	
-	/**
-	 * 获取：购买人
-	 */
-	public Long getBuyUser() 
+
+	public Long getPersonId() 
 	{
-		return buyUser;
+		return personId;
 	}
-	
-	/**
-	 * 设置：订单状态
-	 */
-	public void setOrderStatus(String orderStatus) 
+	public void setPersonCode(String personCode) 
 	{
-		this.orderStatus = orderStatus;
+		this.personCode = personCode;
 	}
-	
-	/**
-	 * 获取：订单状态
-	 */
-	public String getOrderStatus() 
+
+	public String getPersonCode() 
 	{
-		return orderStatus;
+		return personCode;
 	}
-	
-	/**
-	 * 设置：状态
-	 */
-	public void setStatus(String status) 
+	public void setPersonName(String personName) 
 	{
-		this.status = status;
+		this.personName = personName;
 	}
-	
-	/**
-	 * 获取：状态
-	 */
-	public String getStatus() 
+
+	public String getPersonName() 
 	{
-		return status;
+		return personName;
 	}
-	
-	/**
-	 * 设置：操作人
-	 */
-	public void setOperUser(Long operUser) 
+	public void setFlag(String flag) 
 	{
-		this.operUser = operUser;
+		this.flag = flag;
 	}
-	
-	/**
-	 * 获取：操作人
-	 */
-	public Long getOperUser() 
+
+	public String getFlag() 
 	{
-		return operUser;
+		return flag;
 	}
-	
-	/**
-	 * 设置：完成时间
-	 */
+	public void setFinishUser(String finishUser) 
+	{
+		this.finishUser = finishUser;
+	}
+
+	public String getFinishUser() 
+	{
+		return finishUser;
+	}
 	public void setFinishTime(Date finishTime) 
 	{
 		this.finishTime = finishTime;
 	}
-	
-	/**
-	 * 获取：完成时间
-	 */
+
 	public Date getFinishTime() 
 	{
 		return finishTime;
 	}
-	
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateTime(Date createTime) 
+	public void setStatus(String status) 
 	{
-		this.createTime = createTime;
+		this.status = status;
 	}
-	
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateTime() 
+
+	public String getStatus() 
 	{
-		return createTime;
+		return status;
 	}
-	
-	/**
-	 * 设置：修改时间
-	 */
-	public void setUpdateTime(Date updateTime) 
-	{
-		this.updateTime = updateTime;
-	}
-	
-	/**
-	 * 获取：修改时间
-	 */
-	public Date getUpdateTime() 
-	{
-		return updateTime;
-	}
-	
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("orderCode", getOrderCode())
+            .append("money", getMoney())
+            .append("personId", getPersonId())
+            .append("personCode", getPersonCode())
+            .append("personName", getPersonName())
+            .append("flag", getFlag())
+            .append("finishUser", getFinishUser())
+            .append("finishTime", getFinishTime())
+            .append("status", getStatus())
+            .toString();
+    }
 }

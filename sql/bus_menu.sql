@@ -126,9 +126,6 @@ values('商品删除', @parentId, '4',  '#',  'F', '0', 'business:goods:remove',
 
 
 
--- 菜单 SQL
-insert into sys_menu (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('订单详情', '4', '1', '/business/orderDetail', 'C', '0', 'business:orderDetail:view', '#', 'admin', '2018-03-01', 'information', '2018-03-01', '订单详情菜单');
 
 -- 按钮父菜单ID
 SELECT @parentId := LAST_INSERT_ID();
@@ -138,13 +135,7 @@ insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, 
 values('订单详情查询', @parentId, '1',  '#',  'F', '0', 'business:orderDetail:list',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('订单详情新增', @parentId, '2',  '#',  'F', '0', 'business:orderDetail:add',          '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
-
-insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('订单详情修改', @parentId, '3',  '#',  'F', '0', 'business:orderDetail:edit',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
-
-insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('订单详情删除', @parentId, '4',  '#',  'F', '0', 'business:orderDetail:remove',       '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 
 -- 菜单 SQL
@@ -159,14 +150,7 @@ insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, 
 values('订单查询', @parentId, '1',  '#',  'F', '0', 'business:order:list',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('订单新增', @parentId, '2',  '#',  'F', '0', 'business:order:add',          '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
-
-insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('订单修改', @parentId, '3',  '#',  'F', '0', 'business:order:edit',         '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
-
-insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('订单删除', @parentId, '4',  '#',  'F', '0', 'business:order:remove',       '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
-
+values('订单完成', @parentId, '2',  '#',  'F', '0', 'business:order:finish',          '#', 'admin', '2018-03-01', 'information', '2018-03-01', '');
 
 
 -- 菜单 SQL

@@ -5,11 +5,8 @@
 <body class="gray-bg">
     <div class="container-div">
 		<div class="btn-group hidden-xs" id="toolbar" role="group">
-			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:order:add">
-				<i class="fa fa-plus"></i> 新增
-			</a>
-			<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="business:order:remove">
-				<i class="fa fa-trash-o"></i> 删除
+			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.batFinish()" shiro:hasPermission="business:order:finish">
+				<i class="fa fa-plus"></i> 完成
 			</a>
 		</div>
 			
@@ -18,9 +15,12 @@
 		</div>
     </div>
     <div th:include="include :: footer"></div>
+	<script th:src="@{/information/js/information-ui.js?v=2.3.0}"></script>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('business:order:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('business:order:remove')}]];
+        var listFlag = [[${@permission.hasPermi('business:order:list')}]];
+        var finishFlag = [[${@permission.hasPermi('business:order:finish')}]];
+        var detailFlag = [[${@permission.hasPermi('business:orderDetail:list')}]];
+        var flagDatas = [[${@dict.getType('bus_order_flag')}]];
         var prefix = ctx + "business/order"
 
         $(function() {
@@ -29,6 +29,7 @@
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
+                finishUrl: prefix + "/finish",
                 modalName: "订单",
                 columns: [{
 		            checkbox: true
@@ -38,54 +39,52 @@
 					title : '主键' 
 				},
 				{
-					field : 'orderCode', 
+					field : 'orderCode',
 					title : '订单号' 
 				},
 				{
-					field : 'moneySum', 
+					field : 'money', 
 					title : '订单总金额' 
 				},
 				{
-					field : 'buyUser', 
-					title : '购买人' 
+					field : 'personCode', 
+					title : '购买人编号'
 				},
 				{
-					field : 'orderStatus', 
-					title : '订单状态' 
+					field : 'personName', 
+					title : '购买人姓名' 
 				},
 				{
-					field : 'status', 
-					title : '状态' 
+					field : 'flag', 
+					title : '订单状态',
+					formatter: function(value, row, index) {
+		            	return $.table.selectDictLabel(flagDatas, value);
+		            }
 				},
 				{
-					field : 'operUser', 
-					title : '操作人' 
-				},
-				{
-					field : 'finishTime', 
-					title : '完成时间' 
-				},
-				{
-					field : 'createTime', 
-					title : '创建时间' 
-				},
-				{
-					field : 'updateTime', 
-					title : '修改时间' 
+					field : 'createTime',
+					title : '创建时间'
 				},
 		        {
 		            title: '操作',
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+		            	actions.push('<a class="btn btn-info btn-xs ' + detailFlag + '" href="#" onclick="detail(\'' + row.id + '\')"><i class="fa fa-list-ul"></i>详情</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + finishFlag + '" href="#" onclick="$.operate.finish(\'' + row.id + '\')"><i class="fa fa-edit"></i>完成</a>');
 						return actions.join('');
 		            }
 		        }]
             };
             $.table.init(options);
         });
+
+        /*字典列表-详细*/
+		function detail(id) {
+		    var url = ctx + 'business/orderDetail/detail/' + id;
+		    createMenuItem(url, "订单详情");
+		}
+
     </script>
 </body>
 </html>
