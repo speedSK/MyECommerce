@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-    <select id="selectIdentity" resultMap="IdentityResult">
+    <select id="selectIdentityAll" resultMap="IdentityResult">
         <include refid="selectIdentityVo"/>
         where status = '0'
     </select>

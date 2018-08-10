@@ -104,7 +104,7 @@ public class IdentityServiceImpl implements IIdentityService
 
 	@Override
 	public List<Identity> selectPostAll() {
-		return identityMapper.selectPostAll();
+		return identityMapper.selectIdentityAll();
 	}
 
 }

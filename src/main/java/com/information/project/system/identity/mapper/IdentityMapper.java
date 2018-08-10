@@ -59,5 +59,5 @@ public interface IdentityMapper
      */
 	public int deleteIdentityByIds(String[] ids);
 
-    List<Identity> selectPostAll();
+    List<Identity> selectIdentityAll();
 }
