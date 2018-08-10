@@ -1,4 +1,4 @@
-package com.information.project.module.identity.controller;
+package com.information.project.system.identity.controller;
 
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
-import com.information.project.module.identity.domain.Identity;
-import com.information.project.module.identity.service.IIdentityService;
+import com.information.project.system.identity.domain.Identity;
+import com.information.project.system.identity.service.IIdentityService;
 import com.information.framework.web.controller.BaseController;
 import com.information.framework.web.page.TableDataInfo;
 import com.information.framework.web.domain.AjaxResult;
