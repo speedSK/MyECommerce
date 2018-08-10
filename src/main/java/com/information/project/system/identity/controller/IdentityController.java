@@ -25,15 +25,15 @@ import com.information.framework.web.domain.AjaxResult;
  * @date 2018-08-10
  */
 @Controller
-@RequestMapping("/module/identity")
+@RequestMapping("/system/identity")
 public class IdentityController extends BaseController
 {
-    private String prefix = "module/identity";
+    private String prefix = "system/identity";
 	
 	@Autowired
 	private IIdentityService identityService;
 	
-	@RequiresPermissions("module:identity:view")
+	@RequiresPermissions("system:identity:view")
 	@GetMapping()
 	public String identity()
 	{
@@ -43,7 +43,7 @@ public class IdentityController extends BaseController
 	/**
 	 * 查询身份管理列表
 	 */
-	@RequiresPermissions("module:identity:list")
+	@RequiresPermissions("system:identity:list")
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(Identity identity)
@@ -65,7 +65,7 @@ public class IdentityController extends BaseController
 	/**
 	 * 新增保存身份管理
 	 */
-	@RequiresPermissions("module:identity:add")
+	@RequiresPermissions("system:identity:add")
 	@Log(title = "身份管理", action = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
@@ -88,7 +88,7 @@ public class IdentityController extends BaseController
 	/**
 	 * 修改保存身份管理
 	 */
-	@RequiresPermissions("module:identity:edit")
+	@RequiresPermissions("system:identity:edit")
 	@Log(title = "身份管理", action = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
@@ -100,7 +100,7 @@ public class IdentityController extends BaseController
 	/**
 	 * 删除身份管理
 	 */
-	@RequiresPermissions("module:identity:remove")
+	@RequiresPermissions("system:identity:remove")
 	@Log(title = "身份管理", action = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody

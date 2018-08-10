@@ -25,9 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null and id != ''"> and id = #{id}</if>
              <if test="code != null and code != ''"> and code = #{code}</if>
              <if test="name != null and name != ''"> and name = #{name}</if>
+             <if test="searchValue != null and searchValue != ''"> and name like  concat('%', #{searchValue}, '%') </if>
              <if test="costTotal != null and costTotal != ''"> and cost_total = #{costTotal}</if>
-              <if test="status != null and status != ''"> and status = #{status}</if>
-              <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
              <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
              <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
         </where>
