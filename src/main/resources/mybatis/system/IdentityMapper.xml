@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="selectPostAll" resultMap="PostResult">
-        <include refid="selectPostVo"/>
+        <include refid="selectIdentityVo"/>
         where status = '0'
     </select>
 
