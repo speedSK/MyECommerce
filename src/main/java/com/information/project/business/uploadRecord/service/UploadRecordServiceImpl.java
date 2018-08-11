@@ -1,13 +1,18 @@
 package com.information.project.business.uploadRecord.service;
 
 import com.information.common.constant.Constants;
+import com.information.common.utils.poi.ExcelUtil;
 import com.information.common.utils.security.ShiroUtils;
+import com.information.framework.web.domain.AjaxResult;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.information.project.business.uploadRecord.mapper.UploadRecordMapper;
 import com.information.project.business.person.domain.Person;
 import com.information.project.business.person.mapper.PersonMapper;
@@ -111,26 +116,50 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 	}
 
 	@Override
-	public List<BatchRechargeVo> saveRecharge(List<BatchRechargeVo> list) {
+	public AjaxResult saveRecharge(MultipartFile file) throws IOException, Exception {
+		AjaxResult resultJson = null;
+		ExcelUtil<BatchRechargeVo> util = new ExcelUtil<BatchRechargeVo>(BatchRechargeVo.class);
+    	List<BatchRechargeVo> list = util.importExcel("批量充值", file.getInputStream());
 		List<BatchRechargeVo> failList = new ArrayList<>();
+		UploadRecord uploadRecord = new UploadRecord();
+		uploadRecord.setModule("批量导入充值");
+		uploadRecord.setFailName(file.getName());
+		long successCount = 0;
+		long failCount = 0 ;
 		for (BatchRechargeVo batchRechargeVo : list) {
-			if (batchRechargeVo.getNumber()!=null||batchRechargeVo.getAmount()!=null) {
+			if (batchRechargeVo.getNumber()!=null&&batchRechargeVo.getAmount()!=null) {
 				Person person = new Person();
 				person.setNumber(batchRechargeVo.getNumber());
 				person.setStatus(Constants.STATUS_ACTIVE);
 				List<Person> pList = personMapper.selectPersonList(person);
 				if (pList==null||pList.size()==0) {
+					failCount++;
+					batchRechargeVo.setFailure("用户不存在");
 					failList.add(batchRechargeVo);
 				} else {
+					successCount++;
 					person = pList.get(0);
 					person.setBalance(person.getBalance().add(new BigDecimal(batchRechargeVo.getAmount())));
 					//TODO 计算校验字段
 					
 					personMapper.updatePerson(person);
 				}
+			} else {
+				failCount++;
+				batchRechargeVo.setFailure("编号和金额列都不能为空");
+				failList.add(batchRechargeVo);
 			}
 		}
-		return failList;
+		uploadRecord.setSuccessCount(successCount);
+		uploadRecord.setFailCount(failCount);
+		uploadRecord.setStatus(Constants.STATUS_ACTIVE);
+		
+		if (!failList.isEmpty()) {
+			resultJson = util.exportExcel(failList, "批量充值");
+		}
+		uploadRecord.setFailName(resultJson.get("msg").toString());
+		uploadRecordMapper.insertUploadRecord(uploadRecord);
+		return resultJson;
 	}
 	
 }

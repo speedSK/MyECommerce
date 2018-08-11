@@ -10,13 +10,7 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								角色名称：<input type="text" name="roleName"/>
-							</li>
-							<li>
-								权限字符：<input type="text" name="roleKey"/>
-							</li>
-							<li>
-								角色状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+								数据状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
 									<option value="">所有</option>
 									<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
 								</select>
@@ -36,18 +30,15 @@
 				</form>
 			</div>
 
-			<form id="form_table" action="#" th:action="@{/business/uploadRecord/batchImport}" enctype="multipart/form-data" method="post">
-				<input class="form-input" type="file" name="importfile"></input>
-				<button type="submit" class="btn">开始导入</button>
-				<div class="btn-group hidden-xs" id="toolbar" role="group">
-					<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:uploadRecord:add">
-						<i class="fa fa-plus"></i> 模板下载
-					</a>
-					<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.submit()" shiro:hasPermission="business:uploadRecord:remove">
-						<i class="fa fa-trash-o"></i> 开始导入
-					</a>
-				</div>
-			</form>
+			<input class="form-input" type="file" name="importfile" id="importfile"></input>
+			<div class="btn-group hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-outline btn-success btn-rounded" onclick="downMoudle()" shiro:hasPermission="business:uploadRecord:add">
+					<i class="fa fa-plus"></i> 模板下载
+				</a>
+				<a class="btn btn-outline btn-danger btn-rounded" onclick="importExcel()" shiro:hasPermission="business:uploadRecord:remove">
+					<i class="fa fa-trash-o"></i> 开始导入
+				</a>
+			</div>
 			
 				
 			<div class="col-sm-12 select-info table-striped">
@@ -67,7 +58,10 @@
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
+                sortName: "createTime",
+		        sortOrder: "desc",
                 modalName: "功能导入记录",
+                search: false,
                 columns: [{
 		            checkbox: true
 		        },
@@ -124,7 +118,7 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		            	actions.push('<a class="btn btn-success btn-xs" href="#" onclick="downFail(\'' + row.failName + '\')"><i class="fa fa-edit"></i>下载失败文件</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
@@ -132,6 +126,30 @@
             };
             $.table.init(options);
         });
+        
+       	function importExcel(){
+            var formdata = new FormData();
+            formdata.append("importfile", $("#importfile")[0].files[0]);
+            $.ajax({
+                url: prefix + "/batchImport",
+                data: formdata,
+                type: "post",
+                processData: false,
+                contentType: false,
+                success: function(result) {
+                	$.table.refresh();
+                }
+            })
+        }
+       	
+       	function downMoudle(){
+       		window.location.href = ctx + "common/download?fileName=批量充值.xlsx&delete=" + false;
+       	}
+       	
+       	function downFail(fileName){
+       		alert(fileName);
+       		window.location.href = ctx + "common/download?fileName=" + fileName + "&delete=" + false;
+       	}
     </script>
 </body>
 </html>

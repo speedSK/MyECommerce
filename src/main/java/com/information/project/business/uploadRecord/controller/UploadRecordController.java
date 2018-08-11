@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.information.common.utils.poi.ExcelUtil;
 import com.information.framework.aspectj.lang.annotation.Log;
 import com.information.framework.aspectj.lang.constant.BusinessType;
-import com.information.project.business.uploadRecord.domain.BatchRechargeVo;
 import com.information.project.business.uploadRecord.domain.UploadRecord;
 import com.information.project.business.uploadRecord.service.IUploadRecordService;
 import com.information.project.system.user.controller.ProfileController;
@@ -131,12 +129,9 @@ public class UploadRecordController extends BaseController
         {
             if (!file.isEmpty())
             {
-            	ExcelUtil<BatchRechargeVo> util = new ExcelUtil<BatchRechargeVo>(BatchRechargeVo.class);
-            	List<BatchRechargeVo> list = util.importExcel("批量充值", file.getInputStream());
-            	System.out.println(list.size());
-            	List<BatchRechargeVo> failList = uploadRecordService.saveRecharge(list);
-            	if (!failList.isEmpty()) {
-					return util.exportExcel(failList, "批量充值");
+            	AjaxResult result = uploadRecordService.saveRecharge(file);
+            	if (result==null) {
+					return error();
 				} else {
 					return success();
 				}
