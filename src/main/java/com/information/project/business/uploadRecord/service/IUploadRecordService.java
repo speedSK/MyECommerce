@@ -57,5 +57,7 @@ public interface IUploadRecordService
 	public int deleteUploadRecordByIds(String ids);
 
 	public AjaxResult saveRecharge(MultipartFile file) throws IOException, Exception;
+
+	public AjaxResult saveCost(MultipartFile file) throws IOException, Exception;
 	
 }

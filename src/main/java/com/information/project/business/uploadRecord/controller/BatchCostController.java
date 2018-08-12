@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +29,8 @@ import com.information.framework.web.domain.AjaxResult;
  * @date 2018-08-08
  */
 @Controller
-@RequestMapping("/business/uploadRecord")
-public class UploadRecordController extends BaseController
+@RequestMapping("/business/batchCost")
+public class BatchCostController extends BaseController
 {
 	private static final Logger log = LoggerFactory.getLogger(BatchCostController.class);
     private String prefix = "business/uploadRecord";
@@ -40,17 +38,17 @@ public class UploadRecordController extends BaseController
 	@Autowired
 	private IUploadRecordService uploadRecordService;
 	
-	@RequiresPermissions("business:uploadRecord:view")
+	@RequiresPermissions("business:batchCost:view")
 	@GetMapping()
-	public String uploadRecord()
+	public String batchCost()
 	{
-	    return prefix + "/uploadRecord";
+	    return prefix + "/batchCost";
 	}
 	
 	/**
 	 * 查询功能导入记录列表
 	 */
-	@RequiresPermissions("business:uploadRecord:list")
+	@RequiresPermissions("business:batchCost:list")
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(UploadRecord uploadRecord)
@@ -60,55 +58,12 @@ public class UploadRecordController extends BaseController
 		return getDataTable(list);
 	}
 	
-	/**
-	 * 新增功能导入记录
-	 */
-	@GetMapping("/add")
-	public String add()
-	{
-	    return prefix + "/add";
-	}
-	
-	/**
-	 * 新增保存功能导入记录
-	 */
-	@RequiresPermissions("business:uploadRecord:add")
-	@Log(title = "功能导入记录", action = BusinessType.INSERT)
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(UploadRecord uploadRecord)
-	{		
-		return toAjax(uploadRecordService.insertUploadRecord(uploadRecord));
-	}
-
-	/**
-	 * 修改功能导入记录
-	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap)
-	{
-		UploadRecord uploadRecord = uploadRecordService.selectUploadRecordById(id);
-		mmap.put("uploadRecord", uploadRecord);
-	    return prefix + "/edit";
-	}
-	
-	/**
-	 * 修改保存功能导入记录
-	 */
-	@RequiresPermissions("business:uploadRecord:edit")
-	@Log(title = "功能导入记录", action = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(UploadRecord uploadRecord)
-	{		
-		return toAjax(uploadRecordService.updateUploadRecord(uploadRecord));
-	}
 	
 	/**
 	 * 删除功能导入记录
 	 */
-	@RequiresPermissions("business:uploadRecord:remove")
-	@Log(title = "功能导入记录", action = BusinessType.DELETE)
+	@RequiresPermissions("business:batchCost:remove")
+	@Log(title = "批量消费导入", action = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
@@ -119,8 +74,8 @@ public class UploadRecordController extends BaseController
 	 /**
      * 批量导入数据
      */
-    @Log(title = "批量充值导入", action = BusinessType.IMPORT)
-    @PostMapping("/batchImport")
+    @Log(title = "批量消费导入", action = BusinessType.IMPORT)
+    @PostMapping("/batchCostImport")
     @ResponseBody
     public AjaxResult batchImport(User user, @RequestParam("importfile") MultipartFile file)
     {
@@ -128,7 +83,7 @@ public class UploadRecordController extends BaseController
         {
             if (!file.isEmpty())
             {
-            	AjaxResult result = uploadRecordService.saveRecharge(file);
+            	AjaxResult result = uploadRecordService.saveCost(file);
             	if (result==null) {
 					return error();
 				} else {

@@ -48,9 +48,8 @@
     </div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('business:uploadRecord:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('business:uploadRecord:remove')}]];
-        var prefix = ctx + "business/uploadRecord"
+        var removeFlag = [[${@permission.hasPermi('business:batchCost:remove')}]];
+        var prefix = ctx + "business/batchCost"
 
         $(function() {
             var options = {
@@ -131,7 +130,7 @@
             var formdata = new FormData();
             formdata.append("importfile", $("#importfile")[0].files[0]);
             $.ajax({
-                url: prefix + "/batchImport",
+                url: prefix + "/batchCostImport",
                 data: formdata,
                 type: "post",
                 processData: false,
@@ -143,7 +142,7 @@
         }
        	
        	function downMoudle(){
-       		window.location.href = ctx + "common/download?fileName=批量充值.xlsx&delete=" + false;
+       		window.location.href = ctx + "common/download?fileName=批量消费.xlsx&delete=" + false;
        	}
        	
        	function downFail(fileName){

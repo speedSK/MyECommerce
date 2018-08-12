@@ -122,7 +122,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
     	List<BatchRechargeVo> list = util.importExcel("批量充值", file.getInputStream());
 		List<BatchRechargeVo> failList = new ArrayList<>();
 		UploadRecord uploadRecord = new UploadRecord();
-		uploadRecord.setModule("批量导入充值");
+		uploadRecord.setModule("批量充值导入");
 		uploadRecord.setFailName(file.getName());
 		long successCount = 0;
 		long failCount = 0 ;
@@ -156,6 +156,53 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		
 		if (!failList.isEmpty()) {
 			resultJson = util.exportExcel(failList, "批量充值");
+		}
+		uploadRecord.setFailName(resultJson.get("msg").toString());
+		uploadRecordMapper.insertUploadRecord(uploadRecord);
+		return resultJson;
+	}
+
+	@Override
+	public AjaxResult saveCost(MultipartFile file) throws IOException, Exception {
+		AjaxResult resultJson = null;
+		ExcelUtil<BatchRechargeVo> util = new ExcelUtil<BatchRechargeVo>(BatchRechargeVo.class);
+    	List<BatchRechargeVo> list = util.importExcel("批量消费", file.getInputStream());
+		List<BatchRechargeVo> failList = new ArrayList<>();
+		UploadRecord uploadRecord = new UploadRecord();
+		uploadRecord.setModule("批量消费导入");
+		uploadRecord.setFailName(file.getName());
+		long successCount = 0;
+		long failCount = 0 ;
+		for (BatchRechargeVo batchRechargeVo : list) {
+			if (batchRechargeVo.getNumber()!=null&&batchRechargeVo.getAmount()!=null) {
+				Person person = new Person();
+				person.setNumber(batchRechargeVo.getNumber());
+				person.setStatus(Constants.STATUS_ACTIVE);
+				List<Person> pList = personMapper.selectPersonList(person);
+				if (pList==null||pList.size()==0) {
+					failCount++;
+					batchRechargeVo.setFailure("用户不存在");
+					failList.add(batchRechargeVo);
+				} else {
+					successCount++;
+					person = pList.get(0);
+					person.setBalance(person.getBalance().subtract(new BigDecimal(batchRechargeVo.getAmount())));
+					//TODO 计算校验字段
+					
+					personMapper.updatePerson(person);
+				}
+			} else {
+				failCount++;
+				batchRechargeVo.setFailure("编号和金额列都不能为空");
+				failList.add(batchRechargeVo);
+			}
+		}
+		uploadRecord.setSuccessCount(successCount);
+		uploadRecord.setFailCount(failCount);
+		uploadRecord.setStatus(Constants.STATUS_ACTIVE);
+		
+		if (!failList.isEmpty()) {
+			resultJson = util.exportExcel(failList, "批量消费");
 		}
 		uploadRecord.setFailName(resultJson.get("msg").toString());
 		uploadRecordMapper.insertUploadRecord(uploadRecord);
