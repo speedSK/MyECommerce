@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="orderId != null and orderId != ''"> and order_id = #{orderId}</if>
              <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId}</if>
              <if test="merchantName != null and merchantName != ''"> and merchant_name = #{merchantName}</if>
+             <if test="searchValue != null and searchValue != ''"> and merchant_name like  concat('%', #{merchantName}, '%') </if>
              <if test="googsId != null and googsId != ''"> and googs_id = #{googsId}</if>
              <if test="goodsName != null and goodsName != ''"> and goods_name = #{goodsName}</if>
              <if test="goodsPrice != null and goodsPrice != ''"> and goods_price = #{goodsPrice}</if>

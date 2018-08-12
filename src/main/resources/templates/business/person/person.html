@@ -30,52 +30,52 @@
 
 <div class="container-div ui-layout-center">
 	<div class="row">
-		<div class="col-sm-12 select-info">
-			<form id="user-form">
-				<input type="hidden" id="deptId" name="deptId">
-				<input type="hidden" id="parentId" name="parentId">
-				<div class="select-list">
-					<ul>
-						<li>
-							人员名称：<input type="text" name="name"/>
-						</li>
-						<li>
-							人员编号：<input type="text" name="number"/>
-						</li>
-						<li>
-							人员状态：<select name="flag" th:with="type=${@dict.getType('bus_person_flag')}">
-							<option value="">所有</option>
-							<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
-						</select>
-						</li>
-						<li class="time">
-							<label>创建时间： </label>
-							<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
-							<span>-</span>
-							<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
-						</li>
-						<li>
-							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							<a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="business:person:export"><i class="fa fa-download"></i>&nbsp;导出</a>
-						</li>
-					</ul>
-				</div>
-			</form>
-		</div>
-
-		<div class="btn-group hidden-xs" id="toolbar" role="group">
-			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:person:add">
-				<i class="fa fa-plus"></i> 新增
-			</a>
-			<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="business:person:remove">
-				<i class="fa fa-trash-o"></i> 删除
-			</a>
-		</div>
-
-		<div class="col-sm-12 select-info table-striped">
-			<table id="bootstrap-table" data-mobile-responsive="true"></table>
-		</div>
+	<div class="col-sm-12 select-info">
+		<form id="user-form">
+			<input type="hidden" id="deptId" name="deptId">
+			<input type="hidden" id="parentId" name="parentId">
+			<div class="select-list">
+				<ul>
+					<li>
+						人员名称：<input type="text" name="name"/>
+					</li>
+					<li>
+						人员编号：<input type="text" name="number"/>
+					</li>
+					<li>
+						人员状态：<select name="flag" th:with="type=${@dict.getType('bus_person_flag')}">
+						<option value="">所有</option>
+						<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+					</select>
+					</li>
+					<li class="time">
+						<label>创建时间： </label>
+						<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+						<span>-</span>
+						<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+					</li>
+					<li>
+						<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+						<a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="business:person:export"><i class="fa fa-download"></i>&nbsp;导出</a>
+					</li>
+				</ul>
+			</div>
+		</form>
 	</div>
+
+	<div class="btn-group hidden-xs" id="toolbar" role="group">
+		<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:person:add">
+			<i class="fa fa-plus"></i> 新增
+		</a>
+		<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="business:person:remove">
+			<i class="fa fa-trash-o"></i> 删除
+		</a>
+	</div>
+
+	<div class="col-sm-12 select-info table-striped">
+		<table id="bootstrap-table" data-mobile-responsive="true"></table>
+	</div>
+</div>
 </div>
 <div th:include="include :: footer"></div>
 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>

@@ -23,9 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #foreach($column in $columns)
             <if test="$column.attrname != null and $column.attrname.trim() != ''"> and $column.columnName = #{$column.attrname}</if>
  #end
-             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
-             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
-             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
         </where>
     </select>
     
