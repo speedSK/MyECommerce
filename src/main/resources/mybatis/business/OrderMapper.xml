@@ -105,5 +105,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-    
+
+    <delete id="updateMoneyById" parameterType="Long">
+        update bus_order set money = (select IFNULL(sum(money),"0")   from bus_order_detail where order_id = #{id} and flag = '0' and status = '0' )
+        where id = #{id}
+    </delete>
+
 </mapper>

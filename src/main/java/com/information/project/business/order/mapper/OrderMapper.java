@@ -58,5 +58,10 @@ public interface OrderMapper
      * @return 结果
      */
 	public int deleteOrderByIds(String[] ids);
+
+	public int updateMoneyById(Long id);
+
+
+
 	
 }

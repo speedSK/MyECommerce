@@ -38,14 +38,22 @@ public class OrderDetailController extends BaseController
 
 	@Autowired
 	private IOrderDetailService orderDetailService;
-	
-	@RequiresPermissions("business:orderDetail:view")
-	@GetMapping()
-	public String orderDetail()
+
+
+	/**
+	 * 查询字典详细
+	 */
+	@RequiresPermissions("business:orderDetail:list")
+	@GetMapping("/detail/{id}")
+	public String detail(@PathVariable("id") Long id, ModelMap mmap)
 	{
-	    return prefix + "/orderDetail";
+		if(0 != id){
+			Order order = orderService.selectOrderById(id);
+			mmap.put("order", order);
+		}
+		return prefix + "/orderDetail";
 	}
-	
+
 	/**
 	 * 查询订单详情列表
 	 */
@@ -59,72 +67,18 @@ public class OrderDetailController extends BaseController
 		return getDataTable(list);
 	}
 	
-	/**
-	 * 新增订单详情
-	 */
-	@GetMapping("/add")
-	public String add()
-	{
-	    return prefix + "/add";
-	}
-	
-	/**
-	 * 新增保存订单详情
-	 */
-	@RequiresPermissions("business:orderDetail:add")
-	@Log(title = "订单详情", action = BusinessType.INSERT)
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(OrderDetail orderDetail)
-	{		
-		return toAjax(orderDetailService.insertOrderDetail(orderDetail));
-	}
+
 
 	/**
-	 * 修改订单详情
+	 * 取消订单
 	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap)
-	{
-		OrderDetail orderDetail = orderDetailService.selectOrderDetailById(id);
-		mmap.put("orderDetail", orderDetail);
-	    return prefix + "/edit";
-	}
-	
-	/**
-	 * 修改保存订单详情
-	 */
-	@RequiresPermissions("business:orderDetail:edit")
-	@Log(title = "订单详情", action = BusinessType.UPDATE)
-	@PostMapping("/edit")
+	@RequiresPermissions("business:order:cancel")
+	@Log(title = "订单", action = BusinessType.DELETE)
+	@PostMapping( "/cancel")
 	@ResponseBody
-	public AjaxResult editSave(OrderDetail orderDetail)
-	{		
-		return toAjax(orderDetailService.updateOrderDetail(orderDetail));
-	}
-	
-	/**
-	 * 删除订单详情
-	 */
-	@RequiresPermissions("business:orderDetail:remove")
-	@Log(title = "订单详情", action = BusinessType.DELETE)
-	@PostMapping( "/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids)
-	{		
-		return toAjax(orderDetailService.deleteOrderDetailByIds(ids));
-	}
-
-	/**
-	 * 查询字典详细
-	 */
-	@RequiresPermissions("business:orderDetail:list")
-	@GetMapping("/detail/{id}")
-	public String detail(@PathVariable("id") Long id, ModelMap mmap)
+	public AjaxResult cancel(String ids)
 	{
-		Order order = orderService.selectOrderById(id);
-		mmap.put("order", order);
-		return "system/order/detail";
+		return toAjax(orderDetailService.cancelOrderByIds(ids));
 	}
 	
 }

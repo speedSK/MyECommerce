@@ -8,6 +8,9 @@
 			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.batFinish()" shiro:hasPermission="business:order:finish">
 				<i class="fa fa-plus"></i> 完成
 			</a>
+			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.batCancel()" shiro:hasPermission="business:order:remove">
+				<i class="fa fa-plus"></i> 取消
+			</a>
 		</div>
 			
 		<div class="col-sm-12 select-info table-striped">
@@ -15,10 +18,11 @@
 		</div>
     </div>
     <div th:include="include :: footer"></div>
-	<script th:src="@{/information/js/information-ui.js?v=2.3.0}"></script>
+	<script th:src="@{/information/js/information-ui.js?v=2.3.2}"></script>
     <script th:inline="javascript">
         var listFlag = [[${@permission.hasPermi('business:order:list')}]];
         var finishFlag = [[${@permission.hasPermi('business:order:finish')}]];
+        var cancelFlag = [[${@permission.hasPermi('business:order:cancel')}]];
         var detailFlag = [[${@permission.hasPermi('business:orderDetail:list')}]];
         var flagDatas = [[${@dict.getType('bus_order_flag')}]];
         var prefix = ctx + "business/order"
@@ -30,6 +34,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 finishUrl: prefix + "/finish",
+                cancelUrl: prefix + "/cancel",
                 modalName: "订单",
                 columns: [{
 		            checkbox: true
@@ -71,7 +76,12 @@
 		            formatter: function(value, row, index) {
 		            	var actions = [];
 		            	actions.push('<a class="btn btn-info btn-xs ' + detailFlag + '" href="#" onclick="detail(\'' + row.id + '\')"><i class="fa fa-list-ul"></i>详情</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + finishFlag + '" href="#" onclick="$.operate.finish(\'' + row.id + '\')"><i class="fa fa-edit"></i>完成</a>');
+		            	if('0' == row.flag){
+		            		actions.push('<a class="btn btn-danger btn-xs ' + finishFlag + '" href="#" onclick="$.operate.finish(\'' + row.id + '\')"><i class="fa fa-edit"></i>完成</a>');
+                       		actions.push('<a class="btn btn-danger btn-xs ' + cancelFlag + '" href="#" onclick="$.operate.cancel(\'' + row.id + '\')"><i class="fa fa-remove"></i>取消</a>');
+
+		            	}
+
 						return actions.join('');
 		            }
 		        }]

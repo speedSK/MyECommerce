@@ -49,7 +49,9 @@ public interface IOrderService
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-	public int deleteOrderByIds(String ids);
+	public int cancelOrderByIds(String ids);
 
 	public int finishOrderByIds(String ids);
+
+	public int updateMoneyByIds(String ids);
 }

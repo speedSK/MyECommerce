@@ -89,7 +89,7 @@ public class OrderServiceImpl implements IOrderService
      * @return 结果
      */
 	@Override
-	public int deleteOrderByIds(String ids)
+	public int cancelOrderByIds(String ids)
 	{
 	    String [] idsArray = Convert.toStrArray(ids);
         for (String id: idsArray) {
@@ -134,6 +134,22 @@ public class OrderServiceImpl implements IOrderService
 			}
 		}
 
+		return 1;
+	}
+
+	@Override
+	public int updateMoneyByIds(String ids) {
+
+		String [] idsArray = Convert.toStrArray(ids);
+		for (String id: idsArray) {
+
+			Order order = orderMapper.selectOrderById(Long.valueOf(id)) ;
+			if(null != order && Constants.ORDER_0.equals(order.getFlag())){
+
+				//更新该订单下指定商品的money
+				orderMapper.updateMoneyById(Long.valueOf(id)) ;
+			}
+		}
 		return 1;
 	}
 

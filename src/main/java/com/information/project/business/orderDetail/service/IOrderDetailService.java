@@ -53,5 +53,6 @@ public interface IOrderDetailService
 
 
 	public int updateFlagByOrderId(String id,String flag);
-	
+
+	public int cancelOrderByIds(String ids);
 }

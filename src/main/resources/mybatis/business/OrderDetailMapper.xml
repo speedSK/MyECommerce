@@ -115,7 +115,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateFlagByOrderId" parameterType="OrderDetail" >
         update bus_order_detail
         set flag = #{flag}
-        where id = #{id}
+        where order_id = #{id}
+        and flag = '0'
     </update>
-    
+
+
+
+
+
 </mapper>

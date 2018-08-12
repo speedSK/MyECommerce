@@ -2,7 +2,11 @@ package com.information.project.business.orderDetail.service;
 
 import com.information.common.constant.Constants;
 import com.information.common.utils.security.ShiroUtils;
+
+import java.util.Date;
 import java.util.List;
+
+import com.information.project.business.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.information.project.business.orderDetail.mapper.OrderDetailMapper;
@@ -21,6 +25,10 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 {
 	@Autowired
 	private OrderDetailMapper orderDetailMapper;
+
+	@Autowired
+	private IOrderService orderService;
+
 
 	/**
      * 查询订单详情信息
@@ -108,6 +116,31 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 		orderDetail.setId(Long.valueOf(id));
 		orderDetail.setFlag(flag);
 		return orderDetailMapper.updateFlagByOrderId(orderDetail);
+	}
+
+	@Override
+	public int cancelOrderByIds(String ids) {
+
+		String [] idsArray = Convert.toStrArray(ids);
+		for (String id: idsArray) {
+
+			OrderDetail order = orderDetailMapper.selectOrderDetailById(Long.valueOf(id)) ;
+			if(Constants.ORDER_0.equals(order.getFlag())){
+				order.setId(Long.valueOf(id));
+				//初始化數據信息
+				order.setFlag(Constants.ORDER_2);
+
+				order.setUpdateBy(ShiroUtils.getUserId().toString());
+				orderDetailMapper.updateOrderDetail(order);
+
+				//update money
+				orderService.updateMoneyByIds(order.getOrderId().toString());
+
+			}
+
+		}
+
+		return 1;
 	}
 
 }

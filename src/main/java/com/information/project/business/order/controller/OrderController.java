@@ -98,15 +98,15 @@ public class OrderController extends BaseController
 	}
 	
 	/**
-	 * 删除订单
+	 * 取消订单
 	 */
-	@RequiresPermissions("business:order:remove")
+	@RequiresPermissions("business:order:cancel")
 	@Log(title = "订单", action = BusinessType.DELETE)
-	@PostMapping( "/remove")
+	@PostMapping( "/cancel")
 	@ResponseBody
-	public AjaxResult remove(String ids)
+	public AjaxResult cancel(String ids)
 	{		
-		return toAjax(orderService.deleteOrderByIds(ids));
+		return toAjax(orderService.cancelOrderByIds(ids));
 	}
 
 
