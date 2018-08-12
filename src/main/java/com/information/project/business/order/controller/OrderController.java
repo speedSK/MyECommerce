@@ -22,7 +22,7 @@ import com.information.framework.web.domain.AjaxResult;
  * 订单 信息操作处理
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-10
  */
 @Controller
 @RequestMapping("/business/order")
@@ -98,15 +98,27 @@ public class OrderController extends BaseController
 	}
 	
 	/**
-	 * 删除订单
+	 * 取消订单
 	 */
-	@RequiresPermissions("business:order:remove")
+	@RequiresPermissions("business:order:cancel")
 	@Log(title = "订单", action = BusinessType.DELETE)
-	@PostMapping( "/remove")
+	@PostMapping( "/cancel")
 	@ResponseBody
-	public AjaxResult remove(String ids)
+	public AjaxResult cancel(String ids)
 	{		
-		return toAjax(orderService.deleteOrderByIds(ids));
+		return toAjax(orderService.cancelOrderByIds(ids));
 	}
-	
+
+
+	/**
+	 * 完成订单
+	 */
+	@RequiresPermissions("business:order:finish")
+	@Log(title = "订单", action = BusinessType.UPDATE)
+	@PostMapping( "/finish")
+	@ResponseBody
+	public AjaxResult finish(String ids)
+	{
+		return toAjax(orderService.finishOrderByIds(ids));
+	}
 }

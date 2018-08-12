@@ -7,7 +7,7 @@ import java.util.List;
  * 订单详情 服务层
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-10
  */
 public interface IOrderDetailService 
 {
@@ -50,5 +50,9 @@ public interface IOrderDetailService
      * @return 结果
      */
 	public int deleteOrderDetailByIds(String ids);
-	
+
+
+	public int updateFlagByOrderId(String id,String flag);
+
+	public int cancelOrderByIds(String ids);
 }

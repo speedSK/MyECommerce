@@ -7,7 +7,7 @@ import java.util.List;
  * 订单 服务层
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-10
  */
 public interface IOrderService 
 {
@@ -49,6 +49,9 @@ public interface IOrderService
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-	public int deleteOrderByIds(String ids);
-	
+	public int cancelOrderByIds(String ids);
+
+	public int finishOrderByIds(String ids);
+
+	public int updateMoneyByIds(String ids);
 }
