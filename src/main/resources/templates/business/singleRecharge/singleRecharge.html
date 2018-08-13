@@ -9,14 +9,14 @@
 		<div class="row">
 			<div class="col-sm-12 select-info">
 				<form id="role-form">
-					<div class="select-list gd">
+					<div class="select-list">
 						<ul>
 							<li>
-								角色编号：<input type="text" name="roleName"/>
+								角色编号：<input type="text" id="number" name="number"/>
 							</li>
-							<li>
-								银行余额：<input type="text" name="roleKey"/>
-							</li>
+<!-- 							<li> -->
+<!-- 								银行余额：<input type="text" name="roleKey"/> -->
+<!-- 							</li> -->
 							
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" href="javascript:cash()"><i class="fa fa-search"></i>&nbsp;现金充值查询</a>
@@ -33,12 +33,12 @@
 	<script th:inline="javascript">
 		/*现金充值*/
 		function cash() {
-			var url = ctx + "business/singleRecharge/cash/" + 1;
+			var url = ctx + "business/singleRecharge/cash/" + $("#number").val();
 			$.modal.open("现金充值", url);
 		}
 		/*银行充值*/
 		function bankRecharge() {
-			var url = ctx + "business/singleRecharge/bankRecharge/" + 1;
+			var url = ctx + "business/singleRecharge/bankRecharge/" + $("#number").val();
 			$.modal.open("银行充值", url);
 		}
 	</script>

@@ -2,6 +2,8 @@ package com.information.project.business.person.service;
 
 import com.information.common.constant.Constants;
 import com.information.common.utils.security.ShiroUtils;
+
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,6 +103,20 @@ public class PersonServiceImpl implements IPersonService
         }
 
         return 1;
+	}
+
+	@Override
+	public int saveCash(Person person) {
+		Person info = personMapper.selectPersonById(person.getId());
+		info.setBalance(info.getBalance().add(person.getRecharge()));
+		return personMapper.updatePerson(info);
+	}
+
+	@Override
+	public int saveBankCharge(Person person) {
+		Person info = personMapper.selectPersonById(person.getId());
+		info.setBalance(info.getBalance().add(new BigDecimal(1)));
+		return personMapper.updatePerson(info);
 	}
 	
 }

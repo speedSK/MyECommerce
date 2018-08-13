@@ -50,5 +50,9 @@ public interface IPersonService
      * @return 结果
      */
 	public int deletePersonByIds(String ids);
+
+	public int saveCash(Person person);
+
+	public int saveBankCharge(Person person);
 	
 }

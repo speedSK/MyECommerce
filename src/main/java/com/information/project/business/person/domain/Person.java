@@ -62,7 +62,8 @@ public class Person extends BaseEntity
 	private String flag;
 	/** 状态 */
 	private String status;
-
+	/**充值金额*/
+	private BigDecimal recharge;
 	/**
 	 * 设置：主键
 	 */
@@ -412,4 +413,20 @@ public class Person extends BaseEntity
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+
+	/**
+	 * @return the recharge
+	 */
+	public BigDecimal getRecharge() {
+		return recharge;
+	}
+
+	/**
+	 * @param recharge the recharge to set
+	 */
+	public void setRecharge(BigDecimal recharge) {
+		this.recharge = recharge;
+	}
+	
+	
 }
