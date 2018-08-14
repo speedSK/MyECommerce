@@ -2,6 +2,7 @@ package com.information.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -17,6 +18,8 @@ public class DateUtils
     public static String YYYY_MM = "yyyy-MM";
 
     public static String YYYY_MM_DD = "yyyy-MM-dd";
+    
+    public static String YYYYMMDD = "yyyyMMdd";
 
     public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
@@ -96,5 +99,29 @@ public class DateUtils
         Date now = new Date();
         return DateFormatUtils.format(now, "yyyyMMdd");
     }
-
+    
+    /**
+     * 通过时间秒毫秒数判断两个时间的间隔
+     * @param date1
+     * @param date2
+     * @return
+     */
+    public static int differentDaysByMillisecond(Date date1,Date date2)
+    {
+        int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
+        return days;
+    }
+    
+    /**
+    * @Description:获取前一天
+    * @author LiuNing
+    * @date 2018年8月14日 上午11:09:15
+     */
+    public static Date getBeforeDay(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		date = calendar.getTime();
+		return date;
+	}
 }

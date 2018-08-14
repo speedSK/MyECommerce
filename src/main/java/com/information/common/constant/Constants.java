@@ -74,5 +74,8 @@ public class Constants
     public static final String ORDER_0 = "0"; //正常
     public static final String ORDER_1 = "1"; //完成
     public static final String ORDER_2 = "2"; //取消
-
+    
+    public static final String BANK_UNCHECK = "0";
+    public static final String BANK_CHECKED = "1";
+    public static final String BANK_CHECK_fAIL = "2";
 }

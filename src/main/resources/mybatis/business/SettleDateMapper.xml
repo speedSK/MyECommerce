@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.information.project.business.settleDate.mapper.SettleDateMapper">
+    
+    <resultMap type="SettleDate" id="SettleDateResult">
+        <result property="id"    column="id"    />
+        <result property="settleDate"    column="settle_date"    />
+        <result property="settleStatus"    column="settle_status"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectSettleDateVo">
+        select id, settle_date, settle_status, status, remark, create_time, update_time ,remark,create_time,update_time from bus_settle_date
+    </sql>
+	
+    <select id="selectSettleDateList" parameterType="SettleDate" resultMap="SettleDateResult">
+        <include refid="selectSettleDateVo"/>
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id}</if>
+             <if test="settleDate != null and settleDate != ''"> and settle_date = #{settleDate}</if>
+             <if test="settleStatus != null and settleStatus != ''"> and settle_status = #{settleStatus}</if>
+             <if test="status != null and status != ''"> and status = #{status}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSettleDateById" parameterType="Long" resultMap="SettleDateResult">
+        <include refid="selectSettleDateVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSettleDate" parameterType="SettleDate">
+        insert into bus_settle_date
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != '' ">id,</if>
+			<if test="settleDate != null and settleDate != '' ">settle_date,</if>
+			<if test="settleStatus != null and settleStatus != '' ">settle_status,</if>
+			<if test="status != null and status != '' ">status,</if>
+			<if test="remark != null and remark != '' ">remark,</if>
+			<if test="createTime != null and createTime != '' ">create_time,</if>
+			<if test="updateTime != null and updateTime != '' ">update_time,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="settleDate != null and settleDate != ''">#{settleDate},</if>
+			<if test="settleStatus != null and settleStatus != ''">#{settleStatus},</if>
+			<if test="status != null and status != ''">#{status},</if>
+			<if test="remark != null and remark != ''">#{remark},</if>
+			<if test="createTime != null and createTime != ''">#{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            sysdate()
+         </trim>
+    </insert>
+	 
+    <update id="updateSettleDate" parameterType="SettleDate">
+        update bus_settle_date
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="settleDate != null  ">settle_date = #{settleDate},</if>
+            <if test="settleStatus != null  and settleStatus != ''  ">settle_status = #{settleStatus},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            update_time = sysdate()
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSettleDateById" parameterType="Long">
+        delete from bus_settle_date where id = #{id}
+    </delete>
+	
+    <delete id="deleteSettleDateByIds" parameterType="String">
+        delete from bus_settle_date where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
