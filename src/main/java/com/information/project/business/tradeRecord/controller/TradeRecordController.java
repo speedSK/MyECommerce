@@ -22,7 +22,7 @@ import com.information.framework.web.domain.AjaxResult;
  * 流水 信息操作处理
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-18
  */
 @Controller
 @RequestMapping("/business/tradeRecord")

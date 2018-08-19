@@ -7,7 +7,7 @@ import java.util.List;
  * 流水 服务层
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-18
  */
 public interface ITradeRecordService 
 {
