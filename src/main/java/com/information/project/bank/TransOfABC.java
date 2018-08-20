@@ -224,13 +224,13 @@ public class TransOfABC {
 		String responseMsg = new String(buf, 10, 34, encodeType);
 		if (responseCode.equals("000000")) {
 			logger.info("处理总额对账文件成功报文体3051交易\n报文:{},交易时间{},响应码{},相应信息{}.", new String(buf),getCurrentDateTime() ,responseCode,responseMsg);
-			return responseCode;
+			return responseCode + "|" + responseMsg;
 		} else if (responseCode.equals("L99999")) {
 			logger.info("处理总额对账文件系统忙报文体3051交易\n报文:{},交易时间{},响应码{},相应信息{}.", new String(buf),getCurrentDateTime() ,responseCode,responseMsg);
-			return responseCode;
+			return responseCode + "|" + responseMsg;
 		} else {
 			logger.info("处理总额对账文件错误报文体3051交易\n报文:{},交易时间{},响应码{},相应信息{}.", new String(buf),getCurrentDateTime() ,responseCode,responseMsg);
-			return responseCode;
+			return responseCode + "|" + responseMsg;
 		}
 	}
 
