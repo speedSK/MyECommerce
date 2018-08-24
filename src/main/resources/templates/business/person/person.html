@@ -45,10 +45,10 @@
 					<li>
 						人员状态：<select name="flag" th:with="type=${@dict.getType('bus_person_flag')}">
 						<option value="">所有</option>
-						<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+						<option th:each="dict : ${type" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
 					</select>
 					</li>
-					<li class="time">
+					<li class="select-time">
 						<label>创建时间： </label>
 						<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
 						<span>-</span>
@@ -67,12 +67,12 @@
 		<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:person:add">
 			<i class="fa fa-plus"></i> 新增
 		</a>
-		<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.batRemove()" shiro:hasPermission="business:person:remove">
+		<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.removeAll()" shiro:hasPermission="business:person:remove">
 			<i class="fa fa-trash-o"></i> 删除
 		</a>
 	</div>
 
-	<div class="col-sm-12 select-info table-striped">
+	<div class="col-sm-12 select-table table-striped">
 		<table id="bootstrap-table" data-mobile-responsive="true"></table>
 	</div>
 </div>

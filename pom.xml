@@ -3,12 +3,12 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.information</groupId>
-	<artifactId>Information</artifactId>
-	<version>2.2.0</version>
+	<groupId>com.ruoyi</groupId>
+	<artifactId>RuoYi</artifactId>
+	<version>2.3.0</version>
 	<packaging>jar</packaging>
 
-	<name>Information</name>
+	<name>RuoYi</name>
 	<description>监狱管理系统</description>
 
 	<parent>
@@ -87,10 +87,10 @@
 		</dependency>
 
 		<!-- thymeleaf网页解析 -->
-		<dependency>
-			<groupId>net.sourceforge.nekohtml</groupId>
-			<artifactId>nekohtml</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>net.sourceforge.nekohtml</groupId> -->
+<!-- 			<artifactId>nekohtml</artifactId> -->
+<!-- 		</dependency> -->
 
 		<!-- Mysql驱动包 -->
 		<dependency>

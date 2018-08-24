@@ -24,10 +24,10 @@
 						<li>
 							订单状态：<select name="flag" th:with="type=${@dict.getType('bus_order_flag')}">
 							<option value="">所有</option>
-							<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+							<option th:each="dict : ${type" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
 						</select>
 						</li>
-						<li class="time">
+						<li class="select-time">
 							<label>创建时间： </label>
 							<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
 							<span>-</span>
@@ -51,14 +51,14 @@
 
 		</div>
 
-		<div class="col-sm-12 select-info table-striped">
+		<div class="col-sm-12 select-table table-striped">
 			<table id="bootstrap-table" data-mobile-responsive="true"></table>
 		</div>
 	</div>
 </div>
 
     <div th:include="include :: footer"></div>
-	<script th:src="@{/information/js/information-ui.js?v=2.3.2}"></script>
+	<script th:src="@{/ruoyi/js/ruoyi-ui.js?v=2.3.2}"></script>
     <script th:inline="javascript">
         var listFlag = [[${@permission.hasPermi('business:order:list')}]];
         var finishFlag = [[${@permission.hasPermi('business:order:finish')}]];

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+	<property name="log.path" value="/home/logs/ruoyi" />
 	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
 
 	<!-- 控制台输出 -->
@@ -66,7 +67,7 @@
 		<logger name="org.springframework.jdbc" level="debug" />
 	-->
 
-	<logger name="com.information" level="info" />
+	<logger name="com.ruoyi" level="info" />
 
 	<root level="info">
 		<appender-ref ref="console" />

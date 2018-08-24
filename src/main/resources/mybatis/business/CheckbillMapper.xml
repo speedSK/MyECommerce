@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.information.project.business.checkbill.mapper.CheckbillMapper">
+<mapper namespace="com.ruoyi.project.business.checkbill.mapper.CheckbillMapper">
     
     <resultMap type="Checkbill" id="CheckbillResult">
         <result property="id"    column="id"    />

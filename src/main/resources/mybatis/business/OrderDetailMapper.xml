@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.information.project.business.orderDetail.mapper.OrderDetailMapper">
+<mapper namespace="com.ruoyi.project.business.orderDetail.mapper.OrderDetailMapper">
     
     <resultMap type="OrderDetail" id="OrderDetailResult">
         <result property="id"    column="id"    />

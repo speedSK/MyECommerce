@@ -17,7 +17,7 @@
 							分类状态：
 							<select name="visible" th:with="type=${@dict.getType('bus_show_hide')}">
 								<option value="">所有</option>
-								<option th:each="e : ${type}" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+								<option th:each="dict : ${type" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
 							</select>
 						</li>
 						<li>
@@ -33,7 +33,7 @@
 				<i class="fa fa-plus"></i> 新增
 			</a>
 		</div>
-		<div class="col-sm-12 select-info table-striped">
+		<div class="col-sm-12 select-table table-striped">
 			<table id="bootstrap-table" data-mobile-responsive="true"></table>
 		</div>
 	</div>

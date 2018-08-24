@@ -1,30 +1,28 @@
 package ${package}.service;
 
-import com.information.common.constant.Constants;
-import com.information.common.utils.security.ShiroUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ${package}.mapper.${className}Mapper;
 import ${package}.domain.${className};
 import ${package}.service.I${className}Service;
-import com.information.common.support.Convert;
+import com.ruoyi.common.support.Convert;
 
 /**
  * ${tableComment} 服务层实现
- *
+ * 
  * @author ${author}
  * @date ${datetime}
  */
 @Service
-public class ${className}ServiceImpl implements I${className}Service
+public class ${className}ServiceImpl implements I${className}Service 
 {
 	@Autowired
 	private ${className}Mapper ${classname}Mapper;
 
 	/**
      * 查询${tableComment}信息
-     *
+     * 
      * @param ${primaryKey.attrname} ${tableComment}ID
      * @return ${tableComment}信息
      */
@@ -33,73 +31,53 @@ public class ${className}ServiceImpl implements I${className}Service
 	{
 	    return ${classname}Mapper.select${className}ById(${primaryKey.attrname});
 	}
-
+	
 	/**
      * 查询${tableComment}列表
-     *
+     * 
      * @param ${classname} ${tableComment}信息
      * @return ${tableComment}集合
      */
 	@Override
 	public List<${className}> select${className}List(${className} ${classname})
 	{
-	    ${classname}.setStatus(Constants.STATUS_ACTIVE);
 	    return ${classname}Mapper.select${className}List(${classname});
 	}
-
+	
     /**
      * 新增${tableComment}
-     *
+     * 
      * @param ${classname} ${tableComment}信息
      * @return 结果
      */
 	@Override
 	public int insert${className}(${className} ${classname})
 	{
-	    ${classname}.setStatus(Constants.STATUS_ACTIVE);
-
-        ${classname}.setCreateBy(ShiroUtils.getUserId().toString());
 	    return ${classname}Mapper.insert${className}(${classname});
 	}
-
+	
 	/**
      * 修改${tableComment}
-     *
+     * 
      * @param ${classname} ${tableComment}信息
      * @return 结果
      */
 	@Override
 	public int update${className}(${className} ${classname})
 	{
-	    ${classname}.setUpdateBy(ShiroUtils.getUserId().toString());
 	    return ${classname}Mapper.update${className}(${classname});
 	}
 
 	/**
      * 删除${tableComment}对象
-     *
+     * 
      * @param ids 需要删除的数据ID
      * @return 结果
      */
 	@Override
 	public int delete${className}ByIds(String ids)
 	{
-	    String [] idsArray = Convert.toStrArray(ids);
-        for (String id: idsArray) {
-
-            ${className} ${classname} = new ${className}();
-            ${classname}.setId(Long.valueOf(id));
-            //初始化數據信息
-
-            ${classname}.setStatus(Constants.STATUS_REMOVED);
-
-            ${classname}.setUpdateBy(ShiroUtils.getUserId().toString());
-
-            ${classname}Mapper.update${className}(${classname});
-
-        }
-
-        return 1;
+		return ${classname}Mapper.delete${className}ByIds(Convert.toStrArray(ids));
 	}
 	
 }

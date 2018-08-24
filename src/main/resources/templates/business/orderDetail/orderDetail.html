@@ -6,14 +6,14 @@
     <div class="container-div">
 
 
-        <div class="col-sm-12 select-info table-striped">
+        <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
 		<input name="orderId"  type="hidden"   th:field="${order.id}"   id="orderId"/>
 
     </div>
     <div th:include="include :: footer"></div>
-    <script th:src="@{/information/js/information-ui.js?v=2.3.2}"></script>
+    <script th:src="@{/ruoyi/js/ruoyi-ui.js?v=2.3.2}"></script>
     <script th:inline="javascript">
         var cancelFlag = [[${@permission.hasPermi('business:order:cancel')}]];
         var flagDatas = [[${@dict.getType('bus_order_flag')}]];
