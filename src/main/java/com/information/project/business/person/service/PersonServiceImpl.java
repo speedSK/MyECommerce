@@ -1,15 +1,18 @@
 package com.information.project.business.person.service;
 
 import com.information.common.constant.Constants;
+import com.information.common.utils.StringUtils;
 import com.information.common.utils.security.ShiroUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import com.information.project.bank.TransOfABC;
+import com.information.project.bank.domain.TransVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.information.project.business.person.mapper.PersonMapper;
 import com.information.project.business.person.domain.Person;
-import com.information.project.business.person.service.IPersonService;
 import com.information.common.support.Convert;
 
 /**
@@ -115,7 +118,28 @@ public class PersonServiceImpl implements IPersonService
 	@Override
 	public int saveBankCharge(Person person) {
 		Person info = personMapper.selectPersonById(person.getId());
-		info.setBalance(info.getBalance().add(new BigDecimal(1)));
+		String txamt = "";
+		TransVo vo = new TransVo();
+		vo.setYktTxcode("3021");
+		vo.setBankTxcode("YKT01");
+		vo.setYktNo(person.getNumber());
+		vo.setBankCardNo(person.getBankCardNumber());
+		String queryBalance = TransOfABC.transCommMsg("3021", vo);
+		String[] balanceArray = queryBalance.split("\\|");
+		if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
+			txamt = balanceArray[2];
+		}
+		vo.setYktTxcode("3011");
+		vo.setBankTxcode("YKT03");
+		vo.setTxamt(txamt);
+		vo.setYktJourno("");
+		vo.setUsername(person.getName());
+		vo.setIdserial2(person.getIdcard());
+		String transResult = TransOfABC.transCommMsg("3011", vo);
+		String[] transArray = transResult.split("\\|");
+		if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
+			info.setBalance(info.getBalance().add(new BigDecimal(StringUtils.fen2Yuan(txamt))));
+		}
 		return personMapper.updatePerson(info);
 	}
 	

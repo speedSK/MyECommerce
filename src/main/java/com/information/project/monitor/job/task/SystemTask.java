@@ -11,8 +11,13 @@ import org.springframework.stereotype.Component;
 
 import com.information.common.constant.Constants;
 import com.information.common.utils.DateUtils;
+import com.information.common.utils.StringUtils;
+import com.information.project.bank.TransOfABC;
+import com.information.project.bank.domain.TransVo;
 import com.information.project.business.checkbill.domain.Checkbill;
 import com.information.project.business.checkbill.service.ICheckbillService;
+import com.information.project.business.person.domain.Person;
+import com.information.project.business.person.service.IPersonService;
 import com.information.project.business.settleDate.domain.SettleDate;
 import com.information.project.business.settleDate.service.ISettleDateService;
 import com.information.project.business.transactionRecord.domain.TransactionRecord;
@@ -33,9 +38,40 @@ public class SystemTask {
 	private ICheckbillService checkbillService;
 	@Autowired
 	private ISettleDateService settleDateService;
+	@Autowired
+	private IPersonService personService;
 
 	public void ryParams(String params) {
 		System.out.println("执行有参方法：" + params);
+	}
+	
+	public void recharge() {
+		List<Person> personList = personService.selectPersonList(new Person());
+		for (Person person : personList) {
+			String txamt = "";
+			TransVo vo = new TransVo();
+			vo.setYktTxcode("3021");
+			vo.setBankTxcode("YKT01");
+			vo.setYktNo(person.getNumber());
+			vo.setBankCardNo(person.getBankCardNumber());
+			String queryBalance = TransOfABC.transCommMsg("3021", vo);
+			String[] balanceArray = queryBalance.split("\\|");
+			if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
+				txamt = balanceArray[2];
+			}
+			vo.setYktTxcode("3011");
+			vo.setBankTxcode("YKT03");
+			vo.setTxamt(txamt);
+			vo.setYktJourno("");
+			vo.setUsername(person.getName());
+			vo.setIdserial2(person.getIdcard());
+			String transResult = TransOfABC.transCommMsg("3011", vo);
+			String[] transArray = transResult.split("\\|");
+			if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
+				person.setBalance(person.getBalance().add(new BigDecimal(StringUtils.fen2Yuan(txamt))));
+				personService.updatePerson(person);
+			}
+		}
 	}
 
 	public void checkBill() {
@@ -56,8 +92,8 @@ public class SystemTask {
 							transactionRecord.getBankNumber().length() - 5, transactionRecord.getBankNumber().length()));
 				}
 				Checkbill checkbill = new Checkbill();
-				checkbill.setCode("1001");
-				checkbill.setBankCode("3051");
+				checkbill.setCode("3051");
+				checkbill.setBankCode("YKT08");
 				checkbill.setCheckDate(DateUtils.dateTimeNow("yyyyMMdd"));
 				checkbill.setRechargeNum(String.valueOf(rechargeNum));
 				checkbill.setRechargeSum(rechargeSum.toString());
@@ -73,6 +109,47 @@ public class SystemTask {
 				checkbill.setMerchantCardSum("0");
 				checkbill.setStatus(Constants.BANK_UNCHECK);
 				checkbillService.insertCheckbill(checkbill);
+				TransVo vo = new TransVo();
+				vo.setYktTxcode("3051");
+				vo.setBankTxcode("YKT08");
+				vo.setTxdate(checkbill.getCheckDate());
+				vo.setQcTotal(checkbill.getRechargeNum());
+				vo.setQcTotalAmt(checkbill.getRechargeSum());
+				vo.setCzTotal(checkbill.getCorrectionNum());
+				vo.setCzTotalAmt(checkbill.getCorrectionSum());
+				vo.setXhTotal(checkbill.getCloseNum());
+				vo.setXhTotalAmt(checkbill.getCloseSum());
+				vo.setShTotal(checkbill.getMerchantNum());
+				vo.setShTotalAmt(checkbill.getMerchantSum());
+				vo.setCzBankCdNoTotal(checkbill.getCorrectionCardSum());
+				vo.setQcBankCdNoTotal(checkbill.getRechargeCardSum());
+				vo.setXhBankCdNoTotal(checkbill.getCloseCardSum());
+				vo.setJsBankCdNoTotal(checkbill.getMerchantCardSum());
+				String checkBillStr = TransOfABC.transCommMsg("3051", vo);
+				String[] checkBillArray = checkBillStr.split("\\|");
+				if (StringUtils.isNotEmpty(checkBillArray[0])&&checkBillArray[0].equals("000000")) {
+					checkbill.setStatus(Constants.BANK_CHECKED);
+				} else {
+					checkbill.setStatus(Constants.BANK_CHECK_fAIL);
+				}
+				checkbill.setReturnCode(checkBillArray[0]);
+				checkbill.setReturnMessage(checkBillArray[1]);
+				checkbillService.updateCheckbill(checkbill);
+			}
+		}
+	}
+	
+	public void checkBillDetail() {
+		Checkbill checkbill = new Checkbill();
+		checkbill.setCheckDate(DateUtils.dateTimeNow("yyyyMMdd"));
+		List<Checkbill> check = checkbillService.selectCheckbillList(checkbill);
+		if (StringUtils.isNotEmpty(check)&&check.size()>0) {
+			Checkbill bill = check.get(0);
+			if (bill.getStatus().equals(Constants.BANK_CHECK_fAIL)) {
+				TransVo vo = new TransVo();
+				vo.setYktTxcode("3071");
+				vo.setBankTxcode("YKT10");
+				TransOfABC.transCommMsg("3071", vo);
 			}
 		}
 	}

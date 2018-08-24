@@ -1,5 +1,7 @@
 package com.information.project.business.tradeRecord.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import com.information.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
@@ -9,7 +11,7 @@ import java.util.Date;
  * 流水表 bus_trade_record
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-18
  */
 public class TradeRecord extends BaseEntity
 {
@@ -18,200 +20,211 @@ public class TradeRecord extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 流水号 */
-	private String idserial;
+	private String journo;
+	/** 用户编号 */
+	private String userNumber;
+	/** 商户编号 */
+	private String merchantCode;
+	/** 订单号 */
+	private String orderCode;
 	/** 交易代码 */
-	private String tradeCode;
-	/** 关联id（订单号，或流水号） */
-	private String relationId;
-	/** 交易用户 */
-	private Long userId;
+	private String txcode;
 	/** 交易金额 */
-	private BigDecimal amount;
+	private BigDecimal txamt;
 	/** 来源账户 */
 	private String fromAcc;
 	/** 目标账户 */
 	private String toAcc;
+	/** 系统入账日期 */
+	private Date regDate;
+	/** 设备编号 */
+	private String stationCode;
 	/** 备注 */
 	private String remark;
 	/** 状态 */
 	private String status;
+	/** 创建人 */
+	private String createBy;
 	/** 创建时间 */
 	private Date createTime;
+	/** 修改人 */
+	private String updateBy;
+	/** 修改时间 */
+	private Date updateTime;
 
-	/**
-	 * 设置：主键
-	 */
 	public void setId(Long id) 
 	{
 		this.id = id;
 	}
-	
-	/**
-	 * 获取：主键
-	 */
+
 	public Long getId() 
 	{
 		return id;
 	}
-	
-	/**
-	 * 设置：流水号
-	 */
-	public void setIdserial(String idserial) 
+	public void setJourno(String journo) 
 	{
-		this.idserial = idserial;
+		this.journo = journo;
 	}
-	
-	/**
-	 * 获取：流水号
-	 */
-	public String getIdserial() 
+
+	public String getJourno() 
 	{
-		return idserial;
+		return journo;
 	}
-	
-	/**
-	 * 设置：交易代码
-	 */
-	public void setTradeCode(String tradeCode) 
+	public void setUserNumber(String userNumber) 
 	{
-		this.tradeCode = tradeCode;
+		this.userNumber = userNumber;
 	}
-	
-	/**
-	 * 获取：交易代码
-	 */
-	public String getTradeCode() 
+
+	public String getUserNumber() 
 	{
-		return tradeCode;
+		return userNumber;
 	}
-	
-	/**
-	 * 设置：关联id（订单号，或流水号）
-	 */
-	public void setRelationId(String relationId) 
+	public void setMerchantCode(String merchantCode) 
 	{
-		this.relationId = relationId;
+		this.merchantCode = merchantCode;
 	}
-	
-	/**
-	 * 获取：关联id（订单号，或流水号）
-	 */
-	public String getRelationId() 
+
+	public String getMerchantCode() 
 	{
-		return relationId;
+		return merchantCode;
 	}
-	
-	/**
-	 * 设置：交易用户
-	 */
-	public void setUserId(Long userId) 
+	public void setOrderCode(String orderCode) 
 	{
-		this.userId = userId;
+		this.orderCode = orderCode;
 	}
-	
-	/**
-	 * 获取：交易用户
-	 */
-	public Long getUserId() 
+
+	public String getOrderCode() 
 	{
-		return userId;
+		return orderCode;
 	}
-	
-	/**
-	 * 设置：交易金额
-	 */
-	public void setAmount(BigDecimal amount) 
+	public void setTxcode(String txcode) 
 	{
-		this.amount = amount;
+		this.txcode = txcode;
 	}
-	
-	/**
-	 * 获取：交易金额
-	 */
-	public BigDecimal getAmount() 
+
+	public String getTxcode() 
 	{
-		return amount;
+		return txcode;
 	}
-	
-	/**
-	 * 设置：来源账户
-	 */
+	public void setTxamt(BigDecimal txamt) 
+	{
+		this.txamt = txamt;
+	}
+
+	public BigDecimal getTxamt() 
+	{
+		return txamt;
+	}
 	public void setFromAcc(String fromAcc) 
 	{
 		this.fromAcc = fromAcc;
 	}
-	
-	/**
-	 * 获取：来源账户
-	 */
+
 	public String getFromAcc() 
 	{
 		return fromAcc;
 	}
-	
-	/**
-	 * 设置：目标账户
-	 */
 	public void setToAcc(String toAcc) 
 	{
 		this.toAcc = toAcc;
 	}
-	
-	/**
-	 * 获取：目标账户
-	 */
+
 	public String getToAcc() 
 	{
 		return toAcc;
 	}
-	
-	/**
-	 * 设置：备注
-	 */
+	public void setRegDate(Date regDate) 
+	{
+		this.regDate = regDate;
+	}
+
+	public Date getRegDate() 
+	{
+		return regDate;
+	}
+	public void setStationCode(String stationCode) 
+	{
+		this.stationCode = stationCode;
+	}
+
+	public String getStationCode() 
+	{
+		return stationCode;
+	}
 	public void setRemark(String remark) 
 	{
 		this.remark = remark;
 	}
-	
-	/**
-	 * 获取：备注
-	 */
+
 	public String getRemark() 
 	{
 		return remark;
 	}
-	
-	/**
-	 * 设置：状态
-	 */
 	public void setStatus(String status) 
 	{
 		this.status = status;
 	}
-	
-	/**
-	 * 获取：状态
-	 */
+
 	public String getStatus() 
 	{
 		return status;
 	}
-	
-	/**
-	 * 设置：创建时间
-	 */
+	public void setCreateBy(String createBy) 
+	{
+		this.createBy = createBy;
+	}
+
+	public String getCreateBy() 
+	{
+		return createBy;
+	}
 	public void setCreateTime(Date createTime) 
 	{
 		this.createTime = createTime;
 	}
-	
-	/**
-	 * 获取：创建时间
-	 */
+
 	public Date getCreateTime() 
 	{
 		return createTime;
 	}
-	
+	public void setUpdateBy(String updateBy) 
+	{
+		this.updateBy = updateBy;
+	}
+
+	public String getUpdateBy() 
+	{
+		return updateBy;
+	}
+	public void setUpdateTime(Date updateTime) 
+	{
+		this.updateTime = updateTime;
+	}
+
+	public Date getUpdateTime() 
+	{
+		return updateTime;
+	}
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("journo", getJourno())
+            .append("userNumber", getUserNumber())
+            .append("merchantCode", getMerchantCode())
+            .append("orderCode", getOrderCode())
+            .append("txcode", getTxcode())
+            .append("txamt", getTxamt())
+            .append("fromAcc", getFromAcc())
+            .append("toAcc", getToAcc())
+            .append("regDate", getRegDate())
+            .append("stationCode", getStationCode())
+            .append("remark", getRemark())
+            .append("status", getStatus())
+            .append("createBy", getCreateBy())
+            .append("createTime", getCreateTime())
+            .append("updateBy", getUpdateBy())
+            .append("updateTime", getUpdateTime())
+            .toString();
+    }
 }

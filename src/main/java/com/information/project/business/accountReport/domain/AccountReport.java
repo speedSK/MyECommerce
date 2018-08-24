@@ -1,14 +1,17 @@
 package com.information.project.business.accountReport.domain;
 
-import java.math.BigDecimal;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import com.information.framework.web.domain.BaseEntity;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 系统账户报表 bus_account_report
  * 
  * @author LiuNing
- * @date 2018-08-06
+ * @date 2018-08-15
  */
 public class AccountReport extends BaseEntity
 {
@@ -17,9 +20,9 @@ public class AccountReport extends BaseEntity
 	/**  */
 	private Long id;
 	/** 报表日期 */
-	private String reportDate;
+	private Date reportDate;
 	/** 账户id */
-	private Long accountId;
+	private String accountCode;
 	/** 收入笔数 */
 	private Integer incomeNum;
 	/** 收入金额 */
@@ -28,117 +31,128 @@ public class AccountReport extends BaseEntity
 	private Integer outcomeNum;
 	/** 支出金额 */
 	private BigDecimal outcomeSum;
+	/**  */
+	private String remark;
+	/**  */
+	private String status;
+	/**  */
+	private Date createTime;
+	/**  */
+	private Date updateTime;
 
-	/**
-	 * 设置：
-	 */
 	public void setId(Long id) 
 	{
 		this.id = id;
 	}
-	
-	/**
-	 * 获取：
-	 */
+
 	public Long getId() 
 	{
 		return id;
 	}
-	
-	/**
-	 * 设置：报表日期
-	 */
-	public void setReportDate(String reportDate) 
+	public void setReportDate(Date reportDate) 
 	{
 		this.reportDate = reportDate;
 	}
-	
-	/**
-	 * 获取：报表日期
-	 */
-	public String getReportDate() 
+
+	public Date getReportDate() 
 	{
 		return reportDate;
 	}
-	
-	/**
-	 * 设置：账户id
-	 */
-	public void setAccountId(Long accountId) 
+	public void setAccountCode(String accountCode) 
 	{
-		this.accountId = accountId;
+		this.accountCode = accountCode;
 	}
-	
-	/**
-	 * 获取：账户id
-	 */
-	public Long getAccountId() 
+
+	public String getAccountCode() 
 	{
-		return accountId;
+		return accountCode;
 	}
-	
-	/**
-	 * 设置：收入笔数
-	 */
 	public void setIncomeNum(Integer incomeNum) 
 	{
 		this.incomeNum = incomeNum;
 	}
-	
-	/**
-	 * 获取：收入笔数
-	 */
+
 	public Integer getIncomeNum() 
 	{
 		return incomeNum;
 	}
-	
-	/**
-	 * 设置：收入金额
-	 */
 	public void setIncomeSum(BigDecimal incomeSum) 
 	{
 		this.incomeSum = incomeSum;
 	}
-	
-	/**
-	 * 获取：收入金额
-	 */
+
 	public BigDecimal getIncomeSum() 
 	{
 		return incomeSum;
 	}
-	
-	/**
-	 * 设置：支出笔数
-	 */
 	public void setOutcomeNum(Integer outcomeNum) 
 	{
 		this.outcomeNum = outcomeNum;
 	}
-	
-	/**
-	 * 获取：支出笔数
-	 */
+
 	public Integer getOutcomeNum() 
 	{
 		return outcomeNum;
 	}
-	
-	/**
-	 * 设置：支出金额
-	 */
 	public void setOutcomeSum(BigDecimal outcomeSum) 
 	{
 		this.outcomeSum = outcomeSum;
 	}
-	
-	/**
-	 * 获取：支出金额
-	 */
+
 	public BigDecimal getOutcomeSum() 
 	{
 		return outcomeSum;
 	}
-	
+	public void setRemark(String remark) 
+	{
+		this.remark = remark;
+	}
+
+	public String getRemark() 
+	{
+		return remark;
+	}
+	public void setStatus(String status) 
+	{
+		this.status = status;
+	}
+
+	public String getStatus() 
+	{
+		return status;
+	}
+	public void setCreateTime(Date createTime) 
+	{
+		this.createTime = createTime;
+	}
+
+	public Date getCreateTime() 
+	{
+		return createTime;
+	}
+	public void setUpdateTime(Date updateTime) 
+	{
+		this.updateTime = updateTime;
+	}
+
+	public Date getUpdateTime() 
+	{
+		return updateTime;
+	}
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("reportDate", getReportDate())
+            .append("accountCode", getAccountCode())
+            .append("incomeNum", getIncomeNum())
+            .append("incomeSum", getIncomeSum())
+            .append("outcomeNum", getOutcomeNum())
+            .append("outcomeSum", getOutcomeSum())
+            .append("remark", getRemark())
+            .append("status", getStatus())
+            .append("createTime", getCreateTime())
+            .append("updateTime", getUpdateTime())
+            .toString();
+    }
 }

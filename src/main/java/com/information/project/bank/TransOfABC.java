@@ -35,7 +35,7 @@ public class TransOfABC {
 //		transOfABC=this;
 //		transOfABC.bankService=this.bankService;
 //	}
-	public static synchronized String transCommMsg(String txCode, TransVo vo) throws Exception {
+	public static synchronized String transCommMsg(String txCode, TransVo vo) {
 		String backMsg = "";
 		String sendPackage = "";
 
@@ -84,7 +84,7 @@ public class TransOfABC {
 		}
 	}
 
-	public static String createPkg3002(TransVo vo) throws Exception {
+	private static String createPkg3002(TransVo vo) throws Exception {
 		String pckbdy = "";
 		String yktTxcode = getRealString(3, "3002", 4);
 		String bankTxcode = getRealString(3, "YKT02", 5);
@@ -104,7 +104,7 @@ public class TransOfABC {
 		return pkgLength + pckbdy;
 	}
 
-	public static String createPkg3011(TransVo vo) throws Exception {
+	private static String createPkg3011(TransVo vo) throws Exception {
 		String pckbdy = "";
 		String yktTxcode = getRealString(3, "3011", 4);
 		String bankTxcode = getRealString(3, "YKT03", 5);
@@ -121,7 +121,7 @@ public class TransOfABC {
 		return pkgLength + pckbdy;
 	}
 
-	public static String createPkg3021(TransVo vo) throws Exception {
+	private static String createPkg3021(TransVo vo) throws Exception {
 		String pckbdy = "";
 		String yktTxcode = getRealString(3, "3021", 4);
 		String bankTxcode = getRealString(3, "YKT01", 5);
@@ -133,7 +133,7 @@ public class TransOfABC {
 		return pkgLength + pckbdy;
 	}
 
-	public static String createPkg3051(TransVo vo) throws Exception {
+	private static String createPkg3051(TransVo vo) throws Exception {
 		String pckbdy = "";
 		String yktTxcode = getRealString(3, "3051", 4);
 		String bankTxcode = getRealString(3, "YKT08", 5);
@@ -157,7 +157,7 @@ public class TransOfABC {
 		return pkgLength + pckbdy;
 	}
 
-	public static String createPkg3071(TransVo vo) throws Exception {
+	private static String createPkg3071(TransVo vo) throws Exception {
 		String pckbdy = "";
 		String yktTxcode = getRealString(3, "3", 4);
 		String bankTxcode = getRealString(3, "YKT10", 5);
@@ -173,7 +173,7 @@ public class TransOfABC {
 		return pkgLength + pckbdy;
 	}
 
-	public static String dealMsg3002(byte[] buf) throws UnsupportedEncodingException {
+	private static String dealMsg3002(byte[] buf) throws UnsupportedEncodingException {
 		logger.info("dealMsg3002:" + new String(buf));
 		String txdate = new String(buf, 4, 8);
 		String journo = new String(buf, 12, 32);
@@ -188,7 +188,7 @@ public class TransOfABC {
 		}
 	}
 
-	public static String dealMsg3011(byte[] buf) throws UnsupportedEncodingException {
+	private static String dealMsg3011(byte[] buf) throws UnsupportedEncodingException {
 		logger.info("dealMsg3011:" + new String(buf));
 		String txdate = new String(buf, 4, 8);
 		String journo = new String(buf, 12, 32);
@@ -203,7 +203,7 @@ public class TransOfABC {
 		}
 	}
 
-	public static String dealMsg3021(byte[] buf) throws UnsupportedEncodingException {
+	private static String dealMsg3021(byte[] buf) throws UnsupportedEncodingException {
 		logger.info("dealMsg3021:" + new String(buf));
 		String responseCode = new String(buf, 4, 6);
 		String responseMsg = new String(buf, 10, 34, encodeType);
@@ -218,23 +218,23 @@ public class TransOfABC {
 		}
 	}
 
-	public static String dealMsg3051(byte[] buf) throws UnsupportedEncodingException {
+	private static String dealMsg3051(byte[] buf) throws UnsupportedEncodingException {
 		logger.info("dealMsg3051:" + new String(buf));
 		String responseCode = new String(buf, 4, 6);
 		String responseMsg = new String(buf, 10, 34, encodeType);
 		if (responseCode.equals("000000")) {
 			logger.info("处理总额对账文件成功报文体3051交易\n报文:{},交易时间{},响应码{},相应信息{}.", new String(buf),getCurrentDateTime() ,responseCode,responseMsg);
-			return responseCode;
+			return responseCode + "|" + responseMsg;
 		} else if (responseCode.equals("L99999")) {
 			logger.info("处理总额对账文件系统忙报文体3051交易\n报文:{},交易时间{},响应码{},相应信息{}.", new String(buf),getCurrentDateTime() ,responseCode,responseMsg);
-			return responseCode;
+			return responseCode + "|" + responseMsg;
 		} else {
 			logger.info("处理总额对账文件错误报文体3051交易\n报文:{},交易时间{},响应码{},相应信息{}.", new String(buf),getCurrentDateTime() ,responseCode,responseMsg);
-			return responseCode;
+			return responseCode + "|" + responseMsg;
 		}
 	}
 
-	public static String dealMsg3071(byte[] buf) throws UnsupportedEncodingException {
+	private static String dealMsg3071(byte[] buf) throws UnsupportedEncodingException {
 		logger.info("dealMsg3071:" + new String(buf));
 		String responseCode = new String(buf, 4, 6);
 		String responseMsg = new String(buf, 10, 34, encodeType);
@@ -247,7 +247,7 @@ public class TransOfABC {
 		}
 	}
 
-	public static String getRealString(int type, String oldString, int length) {
+	private static String getRealString(int type, String oldString, int length) {
 		String newString = "";
 		String temp = "";
 		int i;
@@ -292,22 +292,22 @@ public class TransOfABC {
 		return newString;
 	}
 
-	public static String getCurrentDate() {
+	private static String getCurrentDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		return sdf.format(new Date());
 	}
 
-	public static String getCurrentDateTime() {
+	private static String getCurrentDateTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(new Date());
 	}
 
-	public static String getPackageLen(String packageStr) {
+	private static String getPackageLen(String packageStr) {
 		int length = packageStr.getBytes().length;
 		return String.valueOf(length);
 	}
 
-	public static byte[] createPckUserSign(ReceiveFromBankInfo receiveFromBankInfo) throws Exception {
+	private static byte[] createPckUserSign(ReceiveFromBankInfo receiveFromBankInfo) throws Exception {
 		String resMessage = StringUtils.formatStr(receiveFromBankInfo.getResponsename(), 34, encodeType);
 		String packgBody = receiveFromBankInfo.getResponsecode() + resMessage;
 		String packgTopLen = getRealString(1, getPackageLen(packgBody), 4);
@@ -316,7 +316,7 @@ public class TransOfABC {
 		return packgTop.getBytes();
 	}
 
-	public static byte[] createPckSign(ReceiveFromBankInfo receiveFromBankInfo) throws Exception {
+	private static byte[] createPckSign(ReceiveFromBankInfo receiveFromBankInfo) throws Exception {
 		String resMessage = StringUtils.formatStr(receiveFromBankInfo.getResponsename(), 34, encodeType);
 		String packgBody = receiveFromBankInfo.getResponsecode() + resMessage;
 		String packgTopLen = getRealString(1, getPackageLen(packgBody), 4);
@@ -325,7 +325,7 @@ public class TransOfABC {
 		return packgTop.getBytes();
 	}
 
-	public static byte[] queryUserInfoSign(byte[] buf) throws Exception {
+	public static byte[] queryUserInfoSign(byte[] buf) {
 		logger.info("queryUserInfoSign接收报文:" + new String(buf));
 		String idserial = new String(buf, 15, 18);
 		Person user = new Person();
