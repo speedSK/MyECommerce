@@ -54,18 +54,11 @@ public class OperlogController extends BaseController
     @RequiresPermissions("monitor:operlog:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(OperLog operLog) throws Exception
+    public AjaxResult export(OperLog operLog)
     {
-        try
-        {
-            List<OperLog> list = operLogService.selectOperLogList(operLog);
-            ExcelUtil<OperLog> util = new ExcelUtil<OperLog>(OperLog.class);
-            return util.exportExcel(list, "operLog");
-        }
-        catch (Exception e)
-        {
-            return error("导出Excel失败，请联系网站管理员！");
-        }
+        List<OperLog> list = operLogService.selectOperLogList(operLog);
+        ExcelUtil<OperLog> util = new ExcelUtil<OperLog>(OperLog.class);
+        return util.exportExcel(list, "operLog");
     }
 
     @RequiresPermissions("monitor:operlog:remove")
@@ -78,9 +71,19 @@ public class OperlogController extends BaseController
 
     @RequiresPermissions("monitor:operlog:detail")
     @GetMapping("/detail/{operId}")
-    public String detail(@PathVariable("operId") Long deptId, ModelMap mmap)
+    public String detail(@PathVariable("operId") Long operId, ModelMap mmap)
     {
-        mmap.put("operLog", operLogService.selectOperLogById(deptId));
+        mmap.put("operLog", operLogService.selectOperLogById(operId));
         return prefix + "/detail";
+    }
+    
+    @Log(title = "操作日志", businessType = BusinessType.CLEAN)
+    @RequiresPermissions("monitor:operlog:remove")
+    @PostMapping("/clean")
+    @ResponseBody
+    public AjaxResult clean()
+    {
+        operLogService.cleanOperLog();
+        return success();
     }
 }

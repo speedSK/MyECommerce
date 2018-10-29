@@ -6,7 +6,7 @@
     
     <div class="container-div">
 		<div class="row">
-			<div class="col-sm-12 select-info">
+			<div class="col-sm-12 search-collapse">
 				<form id="gen-form">
 					<div class="select-list">
 						<ul>
@@ -24,14 +24,15 @@
 							</li>
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 							</li>
 						</ul>
 					</div>
 				</form>
 			</div>
 			
-			<div class="btn-group hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-outline btn-success btn-rounded" onclick="javascript:batchGenCode()" shiro:hasPermission="tool:gen:code">
+			<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="javascript:batchGenCode()" shiro:hasPermission="tool:gen:code">
 			        <i class="fa fa-download"></i> 批量生成
 			    </a>
 		    </div>
@@ -43,7 +44,7 @@
 	</div>
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript">
-		var prefix = ctx + "tool/gen"
+		var prefix = ctx + "tool/gen";
 	
 		$(function() {
 		    var options = {

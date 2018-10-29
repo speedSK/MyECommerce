@@ -11,8 +11,11 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.support.Convert;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import com.ruoyi.project.system.role.domain.Role;
+import com.ruoyi.project.system.role.domain.RoleDept;
 import com.ruoyi.project.system.role.domain.RoleMenu;
+import com.ruoyi.project.system.role.mapper.RoleDeptMapper;
 import com.ruoyi.project.system.role.mapper.RoleMapper;
 import com.ruoyi.project.system.role.mapper.RoleMenuMapper;
 import com.ruoyi.project.system.user.mapper.UserRoleMapper;
@@ -25,7 +28,6 @@ import com.ruoyi.project.system.user.mapper.UserRoleMapper;
 @Service
 public class RoleServiceImpl implements IRoleService
 {
-
     @Autowired
     private RoleMapper roleMapper;
 
@@ -35,6 +37,9 @@ public class RoleServiceImpl implements IRoleService
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    @Autowired
+    private RoleDeptMapper roleDeptMapper;
+
     /**
      * 根据条件分页查询角色数据
      * 
@@ -42,6 +47,7 @@ public class RoleServiceImpl implements IRoleService
      * @return 角色数据集合信息
      */
     @Override
+    @DataScope(tableAlias = "u")
     public List<Role> selectRoleList(Role role)
     {
         return roleMapper.selectRoleList(role);
@@ -78,7 +84,7 @@ public class RoleServiceImpl implements IRoleService
     public List<Role> selectRolesByUserId(Long userId)
     {
         List<Role> userRoles = roleMapper.selectRolesByUserId(userId);
-        List<Role> roles = roleMapper.selectRolesAll();
+        List<Role> roles = selectRoleAll();
         for (Role role : roles)
         {
             for (Role userRole : userRoles)
@@ -101,7 +107,7 @@ public class RoleServiceImpl implements IRoleService
     @Override
     public List<Role> selectRoleAll()
     {
-        return roleMapper.selectRolesAll();
+        return selectRoleList(new Role());
     }
 
     /**
@@ -177,10 +183,28 @@ public class RoleServiceImpl implements IRoleService
         role.setUpdateBy(ShiroUtils.getLoginName());
         // 修改角色信息
         roleMapper.updateRole(role);
+        ShiroUtils.clearCachedAuthorizationInfo();
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
-        ShiroUtils.clearCachedAuthorizationInfo();
         return insertRoleMenu(role);
+    }
+
+    /**
+     * 修改数据权限信息
+     * 
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    public int updateRule(Role role)
+    {
+        role.setUpdateBy(ShiroUtils.getLoginName());
+        // 修改角色信息
+        roleMapper.updateRole(role);
+        // 删除角色与部门关联
+        roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
+        // 新增角色和部门信息（数据权限）
+        return insertRoleDept(role);
     }
 
     /**
@@ -208,6 +232,30 @@ public class RoleServiceImpl implements IRoleService
     }
 
     /**
+     * 新增角色部门信息(数据权限)
+     *
+     * @param role 角色对象
+     */
+    public int insertRoleDept(Role role)
+    {
+        int rows = 1;
+        // 新增角色与部门（数据权限）管理
+        List<RoleDept> list = new ArrayList<RoleDept>();
+        for (Long deptId : role.getDeptIds())
+        {
+            RoleDept rd = new RoleDept();
+            rd.setRoleId(role.getRoleId());
+            rd.setDeptId(deptId);
+            list.add(rd);
+        }
+        if (list.size() > 0)
+        {
+            rows = roleDeptMapper.batchRoleDept(list);
+        }
+        return rows;
+    }
+
+    /**
      * 校验角色名称是否唯一
      * 
      * @param role 角色信息
@@ -224,7 +272,7 @@ public class RoleServiceImpl implements IRoleService
         }
         return UserConstants.ROLE_NAME_UNIQUE;
     }
-    
+
     /**
      * 校验角色权限是否唯一
      * 
@@ -254,5 +302,4 @@ public class RoleServiceImpl implements IRoleService
     {
         return userRoleMapper.countUserRoleByRoleId(roleId);
     }
-
 }

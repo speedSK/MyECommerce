@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.system.dept.domain.Dept;
 import com.ruoyi.project.system.dept.service.IDeptService;
+import com.ruoyi.project.system.role.domain.Role;
 
 /**
  * 部门信息
@@ -76,7 +78,12 @@ public class DeptController extends BaseController
     @GetMapping("/edit/{deptId}")
     public String edit(@PathVariable("deptId") Long deptId, ModelMap mmap)
     {
-        mmap.put("dept", deptService.selectDeptById(deptId));
+        Dept dept = deptService.selectDeptById(deptId);
+        if (StringUtils.isNotNull(dept) && 100L == deptId)
+        {
+            dept.setParentName("无");
+        }
+        mmap.put("dept", dept);
         return prefix + "/edit";
     }
 
@@ -140,6 +147,17 @@ public class DeptController extends BaseController
     public List<Map<String, Object>> treeData()
     {
         List<Map<String, Object>> tree = deptService.selectDeptTree();
+        return tree;
+    }
+
+    /**
+     * 加载角色部门（数据权限）列表树
+     */
+    @GetMapping("/roleDeptTreeData")
+    @ResponseBody
+    public List<Map<String, Object>> deptTreeData(Role role)
+    {
+        List<Map<String, Object>> tree = deptService.roleDeptTreeData(role);
         return tree;
     }
 }

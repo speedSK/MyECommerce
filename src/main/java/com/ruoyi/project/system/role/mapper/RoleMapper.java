@@ -10,7 +10,6 @@ import com.ruoyi.project.system.role.domain.Role;
  */
 public interface RoleMapper
 {
-
     /**
      * 根据条件分页查询角色数据
      * 
@@ -26,13 +25,6 @@ public interface RoleMapper
      * @return 角色列表
      */
     public List<Role> selectRolesByUserId(Long userId);
-
-    /**
-     * 查询角色列表
-     * 
-     * @return 角色列表
-     */
-    public List<Role> selectRolesAll();
 
     /**
      * 通过角色ID查询角色
@@ -89,5 +81,4 @@ public interface RoleMapper
      * @return 角色信息
      */
     public Role checkRoleKeyUnique(String roleKey);
-
 }

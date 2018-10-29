@@ -10,7 +10,6 @@ import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
  */
 public interface ILogininforService
 {
-
     /**
      * 新增系统登录日志
      * 
@@ -33,4 +32,9 @@ public interface ILogininforService
      * @return
      */
     public int deleteLogininforByIds(String ids);
+    
+    /**
+     * 清空系统登录日志
+     */
+    public void cleanLogininfor();
 }

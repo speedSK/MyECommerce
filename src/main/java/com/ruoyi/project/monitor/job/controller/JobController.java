@@ -54,18 +54,11 @@ public class JobController extends BaseController
     @RequiresPermissions("monitor:job:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(Job job) throws Exception
+    public AjaxResult export(Job job)
     {
-        try
-        {
-            List<Job> list = jobService.selectJobList(job);
-            ExcelUtil<Job> util = new ExcelUtil<Job>(Job.class);
-            return util.exportExcel(list, "job");
-        }
-        catch (Exception e)
-        {
-            return error("导出Excel失败，请联系网站管理员！");
-        }
+        List<Job> list = jobService.selectJobList(job);
+        ExcelUtil<Job> util = new ExcelUtil<Job>(Job.class);
+        return util.exportExcel(list, "job");
     }
 
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
@@ -151,5 +144,15 @@ public class JobController extends BaseController
     public AjaxResult editSave(Job job)
     {
         return toAjax(jobService.updateJobCron(job));
+    }
+    
+    /**
+     * 校验cron表达式是否有效
+     */
+    @PostMapping("/checkCronExpressionIsValid")
+    @ResponseBody
+    public boolean checkCronExpressionIsValid(Job job)
+    {
+        return jobService.checkCronExpressionIsValid(job.getCronExpression());
     }
 }

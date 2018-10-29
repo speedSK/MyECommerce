@@ -15,7 +15,6 @@ import com.ruoyi.project.monitor.logininfor.mapper.LogininforMapper;
 @Service
 public class LogininforServiceImpl implements ILogininforService
 {
-
     @Autowired
     private LogininforMapper logininforMapper;
 
@@ -52,5 +51,14 @@ public class LogininforServiceImpl implements ILogininforService
     public int deleteLogininforByIds(String ids)
     {
         return logininforMapper.deleteLogininforByIds(Convert.toStrArray(ids));
+    }
+    
+    /**
+     * 清空系统登录日志
+     */
+    @Override
+    public void cleanLogininfor()
+    {
+        logininforMapper.cleanLogininfor();
     }
 }
