@@ -60,7 +60,7 @@ create table bank_checkbill
    return_code          varchar(6) comment '返回码',
    return_message       varchar(34) comment '返回信息',
    status               char(1) comment '状态',
-   create_time          timestamp comment '创建时间戳',
+   create_time          datetime comment '创建时间戳',
    primary key (id)
 );
 
@@ -76,7 +76,7 @@ create table bank_checkdetail
    amount               varchar(17) comment '金额',
    check_status         char(1) comment '对账状态',
    oper_user            bigint comment '操作人',
-   create_time          timestamp comment '时间戳',
+   create_time          datetime comment '时间戳',
    primary key (id)
 );
 
@@ -99,7 +99,7 @@ create table bank_recharge_record
    return_code          varchar(6) comment '返回码',
    return_message       varchar(34) comment '返回信息',
    bank_idserial        varchar(32) comment '银行流水号',
-   create_time          timestamp comment '创建时间',
+   create_time          datetime comment '创建时间',
    primary key (id)
 );
 
@@ -142,8 +142,8 @@ create table bus_cost_total
    cost_total           decimal(9,2) comment '消费上限',
    opser_user           bigint comment '操作人',
    status               char(1) comment '状态',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '时间戳',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '时间戳',
    primary key (id)
 );
 
@@ -161,8 +161,8 @@ create table bus_device
    des                  varchar(50) comment '说明',
    oper_user            bigint comment '操作用户',
    status               char(1) comment '状态',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '修改时间',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '修改时间',
    primary key (id)
 );
 
@@ -178,8 +178,8 @@ create table bus_good_category
    status               char(1) comment '状态',
    des                  varchar(50) comment '描述',
    oper_user            bigint comment '操作人',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '修改时间',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '修改时间',
    primary key (id)
 );
 
@@ -198,8 +198,8 @@ create table bus_goods
    gooods_status        char(1) comment '商品上架状态',
    status               char(1) comment '状态',
    oper_user            bigint comment '操作人',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '修改时间',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '修改时间',
    primary key (id)
 );
 
@@ -217,8 +217,8 @@ create table bus_merchant
    address              varchar(50) comment '地址',
    status               char(1) comment '状态',
    oper_user            bigint comment '操作人',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '修改时间',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '修改时间',
    primary key (id)
 );
 
@@ -233,8 +233,8 @@ create table bus_modify_pwd
    agreest              char(1) comment '是否同意',
    status               char(1) comment '状态',
    oper_user            bigint comment '操作人',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '修改时间',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '修改时间',
    primary key (id)
 );
 
@@ -263,9 +263,9 @@ create table bus_order
    order_status         char(1) comment '订单状态',
    status               char(1) comment '状态',
    oper_user            bigint comment '操作人',
-   finish_time          timestamp comment '完成时间',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '修改时间',
+   finish_time          datetime comment '完成时间',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '修改时间',
    primary key (id)
 );
 
@@ -298,7 +298,7 @@ create table bus_trade_record
    to_acc               varchar(10) comment '目标账户',
    remark               varchar(50) comment '备注',
    status               char(1) comment '状态',
-   create_time          timestamp comment '创建时间',
+   create_time          datetime comment '创建时间',
    primary key (id)
 );
 
@@ -331,8 +331,8 @@ create table bus_user
    status               char(1) comment '状态',
    remark               varchar(50) comment '备注',
    oper_user            bigint comment '操作人',
-   create_time          timestamp comment '创建时间',
-   update_time          timestamp comment '修改时间',
+   create_time          datetime comment '创建时间',
+   update_time          datetime comment '修改时间',
    primary key (id)
 );
 
