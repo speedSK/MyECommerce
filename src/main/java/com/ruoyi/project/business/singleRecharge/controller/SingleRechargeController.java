@@ -18,7 +18,7 @@ import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.business.person.service.IPersonService;
 
 /**
- * 银行总账对账 信息操作处理
+ * 单笔充值 信息操作处理
  *
  * @author LiuNing
  * @date 2018-08-06

@@ -19,7 +19,7 @@ import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
 
 /**
- * 系统账户报 信息操作处理
+ * 系统账户报表 信息操作处理
  * 
  * @author LiuNing
  * @date 2018-08-15
