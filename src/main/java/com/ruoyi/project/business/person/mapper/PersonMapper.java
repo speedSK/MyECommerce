@@ -1,7 +1,9 @@
 package com.ruoyi.project.business.person.mapper;
 
 import com.ruoyi.project.business.person.domain.Person;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 业务（犯人） 数据层
@@ -9,6 +11,7 @@ import java.util.List;
  * @author LiuNing
  * @date 2018-08-09
  */
+@Repository
 public interface PersonMapper 
 {
 	/**

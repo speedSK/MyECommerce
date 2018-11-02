@@ -5,14 +5,14 @@
 <body class="gray-bg">
     <div class="container-div">
     <div class="row">
-			<div class="col-sm-12 select-info">
+			<div class="col-sm-12 search-collapse">
 				<form id="role-form">
 					<div class="select-list">
 						<ul>
 							<li>
 								数据状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
 									<option value="">所有</option>
-									<option th:each="dict : ${type" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
 							</li>
 							<li class="select-time">
@@ -59,7 +59,7 @@
                 removeUrl: prefix + "/remove",
                 sortName: "createTime",
 		        sortOrder: "desc",
-                modalName: "功能导入记录",
+                modalName: "批量消费导入",
                 search: false,
                 columns: [{
 		            checkbox: true
@@ -142,7 +142,7 @@
         }
        	
        	function downMoudle(){
-       		window.location.href = ctx + "common/download?fileName=批量消费.xlsx&delete=" + false;
+       		window.location.href = ctx + "common/downloadTemplate?fileName=批量消费.xlsx&delete=" + false;
        	}
        	
        	function downFail(fileName){

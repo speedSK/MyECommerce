@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.config.RuoYiConfig;
@@ -28,6 +29,30 @@ public class CommonController
         try
         {
             String filePath = RuoYiConfig.getDownloadPath() + fileName;
+
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader("Content-Disposition", "attachment;fileName=" + setFileDownloadHeader(request, realFileName));
+            FileUtils.writeBytes(filePath, response.getOutputStream());
+            if (delete)
+            {
+                FileUtils.deleteFile(filePath);
+            }
+        }
+        catch (Exception e)
+        {
+            log.error("下载文件失败", e);
+        }
+    }
+
+
+    @RequestMapping("common/downloadTemplate")
+    public void fileDownloadTemplate(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request)
+    {
+        String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+        try
+        {
+            String filePath = ResourceUtils.getURL("classpath:").getPath() + "static/file/" + fileName;
 
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");

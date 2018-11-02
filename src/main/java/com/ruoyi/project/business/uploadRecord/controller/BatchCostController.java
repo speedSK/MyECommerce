@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.uploadRecord.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.constant.Constants;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +56,8 @@ public class BatchCostController extends BaseController
 	public TableDataInfo list(UploadRecord uploadRecord)
 	{
 		startPage();
+		uploadRecord.setModule("批量消费导入");
+		uploadRecord.setStatus(Constants.STATUS_ACTIVE);
         List<UploadRecord> list = uploadRecordService.selectUploadRecordList(uploadRecord);
 		return getDataTable(list);
 	}
@@ -83,12 +87,7 @@ public class BatchCostController extends BaseController
         {
             if (!file.isEmpty())
             {
-            	AjaxResult result = uploadRecordService.saveCost(file);
-            	if (result==null) {
-					return error();
-				} else {
-					return success();
-				}
+            	return uploadRecordService.saveCost(file);
             }
             return error();
         }

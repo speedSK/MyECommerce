@@ -123,7 +123,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		List<BatchRechargeVo> failList = new ArrayList<>();
 		UploadRecord uploadRecord = new UploadRecord();
 		uploadRecord.setModule("批量充值导入");
-		uploadRecord.setFailName(file.getName());
+		uploadRecord.setUploadName(file.getOriginalFilename());
 		long successCount = 0;
 		long failCount = 0 ;
 		for (BatchRechargeVo batchRechargeVo : list) {
@@ -156,8 +156,10 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		
 		if (!failList.isEmpty()) {
 			resultJson = util.exportExcel(failList, "批量充值");
+			uploadRecord.setFailName(resultJson.get("msg").toString());
+		} else {
+			resultJson = AjaxResult.success();
 		}
-		uploadRecord.setFailName(resultJson.get("msg").toString());
 		uploadRecordMapper.insertUploadRecord(uploadRecord);
 		return resultJson;
 	}
@@ -170,7 +172,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		List<BatchRechargeVo> failList = new ArrayList<>();
 		UploadRecord uploadRecord = new UploadRecord();
 		uploadRecord.setModule("批量消费导入");
-		uploadRecord.setFailName(file.getName());
+		uploadRecord.setUploadName(file.getOriginalFilename());
 		long successCount = 0;
 		long failCount = 0 ;
 		for (BatchRechargeVo batchRechargeVo : list) {
@@ -203,8 +205,10 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		
 		if (!failList.isEmpty()) {
 			resultJson = util.exportExcel(failList, "批量消费");
+			uploadRecord.setFailName(resultJson.get("msg").toString());
+		} else {
+			resultJson = AjaxResult.success();
 		}
-		uploadRecord.setFailName(resultJson.get("msg").toString());
 		uploadRecordMapper.insertUploadRecord(uploadRecord);
 		return resultJson;
 	}

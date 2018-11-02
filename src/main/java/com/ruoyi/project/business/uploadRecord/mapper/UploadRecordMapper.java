@@ -1,7 +1,9 @@
 package com.ruoyi.project.business.uploadRecord.mapper;
 
 import com.ruoyi.project.business.uploadRecord.domain.UploadRecord;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 功能导入记录 数据层
@@ -9,6 +11,7 @@ import java.util.List;
  * @author LiuNing
  * @date 2018-08-08
  */
+@Repository
 public interface UploadRecordMapper 
 {
 	/**
