@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <link href="/ajax/libs/jquery-layout/jquery.layout-latest.css" th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
@@ -43,7 +42,7 @@
 							分类状态：
 							<select name="visible" th:with="type=${@dict.getType('bus_show_hide')}">
 								<option value="">所有</option>
-								<option th:each="dict : ${type" th:text="${e['dictLabel']}" th:value="${e['dictValue']}"></option>
+								<option th:each="dict : ${type}" th:text="${dict['dictLabel']}" th:value="${dict['dictValue']}"></option>
 							</select>
 						</li>
 
@@ -55,12 +54,15 @@
 			</form>
 		</div>
 
-		<div class="btn-group hidden-xs" id="toolbar" role="group">
-			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:goods:add">
-				<i class="fa fa-plus"></i> 新增
+		<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+			<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="business:goods:add">
+				<i class="fa fa-plus"></i> 添加
 			</a>
-			<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.removeAll()" shiro:hasPermission="business:goods:remove">
-				<i class="fa fa-trash-o"></i> 删除
+			<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="business:goods:edit">
+				<i class="fa fa-edit"></i> 修改
+			</a>
+			<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="business:goods:remove">
+				<i class="fa fa-remove"></i> 删除
 			</a>
 		</div>
 
