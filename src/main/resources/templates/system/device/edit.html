@@ -67,42 +67,14 @@
 				    required:true,
 				    isIP:true
 				}
-			},
-			submitHandler: function(form) {
-				edit();
 			}
 		});
 
 
-		function edit() {
-		    var id = $("input[name='id']").val();
-        	var code = $("input[name='code']").val();
-        	var name = $("input[name='name']").val();
-        	var type = $("#type option:selected").val();
-        	var ip = $("input[name='ip']").val();
-        	var address = $("input[name='address']").val();
-        	var remark = $("input[name='remark']").val();
-        	$.ajax({
-        		cache : true,
-        		type : "POST",
-        		url : ctx + "system/device/edit",
-        		data : {
-        		    "id": id,
-        			"code": code,
-        			"name": name,
-        			"type": type,
-        			"ip": ip,
-        			"address": address,
-        			"remark": remark
-        		},
-        		async : false,
-        		error : function(request) {
-        			$.modal.alertError("系统错误");
-        		},
-        		success : function(data) {
-        			$.operate.saveSuccess(data);
-        		}
-        	});
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-device-edit').serialize());
+            }
         }
 	</script>
 </body>

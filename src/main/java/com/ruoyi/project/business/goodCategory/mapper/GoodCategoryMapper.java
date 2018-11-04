@@ -1,7 +1,10 @@
 package com.ruoyi.project.business.goodCategory.mapper;
 
 import com.ruoyi.project.business.goodCategory.domain.GoodCategory;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 商品分类 数据层
@@ -9,6 +12,7 @@ import java.util.List;
  * @author LiuNing
  * @date 2018-08-07
  */
+@Repository
 public interface GoodCategoryMapper 
 {
 	/**
@@ -80,5 +84,5 @@ public interface GoodCategoryMapper
 	 * @param categoryName 分类名称
 	 * @return 结果
 	 */
-	public GoodCategory checkGoodCategoryNameUnique(String categoryName);
+	public GoodCategory checkGoodCategoryNameUnique(@Param("categoryName") String categoryName, @Param("parentId") Long parentId);
 }

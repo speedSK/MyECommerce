@@ -53,41 +53,14 @@
 				remark:{
 					maxlength: 40,
 				},
-			},
-			submitHandler: function(form) {
-				review();
 			}
 		});
 
-
-		function review() {
-        	var id = $("input[name='id']").val();
-        	var userid = $("input[name='userid']").val();
-        	var agreest = $("#agreest option:selected").val();
-        	var remark = $("input[name='remark']").val();
-        	var newPwd = $("input[name='newPwd']").val();
-
-        	$.ajax({
-        		cache : true,
-        		type : "POST",
-        		url : ctx + "system/modifyPwd/review",
-        		data : {
-        			"id": id,
-        			"userid": userid,
-        			"agreest": agreest,
-        			"newPwd": newPwd,
-        			"remark": remark
-        		},
-        		async : false,
-        		error : function(request) {
-        			$.modal.alertError("系统错误");
-        		},
-        		success : function(data) {
-        			$.operate.saveSuccess(data);
-        		}
-        	});
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/review", $('#form-modifyPwd-edit').serialize());
+            }
         }
-
 
 	</script>
 </body>

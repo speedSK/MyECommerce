@@ -163,16 +163,6 @@
         	var menuId = $("#treeId").val();
         	if(menuId > 0) {
         		var url = prefix + "/selectMenuTree/" + menuId;
-        		$.modal.open("选择菜单", url, '380', '380');
-        	} else {
-        		$.modal.alertError("主菜单不能选择");
-        	}
-        }
-        
-        function selectMenuTree() {
-        	var menuId = $("#treeId").val();
-        	if(menuId > 0) {
-        		var url = prefix + "/selectMenuTree/" + menuId;
         		var options = {
        				title: '菜单选择',
        				width: "380",

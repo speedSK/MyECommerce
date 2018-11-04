@@ -1,7 +1,6 @@
 package com.ruoyi.project.system.device.domain;
 
 import com.ruoyi.framework.web.domain.BaseEntity;
-import java.util.Date;
 
 /**
  * 设备表 bus_device

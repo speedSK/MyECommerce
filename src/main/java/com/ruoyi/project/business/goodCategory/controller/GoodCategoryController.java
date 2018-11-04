@@ -136,12 +136,7 @@ public class GoodCategoryController extends BaseController
 	@ResponseBody
 	public String checkGoodCategoryNameUnique(GoodCategory goodCategory)
 	{
-		String uniqueFlag = "0";
-		if (goodCategory != null)
-		{
-			uniqueFlag = goodCategoryService.checkGoodCategoryNameUnique(goodCategory);
-		}
-		return uniqueFlag;
+		return goodCategoryService.checkGoodCategoryNameUnique(goodCategory);
 	}
 
 
@@ -163,7 +158,7 @@ public class GoodCategoryController extends BaseController
 	@GetMapping("/selectGoodCategoryTree/{goodCategoryId}")
 	public String selectGoodCategoryTree(@PathVariable("goodCategoryId") Long goodCategoryId, ModelMap mmap)
 	{
-		mmap.put("treeName", goodCategoryService.selectGoodCategoryById(goodCategoryId).getCategoryName());
+		mmap.put("goodCategory", goodCategoryService.selectGoodCategoryById(goodCategoryId));
 		return prefix + "/tree";
 	}
 

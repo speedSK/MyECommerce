@@ -43,11 +43,14 @@
         			required:true,
         			number:true
         		}
-			},
-			submitHandler: function(form) {
-				$.operate.save(prefix + "/edit", $('#form-identity-edit').serialize());
 			}
 		});
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-identity-edit').serialize());
+            }
+        }
 	</script>
 </body>
 </html>

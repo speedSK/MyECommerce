@@ -42,11 +42,14 @@
         			required:true,
         			number:true
         		}
-			},
-			submitHandler: function(form) {
-				$.operate.save(prefix + "/add", $('#form-identity-add').serialize());
 			}
 		});
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-identity-add').serialize());
+            }
+        }
 	</script>
 </body>
 </html>

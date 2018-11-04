@@ -82,13 +82,15 @@
                         	"id": function() {
                                 return $("input[name='id']").val();
                             },
+                            "parentId": function() {
+                                return $("input[name='parentId']").val();
+                            },
                 			"categoryName": function() {
                                 return $("input[name='categoryName']").val();
                             }
                         },
                         dataFilter: function(data, type) {
-                            if (data == "0") return true;
-                            else return false;
+                            return $.validate.unique(data);
                         }
                     }
         		},
@@ -101,11 +103,14 @@
                 "categoryName": {
                     remote: "分类已经存在"
                 }
-            },
-        	submitHandler:function(form){
-        		$.operate.save(prefix + "/edit", $('#form-goodCategory-edit').serialize());
-        	}
+            }
         });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-goodCategory-edit').serialize());
+            }
+        }
 
         $(function() {
             $("input[name='icon']").focus(function() {
@@ -125,16 +130,27 @@
         });
         /*分类管理-修改-选择分类树*/
         function selectGoodCategoryTree() {
-        	var parentId = $("#treeId").val();
-        	if(parentId > 0) {
-        		var url = prefix + "/selectGoodCategoryTree/" + parentId;
-        		$.modal.open("选择分类", url, '380', '380');
-        	}
-        	else {
-        		$.modal.alertError("主分类不能选择");
-        	}
+            var goodCategoryId = $("#treeId").val();
+            if(goodCategoryId > 0) {
+                var url = prefix + "/selectGoodCategoryTree/" + goodCategoryId;
+                var options = {
+                    title: '菜单选择',
+                    width: "380",
+                    url: url,
+                    callBack: doSubmit
+                };
+                $.modal.openOptions(options);
+            } else {
+                $.modal.alertError("主菜单不能选择");
+            }
         }
 
+        function doSubmit(index, layero){
+            var body = layer.getChildFrame('body', index);
+            $("#treeId").val(body.find('#treeId').val());
+            $("#treeName").val(body.find('#treeName').val());
+            layer.close(index);
+        }
 
 	</script>
 </body>

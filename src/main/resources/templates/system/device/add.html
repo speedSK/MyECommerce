@@ -64,41 +64,15 @@
 				    required:true,
 				    isIP:true
 				}
-			},
-			submitHandler: function(form) {
-				add();
 			}
 		});
 
-		function add() {
-        	var code = $("input[name='code']").val();
-        	var name = $("input[name='name']").val();
-        	var type = $("#type option:selected").val();
-        	var ip = $("input[name='ip']").val();
-        	var address = $("input[name='address']").val();
-        	var remark = $("input[name='remark']").val();
-
-        	$.ajax({
-        		cache : true,
-        		type : "POST",
-        		url : ctx + "system/device/add",
-        		data : {
-        			"code": code,
-        			"name": name,
-        			"type": type,
-        			"ip": ip,
-        			"address": address,
-        			"remark": remark
-        		},
-        		async : false,
-        		error : function(request) {
-        			$.modal.alertError("系统错误");
-        		},
-        		success : function(data) {
-        			$.operate.saveSuccess(data);
-        		}
-        	});
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-device-add').serialize());
+            }
         }
+
 
 	</script>
 </body>

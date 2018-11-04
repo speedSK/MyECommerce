@@ -114,7 +114,7 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 	@Override
 	public String checkGoodCategoryNameUnique(GoodCategory goodCategory) {
 		Long goodCategoryId = StringUtils.isNull(goodCategory.getId()) ? -1L : goodCategory.getId();
-		GoodCategory info = goodCategoryMapper.checkGoodCategoryNameUnique(goodCategory.getCategoryName());
+		GoodCategory info = goodCategoryMapper.checkGoodCategoryNameUnique(goodCategory.getCategoryName(),goodCategory.getParentId());
 		if (StringUtils.isNotNull(info) && info.getId().longValue() != goodCategoryId.longValue())
 		{
 			return UserConstants.MENU_NAME_NOT_UNIQUE;

@@ -1,6 +1,8 @@
 package com.ruoyi.project.system.identity.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.constant.Constants;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +51,7 @@ public class IdentityController extends BaseController
 	public TableDataInfo list(Identity identity)
 	{
 		startPage();
+		identity.setStatus(Constants.STATUS_ACTIVE);
         List<Identity> list = identityService.selectIdentityList(identity);
 		return getDataTable(list);
 	}

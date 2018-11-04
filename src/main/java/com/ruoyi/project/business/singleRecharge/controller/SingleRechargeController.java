@@ -2,6 +2,7 @@ package com.ruoyi.project.business.singleRecharge.controller;
 
 import java.util.List;
 
+import com.ruoyi.common.constant.Constants;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,9 +35,26 @@ public class SingleRechargeController extends BaseController
 
 	@RequiresPermissions("business:singleRecharge:view")
 	@GetMapping()
-	public String checkbill()
+	public String singleRecharge()
 	{
 	    return prefix + "/singleRecharge";
+	}
+
+	/**
+	 * 现金充值页面
+	 */
+	@GetMapping("/query/{number}")
+    @ResponseBody
+	public AjaxResult query(@PathVariable("number") String number)
+	{
+		Person user = new Person();
+		user.setNumber(number);
+		user.setStatus(Constants.STATUS_ACTIVE);
+		List<Person> userlist = personService.selectPersonList(user);
+		if (userlist!=null&&userlist.size()>0) {
+			return success();
+		}
+		return error("用户不存在");
 	}
 
 	/**

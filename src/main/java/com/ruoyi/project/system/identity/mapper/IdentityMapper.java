@@ -1,7 +1,9 @@
 package com.ruoyi.project.system.identity.mapper;
 
 import com.ruoyi.project.system.identity.domain.Identity;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 身份管理 数据层
@@ -9,6 +11,7 @@ import java.util.List;
  * @author LiuNing
  * @date 2018-08-10
  */
+@Repository
 public interface IdentityMapper 
 {
 	/**

@@ -63,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="code != null  and code != ''  ">code = #{code},</if>
             <if test="name != null  and name != ''  ">name = #{name},</if>
             <if test="costTotal != null  ">cost_total = #{costTotal},</if>
+            <if test="status != null  ">status = #{status},</if>
             update_time = sysdate()
         </trim>
         where id = #{id}

@@ -12,15 +12,15 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								角色编号：<input type="text" id="number" name="number"/>
+								角色编号：<input type="text" id="number" name="number" />
 							</li>
 <!-- 							<li> -->
 <!-- 								银行余额：<input type="text" name="roleKey"/> -->
 <!-- 							</li> -->
 							
 							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" href="javascript:cash()"><i class="fa fa-search"></i>&nbsp;现金充值查询</a>
-								<a class="btn btn-primary btn-rounded btn-sm" href="javascript:bankRecharge()"><i class="fa fa-search"></i>&nbsp;银行余额查询</a>
+								<a class="btn btn-primary btn-rounded btn-sm" href="javascript:query(1)"><i class="fa fa-search"></i>&nbsp;现金充值查询</a>
+								<a class="btn btn-primary btn-rounded btn-sm" href="javascript:query(2)"><i class="fa fa-search"></i>&nbsp;银行余额查询</a>
 							</li>
 						</ul>
 					</div>
@@ -31,6 +31,29 @@
 	</div>
 	<div th:include="include :: footer"></div>
 	<script th:inline="javascript">
+		function query(type){
+            if ($.common.isEmpty($("#number").val())) {
+                alert("请输入编号");
+                return;
+            }
+            $.ajax({
+                type : 'get',
+                url: ctx + "business/singleRecharge/query/" + $("#number").val(),
+                success : function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        if (type == 1) {
+                            cash();
+                        } else {
+                            bankRecharge();
+                        }
+
+                    } else {
+                        $.modal.msgError(result.msg);
+                    }
+                }
+            });
+        }
+
 		/*现金充值*/
 		function cash() {
 			var url = ctx + "business/singleRecharge/cash/" + $("#number").val();

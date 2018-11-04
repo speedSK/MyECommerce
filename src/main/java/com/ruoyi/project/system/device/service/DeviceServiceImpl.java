@@ -1,19 +1,15 @@
 package com.ruoyi.project.system.device.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
-import com.ruoyi.project.system.dict.domain.DictData;
 import com.ruoyi.project.system.dict.mapper.DictDataMapper;
-import com.ruoyi.project.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.device.mapper.DeviceMapper;
 import com.ruoyi.project.system.device.domain.Device;
-import com.ruoyi.project.system.device.service.IDeviceService;
 import com.ruoyi.common.support.Convert;
 
 /**
