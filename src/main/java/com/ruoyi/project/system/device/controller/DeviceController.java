@@ -66,7 +66,7 @@ public class DeviceController extends BaseController
 	 * 新增保存设备
 	 */
 	@RequiresPermissions("system:device:add")
-	@Log(title = "设备", businessType = BusinessType.INSERT)
+	@Log(title = "设备管理", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Device device)
@@ -89,7 +89,7 @@ public class DeviceController extends BaseController
 	 * 修改保存设备
 	 */
 	@RequiresPermissions("system:device:edit")
-	@Log(title = "设备", businessType = BusinessType.UPDATE)
+	@Log(title = "设备管理", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Device device)
@@ -101,7 +101,7 @@ public class DeviceController extends BaseController
 	 * 删除设备
 	 */
 	@RequiresPermissions("system:device:remove")
-	@Log(title = "设备", businessType = BusinessType.DELETE)
+	@Log(title = "设备管理", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)

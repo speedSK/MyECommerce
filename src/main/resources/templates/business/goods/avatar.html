@@ -2,10 +2,9 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <meta charset="utf-8">
 <title>用户图片修改</title>
-<link href="/ajax/libs/cropbox/cropbox.css" th:href="@{/ajax/libs/cropbox/cropbox.css}" rel="stylesheet"/>
+<link th:href="@{/ajax/libs/cropbox/cropbox.css}" rel="stylesheet"/>
 <body class="white-bg">
     <input name="id" id="id" type="hidden"  th:value="${goods.id}" />
-    <input name="image" id="image" type="hidden"  th:value="${goods.image}" />
     <div class="container">
         <div class="imageBox"> 
 	        <div class="thumbBox"></div> 
@@ -29,17 +28,11 @@
 $(window).load(function() {
 
 	$(function() {
-		var image = $("input[name='image']").val();
-
-		var imagePath = '/img/goods.jpg' ;
-		if (image.length >= 5) {
-			imagePath = '/profile/' +image ;
-		}
-
+        var avatar = '[[${goods.image}]]';
 		var options = {
 			thumbBox: '.thumbBox',
 			spinner: '.spinner',
-			imgSrc: imagePath
+            imgSrc: $.common.isEmpty(avatar) ? ctx + 'img/goods.jpg' : ctx + 'profile/' + avatar
 		}
 		var cropper = $('.imageBox').cropbox(options);
 

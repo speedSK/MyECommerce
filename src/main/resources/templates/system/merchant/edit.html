@@ -71,11 +71,14 @@
 				merchantName:{
 					required:true,
 				},
-			},
-			submitHandler: function(form) {
-				$.operate.save(prefix + "/edit", $('#form-merchant-edit').serialize());
 			}
 		});
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-merchant-edit').serialize());
+            }
+        }
 	</script>
 </body>
 </html>

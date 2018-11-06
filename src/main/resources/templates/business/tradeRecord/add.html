@@ -117,11 +117,14 @@
 				xxxx:{
 					required:true,
 				},
-			},
-			submitHandler: function(form) {
-				$.operate.save(prefix + "/add", $('#form-tradeRecord-add').serialize());
 			}
 		});
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-tradeRecord-add').serialize());
+            }
+        }
 	</script>
 </body>
 </html>

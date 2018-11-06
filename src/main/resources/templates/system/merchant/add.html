@@ -70,11 +70,14 @@
 				merchantName:{
 					required:true,
 				},
-			},
-			submitHandler: function(form) {
-				$.operate.save(prefix + "/add", $('#form-merchant-add').serialize());
 			}
 		});
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-merchant-add').serialize());
+            }
+        }
 	</script>
 </body>
 </html>
