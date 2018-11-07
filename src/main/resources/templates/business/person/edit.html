@@ -14,13 +14,19 @@
                     <img  class="m-t-xs img-responsive" th:src="(*{photo} == '') ? '/img/person.jpg' : '/profile/' + *{photo}">
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">部门名称：</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="text" name="deptName" th:field="*{deptName}" onclick="selectDeptTree()" readonly="true" id="treeName">
+                </div>
+            </div>
             <div class="form-group">	
                 <label class="col-sm-3 control-label">编号：</label>
                 <div class="col-sm-8">
                     <input id="number" name="number" th:field="*{number}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">	
+            <div class="form-group">
                 <label class="col-sm-3 control-label">姓名：</label>
                 <div class="col-sm-8">
                     <input id="name" name="name" th:field="*{name}" class="form-control" type="text">

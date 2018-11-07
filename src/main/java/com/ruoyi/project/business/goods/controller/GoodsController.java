@@ -2,6 +2,7 @@ package com.ruoyi.project.business.goods.controller;
 
 import java.util.List;
 
+import com.ruoyi.common.constant.Constants;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,27 @@ public class GoodsController extends BaseController
 	{		
 		return toAjax(goodsService.deleteGoodsByIds(ids));
 	}
+
+    /**
+     * 删除商品
+     */
+    @RequiresPermissions("business:goods:editVisible")
+    @Log(title = "商品上/下架", businessType = BusinessType.UPDATE)
+    @PostMapping("/editVisible")
+    @ResponseBody
+    public AjaxResult editVisible(String ids, String visible) {
+        Goods goods = new Goods();
+        goods.setId(Long.valueOf(ids));
+        switch (visible) {
+            case "up":
+                goods.setVisible(Constants.VISIBLE_TRUE);
+                break;
+            case "down":
+                goods.setVisible(Constants.VISIBLE_FALSE);
+                break;
+        }
+        return toAjax(goodsService.updateGoods(goods));
+    }
 
 
 

@@ -4,16 +4,19 @@
 <head th:include="include :: header"></head>
 <body class="gray-bg">
     <div class="container-div">
-<!-- 		<div class="btn-group hidden-xs" id="toolbar" role="group"> -->
-<!-- 			<a class="btn btn-outline btn-success btn-rounded" onclick="$.operate.add()" shiro:hasPermission="business:transactionRecord:add"> -->
-<!-- 				<i class="fa fa-plus"></i> 新增 -->
-<!-- 			</a> -->
-<!-- 			<a class="btn btn-outline btn-danger btn-rounded" onclick="$.operate.removeAll()" shiro:hasPermission="business:transactionRecord:remove"> -->
-<!-- 				<i class="fa fa-trash-o"></i> 删除 -->
-<!-- 			</a> -->
-<!-- 		</div> -->
+		<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+			<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="business:transactionRecord:add">
+				<i class="fa fa-plus"></i> 添加
+			</a>
+			<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="business:transactionRecord:edit">
+	            <i class="fa fa-edit"></i> 修改
+	        </a>
+			<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="business:transactionRecord:remove">
+				<i class="fa fa-remove"></i> 删除
+			</a>
+		</div>
 
-		<div class="col-sm-12 select-info">
+		<div class="col-sm-12  search-collapse">
 				<form id="role-form">
 					<div class="select-list gd">
 						<ul>
@@ -45,7 +48,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('business:transactionRecord:edit')}]];
         var removeFlag = [[${@permission.hasPermi('business:transactionRecord:remove')}]];
-        var prefix = ctx + "business/transactionRecord"
+        var prefix = ctx + "business/transactionRecord";
 
         $(function() {
             var options = {

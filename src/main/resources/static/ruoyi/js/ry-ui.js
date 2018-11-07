@@ -443,6 +443,17 @@
 	            	$.operate.submit(url, "post", "json", data);
             	});
             },
+            // 商品上架
+            editVisible: function(id,visible,msg) {
+                $.modal.confirm("确定" + msg + "该条" + $.table._option.modalName + "信息吗？", function () {
+                    var url = $.common.isEmpty(id) ? $.table._option.editVisibleUrl : $.table._option.editVisibleUrl.replace("{id}", id);
+                    var data = {
+                        "ids": id,
+                        "visible": visible
+                    };
+                    $.operate.submit(url, "post", "json", data);
+                });
+            },
             // 批量删除信息
             removeAll: function() {
         		var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);

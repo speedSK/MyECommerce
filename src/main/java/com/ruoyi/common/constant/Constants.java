@@ -66,6 +66,8 @@ public class Constants
     public static final String STATUS_ACTIVE = "0";
     public static final String STATUS_REMOVED = "1";
 
+    public static final String VISIBLE_FALSE = "0";
+    public static final String VISIBLE_TRUE = "1";
 
     public static final String ACCOUNT_ACTIVE_1 = "1";  //系统收入账户
     public static final String ACCOUNT_ACTIVE_2 = "2";  //系统支出账户

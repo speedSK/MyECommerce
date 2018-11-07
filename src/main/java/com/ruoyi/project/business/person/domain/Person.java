@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.person.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
@@ -15,32 +16,43 @@ public class Person extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	
 	/** 主键 */
+	@Excel(name = "人员序号")
 	private Long id;
 	/** 编号 */
+    @Excel(name = "人员编号")
 	private String number;
 	/** 姓名 */
+    @Excel(name = "姓名")
 	private String name;
 	/** 性别 */
 	private String sex;
 	/** 年龄 */
+    @Excel(name = "年龄")
 	private Integer age;
 	/** 民族 */
 	private Long nation;
 	/** 身份证号 */
+    @Excel(name = "身份证号")
 	private String idcard;
 	/** 银行卡号 */
+    @Excel(name = "银行卡号")
 	private String bankCardNumber;
 	/** 楼号 */
+    @Excel(name = "楼号")
 	private String build;
 	/** 照片 */
 	private String photo;
 	/** 手机号 */
+    @Excel(name = "手机号码")
 	private String mobile;
 	/** 监区 */
+    @Excel(name = "监区")
 	private String area;
 	/** 房间 */
+    @Excel(name = "房间")
 	private String room;
 	/** 床号 */
+    @Excel(name = "床号")
 	private String bed;
 	/** 部门 */
 	private Long deptId;
@@ -427,6 +439,6 @@ public class Person extends BaseEntity
 	public void setRecharge(BigDecimal recharge) {
 		this.recharge = recharge;
 	}
-	
-	
+
+
 }

@@ -3,6 +3,7 @@ package com.ruoyi.project.business.person.controller;
 import java.util.List;
 
 import com.ruoyi.common.utils.file.FileUploadUtils;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.project.system.identity.service.IIdentityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,40 @@ public class PersonController extends BaseController
 		return toAjax(personService.deletePersonByIds(ids));
 	}
 
+	/**
+	 * 冻结业务（犯人）
+	 */
+	@RequiresPermissions("business:person:editFlag")
+	@Log(title = "冻结业务（犯人）", businessType = BusinessType.UPDATE)
+	@PostMapping( "/editFlag")
+	@ResponseBody
+	public AjaxResult editFlag(String ids , String visible)
+	{
+        Person person = new Person();
+        person.setId(Long.valueOf(ids));
+        switch (visible) {
+            case "lock":
+                person.setFlag("1");
+                break;
+            case "unlock":
+                person.setFlag("0");
+                break;
+        }
+		return toAjax(personService.updatePerson(person));
+	}
+
+	/**
+	 * 导出业务（犯人）列表
+	 */
+	@RequiresPermissions("business:person:export")
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(Person person)
+	{
+		List<Person> list = personService.selectPersonList(person);
+        ExcelUtil<Person> util = new ExcelUtil<Person>(Person.class);
+        return util.exportExcel(list, "person");
+	}
 
 	/**
 	 * 保存图片

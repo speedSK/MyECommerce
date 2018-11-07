@@ -4,7 +4,7 @@
 <head th:include="include :: header"></head>
 <body class="gray-bg">
     <div class="container-div">
-		<div class="col-sm-12 select-info">
+		<div class="col-sm-12  search-collapse">
 				<form id="role-form">
 					<div class="select-list gd">
 						<ul>
@@ -36,7 +36,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('business:checkdetail:edit')}]];
         var removeFlag = [[${@permission.hasPermi('business:checkdetail:remove')}]];
-        var prefix = ctx + "business/checkdetail"
+        var prefix = ctx + "business/checkdetail";
 
         $(function() {
             var options = {
