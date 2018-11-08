@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.transactionRecord.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,20 @@ public class TransactionRecordController extends BaseController
 		startPage();
         List<TransactionRecord> list = transactionRecordService.selectTransactionRecordList(transactionRecord);
 		return getDataTable(list);
+	}
+
+	/**
+	 * 查询银行转账列表
+	 */
+	@RequiresPermissions("business:transactionRecord:export")
+    @Log(title = "银行转账", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(TransactionRecord transactionRecord)
+	{
+		List<TransactionRecord> list = transactionRecordService.selectTransactionRecordList(transactionRecord);
+        ExcelUtil<TransactionRecord> util = new ExcelUtil<TransactionRecord>(TransactionRecord.class);
+        return util.exportExcel(list, "transactionRecord");
 	}
 	
 	/**

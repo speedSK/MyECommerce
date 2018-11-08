@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.transactionRecord.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import java.util.Date;
 
@@ -14,32 +15,45 @@ public class TransactionRecord extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	
 	/** 主键 */
+	@Excel(name = "序号")
 	private Long id;
 	/** 交易码 */
+    @Excel(name = "交易码")
 	private String code;
 	/** 银行交易码 */
+    @Excel(name = "银行交易码")
 	private String bankCode;
 	/** 转账日期 */
+    @Excel(name = "转账日期")
 	private String transDate;
 	/** 转账流水号 */
+    @Excel(name = "转账流水号")
 	private String transIdserial;
 	/** 用户编号 */
+    @Excel(name = "用户编号")
 	private String userCode;
 	/** 用户姓名 */
+    @Excel(name = "用户姓名")
 	private String userName;
 	/** 身份证号 */
-	private String diNumber;
+    @Excel(name = "身份证号")
+	private String idNumber;
 	/** 银行卡号 */
+    @Excel(name = "银行卡号")
 	private String bankNumber;
 	/** 金额 */
+    @Excel(name = "金额")
 	private String amount;
 	/** 状态 */
 	private String status;
 	/** 返回码 */
+    @Excel(name = "返回码")
 	private String returnCode;
 	/** 返回信息 */
+    @Excel(name = "返回信息")
 	private String returnMessage;
 	/** 银行流水号 */
+    @Excel(name = "银行流水号")
 	private String bankIdserial;
 	/** 创建人 */
 	private String createBy;
@@ -161,24 +175,16 @@ public class TransactionRecord extends BaseEntity
 	{
 		return userName;
 	}
-	
-	/**
-	 * 设置：身份证号
-	 */
-	public void setDiNumber(String diNumber) 
-	{
-		this.diNumber = diNumber;
-	}
-	
-	/**
-	 * 获取：身份证号
-	 */
-	public String getDiNumber() 
-	{
-		return diNumber;
-	}
-	
-	/**
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    /**
 	 * 设置：银行卡号
 	 */
 	public void setBankNumber(String bankNumber) 

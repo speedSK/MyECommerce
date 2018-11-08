@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.checkbill.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,20 @@ public class CheckbillController extends BaseController
 		startPage();
         List<Checkbill> list = checkbillService.selectCheckbillList(checkbill);
 		return getDataTable(list);
+	}
+
+	/**
+	 * 查询银行总账对账列表
+	 */
+    @Log(title = "银行总账对账", businessType = BusinessType.EXPORT)
+	@RequiresPermissions("business:checkbill:export")
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(Checkbill checkbill)
+	{
+		List<Checkbill> list = checkbillService.selectCheckbillList(checkbill);
+        ExcelUtil<Checkbill> util = new ExcelUtil<Checkbill>(Checkbill.class);
+        return util.exportExcel(list, "checkbill");
 	}
 	
 	/**

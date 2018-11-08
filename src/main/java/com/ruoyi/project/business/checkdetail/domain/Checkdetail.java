@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.checkdetail.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import java.util.Date;
 
@@ -14,20 +15,28 @@ public class Checkdetail extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	
 	/** 主键 */
+	@Excel(name = "序号")
 	private Long id;
 	/** 编号 */
+    @Excel(name = "人员编号")
 	private String number;
 	/** 系统流水号 */
+    @Excel(name = "系统流水号")
 	private String idserial;
 	/** 银行流水号 */
+    @Excel(name = "银行流水号")
 	private String bankIdserial;
 	/** 转账日期 */
+    @Excel(name = "转账日期")
 	private String transDate;
 	/** 金额 */
+    @Excel(name = "转账金额")
 	private String amount;
 	/** 用户类型 */
+    @Excel(name = "用户类型")
 	private String userType;
 	/** 对账状态 */
+    @Excel(name = "对账状态")
 	private String checkStatus;
 	/** 操作人 */
 	private Long operUser;

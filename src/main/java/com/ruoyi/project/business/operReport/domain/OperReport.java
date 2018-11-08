@@ -1,5 +1,7 @@
 package com.ruoyi.project.business.operReport.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -18,18 +20,26 @@ public class OperReport extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	
 	/**  */
+	@Excel(name = "序号")
 	private Long id;
 	/** 报表日期 */
+	@Excel(name = "报表日期")
+    @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date reportDate;
 	/** 交易码 */
+	@Excel(name = "交易码")
 	private String tradeCode;
 	/** 交易笔数 */
+	@Excel(name = "交易笔数")
 	private Integer tradeNum;
 	/** 交易金额 */
+	@Excel(name = "交易金额")
 	private BigDecimal tradeSum;
 	/**  */
+	@Excel(name = "备注")
 	private String remark;
 	/**  */
+	@Excel(name = "状态")
 	private String status;
 	/**  */
 	private Date createTime;

@@ -1,5 +1,7 @@
 package com.ruoyi.project.business.accountReport.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -18,22 +20,32 @@ public class AccountReport extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	
 	/**  */
+	@Excel(name = "序号")
 	private Long id;
 	/** 报表日期 */
+	@Excel(name = "报表日期")
+    @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date reportDate;
 	/** 账户id */
+	@Excel(name = "账户编号")
 	private String accountCode;
 	/** 收入笔数 */
+	@Excel(name = "收入笔数")
 	private Integer incomeNum;
 	/** 收入金额 */
+	@Excel(name = "收入金额")
 	private BigDecimal incomeSum;
 	/** 支出笔数 */
+	@Excel(name = "支出笔数")
 	private Integer outcomeNum;
 	/** 支出金额 */
+	@Excel(name = "支出金额")
 	private BigDecimal outcomeSum;
 	/**  */
+	@Excel(name = "备注")
 	private String remark;
 	/**  */
+	@Excel(name = "状态")
 	private String status;
 	/**  */
 	private Date createTime;

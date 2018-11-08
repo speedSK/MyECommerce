@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.accountReport.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,7 +54,21 @@ public class AccountReportController extends BaseController
         List<AccountReport> list = accountReportService.selectAccountReportList(accountReport);
 		return getDataTable(list);
 	}
-	
+
+	/**
+	 * 查询系统账户报列表
+	 */
+    @Log(title = "系统账户报", businessType = BusinessType.EXPORT)
+	@RequiresPermissions("business:accountReport:export")
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(AccountReport accountReport)
+	{
+		List<AccountReport> list = accountReportService.selectAccountReportList(accountReport);
+        ExcelUtil<AccountReport> util = new ExcelUtil<AccountReport>(AccountReport.class);
+        return util.exportExcel(list, "accountReport");
+	}
+
 	/**
 	 * 新增系统账户报
 	 */

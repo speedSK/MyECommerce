@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.checkdetail.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,20 @@ public class CheckdetailController extends BaseController
 		startPage();
         List<Checkdetail> list = checkdetailService.selectCheckdetailList(checkdetail);
 		return getDataTable(list);
+	}
+
+	/**
+	 * 查询银行详情对账对账列表
+	 */
+    @Log(title = "银行详情对账对账", businessType = BusinessType.EXPORT)
+	@RequiresPermissions("business:checkdetail:export")
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(Checkdetail checkdetail)
+	{
+		List<Checkdetail> list = checkdetailService.selectCheckdetailList(checkdetail);
+        ExcelUtil<Checkdetail> util = new ExcelUtil<Checkdetail>(Checkdetail.class);
+        return util.exportExcel(list, "checkdetail");
 	}
 	
 	/**

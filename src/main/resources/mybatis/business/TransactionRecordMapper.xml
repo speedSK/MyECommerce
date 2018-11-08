@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="transIdserial"    column="trans_idserial"    />
         <result property="userCode"    column="user_code"    />
         <result property="userName"    column="user_name"    />
-        <result property="diNumber"    column="di_number"    />
+        <result property="idNumber"    column="id_number"    />
         <result property="bankNumber"    column="bank_number"    />
         <result property="amount"    column="amount"    />
         <result property="status"    column="status"    />
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectTransactionRecordVo">
-        select id, code, bank_code, trans_date, trans_idserial, user_code, user_name, di_number, bank_number, amount, status, return_code, return_message, bank_idserial, create_by, create_time, update_by, update_time from bank_transaction_record
+        select id, code, bank_code, trans_date, trans_idserial, user_code, user_name, id_number, bank_number, amount, status, return_code, return_message, bank_idserial, create_by, create_time, update_by, update_time from bank_transaction_record
     </sql>
 	
     <select id="selectTransactionRecordList" parameterType="TransactionRecord" resultMap="TransactionRecordResult">
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="transIdserial != null and transIdserial != ''"> and trans_idserial = #{transIdserial}</if>
              <if test="userCode != null and userCode != ''"> and user_code = #{userCode}</if>
              <if test="userName != null and userName != ''"> and user_name = #{userName}</if>
-             <if test="diNumber != null and diNumber != ''"> and di_number = #{diNumber}</if>
+             <if test="idNumber != null and idNumber != ''"> and id_number = #{idNumber}</if>
              <if test="bankNumber != null and bankNumber != ''"> and bank_number = #{bankNumber}</if>
              <if test="amount != null and amount != ''"> and amount = #{amount}</if>
              <if test="status != null and status != ''"> and status = #{status}</if>
@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="transIdserial != null and transIdserial != '' ">trans_idserial,</if>
 			<if test="userCode != null and userCode != '' ">user_code,</if>
 			<if test="userName != null and userName != '' ">user_name,</if>
-			<if test="diNumber != null and diNumber != '' ">di_number,</if>
+			<if test="idNumber != null and idNumber != '' ">id_number,</if>
 			<if test="bankNumber != null and bankNumber != '' ">bank_number,</if>
 			<if test="amount != null and amount != '' ">amount,</if>
 			<if test="status != null and status != '' ">status,</if>
@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="transIdserial != null and transIdserial != ''">#{transIdserial},</if>
 			<if test="userCode != null and userCode != ''">#{userCode},</if>
 			<if test="userName != null and userName != ''">#{userName},</if>
-			<if test="diNumber != null and diNumber != ''">#{diNumber},</if>
+			<if test="idNumber != null and idNumber != ''">#{idNumber},</if>
 			<if test="bankNumber != null and bankNumber != ''">#{bankNumber},</if>
 			<if test="amount != null and amount != ''">#{amount},</if>
 			<if test="status != null and status != ''">#{status},</if>
@@ -116,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="transIdserial != null  and transIdserial != ''  ">trans_idserial = #{transIdserial},</if>
             <if test="userCode != null  and userCode != ''  ">user_code = #{userCode},</if>
             <if test="userName != null  and userName != ''  ">user_name = #{userName},</if>
-            <if test="diNumber != null  and diNumber != ''  ">di_number = #{diNumber},</if>
+            <if test="idNumber != null  and idNumber != ''  ">id_number = #{idNumber},</if>
             <if test="bankNumber != null  and bankNumber != ''  ">bank_number = #{bankNumber},</if>
             <if test="amount != null  and amount != ''  ">amount = #{amount},</if>
             <if test="status != null  and status != ''  ">status = #{status},</if>

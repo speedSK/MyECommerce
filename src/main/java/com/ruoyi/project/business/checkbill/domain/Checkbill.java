@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.checkbill.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import java.util.Date;
 
@@ -14,44 +15,64 @@ public class Checkbill extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	
 	/** 主键 */
+	@Excel(name = "序号")
 	private Long id;
 	/** 系统交易码 */
+    @Excel(name = "系统交易码")
 	private String code;
 	/** 银行交易码 */
+    @Excel(name = "银行交易码")
 	private String bankCode;
 	/** 对账日期 */
+    @Excel(name = "对账日期")
 	private String checkDate;
 	/** 充值总笔数 */
+    @Excel(name = "充值笔数")
 	private String rechargeNum;
 	/** 充值总金额 */
+    @Excel(name = "充值金额")
 	private String rechargeSum;
 	/** 冲正总笔数 */
+    @Excel(name = "冲正笔数")
 	private String correctionNum;
 	/** 冲正总金额 */
+    @Excel(name = "冲正金额")
 	private String correctionSum;
 	/** 销户总笔数 */
+    @Excel(name = "销户笔数")
 	private String closeNum;
 	/** 销户总金额 */
+    @Excel(name = "销户金额")
 	private String closeSum;
 	/** 商户总笔数 */
+    @Excel(name = "结算笔数")
 	private String merchantNum;
 	/** 商户总金额 */
+    @Excel(name = "结算金额")
 	private String merchantSum;
 	/** 所有正确圈存的卡号总和 */
+    @Excel(name = "圈存卡号总和")
 	private String rechargeCardSum;
 	/** 所有冲正的卡号总和 */
+    @Excel(name = "冲正卡号总和")
 	private String correctionCardSum;
 	/** 所有销户的卡号总和 */
+    @Excel(name = "销户卡号总和")
 	private String closeCardSum;
 	/** 所有结算的卡号总和 */
+    @Excel(name = "结算卡号总和")
 	private String merchantCardSum;
 	/** 返回码 */
+    @Excel(name = "返回码")
 	private String returnCode;
 	/** 返回信息 */
+    @Excel(name = "返回信息")
 	private String returnMessage;
 	/** 状态 */
+    @Excel(name = "状态")
 	private String status;
 	/** 创建时间戳 */
+    @Excel(name = "时间戳")
 	private Date createTime;
 
 	/**

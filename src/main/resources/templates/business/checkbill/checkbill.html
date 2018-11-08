@@ -5,7 +5,7 @@
 <body class="gray-bg">
     <div class="container-div">
 		<div class="col-sm-12  search-collapse">
-				<form id="role-form">
+				<form id="checkbill-form">
 					<div class="select-list gd">
 						<ul>
 							<li>
@@ -18,21 +18,26 @@
 								<input type="text" class="layui-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
 							</li>
 							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search($('form').attr('id'))"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 							</li>
 						</ul>
 					</div>
 				</form>
 			</div>
-			
+
+            <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:checkdetail:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+
 		<div class="col-sm-12 select-table table-striped">
 			<table id="bootstrap-table" data-mobile-responsive="true"></table>
 		</div>
     </div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('business:checkbill:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('business:checkbill:remove')}]];
         var prefix = ctx + "business/checkbill";
 
         $(function() {
@@ -41,13 +46,12 @@
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
                 modalName: "银行总账对账",
-                columns: [{
-		            checkbox: true
-		        },
+                columns: [
 				{
 					field : 'id', 
-					title : '主键' 
+					title : '序号'
 				},
 				{
 					field : 'checkDate', 

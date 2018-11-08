@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.operReport.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,7 +54,21 @@ public class OperReportController extends BaseController
         List<OperReport> list = operReportService.selectOperReportList(operReport);
 		return getDataTable(list);
 	}
-	
+
+	/**
+	 * 查询系统操作报列表
+	 */
+	@RequiresPermissions("business:operReport:export")
+    @Log(title = "系统操作报", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(OperReport operReport)
+	{
+		List<OperReport> list = operReportService.selectOperReportList(operReport);
+        ExcelUtil<OperReport> util = new ExcelUtil<OperReport>(OperReport.class);
+        return util.exportExcel(list, "operateReport");
+	}
+
 	/**
 	 * 新增系统操作报
 	 */
