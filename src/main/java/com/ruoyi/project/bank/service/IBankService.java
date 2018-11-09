@@ -5,7 +5,8 @@ import com.ruoyi.project.business.person.domain.Person;
 
 public interface IBankService {
 
-	public ReceiveFromBankInfo queryUserInfo4Bank(Person person);
+	public ReceiveFromBankInfo queryUserInfo4Bank(String idserial);
 	
-	public ReceiveFromBankInfo queryUserSign(Person person);
+	public ReceiveFromBankInfo queryUserSign(String idserial, String idserial2, String bankcdno, String newbankcdno);
+
 }

@@ -36,7 +36,7 @@ public class SocketServer {
 		System.out.println("监听线程启动......");
 
 		try {
-			int port = Integer.parseInt(SysConfigUtil.getNodeValue("signPort"));
+			int port = Integer.parseInt(SysConfigUtil.getNodeValue("system.server.port"));
 			ServerSocket server = new ServerSocket(port);
 			while (true) {
 				Socket connection = server.accept();

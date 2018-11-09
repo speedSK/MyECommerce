@@ -22,19 +22,13 @@ import com.ruoyi.project.business.person.domain.Person;
 public class TransOfABC {
 	
 	private static Logger logger = LoggerFactory.getLogger(TransOfABC.class);
-	private static String serverIp = SysConfigUtil.getNodeValue("serverIp");
-	private static String port = SysConfigUtil.getNodeValue("serverPort");
-	private static String sysFlag = SysConfigUtil.getNodeValue("systemFlag");
+	private static String serverIp = SysConfigUtil.getNodeValue("bank.server.IP");
+	private static String port = SysConfigUtil.getNodeValue("bank.server.port");
+	private static String sysFlag = SysConfigUtil.getNodeValue("bank.server.flag");
 	private static String encodeType = "gbk";
 	//通过springApplicationContextAware获取bean
 	private static IBankService bankService = (IBankService) SpringUtils.getBean(BankServiceImpl.class);
-	//通过postContruct注入service
-//	public static TransOfABC transOfABC;
-//	@PostConstruct
-//	public void init() {
-//		transOfABC=this;
-//		transOfABC.bankService=this.bankService;
-//	}
+
 	public static synchronized String transCommMsg(String txCode, TransVo vo) {
 		String backMsg = "";
 		String sendPackage = "";
@@ -327,12 +321,10 @@ public class TransOfABC {
 
 	public static byte[] queryUserInfoSign(byte[] buf) {
 		logger.info("queryUserInfoSign接收报文:" + new String(buf));
-		String idserial = new String(buf, 15, 18);
-		Person user = new Person();
-		user.setNumber(idserial);
+		String idserial = new String(buf, 13, 20);
 		logger.info("编号：" + idserial + "。");
 		try {
-			ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserInfo4Bank(user);
+			ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserInfo4Bank(idserial);
 			byte[] pckBody = createPckUserSign(receiveFromBankInfo);
 			if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
 				logger.info("用户:" + idserial + ",发起信息查询成功");
@@ -341,30 +333,52 @@ public class TransOfABC {
 			}
 
 			return pckBody;
-		} catch (Exception var6) {
-			var6.printStackTrace();
+		} catch (Exception e) {
+			logger.error("查询用户信息出错", e);
 			return null;
 		}
 	}
 
-	public static byte[] querySign(byte[] buf) throws Exception {
+	public static byte[] querySign(byte[] buf) {
 		logger.info("querySign接收报文:" + new String(buf));
-		String idserial = new String(buf, 56, 18);
-		String idserial2 = new String(buf, 94, 18);
-		String bankcdno = new String(buf, 123, 32);
-		logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno);
-		Person person = new Person();
-		person.setNumber(idserial);
-		person.setIdcard(idserial2);
-		person.setBankCardNumber(bankcdno);
-		ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(person);
-		byte[] pckBody = createPckSign(receiveFromBankInfo);
-		if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
-			logger.info("用户:" + idserial + ",发起签约，签约成功");
-		} else {
-			logger.info("用户:" + idserial + ",发起签约，签约失败");
+		try {
+			String idserial = new String(buf, 54, 20);
+			String idserial2 = new String(buf, 94, 18);
+			String bankcdno = new String(buf, 123, 32);
+			logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno);
+            ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(idserial, idserial2, bankcdno, null);
+			byte[] pckBody = createPckSign(receiveFromBankInfo);
+			if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
+				logger.info("用户:" + idserial + ",发起签约，签约成功");
+			} else {
+				logger.info("用户:" + idserial + ",发起签约，签约失败");
+			}
+			return pckBody;
+		} catch (Exception e) {
+			logger.error("签约出错", e);
+			return null;
 		}
-
-		return pckBody;
 	}
+
+    public static byte[] queryChangeSign(byte[] buf) {
+        logger.info("queryChangeSign接收报文:" + new String(buf));
+        try {
+            String idserial = new String(buf, 54, 20);
+            String idserial2 = new String(buf, 94, 18);
+            String bankcdno = new String(buf, 123, 32);
+            String newbankcdno = new String(buf, 155, 32);
+            logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno, "newbankcdno" + newbankcdno);
+            ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(idserial, idserial2, bankcdno, newbankcdno);
+            byte[] pckBody = createPckSign(receiveFromBankInfo);
+            if ("000000".equals(receiveFromBankInfo.getResponsecode())) {
+                logger.info("用户:" + idserial + ",发起换卡签约，签约成功");
+            } else {
+                logger.info("用户:" + idserial + ",发起换卡签约，签约失败");
+            }
+            return pckBody;
+        } catch (Exception e) {
+            logger.error("换卡签约出错", e);
+            return null;
+        }
+    }
 }
