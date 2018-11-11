@@ -73,11 +73,12 @@ public class Constants
     public static final String ACCOUNT_ACTIVE_2 = "2";  //系统支出账户
     public static final String ACCOUNT_ACTIVE_3 = "3";  // 普通商户
 
-    public static final String ORDER_0 = "0"; //正常
-    public static final String ORDER_1 = "1"; //完成
-    public static final String ORDER_2 = "2"; //取消
+    public static final String ORDER_NORMAL = "0"; //正常
+    public static final String ORDER_FINISH = "1"; //完成
+    public static final String ORDER_CANCEL = "2"; //取消
     
     public static final String BANK_UNCHECK = "0";
     public static final String BANK_CHECKED = "1";
     public static final String BANK_CHECK_fAIL = "2";
+    public static final String BANK_CHECK_DETAIL = "3";
 }

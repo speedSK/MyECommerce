@@ -1,6 +1,7 @@
 package com.ruoyi.project.business.order.controller;
 
 import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,27 +99,15 @@ public class OrderController extends BaseController
 	}
 	
 	/**
-	 * 取消订单
+	 * 修改订单状态
 	 */
-	@RequiresPermissions("business:order:cancel")
-	@Log(title = "订单", businessType = BusinessType.DELETE)
-	@PostMapping( "/cancel")
+	@RequiresPermissions("business:order:editVisible")
+	@Log(title = "订单状态", businessType = BusinessType.UPDATE)
+	@PostMapping( "/editVisible")
 	@ResponseBody
-	public AjaxResult cancel(String ids)
-	{		
-		return toAjax(orderService.cancelOrderByIds(ids));
-	}
-
-
-	/**
-	 * 完成订单
-	 */
-	@RequiresPermissions("business:order:finish")
-	@Log(title = "订单", businessType = BusinessType.UPDATE)
-	@PostMapping( "/finish")
-	@ResponseBody
-	public AjaxResult finish(String ids)
+	public AjaxResult editVisible(String ids, String visible)
 	{
-		return toAjax(orderService.finishOrderByIds(ids));
+        return toAjax(orderService.updateOrderFlag(ids, visible));
 	}
+
 }

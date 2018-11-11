@@ -42,16 +42,12 @@ public interface IOrderService
      * @return 结果
      */
 	public int updateOrder(Order order);
-		
+
 	/**
-     * 删除订单信息
-     * 
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-	public int cancelOrderByIds(String ids);
-
-	public int finishOrderByIds(String ids);
-
-	public int updateMoneyByIds(String ids);
+	 * 修改订单状态
+	 * @param id
+	 * @param flag
+	 * @return
+	 */
+	public int updateOrderFlag(String id, String flag);
 }

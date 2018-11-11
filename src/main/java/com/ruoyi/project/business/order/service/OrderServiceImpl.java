@@ -1,12 +1,15 @@
 package com.ruoyi.project.business.order.service;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 
 import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.business.orderDetail.service.IOrderDetailService;
+import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.business.person.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.order.mapper.OrderMapper;
@@ -28,6 +31,8 @@ public class OrderServiceImpl implements IOrderService
 
 	@Autowired
 	private IOrderDetailService orderDetailService;
+    @Autowired
+    private IPersonService personService;
 
 	/**
      * 查询订单信息
@@ -82,75 +87,25 @@ public class OrderServiceImpl implements IOrderService
 	    return orderMapper.updateOrder(order);
 	}
 
-	/**
-     * 删除订单对象
-     *
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
 	@Override
-	public int cancelOrderByIds(String ids)
-	{
-	    String [] idsArray = Convert.toStrArray(ids);
-        for (String id: idsArray) {
-
-			Order order = orderMapper.selectOrderById(Long.valueOf(id)) ;
-			if(Constants.ORDER_0.equals(order.getFlag())){
-				order.setId(Long.valueOf(id));
-				//初始化數據信息
-				order.setFlag(Constants.ORDER_2);
-				order.setFinishUser(ShiroUtils.getLoginName());
-				order.setFinishTime(new Date());
-				order.setUpdateBy(ShiroUtils.getUserId().toString());
-				orderMapper.updateOrder(order);
-
+	public int updateOrderFlag(String id, String flag) {
+        Order order = orderMapper.selectOrderById(Long.parseLong(id));
+		switch (flag) {
+			case "finish":
+				order.setFlag(Constants.ORDER_FINISH);
 				//更新该订单下指定商品的状态
-				orderDetailService.updateFlagByOrderId(id,Constants.ORDER_2);
-			}
-
-        }
-
-        return 1;
-	}
-
-	@Override
-	public int finishOrderByIds(String ids) {
-
-		String [] idsArray = Convert.toStrArray(ids);
-		for (String id: idsArray) {
-
-			Order order = orderMapper.selectOrderById(Long.valueOf(id)) ;
-			if(Constants.ORDER_0.equals(order.getFlag())){
-				order.setId(Long.valueOf(id));
-				//初始化數據信息
-				order.setFlag(Constants.ORDER_1);
-				order.setFinishUser(ShiroUtils.getLoginName());
-				order.setFinishTime(new Date());
-				order.setUpdateBy(ShiroUtils.getUserId().toString());
-				orderMapper.updateOrder(order);
-
-				//更新该订单下指定商品的状态
-				orderDetailService.updateFlagByOrderId(id,Constants.ORDER_1);
-			}
+				orderDetailService.updateFlagByOrderId(id,Constants.ORDER_FINISH);
+				break;
+			case "cancel":
+				order.setFlag(Constants.ORDER_CANCEL);
+				orderDetailService.updateFlagByOrderId(id,Constants.ORDER_CANCEL);
+				Person person = personService.selectPersonById(order.getPersonId());
+                if (person != null) {
+                    person.setBalance(person.getBalance().add(order.getMoney()));
+                    personService.updatePerson(person);
+                }
+                break;
 		}
-
-		return 1;
+        return updateOrder(order);
 	}
-
-	@Override
-	public int updateMoneyByIds(String ids) {
-
-		String [] idsArray = Convert.toStrArray(ids);
-		for (String id: idsArray) {
-
-			Order order = orderMapper.selectOrderById(Long.valueOf(id)) ;
-			if(null != order && Constants.ORDER_0.equals(order.getFlag())){
-
-				//更新该订单下指定商品的money
-				orderMapper.updateMoneyById(Long.valueOf(id)) ;
-			}
-		}
-		return 1;
-	}
-
 }

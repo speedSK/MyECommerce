@@ -13,7 +13,6 @@
 
     </div>
     <div th:include="include :: footer"></div>
-    <script th:src="@{/ruoyi/js/ruoyi-ui.js?v=2.3.2}"></script>
     <script th:inline="javascript">
         var cancelFlag = [[${@permission.hasPermi('business:order:cancel')}]];
         var flagDatas = [[${@dict.getType('bus_order_flag')}]];
@@ -27,6 +26,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 cancelUrl: prefix + "/cancel",
+                editVisibleUrl: prefix + "/editVisible",
                 queryParams: queryParams,
                 modalName: "订单详情",
                 search: false,
@@ -66,7 +66,7 @@
 		            formatter: function(value, row, index) {
 		            	var actions = [];
 		            	if('0' == row.flag){
-                       		actions.push('<a class="btn btn-danger btn-xs ' + cancelFlag + '" href="#" onclick="$.operate.cancel(\'' + row.id + '\')"><i class="fa fa-remove"></i>取消</a>');
+                       		actions.push('<a class="btn btn-danger btn-xs ' + cancelFlag + '" href="#" onclick="$.operate.editVisible(\'' + row.id + '\',\'cancel\',\'取消\')"><i class="fa fa-remove"></i>取消</a>');
 		            	}
 						return actions.join('');
 		            }

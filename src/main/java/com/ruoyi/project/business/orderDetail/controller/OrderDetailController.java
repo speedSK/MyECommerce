@@ -66,19 +66,19 @@ public class OrderDetailController extends BaseController
         List<OrderDetail> list = orderDetailService.selectOrderDetailList(orderDetail);
 		return getDataTable(list);
 	}
-	
+
 
 
 	/**
-	 * 取消订单
+	 * 修改订单状态
 	 */
-	@RequiresPermissions("business:order:cancel")
-	@Log(title = "订单", businessType = BusinessType.DELETE)
-	@PostMapping( "/cancel")
+	@RequiresPermissions("business:order:editVisible")
+	@Log(title = "订单状态", businessType = BusinessType.UPDATE)
+	@PostMapping( "/editVisible")
 	@ResponseBody
-	public AjaxResult cancel(String ids)
+	public AjaxResult editVisible(String ids, String visible)
 	{
-		return toAjax(orderDetailService.cancelOrderByIds(ids));
+		return toAjax(orderDetailService.updateOrderDetailFlag(ids, visible));
 	}
 	
 }

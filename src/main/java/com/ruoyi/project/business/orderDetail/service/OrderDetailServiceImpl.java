@@ -6,7 +6,10 @@ import com.ruoyi.common.utils.security.ShiroUtils;
 import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.project.business.order.domain.Order;
 import com.ruoyi.project.business.order.service.IOrderService;
+import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.business.person.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.orderDetail.mapper.OrderDetailMapper;
@@ -28,6 +31,9 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 
 	@Autowired
 	private IOrderService orderService;
+    @Autowired
+    private IPersonService personService;
+
 
 
 	/**
@@ -119,28 +125,15 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	}
 
 	@Override
-	public int cancelOrderByIds(String ids) {
-
-		String [] idsArray = Convert.toStrArray(ids);
-		for (String id: idsArray) {
-
-			OrderDetail order = orderDetailMapper.selectOrderDetailById(Long.valueOf(id)) ;
-			if(Constants.ORDER_0.equals(order.getFlag())){
-				order.setId(Long.valueOf(id));
-				//初始化數據信息
-				order.setFlag(Constants.ORDER_2);
-
-				order.setUpdateBy(ShiroUtils.getUserId().toString());
-				orderDetailMapper.updateOrderDetail(order);
-
-				//update money
-				orderService.updateMoneyByIds(order.getOrderId().toString());
-
-			}
-
-		}
-
-		return 1;
+	public int updateOrderDetailFlag(String id, String flag) {
+        OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(Long.parseLong(id));
+        Order order = orderService.selectOrderById(orderDetail.getOrderId());
+        orderDetail.setFlag(Constants.ORDER_CANCEL);
+        order.setMoney(order.getMoney().subtract(orderDetail.getMoney()));
+        this.updateOrderDetail(orderDetail);
+        orderService.updateOrder(order);
+        Person person = personService.selectPersonById(order.getPersonId());
+        person.setBalance(person.getBalance().add(orderDetail.getMoney()));
+        return personService.updatePerson(person);
 	}
-
 }

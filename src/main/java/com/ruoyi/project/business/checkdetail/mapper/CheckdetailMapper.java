@@ -1,7 +1,9 @@
 package com.ruoyi.project.business.checkdetail.mapper;
 
 import com.ruoyi.project.business.checkdetail.domain.Checkdetail;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 银行详情对账对账 数据层
@@ -9,6 +11,7 @@ import java.util.List;
  * @author LiuNing
  * @date 2018-08-06
  */
+@Repository
 public interface CheckdetailMapper 
 {
 	/**
