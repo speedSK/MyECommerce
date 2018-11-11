@@ -66,6 +66,11 @@ public class Constants
     public static final String STATUS_ACTIVE = "0";
     public static final String STATUS_REMOVED = "1";
 
+    public static final String PERSON_ACTIVE = "0";
+    public static final String PERSON_LOCK = "1";
+    public static final String PERSON_PREP = "2";
+    public static final String PERSON_CLOSE = "3";
+
     public static final String VISIBLE_FALSE = "0";
     public static final String VISIBLE_TRUE = "1";
 

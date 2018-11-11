@@ -336,5 +336,46 @@ create table bus_user
    primary key (id)
 );
 
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for bus_closed_person
+-- ----------------------------
+DROP TABLE IF EXISTS `bus_closed_person`;
+CREATE TABLE `bus_closed_person` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `number` varchar(20) DEFAULT NULL COMMENT '编号',
+  `name` varchar(30) DEFAULT NULL COMMENT '姓名',
+  `sex` char(1) DEFAULT NULL COMMENT '性别',
+  `age` int(11) DEFAULT '0' COMMENT '年龄',
+  `nation` bigint(20) DEFAULT NULL COMMENT '民族',
+  `idcard` varchar(18) DEFAULT NULL COMMENT '身份证号',
+  `bank_card_number` varchar(32) DEFAULT NULL COMMENT '银行卡号',
+  `build` varchar(20) DEFAULT NULL COMMENT '楼号',
+  `photo` varchar(100) DEFAULT '' COMMENT '照片',
+  `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
+  `area` varchar(20) DEFAULT NULL COMMENT '监区',
+  `room` varchar(20) DEFAULT NULL COMMENT '房间',
+  `bed` varchar(20) DEFAULT NULL COMMENT '床号',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门',
+  `identity_id` bigint(20) DEFAULT NULL COMMENT '身份',
+  `password` varchar(32) DEFAULT NULL COMMENT '密码（用于登录）',
+  `salt` varchar(20) DEFAULT NULL COMMENT '盐加密',
+  `deposit` decimal(9,2) DEFAULT '0.00' COMMENT '押金',
+  `balance` decimal(15,2) DEFAULT '0.00' COMMENT '账户余额',
+  `already_cost` decimal(9,2) DEFAULT '0.00' COMMENT '当月已经消费',
+  `flag` char(1) DEFAULT '0' COMMENT '账户状态',
+  `status` char(1) CHARACTER SET utf8 DEFAULT '0' COMMENT '状态',
+  `remark` varchar(50) DEFAULT NULL COMMENT '说明',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='销户人员管理';
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 alter table bus_user comment '业务信息表（犯人信息）';
 

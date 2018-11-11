@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <div class="container-div">
+		<!--<div class="btn-group-sm hidden-xs" id="toolbar" role="group">-->
+			<!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="business:account:remove">-->
+				<!--<i class="fa fa-remove"></i> 删除-->
+			<!--</a>-->
+		<!--</div>-->
+
+        <div class="col-sm-12  search-collapse">
+            <form id="user-form">
+                <input type="hidden" id="deptId" name="deptId">
+                <input type="hidden" id="parentId" name="parentId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            人员名称：<input type="text" name="name"/>
+                        </li>
+                        <li>
+                            人员编号：<input type="text" name="number"/>
+                        </li>
+                        <li class="select-time">
+                            <label>创建时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+			
+		<div class="col-sm-12 select-table table-striped">
+			<table id="bootstrap-table" data-mobile-responsive="true"></table>
+		</div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('business:account:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('business:account:remove')}]];
+        var flagDatas = [[${@dict.getType('bus_person_flag')}]];
+        var prefix = ctx + "business/account";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                modalName: "人员管理",
+                columns: [{
+					field : 'id', 
+					title : '序号'
+				},
+				{
+					field : 'number', 
+					title : '编号' 
+				},
+				{
+					field : 'name', 
+					title : '姓名' 
+				},
+				{
+					field : 'age', 
+					title : '年龄' 
+				},
+				{
+					field : 'idcard', 
+					title : '身份证号' 
+				},
+				{
+					field : 'deposit', 
+					title : '押金' 
+				},
+				{
+					field : 'balance', 
+					title : '账户余额' 
+				},
+				{
+					field : 'flag',
+					title : '账户状态',
+					formatter: function(value, row, index) {
+						return $.table.selectDictLabel(flagDatas, value);
+					}
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+                        actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-key"></i>生成销户单</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>确认销户</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

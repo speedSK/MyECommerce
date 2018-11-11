@@ -2,6 +2,7 @@ package com.ruoyi.project.business.person.controller;
 
 import java.util.List;
 
+import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.project.system.identity.service.IIdentityService;
@@ -130,11 +131,14 @@ public class PersonController extends BaseController
         person.setId(Long.valueOf(ids));
         switch (visible) {
             case "lock":
-                person.setFlag("1");
+                person.setFlag(Constants.PERSON_LOCK);
                 break;
             case "unlock":
-                person.setFlag("0");
+                person.setFlag(Constants.PERSON_ACTIVE);
                 break;
+			case "prep":
+				person.setFlag(Constants.PERSON_PREP);
+				break;
         }
 		return toAjax(personService.updatePerson(person));
 	}
