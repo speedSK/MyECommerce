@@ -54,5 +54,6 @@ public interface IPersonService
 	public int saveCash(Person person);
 
 	public int saveBankCharge(Person person);
-	
+
+	public int deletePersonAccount(String ids);
 }

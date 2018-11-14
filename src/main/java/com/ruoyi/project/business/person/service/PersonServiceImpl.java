@@ -9,6 +9,9 @@ import java.util.List;
 
 import com.ruoyi.project.bank.TransOfABC;
 import com.ruoyi.project.bank.domain.TransVo;
+import com.ruoyi.project.business.closedPerson.domain.ClosedPerson;
+import com.ruoyi.project.business.closedPerson.mapper.ClosedPersonMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.person.mapper.PersonMapper;
@@ -26,6 +29,8 @@ public class PersonServiceImpl implements IPersonService
 {
 	@Autowired
 	private PersonMapper personMapper;
+	@Autowired
+	private ClosedPersonMapper closedPersonMapper;
 
 	/**
      * 查询人员管理信息
@@ -142,5 +147,19 @@ public class PersonServiceImpl implements IPersonService
 		}
 		return personMapper.updatePerson(info);
 	}
-	
+
+	@Override
+	public int deletePersonAccount(String ids) {
+		String [] idsArray = Convert.toStrArray(ids);
+		for (String id: idsArray) {
+			Person person = personMapper.selectPersonById(Long.parseLong(id));
+            ClosedPerson closedPerson = new ClosedPerson();
+            BeanUtils.copyProperties(person, closedPerson);
+            closedPerson.setFlag(Constants.PERSON_CLOSE);
+            closedPersonMapper.insertClosedPerson(closedPerson);
+            personMapper.deletePersonById(Long.parseLong(id));
+		}
+		return 1;
+	}
+
 }

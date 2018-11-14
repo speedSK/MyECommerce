@@ -1,7 +1,10 @@
 package com.ruoyi.project.business.person.controller;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.framework.aspectj.lang.annotation.Log;
+import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.business.person.service.IPersonService;
@@ -20,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/business/account")
-public class CloseAccount extends BaseController {
+public class CloseAccountController extends BaseController {
     private String prefix = "business/account";
 
     @Autowired
@@ -34,7 +37,7 @@ public class CloseAccount extends BaseController {
     }
 
     /**
-     * 查询业务（犯人）列表
+     * 可销户（犯人）列表
      */
     @RequiresPermissions("business:account:list")
     @PostMapping("/list")
@@ -45,6 +48,18 @@ public class CloseAccount extends BaseController {
         person.setFlag(Constants.PERSON_PREP);
         List<Person> list = personService.selectPersonList(person);
         return getDataTable(list);
+    }
+
+    /**
+     * 销户业务（犯人）
+     */
+    @RequiresPermissions("business:account:close")
+    @Log(title = "销户（犯人）", businessType = BusinessType.DELETE)
+    @PostMapping( "/close")
+    @ResponseBody
+    public AjaxResult close(String ids)
+    {
+        return toAjax(personService.deletePersonAccount(ids));
     }
 
 }
