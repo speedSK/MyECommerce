@@ -62,4 +62,16 @@ public class CloseAccountController extends BaseController {
         return toAjax(personService.deletePersonAccount(ids));
     }
 
+    /**
+     * 生成销户单
+     */
+    @RequiresPermissions("business:account:createPDF")
+    @Log(title = "生成销户单", businessType = BusinessType.EXPORT)
+    @PostMapping( "/createPDF")
+    @ResponseBody
+    public AjaxResult createPDF(String ids)
+    {
+        return toAjax(personService.deletePersonAccount(ids));
+    }
+
 }
