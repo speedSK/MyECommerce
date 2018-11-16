@@ -97,7 +97,7 @@
 		            	var actions = [];
 		            	var url = "";
                         // actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-key"></i>生成销户单</a>');
-                        actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="#" onclick=" $.modal.open(\'生成\' + $.table._option.modalName, \'/PDF/web/viewer.html?file=E:/ceshi.pdf\');"><i class="fa fa-key"></i>生成销户单</a>');
+                        actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="#" onclick=" $.modal.open(\'生成\' + $.table._option.modalName, \'/PDF/web/viewer.html?file=/business/account/createPDF/' + row.id + '\');"><i class="fa fa-key"></i>生成销户单</a>');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>确认销户</a>');
 						return actions.join('');
 		            }

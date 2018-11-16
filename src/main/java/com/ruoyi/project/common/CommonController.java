@@ -69,7 +69,7 @@ public class CommonController
         }
     }
 
-    public String setFileDownloadHeader(HttpServletRequest request, String fileName) throws UnsupportedEncodingException
+    public static String setFileDownloadHeader(HttpServletRequest request, String fileName) throws UnsupportedEncodingException
     {
         final String agent = request.getHeader("USER-AGENT");
         String filename = fileName;

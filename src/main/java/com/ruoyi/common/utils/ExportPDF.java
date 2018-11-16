@@ -1,4 +1,4 @@
-package com.ruoyi.project.business.person.controller;
+package com.ruoyi.common.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -14,12 +14,14 @@ import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.BaseFont;
 
 public class ExportPDF {
-    // 利用模板生成pdf
-    public static void fillTemplate() {
-        // 模板路径
-        String templatePath = "E:/销户模板.pdf";
-        // 生成的新文件路径
-        String newPDFPath = "E:/ceshi.pdf";
+
+    /**
+     * 利用模板生成pdf
+     * @param templatePath 模板路径
+     * @param newPDFPath 生成的新文件路径
+     * @param str 参数数组
+     */
+    public static void createPDF(String templatePath,String newPDFPath,String[] str) {
         PdfReader reader;
         FileOutputStream out;
         ByteArrayOutputStream bos;
@@ -32,24 +34,14 @@ public class ExportPDF {
             stamper = new PdfStamper(reader, bos);
             AcroFields form = stamper.getAcroFields();
 
-            String[] str = {"123456789", "刘宁", "测试部", "100.00", "admin", "192.168.0.1", "2018-11-14 16:39:53"};
             int i = 0;
             java.util.Iterator<String> it = form.getFields().keySet().iterator();
             while (it.hasNext()) {
                 String name = it.next().toString();
-                System.out.println(name);
                 // 设置支持中文
                 form.setFieldProperty(name, "textfont", baseFont, null);
                 form.setField(name, str[i++]);
             }
-
-//            form.setField("user_number", "1");
-//            form.setField("user_name", "大傻子");
-//            form.setField("refund_amount", "1");
-//            form.setField("user_dept", "1");
-//            form.setField("oper_time", "1");
-//            form.setField("oper_device", "1");
-//            form.setField("oper_user", "1");
 
             stamper.setFormFlattening(true);// 如果为false那么生成的PDF文件还能编辑，一定要设为true
             stamper.close();
@@ -67,9 +59,5 @@ public class ExportPDF {
             System.out.println(2);
         }
 
-    }
-
-    public static void main(String[] args) {
-        fillTemplate();
     }
 }
