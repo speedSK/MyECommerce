@@ -5,8 +5,10 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.bank.TransOfABC;
 import com.ruoyi.project.bank.domain.TransVo;
 import com.ruoyi.project.business.closedPerson.domain.ClosedPerson;
@@ -31,6 +33,8 @@ public class PersonServiceImpl implements IPersonService
 	private PersonMapper personMapper;
 	@Autowired
 	private ClosedPersonMapper closedPersonMapper;
+    @Autowired
+    private PasswordService passwordService;
 
 	/**
      * 查询人员管理信息
@@ -67,9 +71,10 @@ public class PersonServiceImpl implements IPersonService
 	@Override
 	public int insertPerson(Person person)
 	{
+	    person.randomSalt();
+	    person.setPassword(passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt()));
+        person.setCreateBy(ShiroUtils.getLoginName());
 	    person.setStatus(Constants.STATUS_ACTIVE);
-
-        person.setCreateBy(ShiroUtils.getUserId().toString());
 	    return personMapper.insertPerson(person);
 	}
 	
@@ -82,7 +87,7 @@ public class PersonServiceImpl implements IPersonService
 	@Override
 	public int updatePerson(Person person)
 	{
-	    person.setUpdateBy(ShiroUtils.getUserId().toString());
+	    person.setUpdateBy(ShiroUtils.getLoginName());
 	    return personMapper.updatePerson(person);
 	}
 
@@ -101,11 +106,8 @@ public class PersonServiceImpl implements IPersonService
             Person person = new Person();
             person.setId(Long.valueOf(id));
             //初始化數據信息
-
             person.setStatus(Constants.STATUS_REMOVED);
-
-            person.setUpdateBy(ShiroUtils.getUserId().toString());
-
+            person.setUpdateBy(ShiroUtils.getLoginName());
             personMapper.updatePerson(person);
 
         }
@@ -156,6 +158,8 @@ public class PersonServiceImpl implements IPersonService
             ClosedPerson closedPerson = new ClosedPerson();
             BeanUtils.copyProperties(person, closedPerson);
             closedPerson.setFlag(Constants.PERSON_CLOSE);
+			closedPerson.setUpdateBy(ShiroUtils.getUserId().toString());
+            closedPerson.setUpdateTime(new Date());
             closedPersonMapper.insertClosedPerson(closedPerson);
             personMapper.deletePersonById(Long.parseLong(id));
 		}

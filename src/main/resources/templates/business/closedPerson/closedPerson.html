@@ -4,17 +4,17 @@
 <head th:include="include :: header"></head>
 <body class="gray-bg">
     <div class="container-div">
-		<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-			<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="business:closedPerson:add">
-				<i class="fa fa-plus"></i> 添加
-			</a>
-			<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="business:closedPerson:edit">
-	            <i class="fa fa-edit"></i> 修改
-	        </a>
-			<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="business:closedPerson:remove">
-				<i class="fa fa-remove"></i> 删除
-			</a>
-		</div>
+		<!--<div class="btn-group-sm hidden-xs" id="toolbar" role="group">-->
+			<!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="business:closedPerson:add">-->
+				<!--<i class="fa fa-plus"></i> 添加-->
+			<!--</a>-->
+			<!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="business:closedPerson:edit">-->
+	            <!--<i class="fa fa-edit"></i> 修改-->
+	        <!--</a>-->
+			<!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="business:closedPerson:remove">-->
+				<!--<i class="fa fa-remove"></i> 删除-->
+			<!--</a>-->
+		<!--</div>-->
 			
 		<div class="col-sm-12 select-table table-striped">
 			<table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -33,12 +33,10 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 modalName: "销户人员管理",
-                columns: [{
-		            checkbox: true
-		        },
+                columns: [
 				{
 					field : 'id', 
-					title : '主键' 
+					title : '序号'
 				},
 				{
 					field : 'number', 
@@ -65,32 +63,8 @@
 					title : '身份证号' 
 				},
 				{
-					field : 'bankCardNumber', 
-					title : '银行卡号' 
-				},
-				{
-					field : 'build', 
-					title : '楼号' 
-				},
-				{
-					field : 'photo', 
-					title : '照片' 
-				},
-				{
 					field : 'mobile', 
 					title : '手机号' 
-				},
-				{
-					field : 'area', 
-					title : '监区' 
-				},
-				{
-					field : 'room', 
-					title : '房间' 
-				},
-				{
-					field : 'bed', 
-					title : '床号' 
 				},
 				{
 					field : 'deptId', 
@@ -101,44 +75,8 @@
 					title : '身份' 
 				},
 				{
-					field : 'password', 
-					title : '密码（用于登录）' 
-				},
-				{
-					field : 'salt', 
-					title : '盐加密' 
-				},
-				{
-					field : 'deposit', 
-					title : '押金' 
-				},
-				{
-					field : 'balance', 
-					title : '账户余额' 
-				},
-				{
-					field : 'alreadyCost', 
-					title : '当月已经消费' 
-				},
-				{
 					field : 'flag', 
 					title : '账户状态' 
-				},
-				{
-					field : 'status', 
-					title : '状态' 
-				},
-				{
-					field : 'remark', 
-					title : '说明' 
-				},
-				{
-					field : 'createBy', 
-					title : '创建人' 
-				},
-				{
-					field : 'createTime', 
-					title : '创建时间' 
 				},
 				{
 					field : 'updateBy', 
@@ -147,17 +85,7 @@
 				{
 					field : 'updateTime', 
 					title : '修改时间' 
-				},
-		        {
-		            title: '操作',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-						return actions.join('');
-		            }
-		        }]
+				}]
             };
             $.table.init(options);
         });

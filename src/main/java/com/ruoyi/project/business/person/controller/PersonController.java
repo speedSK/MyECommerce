@@ -5,6 +5,7 @@ import java.util.List;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.project.system.identity.service.IIdentityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +75,7 @@ public class PersonController extends BaseController
 	 * 新增保存业务（犯人）
 	 */
 	@RequiresPermissions("business:person:add")
-	@Log(title = "业务（犯人）", businessType = BusinessType.INSERT)
+	@Log(title = "添加人员（犯人）", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Person person)
@@ -98,7 +99,7 @@ public class PersonController extends BaseController
 	 * 修改保存业务（犯人）
 	 */
 	@RequiresPermissions("business:person:edit")
-	@Log(title = "业务（犯人）", businessType = BusinessType.UPDATE)
+	@Log(title = "修改人员（犯人）", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Person person)
@@ -110,7 +111,7 @@ public class PersonController extends BaseController
 	 * 删除业务（犯人）
 	 */
 	@RequiresPermissions("business:person:remove")
-	@Log(title = "业务（犯人）", businessType = BusinessType.DELETE)
+	@Log(title = "删除人员（犯人）", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
@@ -122,7 +123,7 @@ public class PersonController extends BaseController
 	 * 冻结业务（犯人）
 	 */
 	@RequiresPermissions("business:person:editFlag")
-	@Log(title = "冻结业务（犯人）", businessType = BusinessType.UPDATE)
+	@Log(title = "冻结、解冻（犯人）", businessType = BusinessType.UPDATE)
 	@PostMapping( "/editFlag")
 	@ResponseBody
 	public AjaxResult editFlag(String ids , String visible)
@@ -147,6 +148,7 @@ public class PersonController extends BaseController
 	 * 导出业务（犯人）列表
 	 */
 	@RequiresPermissions("business:person:export")
+	@Log(title = "导出信息（犯人）", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(Person person)
@@ -159,7 +161,7 @@ public class PersonController extends BaseController
 	/**
 	 * 保存图片
 	 */
-	@Log(title = "商品图片信息", businessType = BusinessType.UPDATE)
+	@Log(title = "上传照片", businessType = BusinessType.UPDATE)
 	@PostMapping("/updateAvatar")
 	@ResponseBody
 	public AjaxResult updateAvatar(Person person, @RequestParam("avatarfile") MultipartFile file)
@@ -168,7 +170,7 @@ public class PersonController extends BaseController
 		{
 			if (!file.isEmpty())
 			{
-				String avatar = FileUploadUtils.upload(file);
+                String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
 				person.setPhoto(avatar);
 				if (personService.updatePerson(person) > 0)
 				{

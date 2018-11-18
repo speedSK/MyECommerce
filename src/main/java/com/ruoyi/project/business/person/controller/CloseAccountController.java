@@ -1,8 +1,10 @@
 package com.ruoyi.project.business.person.controller;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.ExportPDF;
 import com.ruoyi.common.utils.file.FileUtils;
+import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.config.RuoYiConfig;
@@ -82,7 +84,8 @@ public class CloseAccountController extends BaseController {
             Person person = personService.selectPersonById(id);
             String template = ResourceUtils.getURL("classpath:").getPath() + "static/file/销户模板.pdf";
             String filePath = RuoYiConfig.getDownloadPath() + person.getNumber() + ".pdf";
-            String[] str = {"123456789", "刘宁", "测试部", "100.00", "admin", "192.168.0.1", "2018-11-14 16:39:53"};
+
+            String[] str = {person.getNumber(), person.getName(), person.getDeptName(), person.getDeposit().add(person.getBalance()).toString(), ShiroUtils.getLoginName(), ShiroUtils.getIp(), DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, person.getUpdateTime())};
             ExportPDF.createPDF(template,filePath,str);
 
             response.setCharacterEncoding("utf-8");

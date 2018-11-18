@@ -2,6 +2,7 @@ package com.ruoyi.project.business.person.domain;
 
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 
 import java.math.BigDecimal;
 
@@ -439,6 +440,15 @@ public class Person extends BaseEntity
 	public void setRecharge(BigDecimal recharge) {
 		this.recharge = recharge;
 	}
-
+	/**
+	 * 生成随机盐
+	 */
+	public void randomSalt()
+	{
+		// 一个Byte占两个字节，此处生成的3字节，字符串长度为6
+		SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
+		String hex = secureRandom.nextBytes(3).toHex();
+		setSalt(hex);
+	}
 
 }
