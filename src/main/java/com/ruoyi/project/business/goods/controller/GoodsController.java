@@ -54,6 +54,7 @@ public class GoodsController extends BaseController
 	public TableDataInfo list(Goods goods)
 	{
 		startPage();
+		goods.setStatus(Constants.STATUS_ACTIVE);
         List<Goods> list = goodsService.selectGoodsList(goods);
 		return getDataTable(list);
 	}
@@ -74,7 +75,7 @@ public class GoodsController extends BaseController
 	 * 新增保存商品
 	 */
 	@RequiresPermissions("business:goods:add")
-	@Log(title = "商品", businessType = BusinessType.INSERT)
+	@Log(title = "商品管理", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Goods goods)
@@ -99,7 +100,7 @@ public class GoodsController extends BaseController
 	 * 修改保存商品
 	 */
 	@RequiresPermissions("business:goods:edit")
-	@Log(title = "商品", businessType = BusinessType.UPDATE)
+	@Log(title = "商品管理", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Goods goods)
@@ -111,7 +112,7 @@ public class GoodsController extends BaseController
 	 * 删除商品
 	 */
 	@RequiresPermissions("business:goods:remove")
-	@Log(title = "商品", businessType = BusinessType.DELETE)
+	@Log(title = "商品管理", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)

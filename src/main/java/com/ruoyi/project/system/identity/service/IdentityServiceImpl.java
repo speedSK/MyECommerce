@@ -58,7 +58,7 @@ public class IdentityServiceImpl implements IIdentityService
 	{
 	    identity.setStatus(Constants.STATUS_ACTIVE);
 
-        identity.setCreateBy(ShiroUtils.getUserId().toString());
+        identity.setCreateBy(ShiroUtils.getLoginName());
 	    return identityMapper.insertIdentity(identity);
 	}
 
@@ -71,7 +71,7 @@ public class IdentityServiceImpl implements IIdentityService
 	@Override
 	public int updateIdentity(Identity identity)
 	{
-	    identity.setUpdateBy(ShiroUtils.getUserId().toString());
+	    identity.setUpdateBy(ShiroUtils.getLoginName());
 	    return identityMapper.updateIdentity(identity);
 	}
 
@@ -93,7 +93,7 @@ public class IdentityServiceImpl implements IIdentityService
 
             identity.setStatus(Constants.STATUS_REMOVED);
 
-            identity.setUpdateBy(ShiroUtils.getUserId().toString());
+            identity.setUpdateBy(ShiroUtils.getLoginName());
 
             identityMapper.updateIdentity(identity);
 

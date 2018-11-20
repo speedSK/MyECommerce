@@ -17,12 +17,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="visible"    column="visible"    />
         <result property="status"    column="status"    />
         <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
 	<sql id="selectGoodsVo">
-        select id, category_id, merchant_id, code, name, price, order_num, image, visible, status , remark , create_time, update_time  from bus_goods
+        select id, category_id, merchant_id, code, name, price, order_num, image, visible, status , remark , create_by, create_time, update_by, update_time  from bus_goods
     </sql>
 	
     <select id="selectGoodsList" parameterType="Goods" resultMap="GoodsResult">
@@ -40,13 +42,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="visible != null and visible != ''"> and visible = #{visible}</if>
              <if test="status != null and status != ''"> and status = #{status}</if>
              <if test="remark != null and remark != ''"> and remark = #{remark}</if>
-            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
-            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+            <if test="createBy != null  and createBy != '' ">and create_by = #{createBy}</if>
+            <if test="createTime != null ">and create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' ">and update_by = #{updateBy}</if>
+            <if test="updateTime != null ">and update_time = #{updateTime}</if>
         </where>
     </select>
     
     <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult">
-        select t.id, t.category_id, t.merchant_id, t.code, t.name, t.price, t.order_num, t.image, t.visible, t.status , t.remark , t.create_time, t.update_time ,
+        select t.id, t.category_id, t.merchant_id, t.code, t.name, t.price, t.order_num, t.image, t.visible, t.status , t.remark , t.create_by , t.create_time, t.update_by , t.update_time ,
         (select category_name from bus_good_category where id = t.category_id) category_name
         from bus_goods t
         where id = #{id}
@@ -65,6 +69,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="image != null and image != '' ">image,</if>
 			<if test="visible != null and visible != '' ">visible,</if>
 			<if test="status != null and status != '' ">status,</if>
+            <if test="remark != null and remark != '' ">remark,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
             create_time
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -78,6 +84,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="image != null and image != ''">#{image},</if>
 			<if test="visible != null and visible != ''">#{visible},</if>
 			<if test="status != null and status != ''">#{status},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
             sysdate()
          </trim>
     </insert>
@@ -94,6 +102,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="image != null  and image != ''  ">image = #{image},</if>
             <if test="visible != null  and visible != ''  ">visible = #{visible},</if>
             <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
             update_time = sysdate()
         </trim>
         where id = #{id}

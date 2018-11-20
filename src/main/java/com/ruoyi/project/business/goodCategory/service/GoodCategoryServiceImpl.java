@@ -64,7 +64,7 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 	{
 	    goodCategory.setStatus(Constants.STATUS_ACTIVE);
 
-        goodCategory.setCreateBy(ShiroUtils.getUserId().toString());
+        goodCategory.setCreateBy(ShiroUtils.getLoginName());
 	    return goodCategoryMapper.insertGoodCategory(goodCategory);
 	}
 	
@@ -77,7 +77,7 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 	@Override
 	public int updateGoodCategory(GoodCategory goodCategory)
 	{
-	    goodCategory.setUpdateBy(ShiroUtils.getUserId().toString());
+	    goodCategory.setUpdateBy(ShiroUtils.getLoginName());
 	    return goodCategoryMapper.updateGoodCategory(goodCategory);
 	}
 
@@ -99,7 +99,7 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 
             goodCategory.setStatus(Constants.STATUS_REMOVED);
 
-            goodCategory.setUpdateBy(ShiroUtils.getUserId().toString());
+            goodCategory.setUpdateBy(ShiroUtils.getLoginName());
 
             goodCategoryMapper.updateGoodCategory(goodCategory);
 
@@ -140,7 +140,7 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 		GoodCategory goodCategory = new GoodCategory ();
 		goodCategory.setId(id);
 		goodCategory.setStatus(Constants.STATUS_REMOVED);
-		goodCategory.setUpdateBy(ShiroUtils.getUserId().toString());
+		goodCategory.setUpdateBy(ShiroUtils.getLoginName());
 		return goodCategoryMapper.updateGoodCategory(goodCategory);
 	}
 

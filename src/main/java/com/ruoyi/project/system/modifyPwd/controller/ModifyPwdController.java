@@ -69,7 +69,7 @@ public class ModifyPwdController extends BaseController
 	 * 修改保存密码修改申请
 	 */
 	@RequiresPermissions("system:modifyPwd:review")
-	@Log(title = "密码修改申请", businessType = BusinessType.UPDATE)
+	@Log(title = "密码修改审批", businessType = BusinessType.UPDATE)
 	@PostMapping("/review")
 	@ResponseBody
 	public AjaxResult reviewSave(ModifyPwd modifyPwd)

@@ -57,7 +57,7 @@ public class GoodsServiceImpl implements IGoodsService
 	{
 	    goods.setStatus(Constants.STATUS_ACTIVE);
 
-        goods.setCreateBy(ShiroUtils.getUserId().toString());
+        goods.setCreateBy(ShiroUtils.getLoginName());
 	    return goodsMapper.insertGoods(goods);
 	}
 	
@@ -70,7 +70,7 @@ public class GoodsServiceImpl implements IGoodsService
 	@Override
 	public int updateGoods(Goods goods)
 	{
-	    goods.setUpdateBy(ShiroUtils.getUserId().toString());
+	    goods.setUpdateBy(ShiroUtils.getLoginName());
 	    return goodsMapper.updateGoods(goods);
 	}
 
@@ -92,7 +92,7 @@ public class GoodsServiceImpl implements IGoodsService
 
             goods.setStatus(Constants.STATUS_REMOVED);
 
-            goods.setUpdateBy(ShiroUtils.getUserId().toString());
+            goods.setUpdateBy(ShiroUtils.getLoginName());
 
             goodsMapper.updateGoods(goods);
 

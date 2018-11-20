@@ -5,6 +5,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import java.util.List;
 
+import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.business.person.mapper.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
 {
 	@Autowired
 	private ModifyPwdMapper modifyPwdMapper;
+
+    @Autowired
+    private PasswordService passwordService;
 
 
 	@Autowired
@@ -61,22 +65,22 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
      * @return 结果
      */
 	@Override
-	public int updateModifyPwd(ModifyPwd modifyPwd)
-	{
-		if( 0 != modifyPwd.getUserid() &&  !"0".equals(modifyPwd.getAgreest())  &&   !StringUtils.isEmpty(modifyPwd.getNewPwd())   ){
-			modifyPwd.setUpdateBy(ShiroUtils.getUserId().toString());
-			modifyPwdMapper.updateModifyPwd(modifyPwd);
+    public int updateModifyPwd(ModifyPwd modifyPwd) {
+        if (!"0".equals(modifyPwd.getAgreest()) && !StringUtils.isEmpty(modifyPwd.getNewPwd())) {
+            modifyPwd.setUpdateBy(ShiroUtils.getLoginName());
+            modifyPwdMapper.updateModifyPwd(modifyPwd);
+            if ("1".equals(modifyPwd.getAgreest())) {
+                //修改密码
+                Person person = new Person();
+                person.setId(modifyPwd.getUserid());
+                person.randomSalt();
+                person.setPassword(passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt()));
+                person.setUpdateBy(ShiroUtils.getLoginName());
+                personMapper.updatePerson(person);
+            }
 
-			//修改密码
-
-			Person buser = new Person();
-			buser.setId(modifyPwd.getUserid());
-			buser.setPassword(modifyPwd.getNewPwd());
-			personMapper.updatePerson(buser) ;
-
-		}
-		return 1 ;
-
-	}
+        }
+        return 1;
+    }
 
 }
