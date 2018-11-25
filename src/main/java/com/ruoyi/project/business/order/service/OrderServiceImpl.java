@@ -70,7 +70,7 @@ public class OrderServiceImpl implements IOrderService
 	{
 	    order.setStatus(Constants.STATUS_ACTIVE);
 
-        order.setCreateBy(ShiroUtils.getUserId().toString());
+        order.setCreateBy(ShiroUtils.getLoginName());
 	    return orderMapper.insertOrder(order);
 	}
 
@@ -83,13 +83,14 @@ public class OrderServiceImpl implements IOrderService
 	@Override
 	public int updateOrder(Order order)
 	{
-	    order.setUpdateBy(ShiroUtils.getUserId().toString());
+	    order.setUpdateBy(ShiroUtils.getLoginName());
 	    return orderMapper.updateOrder(order);
 	}
 
 	@Override
 	public int updateOrderFlag(String id, String flag) {
         Order order = orderMapper.selectOrderById(Long.parseLong(id));
+		order.setUpdateBy(ShiroUtils.getLoginName());
 		switch (flag) {
 			case "finish":
 				order.setFlag(Constants.ORDER_FINISH);

@@ -72,7 +72,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	{
 	    orderDetail.setStatus(Constants.STATUS_ACTIVE);
 
-        orderDetail.setCreateBy(ShiroUtils.getUserId().toString());
+        orderDetail.setCreateBy(ShiroUtils.getLoginName());
 	    return orderDetailMapper.insertOrderDetail(orderDetail);
 	}
 
@@ -85,7 +85,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	@Override
 	public int updateOrderDetail(OrderDetail orderDetail)
 	{
-	    orderDetail.setUpdateBy(ShiroUtils.getUserId().toString());
+	    orderDetail.setUpdateBy(ShiroUtils.getLoginName());
 	    return orderDetailMapper.updateOrderDetail(orderDetail);
 	}
 
@@ -107,7 +107,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 
             orderDetail.setStatus(Constants.STATUS_REMOVED);
 
-            orderDetail.setUpdateBy(ShiroUtils.getUserId().toString());
+            orderDetail.setUpdateBy(ShiroUtils.getLoginName());
 
             orderDetailMapper.updateOrderDetail(orderDetail);
 
@@ -121,6 +121,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setId(Long.valueOf(id));
 		orderDetail.setFlag(flag);
+		orderDetail.setUpdateBy(ShiroUtils.getLoginName());
 		return orderDetailMapper.updateFlagByOrderId(orderDetail);
 	}
 
@@ -129,7 +130,9 @@ public class OrderDetailServiceImpl implements IOrderDetailService
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(Long.parseLong(id));
         Order order = orderService.selectOrderById(orderDetail.getOrderId());
         orderDetail.setFlag(Constants.ORDER_CANCEL);
+        orderDetail.setUpdateBy(ShiroUtils.getLoginName());
         order.setMoney(order.getMoney().subtract(orderDetail.getMoney()));
+        order.setUpdateBy(ShiroUtils.getLoginName());
         this.updateOrderDetail(orderDetail);
         orderService.updateOrder(order);
         Person person = personService.selectPersonById(order.getPersonId());

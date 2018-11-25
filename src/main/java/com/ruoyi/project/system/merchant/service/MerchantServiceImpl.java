@@ -64,7 +64,7 @@ public class MerchantServiceImpl implements IMerchantService
 
 		merchant.setStatus(Constants.STATUS_ACTIVE);
 
-		merchant.setCreateBy(ShiroUtils.getUserId().toString());
+		merchant.setCreateBy(ShiroUtils.getLoginName());
 
 		return merchantMapper.insertMerchant(merchant);
 	}
@@ -81,7 +81,7 @@ public class MerchantServiceImpl implements IMerchantService
 
 		//初始化數據信息
 
-		merchant.setUpdateBy(ShiroUtils.getUserId().toString());
+		merchant.setUpdateBy(ShiroUtils.getLoginName());
 
 		return merchantMapper.updateMerchant(merchant);
 	}
@@ -103,7 +103,7 @@ public class MerchantServiceImpl implements IMerchantService
 
 			merchant.setStatus(Constants.STATUS_REMOVED);
 
-			merchant.setUpdateBy(ShiroUtils.getUserId().toString());
+			merchant.setUpdateBy(ShiroUtils.getLoginName());
 
 			merchantMapper.updateMerchant(merchant);
 
