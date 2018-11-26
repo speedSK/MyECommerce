@@ -11,7 +11,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">照片：</label>
                 <div class="col-sm-8">
-                    <img  class="m-t-xs img-responsive" th:src="(*{photo} == '') ? '/img/person.jpg' : '/profile/' + *{photo}">
+                    <img  class="m-t-xs img-responsive" th:src="(*{photo} == '') ? @{/img/person.jpg} : @{/profile/photos/} + *{photo}">
                 </div>
             </div>
             <div class="form-group">

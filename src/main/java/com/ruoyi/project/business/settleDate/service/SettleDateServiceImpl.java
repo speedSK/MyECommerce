@@ -58,7 +58,7 @@ public class SettleDateServiceImpl implements ISettleDateService
 	{
 	    settleDate.setStatus(Constants.STATUS_ACTIVE);
 
-        settleDate.setCreateBy(ShiroUtils.getUserId().toString());
+        settleDate.setCreateBy(ShiroUtils.getLoginName());
 	    return settleDateMapper.insertSettleDate(settleDate);
 	}
 
@@ -71,7 +71,7 @@ public class SettleDateServiceImpl implements ISettleDateService
 	@Override
 	public int updateSettleDate(SettleDate settleDate)
 	{
-	    settleDate.setUpdateBy(ShiroUtils.getUserId().toString());
+	    settleDate.setUpdateBy(ShiroUtils.getLoginName());
 	    return settleDateMapper.updateSettleDate(settleDate);
 	}
 
@@ -93,7 +93,7 @@ public class SettleDateServiceImpl implements ISettleDateService
 
             settleDate.setStatus(Constants.STATUS_REMOVED);
 
-            settleDate.setUpdateBy(ShiroUtils.getUserId().toString());
+            settleDate.setUpdateBy(ShiroUtils.getLoginName());
 
             settleDateMapper.updateSettleDate(settleDate);
 

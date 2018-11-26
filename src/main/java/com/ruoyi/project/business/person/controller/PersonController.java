@@ -170,7 +170,7 @@ public class PersonController extends BaseController
 		{
 			if (!file.isEmpty())
 			{
-                String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
+                String avatar = FileUploadUtils.upload(RuoYiConfig.getPhotosPath(), file);
 				person.setPhoto(avatar);
 				if (personService.updatePerson(person) > 0)
 				{

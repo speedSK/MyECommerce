@@ -58,7 +58,7 @@ public class TradeRecordServiceImpl implements ITradeRecordService
 	{
 	    tradeRecord.setStatus(Constants.STATUS_ACTIVE);
 
-        tradeRecord.setCreateBy(ShiroUtils.getUserId().toString());
+        tradeRecord.setCreateBy(ShiroUtils.getLoginName());
 	    return tradeRecordMapper.insertTradeRecord(tradeRecord);
 	}
 
@@ -71,7 +71,7 @@ public class TradeRecordServiceImpl implements ITradeRecordService
 	@Override
 	public int updateTradeRecord(TradeRecord tradeRecord)
 	{
-	    tradeRecord.setUpdateBy(ShiroUtils.getUserId().toString());
+	    tradeRecord.setUpdateBy(ShiroUtils.getLoginName());
 	    return tradeRecordMapper.updateTradeRecord(tradeRecord);
 	}
 
@@ -93,7 +93,7 @@ public class TradeRecordServiceImpl implements ITradeRecordService
 
             tradeRecord.setStatus(Constants.STATUS_REMOVED);
 
-            tradeRecord.setUpdateBy(ShiroUtils.getUserId().toString());
+            tradeRecord.setUpdateBy(ShiroUtils.getLoginName());
 
             tradeRecordMapper.updateTradeRecord(tradeRecord);
 

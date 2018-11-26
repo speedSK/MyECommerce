@@ -158,7 +158,7 @@ public class PersonServiceImpl implements IPersonService
             ClosedPerson closedPerson = new ClosedPerson();
             BeanUtils.copyProperties(person, closedPerson);
             closedPerson.setFlag(Constants.PERSON_CLOSE);
-			closedPerson.setUpdateBy(ShiroUtils.getUserId().toString());
+			closedPerson.setUpdateBy(ShiroUtils.getLoginName());
             closedPerson.setUpdateTime(new Date());
             closedPersonMapper.insertClosedPerson(closedPerson);
             personMapper.deletePersonById(Long.parseLong(id));

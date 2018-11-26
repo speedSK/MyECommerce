@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -82,11 +83,12 @@ public class CloseAccountController extends BaseController {
     {
         try {
             Person person = personService.selectPersonById(id);
-            String template = ResourceUtils.getURL("classpath:").getPath() + "static/file/销户模板.pdf";
+//            String template = ResourceUtils.getURL("classpath:").getPath() + "static/file/销户模板.pdf";
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("static/file/销户模板.pdf");
             String filePath = RuoYiConfig.getDownloadPath() + person.getNumber() + ".pdf";
 
             String[] str = {person.getNumber(), person.getName(), person.getDeptName(), person.getDeposit().add(person.getBalance()).toString(), ShiroUtils.getLoginName(), ShiroUtils.getIp(), DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, person.getUpdateTime())};
-            ExportPDF.createPDF(template,filePath,str);
+            ExportPDF.createPDF(is,filePath,str);
 
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");

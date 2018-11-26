@@ -3,6 +3,7 @@ package com.ruoyi.project.business.goods.controller;
 import java.util.List;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,7 +158,7 @@ public class GoodsController extends BaseController
 		{
 			if (!file.isEmpty())
 			{
-				String avatar = FileUploadUtils.upload(file);
+				String avatar = FileUploadUtils.upload(RuoYiConfig.getGoodsPath(), file);
 				goods.setImage(avatar) ;
 				if (goodsService.updateGoods(goods) > 0)
 				{

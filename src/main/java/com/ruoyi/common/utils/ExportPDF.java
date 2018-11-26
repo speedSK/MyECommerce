@@ -1,35 +1,37 @@
 package com.ruoyi.common.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfCopy;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 public class ExportPDF {
 
+    private static final Logger log = LoggerFactory.getLogger(ExportPDF.class);
+
     /**
      * 利用模板生成pdf
-     * @param templatePath 模板路径
+     * @param is 模板流
      * @param newPDFPath 生成的新文件路径
      * @param str 参数数组
      */
-    public static void createPDF(String templatePath,String newPDFPath,String[] str) {
+    public static void createPDF(InputStream is, String newPDFPath, String[] str) {
         PdfReader reader;
         FileOutputStream out;
         ByteArrayOutputStream bos;
         PdfStamper stamper;
         try {
+            File desc = new File(File.separator + newPDFPath);
+            if (!desc.getParentFile().exists())
+            {
+                desc.getParentFile().mkdirs();
+            }
             BaseFont baseFont = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
             out = new FileOutputStream(newPDFPath);// 输出流
-            reader = new PdfReader(templatePath);// 读取pdf模板
+            reader = new PdfReader(is);// 读取pdf模板
             bos = new ByteArrayOutputStream();
             stamper = new PdfStamper(reader, bos);
             AcroFields form = stamper.getAcroFields();
@@ -54,9 +56,9 @@ public class ExportPDF {
             doc.close();
 
         } catch (IOException e) {
-            System.out.println(1);
+            log.error("创建pdfIO异常", e);
         } catch (DocumentException e) {
-            System.out.println(2);
+            log.error("创建pdfDocument异常", e);
         }
 
     }

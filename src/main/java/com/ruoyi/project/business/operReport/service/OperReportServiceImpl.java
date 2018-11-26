@@ -58,7 +58,7 @@ public class OperReportServiceImpl implements IOperReportService
 	{
 	    operReport.setStatus(Constants.STATUS_ACTIVE);
 
-        operReport.setCreateBy(ShiroUtils.getUserId().toString());
+        operReport.setCreateBy(ShiroUtils.getLoginName());
 	    return operReportMapper.insertOperReport(operReport);
 	}
 
@@ -71,7 +71,7 @@ public class OperReportServiceImpl implements IOperReportService
 	@Override
 	public int updateOperReport(OperReport operReport)
 	{
-	    operReport.setUpdateBy(ShiroUtils.getUserId().toString());
+	    operReport.setUpdateBy(ShiroUtils.getLoginName());
 	    return operReportMapper.updateOperReport(operReport);
 	}
 
@@ -93,7 +93,7 @@ public class OperReportServiceImpl implements IOperReportService
 
             operReport.setStatus(Constants.STATUS_REMOVED);
 
-            operReport.setUpdateBy(ShiroUtils.getUserId().toString());
+            operReport.setUpdateBy(ShiroUtils.getLoginName());
 
             operReportMapper.updateOperReport(operReport);
 

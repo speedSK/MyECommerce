@@ -1,5 +1,6 @@
 package com.ruoyi.project.common;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
@@ -47,21 +48,19 @@ public class CommonController
 
 
     @RequestMapping("common/downloadTemplate")
-    public void fileDownloadTemplate(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request)
+    public void fileDownloadTemplate(String fileName, HttpServletResponse response, HttpServletRequest request)
     {
         String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
         try
         {
-            String filePath = ResourceUtils.getURL("classpath:").getPath() + "static/file/" + fileName;
+            InputStream file = this.getClass().getClassLoader().getResourceAsStream("static/file/" + fileName);
+//            String filePath = ResourceUtils.getURL("classpath:").getPath() + "static/file/" + fileName;
 
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition", "attachment;fileName=" + setFileDownloadHeader(request, realFileName));
-            FileUtils.writeBytes(filePath, response.getOutputStream());
-            if (delete)
-            {
-                FileUtils.deleteFile(filePath);
-            }
+            FileUtils.writeBytes(file, response.getOutputStream());
+
         }
         catch (Exception e)
         {

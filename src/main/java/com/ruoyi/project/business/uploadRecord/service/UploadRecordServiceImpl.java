@@ -71,7 +71,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 	{
 	    uploadRecord.setStatus(Constants.STATUS_ACTIVE);
 
-        uploadRecord.setCreateBy(ShiroUtils.getUserId().toString());
+        uploadRecord.setCreateBy(ShiroUtils.getLoginName());
 	    return uploadRecordMapper.insertUploadRecord(uploadRecord);
 	}
 	
@@ -84,7 +84,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 	@Override
 	public int updateUploadRecord(UploadRecord uploadRecord)
 	{
-	    uploadRecord.setUpdateBy(ShiroUtils.getUserId().toString());
+	    uploadRecord.setUpdateBy(ShiroUtils.getLoginName());
 	    return uploadRecordMapper.updateUploadRecord(uploadRecord);
 	}
 
@@ -106,7 +106,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 
             uploadRecord.setStatus(Constants.STATUS_REMOVED);
 
-            uploadRecord.setUpdateBy(ShiroUtils.getUserId().toString());
+            uploadRecord.setUpdateBy(ShiroUtils.getLoginName());
 
             uploadRecordMapper.updateUploadRecord(uploadRecord);
 

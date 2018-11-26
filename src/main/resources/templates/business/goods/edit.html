@@ -67,7 +67,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">图片：</label>
                 <div class="col-sm-8">
-                    <img alt="image" class="m-t-xs img-responsive" th:src="(*{image} == '') ? '/img/goods.jpg' : '/profile/' + *{image}">
+                    <img alt="image" class="m-t-xs img-responsive" th:src="(*{image} == '') ? @{/img/goods.jpg} : @{/profile/goods/} + *{image}">
                 </div>
             </div>
 		</form>

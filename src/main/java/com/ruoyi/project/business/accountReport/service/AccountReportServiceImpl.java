@@ -58,7 +58,7 @@ public class AccountReportServiceImpl implements IAccountReportService
 	{
 	    accountReport.setStatus(Constants.STATUS_ACTIVE);
 
-        accountReport.setCreateBy(ShiroUtils.getUserId().toString());
+        accountReport.setCreateBy(ShiroUtils.getLoginName());
 	    return accountReportMapper.insertAccountReport(accountReport);
 	}
 
@@ -71,7 +71,7 @@ public class AccountReportServiceImpl implements IAccountReportService
 	@Override
 	public int updateAccountReport(AccountReport accountReport)
 	{
-	    accountReport.setUpdateBy(ShiroUtils.getUserId().toString());
+	    accountReport.setUpdateBy(ShiroUtils.getLoginName());
 	    return accountReportMapper.updateAccountReport(accountReport);
 	}
 
@@ -93,7 +93,7 @@ public class AccountReportServiceImpl implements IAccountReportService
 
             accountReport.setStatus(Constants.STATUS_REMOVED);
 
-            accountReport.setUpdateBy(ShiroUtils.getUserId().toString());
+            accountReport.setUpdateBy(ShiroUtils.getLoginName());
 
             accountReportMapper.updateAccountReport(accountReport);
 

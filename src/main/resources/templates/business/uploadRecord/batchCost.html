@@ -32,11 +32,11 @@
 
 			<input class="form-input" type="file" name="importfile" id="importfile"></input>
 			<div class="btn-group hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-outline btn-success btn-rounded" onclick="downMoudle()" shiro:hasPermission="business:uploadRecord:add">
-					<i class="fa fa-plus"></i> 模板下载
+				<a class="btn btn-success" onclick="downMoudle()" shiro:hasPermission="business:uploadRecord:add">
+					<i class="fa fa-download"></i> 模板下载
 				</a>
-				<a class="btn btn-outline btn-danger btn-rounded" onclick="importExcel()" shiro:hasPermission="business:uploadRecord:remove">
-					<i class="fa fa-trash-o"></i> 开始导入
+				<a class="btn btn-danger" onclick="importExcel()" shiro:hasPermission="business:uploadRecord:remove">
+					<i class="fa fa-plus"></i> 开始导入
 				</a>
 			</div>
 			
@@ -142,7 +142,7 @@
         }
        	
        	function downMoudle(){
-       		window.location.href = ctx + "common/downloadTemplate?fileName=批量消费.xlsx&delete=" + false;
+       		window.location.href = ctx + "common/downloadTemplate?fileName=批量消费.xlsx";
        	}
        	
        	function downFail(fileName){

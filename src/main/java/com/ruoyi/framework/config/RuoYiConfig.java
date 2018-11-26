@@ -78,6 +78,16 @@ public class RuoYiConfig
         return profile + "avatar/";
     }
 
+    public static String getPhotosPath()
+    {
+        return profile + "photos/";
+    }
+
+    public static String getGoodsPath()
+    {
+        return profile + "goods/";
+    }
+
     public static String getDownloadPath()
     {
         return profile + "download/";
