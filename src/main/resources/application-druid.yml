@@ -6,7 +6,8 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://118.24.38.237:3306/test1?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
+#                url: jdbc:mysql://118.24.38.237:3306/test1?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
+                url: jdbc:mysql://118.24.38.237:3306/demonstrate?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
                 username: root
                 password: root@2018
             # 从库数据源
@@ -14,7 +15,7 @@ spring:
                 # 从数据源开关/默认关闭
                 enabled: false
                 url: 
-                username: 
+                username:
                 password: 
             # 初始连接数
             initial-size: 10
