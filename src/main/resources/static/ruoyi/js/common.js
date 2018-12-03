@@ -68,6 +68,23 @@ $(function() {
 		    });
 		});
 	}
+    // laydate time-input 时间控件绑定
+    if ($(".time-input").length > 0) {
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            var times = $(".time-input");
+            for (var i = 0; i < times.length; i++) {
+                var time = times[i];
+                laydate.render({
+                    elem: time,
+                    theme: 'molv',
+                    trigger: 'click',
+                    done: function (value, date) {
+                    }
+                });
+            }
+        });
+    }
 	// tree 关键字搜索绑定
 	if ($("#keyword").length > 0) {
 		$("#keyword").bind("focus", function focusKey(e) {
@@ -91,13 +108,21 @@ $(function() {
 	var expandFlag = false;
 	$("#expandAllBtn").click(function() {
 	    if (expandFlag) {
-	        $('#bootstrap-table').bootstrapTreeTable('expandAll');
+            $('#bootstrap-tree-table').bootstrapTreeTable('expandAll');
 	    } else {
-	        $('#bootstrap-table').bootstrapTreeTable('collapseAll');
+            $('#bootstrap-tree-table').bootstrapTreeTable('collapseAll');
 	    }
 	    expandFlag = expandFlag ? false: true;
 	})
 });
+/** 刷新选项卡 */
+var refreshItem = function () {
+    var topWindow = $(window.parent.document);
+    var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-id');
+    var target = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow);
+    var url = target.attr('src');
+    target.attr('src', url).ready();
+}
 
 /** 创建选项卡 */
 function createMenuItem(dataUrl, menuName) {
@@ -138,13 +163,31 @@ function createMenuItem(dataUrl, menuName) {
     return false;
 }
 
-/** 设置全局ajax超时处理 */
+//日志打印封装处理
+var log = {
+    log: function (msg) {
+        console.log(msg);
+    },
+    info: function (msg) {
+        console.info(msg);
+    },
+    warn: function (msg) {
+        console.warn(msg);
+    },
+    error: function (msg) {
+        console.error(msg);
+    }
+};
+
+/** 设置全局ajax处理 */
 $.ajaxSetup({
-    complete: function(XMLHttpRequest, textStatus) {
-        if (textStatus == "parsererror") {
-        	$.modal.confirm("登陆超时！请重新登陆！", function() {
-        		window.location.href = ctx + "login";
-        	})
+    complete: function (XMLHttpRequest, textStatus) {
+        if (textStatus == 'timeout') {
+            $.modal.alertWarning("服务器超时，请稍后再试！");
+            $.modal.closeLoading();
+        } else if (textStatus == "parsererror") {
+            $.modal.alertWarning("服务器错误，请联系管理员！");
+            $.modal.closeLoading();
         }
     }
-}); 
+});

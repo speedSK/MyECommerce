@@ -13,13 +13,13 @@ import com.ruoyi.project.tool.gen.domain.TableInfo;
 
 /**
  * 代码生成器 工具类
- * 
+ *
  * @author ruoyi
  */
 public class GenUtils
 {
     /** 项目空间路径 */
-    private static final String PROJECT_PATH = "main/java/com/ruoyi/project";
+    private static final String PROJECT_PATH = getProjectPath();
 
     /** mybatis空间路径 */
     private static final String MYBATIS_PATH = "main/resources/mybatis";
@@ -52,7 +52,7 @@ public class GenUtils
 
     /**
      * 获取模板信息
-     * 
+     *
      * @return 模板列表
      */
     public static VelocityContext getVelocityContext(TableInfo table)
@@ -65,7 +65,7 @@ public class GenUtils
         velocityContext.put("primaryKey", table.getPrimaryKey());
         velocityContext.put("className", table.getClassName());
         velocityContext.put("classname", table.getClassname());
-        velocityContext.put("moduleName", GenUtils.getModuleName(packageName));
+        velocityContext.put("moduleName", getModuleName(packageName));
         velocityContext.put("columns", table.getColumns());
         velocityContext.put("package", packageName + "." + table.getClassname());
         velocityContext.put("author", GenConfig.getAuthor());
@@ -75,7 +75,7 @@ public class GenUtils
 
     /**
      * 获取模板信息
-     * 
+     *
      * @return 模板列表
      */
     public static List<String> getTemplates()
@@ -119,7 +119,7 @@ public class GenUtils
         String classname = table.getClassname();
         // 大写类名
         String className = table.getClassName();
-        String javaPath = PROJECT_PATH + "/" + moduleName + "/";
+        String javaPath = PROJECT_PATH;
         String mybatisPath = MYBATIS_PATH + "/" + moduleName + "/" + className;
         String htmlPath = TEMPLATES_PATH + "/" + moduleName + "/" + classname;
 
@@ -179,7 +179,7 @@ public class GenUtils
 
     /**
      * 获取模块名
-     * 
+     *
      * @param packageName 包名
      * @return 模块名
      */
@@ -191,16 +191,19 @@ public class GenUtils
         return moduleName;
     }
 
+    public static String getProjectPath()
+    {
+        String packageName = GenConfig.getPackageName();
+        StringBuffer projectPath = new StringBuffer();
+        projectPath.append("main/java/");
+        projectPath.append(packageName.replace(".", "/"));
+        projectPath.append("/");
+        return projectPath.toString();
+    }
+
     public static String replaceKeyword(String keyword)
     {
         String keyName = keyword.replaceAll("(?:表|信息)", "");
         return keyName;
-    }
-
-    public static void main(String[] args)
-    {
-        System.out.println(StringUtils.convertToCamelCase("user_name"));
-        System.out.println(replaceKeyword("岗位信息表"));
-        System.out.println(getModuleName("com.ruoyi.project.system"));
     }
 }

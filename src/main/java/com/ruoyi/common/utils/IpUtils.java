@@ -1,5 +1,7 @@
 package com.ruoyi.common.utils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -149,10 +151,25 @@ public class IpUtils
                     return null;
             }
         }
-        catch (NumberFormatException e)
-        {
+        catch (NumberFormatException e) {
             return null;
         }
         return bytes;
+    }
+
+    public static String getHostIp() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+        }
+        return "127.0.0.1";
+    }
+
+    public static String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+        }
+        return "未知";
     }
 }

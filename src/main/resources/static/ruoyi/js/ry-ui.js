@@ -10,13 +10,14 @@
     	table: {
             _option: {},
             _params: {},
-            // 初始化表格
+            // 初始化表格参数
             init: function(options) {
                 $.table._option = options;
                 $.table._params = $.common.isEmpty(options.queryParams) ? $.table.queryParams : options.queryParams;
                 _sortOrder = $.common.isEmpty(options.sortOrder) ? "asc" : options.sortOrder;
                 _sortName = $.common.isEmpty(options.sortName) ? "" : options.sortName;
                 _striped = $.common.isEmpty(options.striped) ? false : options.striped;
+                _escape = $.common.isEmpty(options.escape) ? false : options.escape;
                 $('#bootstrap-table').bootstrapTable({
                     url: options.url,                                   // 请求后台的URL（*）
                     contentType: "application/x-www-form-urlencoded",   // 编码类型
@@ -31,9 +32,10 @@
                     pageNumber: 1,                                      // 初始化加载第一页，默认第一页
                     pageSize: 10,                                       // 每页的记录行数（*） 
                     pageList: [10, 25, 50],                             // 可供选择的每页的行数（*）
+                    escape: _escape,                                    // 转义HTML字符串
                     iconSize: 'outline',                                // 图标大小：undefined默认的按钮尺寸 xs超小按钮sm小按钮lg大按钮
         	        toolbar: '#toolbar',                                // 指定工作栏
-                    sidePagination: "server",                           // 启用服务端分页 
+                    sidePagination: "server",                           // 启用服务端分页
                     search: $.common.visible(options.search),           // 是否显示搜索框功能
                     showSearch: $.common.visible(options.showSearch),   // 是否显示检索信息
                     showRefresh: $.common.visible(options.showRefresh), // 是否显示刷新按钮
@@ -65,7 +67,7 @@
                 	return { rows: [], total: 0 };
                 }
             },
-            // 搜索
+            // 搜索-默认第一个form
             search: function(formId) {
             	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
     		    var params = $("#bootstrap-table").bootstrapTable('getOptions');
@@ -83,7 +85,7 @@
     		    }
     		    $("#bootstrap-table").bootstrapTable('refresh', params);
     		},
-    		// 下载
+    		// 下载-默认第一个form
     		exportExcel: function(formId) {
     			var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
     			$.modal.loading("正在导出数据，请稍后...");
@@ -96,20 +98,19 @@
     				$.modal.closeLoading();
     			});
     		},
-            // 刷新
+            // 刷新表格
             refresh: function() {
                 $("#bootstrap-table").bootstrapTable('refresh', {
-                    url: $.table._option.url,
                     silent: true
                 });
             },
-            // 查询选中列值
+            // 查询表格指定列值
             selectColumns: function(column) {
             	return $.map($('#bootstrap-table').bootstrapTable('getSelections'), function (row) {
         	        return row[column];
         	    });
             },
-            // 查询选中首列值
+            // 查询表格首列值
             selectFirstColumns: function() {
             	return $.map($('#bootstrap-table').bootstrapTable('getSelections'), function (row) {
         	        return row[$.table._option.columns[1].field];
@@ -117,14 +118,22 @@
             },
             // 回显数据字典
             selectDictLabel: function(datas, value) {
-            	var actions = [];
-                $.each(datas, function(index, dict) {
+                var actions = [];
+                $.each(datas, function (index, dict) {
                     if (dict.dictValue == value) {
-                    	actions.push("<span class='badge badge-" + dict.listClass + "'>" + dict.dictLabel + "</span>");
+                        actions.push("<span class='badge badge-" + dict.listClass + "'>" + dict.dictLabel + "</span>");
                         return false;
                     }
                 });
                 return actions.join('');
+            },
+            // 显示表格指定列
+            showColumn: function (column) {
+                $("#bootstrap-table").bootstrapTable('showColumn', column);
+            },
+            // 隐藏表格指定列
+            hideColumn: function (column) {
+                $("#bootstrap-table").bootstrapTable('hideColumn', column);
             }
         },
         // 表格树封装处理
@@ -135,7 +144,7 @@
                 $.table._option = options;
                 _striped = $.common.isEmpty(options.striped) ? false : options.striped;
                 _expandColumn = $.common.isEmpty(options.expandColumn) ? '1' : options.expandColumn;
-                var treeTable = $('#bootstrap-table').bootstrapTreeTable({
+                var treeTable = $('#bootstrap-tree-table').bootstrapTreeTable({
                 	code: options.code,                                 // 用于设置父子关系
         		    parentCode: options.parentCode,                     // 用于设置父子关系
         	    	type: 'get',                                        // 请求方式（*）
@@ -416,23 +425,33 @@
             	$.operate.submit(url, "post", "json", data);
             },
             // 详细信息
-            detail: function(id) {
-            	var _url = $.common.isEmpty(id) ? $.table._option.detailUrl : $.table._option.detailUrl.replace("{id}", id);
+            detail: function(id, width, height) {
+                var _url = $.common.isEmpty(id) ? $.table._option.detailUrl : $.table._option.detailUrl.replace("{id}", id);
+                var _width = $.common.isEmpty(width) ? "800" : width;
+                var _height = $.common.isEmpty(height) ? ($(window).height() - 50) : height;
+                //如果是移动端，就使用自适应大小弹窗
+                if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+                    _width = 'auto';
+                    _height = 'auto';
+                }
             	layer.open({
             		type: 2,
-            		area: ['800px', ($(window).height() - 50) + 'px'],
+                    area: [_width + 'px', _height + 'px'],
             		fix: false,
             		//不固定
             		maxmin: true,
             		shade: 0.3,
             		title: $.table._option.modalName + "详细",
             		content: _url,
-            		btn: ['<i class="fa fa-close"></i> 关闭'],
+                    btn: '关闭',
             	    // 弹层外区域关闭
-            		shadeClose: true,
-            	    cancel: function(index) {
-            	        return true;
-            	    }
+                    shadeClose: true,
+                    success: function (layer) {
+                        layer[0].childNodes[3].childNodes[0].attributes[0].value = 'layui-layer-btn1';
+                    },
+                    btn1: function (index) {
+                        layer.close(index);
+                    }
             	});
             },
             // 删除信息
@@ -496,7 +515,7 @@
             },
             // 工具栏表格树修改
             editTree: function() {
-            	var row = $('#bootstrap-table').bootstrapTreeTable('getSelections')[0];
+                var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
             	if ($.common.isEmpty(row)) {
         			$.modal.alertWarning("请至少选择一条记录");
         			return;
@@ -529,7 +548,7 @@
         	        dataType: "json",
         	        data: data,
         	        success: function(result) {
-        	        	$.operate.saveSuccess(result);
+                        $.operate.successCallback(result);
         	        }
         	    };
         	    $.ajax(config)
@@ -544,14 +563,33 @@
                 }
             	$.modal.closeLoading();
             },
-            // 保存结果提示msg
+            // 成功结果提示msg（父窗体全局更新）
             saveSuccess: function (result) {
-            	if (result.code == web_status.SUCCESS) {
-            		$.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
                 } else {
-                	$.modal.alertError(result.msg);
+                    $.modal.alertError(result.msg);
                 }
-            	$.modal.closeLoading();
+                $.modal.closeLoading();
+            },
+            // 成功回调执行事件（父窗体静默更新）
+            successCallback: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    if (window.parent.$("#bootstrap-table").length > 0) {
+                        $.modal.close();
+                        window.parent.$.modal.msgSuccess(result.msg);
+                        window.parent.$.table.refresh();
+                    } else if (window.parent.$("#bootstrap-tree-table").length > 0) {
+                        $.modal.close();
+                        window.parent.$.modal.msgSuccess(result.msg);
+                        window.parent.$.treeTable.refresh();
+                    } else {
+                        $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                    }
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
             }
         },
         // 校验封装处理
@@ -716,7 +754,18 @@
     		        }
     		    }
         		return true;
-        	},
+            },
+            // 不允许最后层级节点选择
+            notAllowLastLevel: function (_tree) {
+                var nodes = _tree.getSelectedNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].level == nodes.length + 1) {
+                        $.modal.msgError("不能选择最后层级节点（" + nodes[i].name + "）");
+                        return false;
+                    }
+                }
+                return true;
+            },
         	// 隐藏/显示搜索栏
         	toggleSearch: function() {
         		$('#search').slideToggle(200);
@@ -763,6 +812,14 @@
             // 指定随机数返回
             random: function (min, max) {
                 return Math.floor((Math.random() * max) + min);
+            },
+            startWith: function (value, start) {
+                var reg = new RegExp("^" + start);
+                return reg.test(value)
+            },
+            endWith: function (value, end) {
+                var reg = new RegExp(end + "$");
+                return reg.test(value)
             }
         }
     });

@@ -1,8 +1,12 @@
 package com.ruoyi.project.monitor.job.domain;
 
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.project.monitor.job.util.CronUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import java.io.Serializable;
+import java.util.Date;
+
 import com.ruoyi.common.constant.ScheduleConstants;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -45,7 +49,7 @@ public class Job extends BaseEntity implements Serializable
     private String misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
 
     /** 任务状态（0正常 1暂停） */
-    @Excel(name = "任务状态")
+    @Excel(name = "任务状态", readConverterExp = "0=正常,1=暂停")
     private String status;
 
     public Long getJobId()
@@ -108,6 +112,13 @@ public class Job extends BaseEntity implements Serializable
         this.cronExpression = cronExpression;
     }
 
+    public Date getNextValidTime() {
+        if (StringUtils.isNotEmpty(cronExpression)) {
+            return CronUtils.getNextExecution(cronExpression);
+        }
+        return null;
+    }
+
     public String getMisfirePolicy()
     {
         return misfirePolicy;
@@ -130,20 +141,21 @@ public class Job extends BaseEntity implements Serializable
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("jobId", getJobId())
-            .append("jobName", getJobName())
-            .append("jobGroup", getJobGroup())
-            .append("methodName", getMethodName())
-            .append("methodParams", getMethodParams())
-            .append("cronExpression", getCronExpression())
-            .append("misfirePolicy", getMisfirePolicy())
-            .append("status", getStatus())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("jobId", getJobId())
+                .append("jobName", getJobName())
+                .append("jobGroup", getJobGroup())
+                .append("methodName", getMethodName())
+                .append("methodParams", getMethodParams())
+                .append("cronExpression", getCronExpression())
+                .append("nextValidTime", getNextValidTime())
+                .append("misfirePolicy", getMisfirePolicy())
+                .append("status", getStatus())
+                .append("createBy", getCreateBy())
+                .append("createTime", getCreateTime())
+                .append("updateBy", getUpdateBy())
+                .append("updateTime", getUpdateTime())
+                .append("remark", getRemark())
+                .toString();
     }
 }

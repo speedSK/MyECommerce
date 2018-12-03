@@ -15,9 +15,10 @@
     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <link th:href="@{/ruoyi/css/ry-ui.css?v=3.0.0}" rel="stylesheet"/>
+    <link th:href="@{/ruoyi/css/ry-ui.css?v=3.1.0}" rel="stylesheet"/>
     <style type="text/css">
         .nav > li:hover .dropdown-menu {display: block;}
+        #content-main.max { height: calc(100% - 110px); overflow: hidden; width: 100%; height: 100%; left: 0px; position: absolute; top: 0px; z-index: 9998; margin: 0; }
     </style>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden" th:classappend="${@config.getKey('sys.index.skinName')}">
@@ -80,11 +81,6 @@
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-default " href="#" title="收起菜单">
                     	<i class="fa fa-bars"></i>
                     </a>
-                    <!--<form role="search" class="navbar-form-custom" method="post" action="">-->
-                        <!--<div class="form-group">-->
-                            <!--<input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">-->
-                        <!--</div>-->
-                    <!--</form>-->
                 </div>
                 <ul class="nav navbar-top-links navbar-right welcome-message">
 	                <li>
@@ -115,10 +111,14 @@
                      <li><a class="tabCloseCurrent" href="javascript:void();">关闭当前</a></li>
                      <li><a class="tabCloseOther" href="javascript:void();">关闭其他</a></li>
 					 <li><a class="tabCloseAll" href="javascript:void();">全部关闭</a></li>
+                     <li><a class="tabMaxCurrent" href="javascript:void();">全屏显示</a></li>
                 </ul>
             </div>
             <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
         </div>
+
+        <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
+
         <div class="row mainContent" id="content-main">
             <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" data-id="/system/main"
                     th:src="@{/system/main}" frameborder="0" seamless></iframe>
@@ -136,7 +136,7 @@
 <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
 <script src="http://tajs.qq.com/stats?sId=62048022"></script>
-<script th:src="@{/ruoyi/js/ry-ui.js?v=3.0.0}"></script>
+<script th:src="@{/ruoyi/js/ry-ui.js?v=3.1.0}"></script>
 <script th:src="@{/ruoyi/index.js}"></script>
 <script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 </body>
