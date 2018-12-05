@@ -125,27 +125,17 @@ public class PersonServiceImpl implements IPersonService
 	@Override
 	public int saveBankCharge(Person person) {
 		Person info = personMapper.selectPersonById(person.getId());
-		String txamt = "";
 		TransVo vo = new TransVo();
-		vo.setYktTxcode("3021");
-		vo.setBankTxcode("YKT01");
-		vo.setYktNo(person.getNumber());
-		vo.setBankCardNo(person.getBankCardNumber());
-		String queryBalance = TransOfABC.transCommMsg("3021", vo);
-		String[] balanceArray = queryBalance.split("\\|");
-		if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
-			txamt = balanceArray[2];
-		}
 		vo.setYktTxcode("3011");
 		vo.setBankTxcode("YKT03");
-		vo.setTxamt(txamt);
+		vo.setTxamt(person.getBankBalance());
 		vo.setYktJourno("");
 		vo.setUsername(person.getName());
 		vo.setIdserial2(person.getIdcard());
 		String transResult = TransOfABC.transCommMsg("3011", vo);
 		String[] transArray = transResult.split("\\|");
 		if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
-			info.setBalance(info.getBalance().add(new BigDecimal(StringUtils.fen2Yuan(txamt))));
+			info.setBalance(info.getBalance().add(new BigDecimal(StringUtils.fen2Yuan(person.getBankBalance()))));
 		}
 		return personMapper.updatePerson(info);
 	}
@@ -166,4 +156,19 @@ public class PersonServiceImpl implements IPersonService
 		return 1;
 	}
 
+    @Override
+    public String queryBankBalance(Person person) {
+        String txamt = "0";
+        TransVo vo = new TransVo();
+        vo.setYktTxcode("3021");
+        vo.setBankTxcode("YKT01");
+        vo.setYktNo(person.getNumber());
+        vo.setBankCardNo(person.getBankCardNumber());
+        String queryBalance = TransOfABC.transCommMsg("3021", vo);
+        String[] balanceArray = queryBalance.split("\\|");
+        if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
+            txamt = balanceArray[2];
+        }
+        return txamt;
+    }
 }

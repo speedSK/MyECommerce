@@ -77,6 +77,17 @@ public class Person extends BaseEntity
 	private String status;
 	/**充值金额*/
 	private BigDecimal recharge;
+	/**银行卡余额*/
+	private String bankBalance;
+
+	public String getBankBalance() {
+		return bankBalance;
+	}
+
+	public void setBankBalance(String bankBalance) {
+		this.bankBalance = bankBalance;
+	}
+
 	/**
 	 * 设置：主键
 	 */

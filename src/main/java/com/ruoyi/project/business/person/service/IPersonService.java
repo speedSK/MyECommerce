@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.person.service;
 
 import com.ruoyi.project.business.person.domain.Person;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -56,4 +58,6 @@ public interface IPersonService
 	public int saveBankCharge(Person person);
 
 	public int deletePersonAccount(String ids);
+
+	public String queryBankBalance(Person person);
 }

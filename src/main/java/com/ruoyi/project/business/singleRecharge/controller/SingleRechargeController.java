@@ -91,6 +91,8 @@ public class SingleRechargeController extends BaseController
 		List<Person> userlist = personService.selectPersonList(user);
 		if (userlist!=null&&userlist.size()>0) {
 			user = userlist.get(0);
+			String balance = personService.queryBankBalance(user);
+			user.setBankBalance(balance);
 			mmap.put("user", user);
 		}
 	    return prefix + "/bankRecharge";

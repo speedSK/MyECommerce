@@ -1,5 +1,8 @@
 package com.ruoyi;
 
+import com.google.common.base.Utf8;
+import sun.nio.cs.ext.GBK;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,12 +16,15 @@ public class test {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		//客户端
 		//1、创建客户端Socket，指定服务器地址和端口
-		Socket socket =new Socket("localhost",8801);
+		Socket socket =new Socket("172.16.21.20",8801);
 		//2、获取输出流，向服务器端发送信息
 		OutputStream os = socket.getOutputStream();//字节输出流
-		PrintWriter pw =new PrintWriter(os);//将输出流包装成打印流
-		pw.write("00003061YKT07YYYYMMDD12345678YYYYMMDDYYYYMMDDYYYYMMDD011                  11                  11111111111111111122222222222YYYYMMDDYYYYMMDDYYYYMMDDYYYYMMDD12345678YYYYMMDDYYYYMMDDYYYYMMDD");
-		pw.flush();
+//		PrintWriter pw =new PrintWriter(os);//将输出流包装成打印流
+        String str = "00003061YKT07YYYYMMDD12345678YYYYMMDDYYYYMMDDYYYYMMDD01                   11                  12345678901234567822222222222YYYYMMDDYYYYMMDDYYYYMMDDYYYYMMDD12345678YYYYMMDDYYYYMMDDYYYYMMDD";
+        os.write(str.getBytes("GBK"));
+        os.flush();
+//		pw.write(str);
+//		pw.flush();
 		socket.shutdownOutput();
 		//3、获取输入流，并读取服务器端的响应信息
 		InputStream is = socket.getInputStream();
@@ -31,7 +37,7 @@ public class test {
 		//4、关闭资源
 		br.close();
 		is.close();
-		pw.close();
+//		pw.close();
 		os.close();
 		socket.close();
 	}
