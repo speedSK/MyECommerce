@@ -1,6 +1,7 @@
 package com.ruoyi.project.business.person.service;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 
@@ -128,10 +129,13 @@ public class PersonServiceImpl implements IPersonService
 		TransVo vo = new TransVo();
 		vo.setYktTxcode("3011");
 		vo.setBankTxcode("YKT03");
-		vo.setTxamt(person.getBankBalance());
-		vo.setYktJourno("");
-		vo.setUsername(person.getName());
-		vo.setIdserial2(person.getIdcard());
+        vo.setYktNo(info.getNumber());
+//        vo.setTxamt(StringUtils.yuan2Fen(person.getBankBalance()));
+        vo.setTxamt("1000");
+        vo.setYktJourno(String.valueOf(IdGen.get().nextId()));
+		vo.setUsername(info.getName());
+		vo.setIdserial2(info.getIdcard());
+		vo.setBankCardNo(info.getBankCardNumber());
 		String transResult = TransOfABC.transCommMsg("3011", vo);
 		String[] transArray = transResult.split("\\|");
 		if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
