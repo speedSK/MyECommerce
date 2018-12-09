@@ -42,16 +42,16 @@ public class BankServiceImpl implements IBankService{
         ReceiveFromBankInfo receiveFromBankInfo = new ReceiveFromBankInfo();
         try {
             Person person = new Person();
-            person.setNumber(idserial);
-            person.setIdcard(idserial2);
+            person.setNumber(idserial.trim());
+            person.setIdcard(idserial2.trim());
             person.setStatus(Constants.STATUS_ACTIVE);
             if (newbankcdno != null) {
-                person.setBankCardNumber(bankcdno);
+                person.setBankCardNumber(bankcdno.trim());
                 bankcdno = newbankcdno;
             }
             List<Person> list = personMapper.selectPersonList(person);
             if (list!=null&&list.size()==1){
-                list.get(0).setBankCardNumber(bankcdno);
+                list.get(0).setBankCardNumber(bankcdno.trim());
                 int result = personMapper.updatePerson(list.get(0));
                 if (result > 0) {
                     receiveFromBankInfo.setResponsecode("000000");

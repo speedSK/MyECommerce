@@ -103,7 +103,7 @@ public class TransOfABC {
 		String yktTxcode = getRealString(3, "3011", 4);
 		String bankTxcode = getRealString(3, "YKT03", 5);
 		String txdate = getRealString(3, getCurrentDate(), 8);
-		String yktJourno = getRealString(3, vo.getYktJourno(), 32);
+		String yktJourno = getRealString(3, "180929"+vo.getYktJourno(), 32);
 		String yktNo = getRealString(3, vo.getYktNo(), 20);
 		String username = StringUtils.formatStr(vo.getUsername(), 20, encodeType);
 		String idserial2 = getRealString(3, vo.getIdserial2(), 18);
@@ -365,8 +365,8 @@ public class TransOfABC {
         try {
             String idserial = new String(buf, 54, 20);
             String idserial2 = new String(buf, 94, 18);
-            String bankcdno = new String(buf, 123, 32);
-            String newbankcdno = new String(buf, 155, 32);
+            String newbankcdno = new String(buf, 123, 32);
+            String bankcdno = new String(buf, 155, 32);
             logger.info("idserial:" + idserial + ",idserial2:" + idserial2 + ",bankcdno:" + bankcdno, "newbankcdno" + newbankcdno);
             ReceiveFromBankInfo receiveFromBankInfo = bankService.queryUserSign(idserial, idserial2, bankcdno, newbankcdno);
             byte[] pckBody = createPckSign(receiveFromBankInfo);

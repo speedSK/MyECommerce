@@ -16,11 +16,11 @@ public class test {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		//客户端
 		//1、创建客户端Socket，指定服务器地址和端口
-		Socket socket =new Socket("172.16.21.20",8801);
+		Socket socket =new Socket("127.0.0.1",8094);
 		//2、获取输出流，向服务器端发送信息
 		OutputStream os = socket.getOutputStream();//字节输出流
 //		PrintWriter pw =new PrintWriter(os);//将输出流包装成打印流
-        String str = "00003061YKT07YYYYMMDD12345678YYYYMMDDYYYYMMDDYYYYMMDD01                   11                  12345678901234567822222222222YYYYMMDDYYYYMMDDYYYYMMDDYYYYMMDD12345678YYYYMMDDYYYYMMDDYYYYMMDD";
+        String str = "01833061YKT092018092930000522000000353906            0300002              乔舜                420381197708144072139991234566213360746646581368             6228483668753162073             ";
         os.write(str.getBytes("GBK"));
         os.flush();
 //		pw.write(str);

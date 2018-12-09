@@ -130,8 +130,7 @@ public class PersonServiceImpl implements IPersonService
 		vo.setYktTxcode("3011");
 		vo.setBankTxcode("YKT03");
         vo.setYktNo(info.getNumber());
-//        vo.setTxamt(StringUtils.yuan2Fen(person.getBankBalance()));
-        vo.setTxamt("1000");
+        vo.setTxamt(StringUtils.yuan2Fen(person.getBankBalance()));
         vo.setYktJourno(String.valueOf(IdGen.get().nextId()));
 		vo.setUsername(info.getName());
 		vo.setIdserial2(info.getIdcard());
@@ -139,7 +138,7 @@ public class PersonServiceImpl implements IPersonService
 		String transResult = TransOfABC.transCommMsg("3011", vo);
 		String[] transArray = transResult.split("\\|");
 		if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
-			info.setBalance(info.getBalance().add(new BigDecimal(StringUtils.fen2Yuan(person.getBankBalance()))));
+			info.setBalance(info.getBalance().add(new BigDecimal(person.getBankBalance())));
 		}
 		return personMapper.updatePerson(info);
 	}
@@ -171,7 +170,7 @@ public class PersonServiceImpl implements IPersonService
         String queryBalance = TransOfABC.transCommMsg("3021", vo);
         String[] balanceArray = queryBalance.split("\\|");
         if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
-            txamt = balanceArray[2];
+            txamt = StringUtils.fen2Yuan(balanceArray[2].trim());
         }
         return txamt;
     }
