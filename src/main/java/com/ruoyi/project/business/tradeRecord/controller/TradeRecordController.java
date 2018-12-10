@@ -17,96 +17,111 @@ import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 
 /**
  * 流水 信息操作处理
- * 
- * @author LiuNing
- * @date 2018-08-18
+ *
+ * @author ruoyi
+ * @date 2018-12-10
  */
 @Controller
 @RequestMapping("/business/tradeRecord")
 public class TradeRecordController extends BaseController
 {
     private String prefix = "business/tradeRecord";
-	
-	@Autowired
-	private ITradeRecordService tradeRecordService;
-	
-	@RequiresPermissions("business:tradeRecord:view")
-	@GetMapping()
-	public String tradeRecord()
-	{
-	    return prefix + "/tradeRecord";
-	}
-	
-	/**
-	 * 查询流水列表
-	 */
-	@RequiresPermissions("business:tradeRecord:list")
-	@PostMapping("/list")
-	@ResponseBody
-	public TableDataInfo list(TradeRecord tradeRecord)
-	{
-		startPage();
-        List<TradeRecord> list = tradeRecordService.selectTradeRecordList(tradeRecord);
-		return getDataTable(list);
-	}
-	
-	/**
-	 * 新增流水
-	 */
-	@GetMapping("/add")
-	public String add()
-	{
-	    return prefix + "/add";
-	}
-	
-	/**
-	 * 新增保存流水
-	 */
-	@RequiresPermissions("business:tradeRecord:add")
-	@Log(title = "流水", businessType = BusinessType.INSERT)
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(TradeRecord tradeRecord)
-	{		
-		return toAjax(tradeRecordService.insertTradeRecord(tradeRecord));
-	}
 
-	/**
-	 * 修改流水
-	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap)
-	{
+    @Autowired
+    private ITradeRecordService tradeRecordService;
+
+    @RequiresPermissions("business:tradeRecord:view")
+    @GetMapping()
+    public String tradeRecord()
+    {
+        return prefix + "/tradeRecord";
+    }
+
+    /**
+     * 查询流水列表
+     */
+    @RequiresPermissions("business:tradeRecord:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(TradeRecord tradeRecord)
+    {
+        startPage();
+        List<TradeRecord> list = tradeRecordService.selectTradeRecordList(tradeRecord);
+        return getDataTable(list);
+    }
+
+
+    /**
+     * 导出流水列表
+     */
+    @RequiresPermissions("business:tradeRecord:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(TradeRecord tradeRecord)
+    {
+        List<TradeRecord> list = tradeRecordService.selectTradeRecordList(tradeRecord);
+        ExcelUtil<TradeRecord> util = new ExcelUtil<TradeRecord>(TradeRecord.class);
+        return util.exportExcel(list, "tradeRecord");
+    }
+
+    /**
+     * 新增流水
+     */
+    @GetMapping("/add")
+    public String add()
+    {
+        return prefix + "/add";
+    }
+
+    /**
+     * 新增保存流水
+     */
+    @RequiresPermissions("business:tradeRecord:add")
+    @Log(title = "流水", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(TradeRecord tradeRecord)
+    {
+        return toAjax(tradeRecordService.insertTradeRecord(tradeRecord));
+    }
+
+    /**
+     * 修改流水
+     */
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
+    {
 		TradeRecord tradeRecord = tradeRecordService.selectTradeRecordById(id);
-		mmap.put("tradeRecord", tradeRecord);
-	    return prefix + "/edit";
-	}
-	
-	/**
-	 * 修改保存流水
-	 */
-	@RequiresPermissions("business:tradeRecord:edit")
-	@Log(title = "流水", businessType = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(TradeRecord tradeRecord)
-	{		
-		return toAjax(tradeRecordService.updateTradeRecord(tradeRecord));
-	}
-	
-	/**
-	 * 删除流水
-	 */
-	@RequiresPermissions("business:tradeRecord:remove")
-	@Log(title = "流水", businessType = BusinessType.DELETE)
-	@PostMapping( "/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids)
-	{		
-		return toAjax(tradeRecordService.deleteTradeRecordByIds(ids));
-	}
-	
+        mmap.put("tradeRecord", tradeRecord);
+        return prefix + "/edit";
+    }
+
+    /**
+     * 修改保存流水
+     */
+    @RequiresPermissions("business:tradeRecord:edit")
+    @Log(title = "流水", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(TradeRecord tradeRecord)
+    {
+        return toAjax(tradeRecordService.updateTradeRecord(tradeRecord));
+    }
+
+    /**
+     * 删除流水
+     */
+    @RequiresPermissions("business:tradeRecord:remove")
+    @Log(title = "流水", businessType = BusinessType.DELETE)
+    @PostMapping( "/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        return toAjax(tradeRecordService.deleteTradeRecordByIds(ids));
+    }
+
 }

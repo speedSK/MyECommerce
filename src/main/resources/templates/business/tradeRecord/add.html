@@ -3,122 +3,134 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-tradeRecord-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">流水号：</label>
-				<div class="col-sm-8">
-					<input id="journo" name="journo" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">用户编号：</label>
-				<div class="col-sm-8">
-					<input id="userNumber" name="userNumber" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">商户编号：</label>
-				<div class="col-sm-8">
-					<input id="merchantCode" name="merchantCode" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">订单号：</label>
-				<div class="col-sm-8">
-					<input id="orderCode" name="orderCode" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">交易代码：</label>
-				<div class="col-sm-8">
-					<input id="txcode" name="txcode" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">交易金额：</label>
-				<div class="col-sm-8">
-					<input id="txamt" name="txamt" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">来源账户：</label>
-				<div class="col-sm-8">
-					<input id="fromAcc" name="fromAcc" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">目标账户：</label>
-				<div class="col-sm-8">
-					<input id="toAcc" name="toAcc" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">系统入账日期：</label>
-				<div class="col-sm-8">
-					<input id="regDate" name="regDate" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">设备编号：</label>
-				<div class="col-sm-8">
-					<input id="stationCode" name="stationCode" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注：</label>
-				<div class="col-sm-8">
-					<input id="remark" name="remark" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">状态：</label>
-				<div class="col-sm-8">
-					<input id="status" name="status" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建人：</label>
-				<div class="col-sm-8">
-					<input id="createBy" name="createBy" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建时间：</label>
-				<div class="col-sm-8">
-					<input id="createTime" name="createTime" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">修改人：</label>
-				<div class="col-sm-8">
-					<input id="updateBy" name="updateBy" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">修改时间：</label>
-				<div class="col-sm-8">
-					<input id="updateTime" name="updateTime" class="form-control" type="text">
-				</div>
-			</div>
-		</form>
-	</div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-		var prefix = ctx + "business/tradeRecord"
-		$("#form-tradeRecord-add").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			}
-		});
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-tradeRecord-add">
+														                    <div class="form-group">
+                        <label class="col-sm-3 control-label">流水号：</label>
+                        <div class="col-sm-8">
+                            <input id="journo" name="journo" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户编号：</label>
+                        <div class="col-sm-8">
+                            <input id="userNumber" name="userNumber" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">商户编号：</label>
+                        <div class="col-sm-8">
+                            <input id="merchantCode" name="merchantCode" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单号：</label>
+                        <div class="col-sm-8">
+                            <input id="orderCode" name="orderCode" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">交易代码：</label>
+                        <div class="col-sm-8">
+                            <input id="txcode" name="txcode" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">消费前余额：</label>
+                        <div class="col-sm-8">
+                            <input id="before" name="before" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">消费后余额：</label>
+                        <div class="col-sm-8">
+                            <input id="after" name="after" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">交易金额：</label>
+                        <div class="col-sm-8">
+                            <input id="txamt" name="txamt" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">来源账户：</label>
+                        <div class="col-sm-8">
+                            <input id="fromAcc" name="fromAcc" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">目标账户：</label>
+                        <div class="col-sm-8">
+                            <input id="toAcc" name="toAcc" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">系统入账日期：</label>
+                        <div class="col-sm-8">
+                            <input id="settleDate" name="settleDate" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">设备编号：</label>
+                        <div class="col-sm-8">
+                            <input id="stationCode" name="stationCode" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-8">
+                            <input id="remark" name="remark" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">状态：</label>
+                        <div class="col-sm-8">
+                            <input id="status" name="status" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">创建人：</label>
+                        <div class="col-sm-8">
+                            <input id="createBy" name="createBy" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">创建时间：</label>
+                        <div class="col-sm-8">
+                            <input id="createTime" name="createTime" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">修改人：</label>
+                        <div class="col-sm-8">
+                            <input id="updateBy" name="updateBy" class="form-control" type="text">
+                        </div>
+                    </div>
+																                    <div class="form-group">
+                        <label class="col-sm-3 control-label">修改时间：</label>
+                        <div class="col-sm-8">
+                            <input id="updateTime" name="updateTime" class="form-control" type="text">
+                        </div>
+                    </div>
+									    </form>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    var prefix = ctx + "business/tradeRecord"
+    $("#form-tradeRecord-add").validate({
+        rules:{
+            xxxx:{
+                required:true,
+            },
+        }
+    });
 
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-tradeRecord-add').serialize());
-	        }
-	    }
-	</script>
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/add", $('#form-tradeRecord-add').serialize());
+        }
+    }
+</script>
 </body>
 </html>

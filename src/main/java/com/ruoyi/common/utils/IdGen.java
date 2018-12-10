@@ -79,6 +79,10 @@ public class IdGen {
     protected long timeGen() {
         return System.currentTimeMillis();
     }
+
+    public static String getJourno() {
+        return String.valueOf(get().nextId());
+    }
 }
 
 

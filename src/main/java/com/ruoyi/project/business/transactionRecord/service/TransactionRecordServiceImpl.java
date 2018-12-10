@@ -11,8 +11,8 @@ import com.ruoyi.common.support.Convert;
 /**
  * 银行转账 服务层实现
  * 
- * @author LiuNing
- * @date 2018-08-07
+ * @author ruoyi
+ * @date 2018-12-10
  */
 @Service
 public class TransactionRecordServiceImpl implements ITransactionRecordService 

@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * 银行转账 服务层
  * 
- * @author LiuNing
- * @date 2018-08-07
+ * @author ruoyi
+ * @date 2018-12-10
  */
 public interface ITransactionRecordService 
 {

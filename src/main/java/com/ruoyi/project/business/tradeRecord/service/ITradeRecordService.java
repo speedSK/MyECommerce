@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * 流水 服务层
  * 
- * @author LiuNing
- * @date 2018-08-18
+ * @author ruoyi
+ * @date 2018-12-10
  */
 public interface ITradeRecordService 
 {

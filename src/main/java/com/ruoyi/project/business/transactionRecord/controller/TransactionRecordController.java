@@ -1,8 +1,6 @@
 package com.ruoyi.project.business.transactionRecord.controller;
 
 import java.util.List;
-
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,110 +17,111 @@ import com.ruoyi.project.business.transactionRecord.service.ITransactionRecordSe
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 
 /**
  * 银行转账 信息操作处理
- * 
- * @author LiuNing
- * @date 2018-08-07
+ *
+ * @author ruoyi
+ * @date 2018-12-10
  */
 @Controller
 @RequestMapping("/business/transactionRecord")
 public class TransactionRecordController extends BaseController
 {
     private String prefix = "business/transactionRecord";
-	
-	@Autowired
-	private ITransactionRecordService transactionRecordService;
-	
-	@RequiresPermissions("business:transactionRecord:view")
-	@GetMapping()
-	public String transactionRecord()
-	{
-	    return prefix + "/transactionRecord";
-	}
-	
-	/**
-	 * 查询银行转账列表
-	 */
-	@RequiresPermissions("business:transactionRecord:list")
-	@PostMapping("/list")
-	@ResponseBody
-	public TableDataInfo list(TransactionRecord transactionRecord)
-	{
-		startPage();
-        List<TransactionRecord> list = transactionRecordService.selectTransactionRecordList(transactionRecord);
-		return getDataTable(list);
-	}
 
-	/**
-	 * 查询银行转账列表
-	 */
-	@RequiresPermissions("business:transactionRecord:export")
-    @Log(title = "银行转账", businessType = BusinessType.EXPORT)
-	@PostMapping("/export")
-	@ResponseBody
-	public AjaxResult export(TransactionRecord transactionRecord)
-	{
-		List<TransactionRecord> list = transactionRecordService.selectTransactionRecordList(transactionRecord);
+    @Autowired
+    private ITransactionRecordService transactionRecordService;
+
+    @RequiresPermissions("business:transactionRecord:view")
+    @GetMapping()
+    public String transactionRecord()
+    {
+        return prefix + "/transactionRecord";
+    }
+
+    /**
+     * 查询银行转账列表
+     */
+    @RequiresPermissions("business:transactionRecord:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(TransactionRecord transactionRecord)
+    {
+        startPage();
+        List<TransactionRecord> list = transactionRecordService.selectTransactionRecordList(transactionRecord);
+        return getDataTable(list);
+    }
+
+
+    /**
+     * 导出银行转账列表
+     */
+    @RequiresPermissions("business:transactionRecord:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(TransactionRecord transactionRecord)
+    {
+        List<TransactionRecord> list = transactionRecordService.selectTransactionRecordList(transactionRecord);
         ExcelUtil<TransactionRecord> util = new ExcelUtil<TransactionRecord>(TransactionRecord.class);
         return util.exportExcel(list, "transactionRecord");
-	}
-	
-	/**
-	 * 新增银行转账
-	 */
-	@GetMapping("/add")
-	public String add()
-	{
-	    return prefix + "/add";
-	}
-	
-	/**
-	 * 新增保存银行转账
-	 */
-	@RequiresPermissions("business:transactionRecord:add")
-	@Log(title = "银行转账", businessType = BusinessType.INSERT)
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(TransactionRecord transactionRecord)
-	{		
-		return toAjax(transactionRecordService.insertTransactionRecord(transactionRecord));
-	}
+    }
 
-	/**
-	 * 修改银行转账
-	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap)
-	{
+    /**
+     * 新增银行转账
+     */
+    @GetMapping("/add")
+    public String add()
+    {
+        return prefix + "/add";
+    }
+
+    /**
+     * 新增保存银行转账
+     */
+    @RequiresPermissions("business:transactionRecord:add")
+    @Log(title = "银行转账", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(TransactionRecord transactionRecord)
+    {
+        return toAjax(transactionRecordService.insertTransactionRecord(transactionRecord));
+    }
+
+    /**
+     * 修改银行转账
+     */
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
+    {
 		TransactionRecord transactionRecord = transactionRecordService.selectTransactionRecordById(id);
-		mmap.put("transactionRecord", transactionRecord);
-	    return prefix + "/edit";
-	}
-	
-	/**
-	 * 修改保存银行转账
-	 */
-	@RequiresPermissions("business:transactionRecord:edit")
-	@Log(title = "银行转账", businessType = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(TransactionRecord transactionRecord)
-	{		
-		return toAjax(transactionRecordService.updateTransactionRecord(transactionRecord));
-	}
-	
-	/**
-	 * 删除银行转账
-	 */
-	@RequiresPermissions("business:transactionRecord:remove")
-	@Log(title = "银行转账", businessType = BusinessType.DELETE)
-	@PostMapping( "/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids)
-	{		
-		return toAjax(transactionRecordService.deleteTransactionRecordByIds(ids));
-	}
-	
+        mmap.put("transactionRecord", transactionRecord);
+        return prefix + "/edit";
+    }
+
+    /**
+     * 修改保存银行转账
+     */
+    @RequiresPermissions("business:transactionRecord:edit")
+    @Log(title = "银行转账", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(TransactionRecord transactionRecord)
+    {
+        return toAjax(transactionRecordService.updateTransactionRecord(transactionRecord));
+    }
+
+    /**
+     * 删除银行转账
+     */
+    @RequiresPermissions("business:transactionRecord:remove")
+    @Log(title = "银行转账", businessType = BusinessType.DELETE)
+    @PostMapping( "/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        return toAjax(transactionRecordService.deleteTransactionRecordByIds(ids));
+    }
+
 }

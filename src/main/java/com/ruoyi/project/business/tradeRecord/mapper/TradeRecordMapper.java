@@ -1,14 +1,17 @@
 package com.ruoyi.project.business.tradeRecord.mapper;
 
 import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 流水 数据层
  * 
- * @author LiuNing
- * @date 2018-08-18
+ * @author ruoyi
+ * @date 2018-12-10
  */
+@Repository
 public interface TradeRecordMapper 
 {
 	/**

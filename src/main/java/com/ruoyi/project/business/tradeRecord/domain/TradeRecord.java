@@ -10,8 +10,8 @@ import java.util.Date;
 /**
  * 流水表 bus_trade_record
  * 
- * @author LiuNing
- * @date 2018-08-18
+ * @author ruoyi
+ * @date 2018-12-10
  */
 public class TradeRecord extends BaseEntity
 {
@@ -29,6 +29,10 @@ public class TradeRecord extends BaseEntity
 	private String orderCode;
 	/** 交易代码 */
 	private String txcode;
+	/** 消费前余额 */
+	private BigDecimal before;
+	/** 消费后余额 */
+	private BigDecimal after;
 	/** 交易金额 */
 	private BigDecimal txamt;
 	/** 来源账户 */
@@ -36,7 +40,7 @@ public class TradeRecord extends BaseEntity
 	/** 目标账户 */
 	private String toAcc;
 	/** 系统入账日期 */
-	private Date regDate;
+	private Date settleDate;
 	/** 设备编号 */
 	private String stationCode;
 	/** 备注 */
@@ -106,6 +110,24 @@ public class TradeRecord extends BaseEntity
 	{
 		return txcode;
 	}
+	public void setBefore(BigDecimal before) 
+	{
+		this.before = before;
+	}
+
+	public BigDecimal getBefore() 
+	{
+		return before;
+	}
+	public void setAfter(BigDecimal after) 
+	{
+		this.after = after;
+	}
+
+	public BigDecimal getAfter() 
+	{
+		return after;
+	}
 	public void setTxamt(BigDecimal txamt) 
 	{
 		this.txamt = txamt;
@@ -133,14 +155,14 @@ public class TradeRecord extends BaseEntity
 	{
 		return toAcc;
 	}
-	public void setRegDate(Date regDate) 
+	public void setsettleDate(Date settleDate) 
 	{
-		this.regDate = regDate;
+		this.settleDate = settleDate;
 	}
 
-	public Date getRegDate() 
+	public Date getsettleDate() 
 	{
-		return regDate;
+		return settleDate;
 	}
 	public void setStationCode(String stationCode) 
 	{
@@ -214,10 +236,12 @@ public class TradeRecord extends BaseEntity
             .append("merchantCode", getMerchantCode())
             .append("orderCode", getOrderCode())
             .append("txcode", getTxcode())
+            .append("before", getBefore())
+            .append("after", getAfter())
             .append("txamt", getTxamt())
             .append("fromAcc", getFromAcc())
             .append("toAcc", getToAcc())
-            .append("regDate", getRegDate())
+            .append("settleDate", getsettleDate())
             .append("stationCode", getStationCode())
             .append("remark", getRemark())
             .append("status", getStatus())
