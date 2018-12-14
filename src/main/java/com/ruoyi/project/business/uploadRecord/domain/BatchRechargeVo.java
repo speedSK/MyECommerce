@@ -34,6 +34,6 @@ public class BatchRechargeVo {
 	public void setFailure(String failure) {
 		this.failure = failure;
 	}
-	
-	
+
+
 }

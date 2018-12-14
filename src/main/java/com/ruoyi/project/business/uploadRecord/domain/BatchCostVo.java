@@ -8,6 +8,8 @@ public class BatchCostVo {
 	private String number;
 	@Excel(name="消费金额")
 	private String amount;
+	@Excel(name="收款商户")
+	private String merchant;
 	@Excel(name="失败原因")
 	private String failure;
 	
@@ -34,6 +36,12 @@ public class BatchCostVo {
 	public void setFailure(String failure) {
 		this.failure = failure;
 	}
-	
-	
+
+    public String getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(String merchant) {
+        this.merchant = merchant;
+    }
 }
