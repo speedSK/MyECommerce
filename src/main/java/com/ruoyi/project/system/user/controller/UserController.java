@@ -22,6 +22,7 @@ import com.ruoyi.project.system.post.service.IPostService;
 import com.ruoyi.project.system.role.service.IRoleService;
 import com.ruoyi.project.system.user.domain.User;
 import com.ruoyi.project.system.user.service.IUserService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 用户信息
@@ -68,7 +69,28 @@ public class UserController extends BaseController
     {
         List<User> list = userService.selectUserList(user);
         ExcelUtil<User> util = new ExcelUtil<User>(User.class);
-        return util.exportExcel(list, "user");
+        return util.exportExcel(list, "用户数据");
+    }
+
+    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
+    @RequiresPermissions("system:user:import")
+    @PostMapping("/importData")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        List<User> userList = util.importExcel(file.getInputStream());
+        String message = userService.importUser(userList, updateSupport);
+        return AjaxResult.success(message);
+    }
+
+    @RequiresPermissions("system:user:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        return util.importTemplateExcel("用户数据");
     }
 
     /**

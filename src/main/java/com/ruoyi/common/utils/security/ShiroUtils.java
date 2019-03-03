@@ -13,12 +13,12 @@ import com.ruoyi.project.system.user.domain.User;
 
 /**
  * shiro 工具类
- * 
+ *
  * @author ruoyi
  */
 public class ShiroUtils
 {
-    public static Subject getSubjct()
+    public static Subject getSubject()
     {
         return SecurityUtils.getSubject();
     }
@@ -30,13 +30,13 @@ public class ShiroUtils
 
     public static void logout()
     {
-        getSubjct().logout();
+        getSubject().logout();
     }
 
     public static User getSysUser()
     {
         User user = null;
-        Object obj = getSubjct().getPrincipal();
+        Object obj = getSubject().getPrincipal();
         if (StringUtils.isNotNull(obj))
         {
             user = new User();
@@ -45,8 +45,9 @@ public class ShiroUtils
         return user;
     }
 
-    public static void setSysUser(User user) {
-        Subject subject = getSubjct();
+    public static void setSysUser(User user)
+    {
+        Subject subject = getSubject();
         PrincipalCollection principalCollection = subject.getPrincipals();
         String realmName = principalCollection.getRealmNames().iterator().next();
         PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
@@ -73,11 +74,11 @@ public class ShiroUtils
 
     public static String getIp()
     {
-        return getSubjct().getSession().getHost();
+        return getSubject().getSession().getHost();
     }
 
     public static String getSessionId()
     {
-        return String.valueOf(getSubjct().getSession().getId());
+        return String.valueOf(getSubject().getSession().getId());
     }
 }

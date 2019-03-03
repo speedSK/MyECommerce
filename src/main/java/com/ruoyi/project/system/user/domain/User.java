@@ -1,18 +1,19 @@
 package com.ruoyi.project.system.user.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
+import com.ruoyi.framework.aspectj.lang.annotation.Excel.Type;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import com.ruoyi.project.system.dept.domain.Dept;
 import com.ruoyi.project.system.role.domain.Role;
 
 /**
  * 用户对象 sys_user
- * 
+ *
  * @author ruoyi
  */
 public class User extends BaseEntity
@@ -24,6 +25,7 @@ public class User extends BaseEntity
     private Long userId;
 
     /** 部门ID */
+    @Excel(name = "部门编号", type = Type.IMPORT)
     private Long deptId;
 
     /** 部门父ID */
@@ -66,14 +68,15 @@ public class User extends BaseEntity
     private String delFlag;
 
     /** 最后登陆IP */
-    @Excel(name = "最后登陆IP")
+    @Excel(name = "最后登陆IP", type = Type.EXPORT)
     private String loginIp;
 
     /** 最后登陆时间 */
-    @Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
 
     /** 部门对象 */
+    @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT)
     private Dept dept;
 
     /** 角色集合 */
@@ -258,6 +261,10 @@ public class User extends BaseEntity
 
     public Dept getDept()
     {
+        if (dept == null)
+        {
+            dept = new Dept();
+        }
         return dept;
     }
 
@@ -299,25 +306,26 @@ public class User extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("userId", getUserId())
-            .append("deptId", getDeptId())
-            .append("loginName", getLoginName())
-            .append("userName", getUserName())
-            .append("email", getEmail())
-            .append("phonenumber", getPhonenumber())
-            .append("sex", getSex())
-            .append("avatar", getAvatar())
-            .append("password", getPassword())
-            .append("salt", getSalt())
-            .append("status", getStatus())
-            .append("delFlag", getDelFlag())
-            .append("loginIp", getLoginIp())
-            .append("loginDate", getLoginDate())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .toString();
+                .append("userId", getUserId())
+                .append("deptId", getDeptId())
+                .append("loginName", getLoginName())
+                .append("userName", getUserName())
+                .append("email", getEmail())
+                .append("phonenumber", getPhonenumber())
+                .append("sex", getSex())
+                .append("avatar", getAvatar())
+                .append("password", getPassword())
+                .append("salt", getSalt())
+                .append("status", getStatus())
+                .append("delFlag", getDelFlag())
+                .append("loginIp", getLoginIp())
+                .append("loginDate", getLoginDate())
+                .append("createBy", getCreateBy())
+                .append("createTime", getCreateTime())
+                .append("updateBy", getUpdateBy())
+                .append("updateTime", getUpdateTime())
+                .append("remark", getRemark())
+                .append("dept", getDept())
+                .toString();
     }
 }

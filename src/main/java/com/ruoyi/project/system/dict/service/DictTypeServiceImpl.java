@@ -1,6 +1,8 @@
 package com.ruoyi.project.system.dict.service;
 
 import java.util.List;
+
+import com.ruoyi.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
@@ -79,7 +81,7 @@ public class DictTypeServiceImpl implements IDictTypeService
      * @return 结果
      */
     @Override
-    public int deleteDictTypeByIds(String ids) throws Exception
+    public int deleteDictTypeByIds(String ids) throws BusinessException
     {
         Long[] dictIds = Convert.toLongArray(ids);
         for (Long dictId : dictIds)
@@ -87,7 +89,7 @@ public class DictTypeServiceImpl implements IDictTypeService
             DictType dictType = selectDictTypeById(dictId);
             if (dictDataMapper.countDictDataByType(dictType.getDictType()) > 0)
             {
-                throw new Exception(String.format("%1$s已分配,不能删除", dictType.getDictName()));
+                throw new BusinessException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
             }
         }
 

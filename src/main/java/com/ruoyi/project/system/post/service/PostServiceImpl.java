@@ -1,6 +1,8 @@
 package com.ruoyi.project.system.post.service;
 
 import java.util.List;
+
+import com.ruoyi.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
@@ -92,7 +94,7 @@ public class PostServiceImpl implements IPostService
      * @throws Exception
      */
     @Override
-    public int deletePostByIds(String ids) throws Exception
+    public int deletePostByIds(String ids) throws BusinessException
     {
         Long[] postIds = Convert.toLongArray(ids);
         for (Long postId : postIds)
@@ -100,7 +102,7 @@ public class PostServiceImpl implements IPostService
             Post post = selectPostById(postId);
             if (countUserPostById(postId) > 0)
             {
-                throw new Exception(String.format("%1$s已分配,不能删除", post.getPostName()));
+                throw new BusinessException(String.format("%1$s已分配,不能删除", post.getPostName()));
             }
         }
         return postMapper.deletePostByIds(postIds);

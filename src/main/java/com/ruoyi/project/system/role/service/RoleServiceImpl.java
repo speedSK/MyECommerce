@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.ruoyi.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
@@ -66,7 +68,7 @@ public class RoleServiceImpl implements IRoleService
         Set<String> permsSet = new HashSet<>();
         for (Role perm : perms)
         {
-            if (StringUtils.isNotNull(perms))
+            if (StringUtils.isNotNull(perm))
             {
                 permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
             }
@@ -141,7 +143,7 @@ public class RoleServiceImpl implements IRoleService
      * @throws Exception
      */
     @Override
-    public int deleteRoleByIds(String ids) throws Exception
+    public int deleteRoleByIds(String ids) throws BusinessException
     {
         Long[] roleIds = Convert.toLongArray(ids);
         for (Long roleId : roleIds)
@@ -149,7 +151,7 @@ public class RoleServiceImpl implements IRoleService
             Role role = selectRoleById(roleId);
             if (countUserRoleByRoleId(roleId) > 0)
             {
-                throw new Exception(String.format("%1$s已分配,不能删除", role.getRoleName()));
+                throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
             }
         }
         return roleMapper.deleteRoleByIds(roleIds);

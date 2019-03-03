@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
@@ -16,7 +17,7 @@ import com.ruoyi.project.system.role.domain.Role;
 
 /**
  * 部门管理 服务实现
- * 
+ *
  * @author ruoyi
  */
 @Service
@@ -44,8 +45,9 @@ public class DeptServiceImpl implements IDeptService
      * @param dept 部门信息
      * @return 所有部门信息
      */
+    @Override
     @DataScope(tableAlias = "d")
- 	public List<Map<String, Object>> selectDeptTree(Dept dept)
+    public List<Map<String, Object>> selectDeptTree(Dept dept)
     {
         List<Map<String, Object>> trees = new ArrayList<Map<String, Object>>();
         List<Dept> deptList = deptMapper.selectDeptList(dept);
@@ -114,7 +116,7 @@ public class DeptServiceImpl implements IDeptService
 
     /**
      * 查询部门人数
-     * 
+     *
      * @param parentId 部门ID
      * @return 结果
      */
@@ -128,7 +130,7 @@ public class DeptServiceImpl implements IDeptService
 
     /**
      * 查询部门是否存在用户
-     * 
+     *
      * @param deptId 部门ID
      * @return 结果 true 存在 false 不存在
      */
@@ -141,7 +143,7 @@ public class DeptServiceImpl implements IDeptService
 
     /**
      * 删除部门管理信息
-     * 
+     *
      * @param deptId 部门ID
      * @return 结果
      */
@@ -153,7 +155,7 @@ public class DeptServiceImpl implements IDeptService
 
     /**
      * 新增保存部门信息
-     * 
+     *
      * @param dept 部门信息
      * @return 结果
      */
@@ -161,6 +163,11 @@ public class DeptServiceImpl implements IDeptService
     public int insertDept(Dept dept)
     {
         Dept info = deptMapper.selectDeptById(dept.getParentId());
+        // 如果父节点不为"正常"状态,则不允许新增子节点
+        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus()))
+        {
+            throw new BusinessException("部门停用，不允许新增");
+        }
         dept.setCreateBy(ShiroUtils.getLoginName());
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         return deptMapper.insertDept(dept);
@@ -168,7 +175,7 @@ public class DeptServiceImpl implements IDeptService
 
     /**
      * 修改保存部门信息
-     * 
+     *
      * @param dept 部门信息
      * @return 结果
      */
@@ -178,17 +185,36 @@ public class DeptServiceImpl implements IDeptService
         Dept info = deptMapper.selectDeptById(dept.getParentId());
         if (StringUtils.isNotNull(info))
         {
-            String ancestors = info.getAncestors() + "," + dept.getParentId();
+            String ancestors = info.getAncestors() + "," + info.getDeptId();
             dept.setAncestors(ancestors);
             updateDeptChildren(dept.getDeptId(), ancestors);
         }
         dept.setUpdateBy(ShiroUtils.getLoginName());
-        return deptMapper.updateDept(dept);
+        int result = deptMapper.updateDept(dept);
+        if (UserConstants.DEPT_NORMAL.equals(dept.getStatus()))
+        {
+            // 如果该部门是启用状态，则启用该部门的所有上级部门
+            updateParentDeptStatus(dept);
+        }
+        return result;
+    }
+
+    /**
+     * 修改该部门的父级部门状态
+     *
+     * @param dept 当前部门
+     */
+    private void updateParentDeptStatus(Dept dept)
+    {
+        String updateBy = dept.getUpdateBy();
+        dept = deptMapper.selectDeptById(dept.getDeptId());
+        dept.setUpdateBy(updateBy);
+        deptMapper.updateDeptStatus(dept);
     }
 
     /**
      * 修改子元素关系
-     * 
+     *
      * @param deptId 部门ID
      * @param ancestors 元素列表
      */
@@ -209,7 +235,7 @@ public class DeptServiceImpl implements IDeptService
 
     /**
      * 根据部门ID查询信息
-     * 
+     *
      * @param deptId 部门ID
      * @return 部门信息
      */
@@ -221,7 +247,7 @@ public class DeptServiceImpl implements IDeptService
 
     /**
      * 校验部门名称是否唯一
-     * 
+     *
      * @param dept 部门信息
      * @return 结果
      */

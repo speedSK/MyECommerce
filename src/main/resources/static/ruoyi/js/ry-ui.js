@@ -67,6 +67,13 @@
                 	return { rows: [], total: 0 };
                 }
             },
+            // 序列号生成
+            serialNumber: function (index) {
+                var table = $('#bootstrap-table').bootstrapTable('getOptions');
+                var pageSize = table.pageSize;
+                var pageNumber = table.pageNumber;
+                return pageSize * (pageNumber - 1) + index + 1;
+            },
             // 搜索-默认第一个form
             search: function(formId) {
             	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
@@ -85,7 +92,7 @@
     		    }
     		    $("#bootstrap-table").bootstrapTable('refresh', params);
     		},
-    		// 下载-默认第一个form
+            // 导出数据
     		exportExcel: function(formId) {
     			var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
     			$.modal.loading("正在导出数据，请稍后...");
@@ -98,6 +105,64 @@
     				$.modal.closeLoading();
     			});
     		},
+            // 下载模板
+            importTemplate: function() {
+                $.get($.table._option.importTemplateUrl, function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        window.location.href = ctx + "common/download?fileName=" + result.msg + "&delete=" + true;
+                    } else {
+                        $.modal.alertError(result.msg);
+                    }
+                });
+            },
+            // 导入数据
+            importExcel: function(formId) {
+                var currentId = $.common.isEmpty(formId) ? 'importForm' : formId;
+                $.form.reset(currentId);
+                layer.open({
+                    type: 1,
+                    area: ['400px'],
+                    fix: false,
+                    //不固定
+                    maxmin: true,
+                    shade: 0.3,
+                    title: '导入' + $.table._option.modalName + '数据',
+                    content: $('#' + currentId),
+                    btn: ['<i class="fa fa-check"></i> 导入', '<i class="fa fa-remove"></i> 取消'],
+                    // 弹层外区域关闭
+                    shadeClose: true,
+                    btn1: function(index, layero){
+                        var file = layero.find('#file').val();
+                        if (file == '' || (!$.common.endWith(file, '.xls') && !$.common.endWith(file, '.xlsx'))){
+                            $.modal.msgWarning("请选择后缀为 “xls”或“xlsx”的文件。");
+                            return false;
+                        }
+                        var index = layer.load(2, {shade: false});
+                        var url = prefix + "/importData";
+                        var formData = new FormData();
+                        formData.append("file", $('#file')[0].files[0]);
+                        formData.append("updateSupport", $("input[name='updateSupport']").is(':checked'));
+                        $.ajax({
+                            url: url,
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            type: 'POST',
+                            success: function (result) {
+                                if (result.code == web_status.SUCCESS) {
+                                    $.modal.closeAll();
+                                    $.modal.alertSuccess(result.msg);
+                                    $.table.refresh();
+                                } else {
+                                    layer.close(index);
+                                    $.modal.alertError(result.msg);
+                                }
+                            }
+                        });
+                    }
+                });
+            },
             // 刷新表格
             refresh: function() {
                 $("#bootstrap-table").bootstrapTable('refresh', {
@@ -281,6 +346,10 @@
             	var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);
             },
+            // 关闭全部窗体
+            closeAll: function () {
+                layer.closeAll();
+            },
             // 确认窗体
             confirm: function (content, callBack) {
             	layer.confirm(content, {
@@ -384,8 +453,16 @@
             		shade: 0.3,
             		title: title,
             		content: url,
-            		// 弹层外区域关闭
-            		shadeClose: true
+                    btn: ['确定', '关闭'],
+                    // 弹层外区域关闭
+                    shadeClose: true,
+                    yes: function(index, layero) {
+                        var iframeWin = layero.find('iframe')[0];
+                        iframeWin.contentWindow.submitHandler();
+                    },
+                    cancel: function(index) {
+                        return true;
+                    }
             	});
                 layer.full(index);
             },
@@ -424,6 +501,10 @@
             post: function(url, data) {
             	$.operate.submit(url, "post", "json", data);
             },
+            // get请求传输
+            get: function(url) {
+				$.operate.submit(url, "get", "json", "");
+			},
             // 详细信息
             detail: function(id, width, height) {
                 var _url = $.common.isEmpty(id) ? $.table._option.detailUrl : $.table._option.detailUrl.replace("{id}", id);
@@ -434,7 +515,7 @@
                     _width = 'auto';
                     _height = 'auto';
                 }
-            	layer.open({
+            	top.layer.open({
             		type: 2,
                     area: [_width + 'px', _height + 'px'],
             		fix: false,
@@ -443,15 +524,12 @@
             		shade: 0.3,
             		title: $.table._option.modalName + "详细",
             		content: _url,
-                    btn: '关闭',
+                    btn: ['关闭'],
             	    // 弹层外区域关闭
                     shadeClose: true,
-                    success: function (layer) {
-                        layer[0].childNodes[3].childNodes[0].attributes[0].value = 'layui-layer-btn1';
-                    },
-                    btn1: function (index) {
-                        layer.close(index);
-                    }
+            		cancel: function(index){
+            			return true;
+         	        }
             	});
             },
             // 删除信息

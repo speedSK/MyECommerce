@@ -3,6 +3,8 @@ package com.ruoyi.framework.shiro.web.session;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import com.ruoyi.common.utils.Threads;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;
@@ -17,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class SpringSessionValidationScheduler implements SessionValidationScheduler
 {
     private static final Logger log = LoggerFactory.getLogger(SpringSessionValidationScheduler.class);
-    
+
     public static final long DEFAULT_SESSION_VALIDATION_INTERVAL = DefaultSessionManager.DEFAULT_SESSION_VALIDATION_INTERVAL;
 
     /**
@@ -134,6 +136,10 @@ public class SpringSessionValidationScheduler implements SessionValidationSchedu
             log.debug("Stopping Spring Scheduler session validation job...");
         }
 
+        if (this.enabled)
+        {
+            Threads.shutdownAndAwaitTermination(executorService);
+        }
         this.enabled = false;
     }
 }

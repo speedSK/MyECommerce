@@ -55,6 +55,12 @@
 		        columns: [{
 		            checkbox: true
 		        },
+				{
+					title: "序号",
+					formatter: function (value, row, index) {
+						return $.table.serialNumber(index);
+					}
+				},
 		        {
 		            field: 'tableName',
 		            title: '表名称',
