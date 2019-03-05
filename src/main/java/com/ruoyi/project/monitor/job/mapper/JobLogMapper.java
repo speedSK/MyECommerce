@@ -19,6 +19,13 @@ public interface JobLogMapper
     public List<JobLog> selectJobLogList(JobLog jobLog);
 
     /**
+     * 查询所有调度任务日志
+     *
+     * @return 调度任务日志列表
+     */
+    public List<JobLog> selectJobLogAll();
+
+    /**
      * 通过调度任务日志ID查询调度信息
      * 
      * @param jobLogId 调度任务日志ID

@@ -40,6 +40,7 @@ public class GenUtils
             String attrName = StringUtils.convertToCamelCase(column.getColumnName());
             column.setAttrName(attrName);
             column.setAttrname(StringUtils.uncapitalize(attrName));
+            column.setExtra(column.getExtra());
 
             // 列的数据类型，转换成Java类型
             String attrType = CommonMap.javaTypeMap.get(column.getDataType());
@@ -99,13 +100,11 @@ public class GenUtils
      */
     public static String tableToJava(String tableName)
     {
-        if (Constants.AUTO_REOMVE_PRE.equals(GenConfig.getAutoRemovePre()))
+        String autoRemovePre = GenConfig.getAutoRemovePre();
+        String tablePrefix = GenConfig.getTablePrefix();
+        if (Constants.AUTO_REOMVE_PRE.equals(autoRemovePre) && StringUtils.isNotEmpty(tablePrefix))
         {
-            tableName = tableName.substring(tableName.indexOf("_") + 1);
-        }
-        if (StringUtils.isNotEmpty(GenConfig.getTablePrefix()))
-        {
-            tableName = tableName.replace(GenConfig.getTablePrefix(), "");
+            tableName = tableName.replaceFirst(tablePrefix, "");
         }
         return StringUtils.convertToCamelCase(tableName);
     }

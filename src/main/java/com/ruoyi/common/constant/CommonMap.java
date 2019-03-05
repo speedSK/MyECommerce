@@ -28,6 +28,7 @@ public class CommonMap
         javaTypeMap.put("mediumint", "Integer");
         javaTypeMap.put("int", "Integer");
         javaTypeMap.put("integer", "integer");
+        javaTypeMap.put("number", "Integer");
         javaTypeMap.put("bigint", "Long");
         javaTypeMap.put("float", "Float");
         javaTypeMap.put("double", "Double");
@@ -35,6 +36,7 @@ public class CommonMap
         javaTypeMap.put("bit", "Boolean");
         javaTypeMap.put("char", "String");
         javaTypeMap.put("varchar", "String");
+        javaTypeMap.put("varchar2", "String");
         javaTypeMap.put("tinytext", "String");
         javaTypeMap.put("text", "String");
         javaTypeMap.put("mediumtext", "String");

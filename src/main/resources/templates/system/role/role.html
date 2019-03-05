@@ -38,7 +38,7 @@
 				</form>
 			</div>
 		
-			<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+			<div class="btn-group-sm" id="toolbar" role="group">
 				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:role:add">
 	                <i class="fa fa-plus"></i> 新增
 	            </a>
@@ -75,8 +75,6 @@
 		        exportUrl: prefix + "/export",
 		        sortName: "roleSort",
 		        modalName: "角色",
-		        search: false,
-		        showExport: false,
 		        columns: [{
 		            checkbox: true
 		        },
@@ -100,12 +98,12 @@
 		            sortable: true
 		        },
 		        {
-		            field: 'status',
-		            title: '状态',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	return $.table.selectDictLabel(datas, value);
-		            }
+		        	visible: editFlag == 'hidden' ? false : true,
+		        	title: '角色状态',
+		        	align: 'center',
+		        	formatter: function (value, row, index) {
+		        		return statusTools(row);
+		        	}
 		        },
 		        {
 		            field: 'createTime',
@@ -126,12 +124,35 @@
 		    };
 		    $.table.init(options);
 		});
-		
-		/*角色管理-分配数据权限*/
+
+        /* 角色管理-分配数据权限 */
 		function rule(roleId) {
 		    var url = prefix + '/rule/' + roleId;
 		    $.modal.open("分配数据权限", url);
 		}
+
+        /* 角色状态显示 */
+        function statusTools(row) {
+            if (row.status == 1) {
+                return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.roleId + '\')"></i> ';
+            } else {
+                return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.roleId + '\')"></i> ';
+            }
+        }
+
+        /* 角色管理-停用 */
+        function disable(roleId) {
+            $.modal.confirm("确认要停用角色吗？", function() {
+                $.operate.post(prefix + "/changeStatus", { "roleId": roleId, "status": 1 });
+            })
+        }
+
+        /* 角色管理启用 */
+        function enable(roleId) {
+            $.modal.confirm("确认要启用角色吗？", function() {
+                $.operate.post(prefix + "/changeStatus", { "roleId": roleId, "status": 0 });
+            })
+        }
 	</script>
 </body>
 </html>

@@ -1,6 +1,10 @@
 package com.ruoyi.common.utils.file;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * 文件处理工具类
@@ -9,6 +13,8 @@ import java.io.*;
  */
 public class FileUtils
 {
+    public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";
+
     /**
      * 输出指定文件的byte数组
      *
@@ -66,54 +72,6 @@ public class FileUtils
     }
 
     /**
-     * 输出指定文件的byte数组
-     *
-     * @param filename 文件
-     * @return
-     */
-    public static void writeBytes(InputStream is, OutputStream os) throws IOException
-    {
-        try
-        {
-            byte[] b = new byte[1024];
-            int length;
-            while ((length = is.read(b)) > 0)
-            {
-                os.write(b, 0, length);
-            }
-        }
-        catch (IOException e)
-        {
-            throw e;
-        }
-        finally
-        {
-            if (os != null)
-            {
-                try
-                {
-                    os.close();
-                }
-                catch (IOException e1)
-                {
-                    e1.printStackTrace();
-                }
-            }
-            if (is != null)
-            {
-                try
-                {
-                    is.close();
-                }
-                catch (IOException e1)
-                {
-                    e1.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /**
      * 删除文件
      *
      * @param filePath 文件
@@ -130,5 +88,16 @@ public class FileUtils
             flag = true;
         }
         return flag;
+    }
+
+    /**
+     * 文件名称验证
+     *
+     * @param filename 文件名称
+     * @return true 正常 false 非法
+     */
+    public static boolean isValidFilename(String filename)
+    {
+        return filename.matches(FILENAME_PATTERN);
     }
 }

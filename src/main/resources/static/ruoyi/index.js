@@ -1,6 +1,12 @@
 /**
- * 菜单处理
+ * 首页方法封装处理
+ * Copyright (c) 2019 ruoyi
  */
+layer.config({
+    extend: 'moon/style.css',
+    skin: 'layer-ext-moon'
+});
+
 $(function() {
     // MetsiMenu
     $('#side-menu').metisMenu();
@@ -41,12 +47,13 @@ $(function() {
 });
 
 $(window).bind("load resize",
-function() {
-    if ($(this).width() < 769) {
-        $('body').addClass('mini-navbar');
-        $('.navbar-static-side').fadeIn();
-    }
-});
+    function() {
+        if ($(this).width() < 769) {
+            $('body').addClass('mini-navbar');
+            $('.navbar-static-side').fadeIn();
+            $(".sidebar-collapse .logo").addClass("hide");
+        }
+    });
 
 function NavToggle() {
     $('.navbar-minimalize').trigger('click');
@@ -55,16 +62,18 @@ function NavToggle() {
 function SmoothlyMenu() {
     if (!$('body').hasClass('mini-navbar')) {
         $('#side-menu').hide();
+        $(".sidebar-collapse .logo").removeClass("hide");
         setTimeout(function() {
-            $('#side-menu').fadeIn(500);
-        },
-        100);
+                $('#side-menu').fadeIn(500);
+            },
+            100);
     } else if ($('body').hasClass('fixed-sidebar')) {
         $('#side-menu').hide();
+        $(".sidebar-collapse .logo").addClass("hide");
         setTimeout(function() {
-            $('#side-menu').fadeIn(500);
-        },
-        300);
+                $('#side-menu').fadeIn(500);
+            },
+            300);
     } else {
         $('#side-menu').removeAttr('style');
     }
@@ -86,7 +95,7 @@ $(function() {
     //滚动到指定选项卡
     function scrollToTab(element) {
         var marginLeftVal = calSumWidth($(element).prevAll()),
-        marginRightVal = calSumWidth($(element).nextAll());
+            marginRightVal = calSumWidth($(element).nextAll());
         // 可视区域非tab宽度
         var tabOuterWidth = calSumWidth($(".content-tabs").children().not(".menuTabs"));
         //可视区域tab宽度
@@ -108,9 +117,9 @@ $(function() {
             scrollVal = marginLeftVal - $(element).prev().outerWidth(true);
         }
         $('.page-tabs-content').animate({
-            marginLeft: 0 - scrollVal + 'px'
-        },
-        "fast");
+                marginLeft: 0 - scrollVal + 'px'
+            },
+            "fast");
     }
 
     //查看左侧隐藏的选项卡
@@ -141,9 +150,9 @@ $(function() {
             }
         }
         $('.page-tabs-content').animate({
-            marginLeft: 0 - scrollVal + 'px'
-        },
-        "fast");
+                marginLeft: 0 - scrollVal + 'px'
+            },
+            "fast");
     }
 
     //查看右侧隐藏的选项卡
@@ -172,9 +181,9 @@ $(function() {
             scrollVal = calSumWidth($(tabElement).prevAll());
             if (scrollVal > 0) {
                 $('.page-tabs-content').animate({
-                    marginLeft: 0 - scrollVal + 'px'
-                },
-                "fast");
+                        marginLeft: 0 - scrollVal + 'px'
+                    },
+                    "fast");
             }
         }
     }
@@ -189,9 +198,9 @@ $(function() {
     function menuItem() {
         // 获取标识数据
         var dataUrl = $(this).attr('href'),
-        dataIndex = $(this).data('index'),
-        menuName = $.trim($(this).text()),
-        flag = true;
+            dataIndex = $(this).data('index'),
+            menuName = $.trim($(this).text()),
+            flag = true;
         if (dataUrl == undefined || $.trim(dataUrl).length == 0) return false;
 
         // 选项卡菜单已存在
@@ -220,13 +229,13 @@ $(function() {
             // 添加选项卡对应的iframe
             var str1 = '<iframe class="RuoYi_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
             $('.mainContent').find('iframe.RuoYi_iframe').hide().parents('.mainContent').append(str1);
-            
+
             $.modal.loading("数据加载中，请稍后...");
-            
+
             $('.mainContent iframe:visible').load(function () {
-            	$.modal.closeLoading();
+                $.modal.closeLoading();
             });
-            
+
             // 添加选项卡
             $('.menuTabs .page-tabs-content').append(str);
             scrollToTab($('.menuTab.active'));
@@ -240,7 +249,7 @@ $(function() {
     function closeTab() {
         var closeTabId = $(this).parents('.menuTab').data('id');
         var currentWidth = $(this).parents('.menuTab').width();
-
+        var panelUrl = $(this).parents('.menuTab').data('panel');
         // 当前元素处于活动状态
         if ($(this).parents('.menuTab').hasClass('active')) {
 
@@ -260,9 +269,9 @@ $(function() {
                 var marginLeftVal = parseInt($('.page-tabs-content').css('margin-left'));
                 if (marginLeftVal < 0) {
                     $('.page-tabs-content').animate({
-                        marginLeft: (marginLeftVal + currentWidth) + 'px'
-                    },
-                    "fast");
+                            marginLeft: (marginLeftVal + currentWidth) + 'px'
+                        },
+                        "fast");
                 }
 
                 //  移除当前选项卡
@@ -298,6 +307,16 @@ $(function() {
                         return false;
                     }
                 });
+
+                if($.common.isNotEmpty(panelUrl)){
+                    $('.menuTab[data-id="' + panelUrl + '"]').addClass('active').siblings('.menuTab').removeClass('active');
+                    $('.mainContent .RuoYi_iframe').each(function() {
+                        if ($(this).data('id') == panelUrl) {
+                            $(this).show().siblings('.RuoYi_iframe').hide();
+                            return false;
+                        }
+                    });
+                }
             }
         }
         // 当前元素不处于活动状态
@@ -356,17 +375,17 @@ $(function() {
 
     //刷新iframe
     function refreshTab() {
-    	var currentId = $('.page-tabs-content').find('.active').attr('data-id');
-    	var target = $('.RuoYi_iframe[data-id="' + currentId + '"]');
+        var currentId = $('.page-tabs-content').find('.active').attr('data-id');
+        var target = $('.RuoYi_iframe[data-id="' + currentId + '"]');
         var url = target.attr('src');
         target.attr('src', url).ready();
     }
-    
+
     // 全屏显示
     $('#fullScreen').on('click', function () {
-    	$('#wrapper').fullScreen();
+        $('#wrapper').fullScreen();
     });
-    
+
     // 刷新按钮
     $('.tabReload').on('click', refreshTab);
 
@@ -378,7 +397,7 @@ $(function() {
 
     // 右移按扭
     $('.tabRight').on('click', scrollTabRight);
-    
+
     // 关闭当前
     $('.tabCloseCurrent').on('click', function () {
         $('.page-tabs-content').find('.active i').trigger("click");
@@ -401,8 +420,9 @@ $(function() {
     $('.tabMaxCurrent').on('click', function () {
         $('.page-tabs-content').find('.active').trigger("dblclick");
     });
+
     // 关闭全屏
-    $('#ax_close_max').click(function () {
+    $('#ax_close_max').click(function(){
         $('#content-main').toggleClass('max');
         $('#ax_close_max').hide();
     })
@@ -413,7 +433,7 @@ $(function() {
         $('#ax_close_max').show();
     }
 
-    $(window).keydown(function (event) {
+    $(window).keydown(function(event) {
         if (event.keyCode == 27) {
             $('#content-main').removeClass('max');
             $('#ax_close_max').hide();

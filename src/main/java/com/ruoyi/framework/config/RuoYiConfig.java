@@ -83,6 +83,10 @@ public class RuoYiConfig
         return profile + "photos/";
     }
 
+    public static String getUploadPath()
+    {
+        return profile + "upload/";
+    }
     public static String getGoodsPath()
     {
         return profile + "goods/";

@@ -1,7 +1,7 @@
 package com.ruoyi.project.system.dept.controller;
 
 import java.util.List;
-import java.util.Map;
+import com.ruoyi.framework.web.domain.Ztree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,7 +104,7 @@ public class DeptController extends BaseController
      */
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:dept:remove")
-    @PostMapping("/remove/{deptId}")
+    @GetMapping("/remove/{deptId}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("deptId") Long deptId)
     {
@@ -144,10 +144,10 @@ public class DeptController extends BaseController
      */
     @GetMapping("/treeData")
     @ResponseBody
-    public List<Map<String, Object>> treeData()
+    public List<Ztree> treeData()
     {
-        List<Map<String, Object>> tree = deptService.selectDeptTree(new Dept());
-        return tree;
+        List<Ztree> ztrees = deptService.selectDeptTree(new Dept());
+        return ztrees;
     }
 
     /**
@@ -155,9 +155,9 @@ public class DeptController extends BaseController
      */
     @GetMapping("/roleDeptTreeData")
     @ResponseBody
-    public List<Map<String, Object>> deptTreeData(Role role)
+    public List<Ztree> deptTreeData(Role role)
     {
-        List<Map<String, Object>> tree = deptService.roleDeptTreeData(role);
-        return tree;
+        List<Ztree> ztrees = deptService.roleDeptTreeData(role);
+        return ztrees;
     }
 }
