@@ -1,10 +1,6 @@
 package com.ruoyi.common.utils.file;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * 文件处理工具类
@@ -62,6 +58,54 @@ public class FileUtils
                 try
                 {
                     fis.close();
+                }
+                catch (IOException e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 输出指定文件的byte数组
+     *
+     * @param is 文件流
+     * @param os 下载文件流
+     */
+    public static void writeBytes(InputStream is, OutputStream os) throws IOException
+    {
+        try
+        {
+            byte[] b = new byte[1024];
+            int length;
+            while ((length = is.read(b)) > 0)
+            {
+                os.write(b, 0, length);
+            }
+        }
+        catch (IOException e)
+        {
+            throw e;
+        }
+        finally
+        {
+            if (os != null)
+            {
+                try
+                {
+                    os.close();
+                }
+                catch (IOException e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+            if (is != null)
+            {
+                try
+                {
+                    is.close();
                 }
                 catch (IOException e1)
                 {

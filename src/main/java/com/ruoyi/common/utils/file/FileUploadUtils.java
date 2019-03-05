@@ -54,7 +54,7 @@ public class FileUploadUtils
      *
      * @param file 上传的文件
      * @return 文件名称
-     * @throws Exception
+     * @throws IOException
      */
     public static final String upload(MultipartFile file) throws IOException
     {
