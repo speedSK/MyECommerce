@@ -144,6 +144,27 @@ public class PersonController extends BaseController
 		return toAjax(personService.updatePerson(person));
 	}
 
+    @RequiresPermissions("business:person:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<Person> util = new ExcelUtil<Person>(Person.class);
+        return util.importTemplateExcel("用户数据");
+    }
+
+	@Log(title = "导入（犯人）管理", businessType = BusinessType.IMPORT)
+	@RequiresPermissions("business:person:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+	{
+		ExcelUtil<Person> util = new ExcelUtil<Person>(Person.class);
+		List<Person> userList = util.importExcel(file.getInputStream());
+		String message = personService.importUser(userList, updateSupport);
+		return AjaxResult.success(message);
+	}
+
 	/**
 	 * 导出业务（犯人）列表
 	 */

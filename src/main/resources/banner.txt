@@ -1,3 +1,3 @@
 Application Version: ${ruoyi.version}
 Spring Boot Version: ${spring-boot.version}
-////////////////////////////////////////////////////////////////////
+监狱“金管家”系统

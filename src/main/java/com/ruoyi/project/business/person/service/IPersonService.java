@@ -60,4 +60,6 @@ public interface IPersonService
 	public int deletePersonAccount(String ids);
 
 	public String queryBankBalance(Person person);
+
+    String importUser(List<Person> userList, boolean updateSupport);
 }

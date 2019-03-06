@@ -248,4 +248,9 @@ public class PersonServiceImpl implements IPersonService
         }
         return txamt;
     }
+
+    @Override
+    public String importUser(List<Person> userList, boolean updateSupport) {
+        return null;
+    }
 }
