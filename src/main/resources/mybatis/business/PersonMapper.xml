@@ -34,58 +34,76 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
+        <association property="dept"    column="dept_id" javaType="Dept" resultMap="deptResult" />
+    </resultMap>
+
+    <resultMap id="deptResult" type="Dept">
+        <id     property="deptId"   column="dept_id"     />
+        <result property="parentId" column="parent_id"   />
+        <result property="deptName" column="dept_name"   />
+        <result property="orderNum" column="order_num"   />
+        <result property="status"   column="dept_status" />
     </resultMap>
 
 	<sql id="selectPersonVo">
-        select id, number, name, sex, age, nation, idcard, bank_card_number, build, photo, mobile, area, room, bed, dept_id, identity_id, password, salt, deposit, balance, already_cost, flag, status, remark, create_by, create_time, update_by, update_time from bus_person
+        select p.id, p.number, p.name, p.sex, p.age, p.nation, p.idcard, p.bank_card_number, p.build, p.photo,
+               p.mobile, p.area, p.room, p.bed, p.dept_id, p.identity_id, p.password,
+               p.salt, p.deposit, p.balance, p.already_cost, p.flag, p.status, p.remark, p.create_by,
+               p.create_time, p.update_by, p.update_time,
+               d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status
+        from bus_person p
+                 left join sys_dept d on p.dept_id = d.dept_id
     </sql>
 	
     <select id="selectPersonList" parameterType="Person" resultMap="PersonResult">
         <include refid="selectPersonVo"/>
         <where>  
-            <if test="id != null and id != ''"> and id = #{id}</if>
-             <if test="number != null and number != ''"> and number = #{number}</if>
-             <if test="name != null and name != ''"> and name like concat('%', #{name}, '%') </if>
-             <if test="sex != null and sex != ''"> and sex = #{sex}</if>
-             <if test="age != null and age != ''"> and age = #{age}</if>
-             <if test="nation != null and nation != ''"> and nation = #{nation}</if>
-             <if test="idcard != null and idcard != ''"> and idcard = #{idcard}</if>
-             <if test="bankCardNumber != null and bankCardNumber != ''"> and bank_card_number = #{bankCardNumber}</if>
-             <if test="build != null and build != ''"> and build = #{build}</if>
-             <if test="photo != null and photo != ''"> and photo = #{photo}</if>
-             <if test="mobile != null and mobile != ''"> and mobile = #{mobile}</if>
-             <if test="area != null and area != ''"> and area = #{area}</if>
-             <if test="room != null and room != ''"> and room = #{room}</if>
-             <if test="bed != null and bed != ''"> and bed = #{bed}</if>
-             <if test="deptId != null and deptId != ''"> and dept_id = #{deptId}</if>
-             <if test="identityId != null and identityId != ''"> and identity_id = #{identityId}</if>
-             <if test="password != null and password != ''"> and password = #{password}</if>
-             <if test="salt != null and salt != ''"> and salt = #{salt}</if>
-             <if test="deposit != null and deposit != ''"> and deposit = #{deposit}</if>
-             <if test="balance != null and balance != ''"> and balance = #{balance}</if>
-             <if test="alreadyCost != null and alreadyCost != ''"> and already_cost = #{alreadyCost}</if>
-             <if test="flag != null and flag != ''"> and flag = #{flag}</if>
-             <if test="status != null and status != ''"> and status = #{status}</if>
-             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
-            <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-            <if test="createTime != null "> and create_time = #{createTime}</if>
-            <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="id != null and id != ''"> and p.id = #{id}</if>
+             <if test="number != null and number != ''"> and p.number = #{number}</if>
+             <if test="name != null and name != ''"> and p.name like concat('%', #{name}, '%') </if>
+             <if test="sex != null and sex != ''"> and p.sex = #{sex}</if>
+             <if test="age != null and age != ''"> and p.age = #{age}</if>
+             <if test="nation != null and nation != ''"> and p.nation = #{nation}</if>
+             <if test="idcard != null and idcard != ''"> and p.idcard = #{idcard}</if>
+             <if test="bankCardNumber != null and bankCardNumber != ''"> and p.bank_card_number = #{bankCardNumber}</if>
+             <if test="build != null and build != ''"> and p.build = #{build}</if>
+             <if test="photo != null and photo != ''"> and p.photo = #{photo}</if>
+             <if test="mobile != null and mobile != ''"> and p.mobile = #{mobile}</if>
+             <if test="area != null and area != ''"> and p.area = #{area}</if>
+             <if test="room != null and room != ''"> and p.room = #{room}</if>
+             <if test="bed != null and bed != ''"> and p.bed = #{bed}</if>
+             <if test="deptId != null and deptId != ''"> and p.dept_id = #{deptId}</if>
+             <if test="identityId != null and identityId != ''"> and p.identity_id = #{identityId}</if>
+             <if test="password != null and password != ''"> and p.password = #{password}</if>
+             <if test="salt != null and salt != ''"> and p.salt = #{salt}</if>
+             <if test="deposit != null and deposit != ''"> and p.deposit = #{deposit}</if>
+             <if test="balance != null and balance != ''"> and p.balance = #{balance}</if>
+             <if test="alreadyCost != null and alreadyCost != ''"> and p.already_cost = #{alreadyCost}</if>
+             <if test="flag != null and flag != ''"> and p.flag = #{flag}</if>
+             <if test="status != null and status != ''"> and p.status = #{status}</if>
+             <if test="remark != null and remark != ''"> and p.remark = #{remark}</if>
+            <if test="createBy != null  and createBy != '' "> and p.create_by = #{createBy}</if>
+            <if test="createTime != null "> and p.create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' "> and p.update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and p.update_time = #{updateTime}</if>
 
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                AND date_format( create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+                AND date_format( p.create_time,'%y%m%d') &gt;= p.date_format(#{params.beginTime},'%y%m%d')
             </if>
             <if test="params.beginTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                AND date_format( create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+                AND date_format( p.create_time,'%y%m%d') &lt;= p.date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
     </select>
     
     <select id="selectPersonById" parameterType="Long" resultMap="PersonResult">
-        select t.id, t.number,  t.name,  t.sex,  t.age,  t.nation,  t.idcard,  t.bank_card_number,  t.build,  t.photo,  t.mobile,  t.area,  t.room,  t.bed,  t.dept_id,  t.identity_id,  t.password,  t.salt,  t.deposit,  t.balance,  t.already_cost,  t.flag,  t.status ,  t.remark , t.create_time,  t.update_time ,
-        (select dept_name from sys_dept where dept_id = t.dept_id) deptName
-        from bus_person t
-        where id = #{id}
+        <include refid="selectPersonVo"/>
+            where p.id =#{id}
+    </select>
+
+    <select id="selectPersonByNumber" parameterType="String" resultMap="PersonResult">
+        <include refid="selectPersonVo"/>
+        where p.number =#{number}
     </select>
         
     <insert id="insertPerson" parameterType="Person">

@@ -124,7 +124,7 @@ $(function() {
 
     //查看左侧隐藏的选项卡
     function scrollTabLeft() {
-        var marginLeftVal = Math.abs(parseInt($('.page-tabs-content').css('margin-left')));
+        var marginLeftVal = Math.abs(parseInt($('.page-tabs-content').css('margin-left')) + 50);
         // 可视区域非tab宽度
         var tabOuterWidth = calSumWidth($(".content-tabs").children().not(".menuTabs"));
         //可视区域tab宽度
@@ -423,8 +423,8 @@ $(function() {
 
     // 关闭全屏
     $('#ax_close_max').click(function(){
-        $('#content-main').toggleClass('max');
-        $('#ax_close_max').hide();
+    	$('#content-main').toggleClass('max');
+    	$('#ax_close_max').hide();
     })
 
     // 双击选项卡全屏显示

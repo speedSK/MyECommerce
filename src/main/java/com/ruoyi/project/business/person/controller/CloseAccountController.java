@@ -87,7 +87,7 @@ public class CloseAccountController extends BaseController {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("static/file/销户模板.pdf");
             String filePath = RuoYiConfig.getDownloadPath() + person.getNumber() + ".pdf";
 
-            String[] str = {person.getNumber(), person.getName(), person.getDeptName(), person.getDeposit().add(person.getBalance()).toString(), ShiroUtils.getLoginName(), ShiroUtils.getIp(), DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, person.getUpdateTime())};
+            String[] str = {person.getNumber(), person.getName(), person.getDept().getDeptName(), person.getDeposit().add(person.getBalance()).toString(), ShiroUtils.getLoginName(), ShiroUtils.getIp(), DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, person.getUpdateTime())};
             ExportPDF.createPDF(is,filePath,str);
 
             response.setCharacterEncoding("utf-8");

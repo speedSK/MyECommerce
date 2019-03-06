@@ -21,6 +21,14 @@ public interface PersonMapper
      * @return 人员管理
      */
 	public Person selectPersonById(Long id);
+
+	/**
+     * 根据编号查询人员
+     *
+     * @param number 业务（犯人）编号
+     * @return 人员管理
+     */
+	public Person selectPersonByNumber(String number);
 	
 	/**
      * 查询业务（犯人）列表

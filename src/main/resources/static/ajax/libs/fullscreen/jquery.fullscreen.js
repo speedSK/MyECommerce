@@ -13,7 +13,7 @@
 		var doc = document.documentElement;
 
 		return ('requestFullscreen' in doc) ||
-                ('msRequestFullscreen' in doc) ||
+		        ('msRequestFullscreen' in doc) ||
 				('mozRequestFullScreen' in doc && document.mozFullScreenEnabled) ||
 				('webkitRequestFullScreen' in doc);
 	}
@@ -25,16 +25,16 @@
 			elem.mozRequestFullScreen();
 		} else if (elem.webkitRequestFullScreen) {
 			elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-		}else if (elem.msRequestFullscreen) {
+		} else if (elem.msRequestFullscreen) {
 			elem.msRequestFullscreen();
-        }
+		}
 	}
 
 	function fullScreenStatus(){
 		return document.fullscreen ||
 				document.mozFullScreen ||
 				document.webkitIsFullScreen ||
-                document.msFullscreenElement ||
+				document.msFullscreenElement ||
 				false;
 	}
 
@@ -45,9 +45,9 @@
 			document.mozCancelFullScreen();
 		} else if (document.webkitCancelFullScreen) {
 			document.webkitCancelFullScreen();
-		}else if (document.msExitFullscreen) {
+		} else if (document.msExitFullscreen) {
 			document.msExitFullscreen();
-        }
+		}
 	}
 
 	function onFullScreenEvent(callback){

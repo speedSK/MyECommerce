@@ -1,6 +1,7 @@
 package com.ruoyi.project.business.person.service;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.StringUtils;
@@ -20,8 +21,11 @@ import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
 import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import com.ruoyi.project.business.transactionRecord.domain.TransactionRecord;
 import com.ruoyi.project.business.transactionRecord.service.ITransactionRecordService;
+import com.ruoyi.project.system.config.service.IConfigService;
 import com.ruoyi.project.system.merchant.domain.Merchant;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +40,10 @@ import com.ruoyi.common.support.Convert;
  * @date 2018-08-09
  */
 @Service
-public class PersonServiceImpl implements IPersonService 
+public class PersonServiceImpl implements IPersonService
 {
+    private static final Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
+
 	@Autowired
 	private PersonMapper personMapper;
 	@Autowired
@@ -52,6 +58,8 @@ public class PersonServiceImpl implements IPersonService
     private ISettleDateService settleDateService;
     @Autowired
     private ITransactionRecordService transactionRecordService;
+    @Autowired
+    private IConfigService configService;
 
 	/**
      * 查询人员管理信息
@@ -250,7 +258,61 @@ public class PersonServiceImpl implements IPersonService
     }
 
     @Override
-    public String importUser(List<Person> userList, boolean updateSupport) {
-        return null;
+    public String importUser(List<Person> personList, boolean updateSupport) {
+        if (StringUtils.isNull(personList) || personList.size() == 0)
+        {
+            throw new BusinessException("导入用户数据不能为空！");
+        }
+        int successNum = 0;
+        int failureNum = 0;
+        StringBuilder successMsg = new StringBuilder();
+        StringBuilder failureMsg = new StringBuilder();
+        String operName = ShiroUtils.getLoginName();
+        String password = configService.selectConfigByKey("sys.user.initPassword");
+        for (Person person : personList)
+        {
+            try
+            {
+                // 验证是否存在这个用户
+                Person p = personMapper.selectPersonByNumber(person.getNumber());
+                if (StringUtils.isNull(p))
+                {
+                    p.setPassword(password);
+                    p.setCreateBy(operName);
+                    this.insertPerson(p);
+                    successNum++;
+                    successMsg.append("<br/>" + successNum + "、账号 " + p.getNumber() + " 导入成功");
+                }
+                else if (updateSupport)
+                {
+                    p.setUpdateBy(operName);
+                    this.updatePerson(p);
+                    successNum++;
+                    successMsg.append("<br/>" + successNum + "、账号 " + p.getNumber() + " 更新成功");
+                }
+                else
+                {
+                    failureNum++;
+                    failureMsg.append("<br/>" + failureNum + "、账号 " + p.getNumber() + " 已存在");
+                }
+            }
+            catch (Exception e)
+            {
+                failureNum++;
+                String msg = "<br/>" + failureNum + "、账号 " + person.getNumber() + " 导入失败：";
+                failureMsg.append(msg + e.getMessage());
+                logger.error(msg, e);
+            }
+        }
+        if (failureNum > 0)
+        {
+            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+            throw new BusinessException(failureMsg.toString());
+        }
+        else
+        {
+            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+        }
+        return successMsg.toString();
     }
 }
