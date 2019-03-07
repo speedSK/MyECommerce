@@ -75,7 +75,9 @@ public class Constants
     public static final String VISIBLE_TRUE = "1";
 
     public static final String ACCOUNT_ACTIVE_1 = "1";  //系统收入账户
+    public static final long ACCOUNT_ACTIVE_1_ID = 1l;  //系统收入账户
     public static final String ACCOUNT_ACTIVE_2 = "2";  //系统支出账户
+    public static final long ACCOUNT_ACTIVE_2_ID = 2l;  //系统支出账户
     public static final String ACCOUNT_ACTIVE_3 = "3";  // 普通商户
 
     public static final String ORDER_NORMAL = "0"; //正常
@@ -86,4 +88,7 @@ public class Constants
     public static final String BANK_CHECKED = "1";
     public static final String BANK_CHECK_fAIL = "2";
     public static final String BANK_CHECK_DETAIL = "3";
+
+    public static final String TX_CODE_DEPOSIT_INCOME = "1000";//系统押金收入交易码
+    public static final String TX_CODE_CASH_RECHARGE = "1001";//系统押金收入交易码
 }

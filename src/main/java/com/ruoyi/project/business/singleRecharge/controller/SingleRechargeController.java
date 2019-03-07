@@ -80,28 +80,28 @@ public class SingleRechargeController extends BaseController
 		return toAjax(personService.saveCash(person));
 	}
 
-	/**
-	 * 银行圈转页面
-	 */
-	@GetMapping("/bankRecharge/{number}")
-	public String bankRecharge(@PathVariable("number") String number, ModelMap mmap)
-	{
-		Person user = new Person();
-		user.setNumber(number);
-		List<Person> userlist = personService.selectPersonList(user);
-		if (userlist!=null&&userlist.size()>0) {
-			user = userlist.get(0);
-			String balance = personService.queryBankBalance(user);
-			user.setBankBalance(balance);
-			mmap.put("user", user);
-		}
-	    return prefix + "/bankRecharge";
-	}
-	
-	@PostMapping("/saveBankCharge")
-	@ResponseBody
-	public AjaxResult saveBankCharge(Person person)
-	{		
-		return toAjax(personService.saveBankCharge(person));
-	}
+//	/**
+//	 * 银行圈转页面
+//	 */
+//	@GetMapping("/bankRecharge/{number}")
+//	public String bankRecharge(@PathVariable("number") String number, ModelMap mmap)
+//	{
+//		Person user = new Person();
+//		user.setNumber(number);
+//		List<Person> userlist = personService.selectPersonList(user);
+//		if (userlist!=null&&userlist.size()>0) {
+//			user = userlist.get(0);
+//			String balance = personService.queryBankBalance(user);
+//			user.setBankBalance(balance);
+//			mmap.put("user", user);
+//		}
+//	    return prefix + "/bankRecharge";
+//	}
+//
+//	@PostMapping("/saveBankCharge")
+//	@ResponseBody
+//	public AjaxResult saveBankCharge(Person person)
+//	{
+//		return toAjax(personService.saveBankCharge(person));
+//	}
 }

@@ -55,11 +55,11 @@ public interface IPersonService
 
 	public int saveCash(Person person);
 
-	public int saveBankCharge(Person person);
+//	public int saveBankCharge(Person person);
 
 	public int deletePersonAccount(String ids);
 
-	public String queryBankBalance(Person person);
+//	public String queryBankBalance(Person person);
 
     String importUser(List<Person> userList, boolean updateSupport);
 }

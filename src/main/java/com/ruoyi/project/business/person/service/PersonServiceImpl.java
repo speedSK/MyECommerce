@@ -101,17 +101,17 @@ public class PersonServiceImpl implements IPersonService
         person.setCreateBy(ShiroUtils.getLoginName());
 	    person.setStatus(Constants.STATUS_ACTIVE);
         personMapper.insertPerson(person);
-        Merchant merchant = merchantService.selectMerchantById(1L);
-        merchantService.updateMerchant(merchant);
+        Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
         merchant.setBalance(merchant.getBalance().add(person.getDeposit()));
+        merchantService.updateMerchant(merchant);
         TradeRecord record = new TradeRecord();
         record.setJourno(IdGen.getJourno());
         record.setUserNumber(person.getNumber());
-        record.setTxcode("1000");
+        record.setTxcode(Constants.TX_CODE_DEPOSIT_INCOME);
         record.setTxamt(person.getDeposit());
         record.setToAcc(merchant.getMerchantCode());
         record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
-        record.setStationCode("1001");
+        record.setStationCode("0000");
 	    return tradeRecordService.insertTradeRecord(record);
 	}
 	
@@ -157,7 +157,7 @@ public class PersonServiceImpl implements IPersonService
         BigDecimal oldBalance = info.getBalance();
 		info.setBalance(oldBalance.add(person.getRecharge()));
 		personMapper.updatePerson(info);
-		Merchant merchant = merchantService.selectMerchantById(1L);
+		Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
 		merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
         merchantService.updateMerchant(merchant);
 		TradeRecord record = new TradeRecord();
@@ -165,65 +165,65 @@ public class PersonServiceImpl implements IPersonService
 		record.setUserNumber(person.getNumber());
         record.setBefore(oldBalance);
         record.setAfter(info.getBalance());
-		record.setTxcode("1001");
+		record.setTxcode(Constants.TX_CODE_CASH_RECHARGE);
 		record.setTxamt(person.getRecharge());
 		record.setToAcc(merchant.getMerchantCode());
 		record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
-		record.setStationCode("1001");
+		record.setStationCode("0000");
 		return tradeRecordService.insertTradeRecord(record);
 	}
 
-	@Override
-	public int saveBankCharge(Person person) {
-        int result = 0;
-		Person info = personMapper.selectPersonById(person.getId());
-        BigDecimal oldBalance = info.getBalance();
-        String journo = IdGen.getJourno();
-		TransVo vo = new TransVo();
-		vo.setYktTxcode("3011");
-		vo.setBankTxcode("YKT03");
-        vo.setYktNo(info.getNumber());
-        vo.setTxamt(StringUtils.yuan2Fen(person.getBankBalance()));
-        vo.setYktJourno(journo);
-		vo.setUsername(info.getName());
-		vo.setIdserial2(info.getIdcard());
-		vo.setBankCardNo(info.getBankCardNumber());
-		String transResult = TransOfABC.transCommMsg("3011", vo);
-		String[] transArray = transResult.split("\\|");
-		if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
-			info.setBalance(info.getBalance().add(new BigDecimal(person.getBankBalance())));
-            personMapper.updatePerson(info);
-            TransactionRecord transactionRecord = new TransactionRecord();
-            transactionRecord.setCode("1002");
-            transactionRecord.setBankCode("YKT03");
-            transactionRecord.setTransDate(DateUtils.dateTimeNow("yyyyMMdd"));
-            transactionRecord.setTransIdserial(journo);
-            transactionRecord.setUserCode(info.getNumber());
-            transactionRecord.setUserName(info.getName());
-            transactionRecord.setIdNumber(info.getIdcard());
-            transactionRecord.setBankNumber(info.getBankCardNumber());
-            transactionRecord.setAmount(person.getRecharge().toString());
-            transactionRecord.setStatus("0");
-            transactionRecordService.insertTransactionRecord(transactionRecord);
-            Merchant merchant = merchantService.selectMerchantById(1L);
-            merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
-            merchantService.updateMerchant(merchant);
-            TradeRecord record = new TradeRecord();
-            record.setJourno(journo);
-            record.setUserNumber(person.getNumber());
-            record.setBefore(oldBalance);
-            record.setAfter(info.getBalance());
-            record.setTxcode("1002");
-            record.setTxamt(person.getRecharge());
-            record.setToAcc(merchant.getMerchantCode());
-            record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
-            record.setStationCode("1001");
-            tradeRecordService.insertTradeRecord(record);
-            result = 1;
-		}
-
-        return result;
-	}
+//	@Override
+//	public int saveBankCharge(Person person) {
+//        int result = 0;
+//		Person info = personMapper.selectPersonById(person.getId());
+//        BigDecimal oldBalance = info.getBalance();
+//        String journo = IdGen.getJourno();
+//		TransVo vo = new TransVo();
+//		vo.setYktTxcode("3011");
+//		vo.setBankTxcode("YKT03");
+//        vo.setYktNo(info.getNumber());
+//        vo.setTxamt(StringUtils.yuan2Fen(person.getBankBalance()));
+//        vo.setYktJourno(journo);
+//		vo.setUsername(info.getName());
+//		vo.setIdserial2(info.getIdcard());
+//		vo.setBankCardNo(info.getBankCardNumber());
+//		String transResult = TransOfABC.transCommMsg("3011", vo);
+//		String[] transArray = transResult.split("\\|");
+//		if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
+//			info.setBalance(info.getBalance().add(new BigDecimal(person.getBankBalance())));
+//            personMapper.updatePerson(info);
+//            TransactionRecord transactionRecord = new TransactionRecord();
+//            transactionRecord.setCode("1002");
+//            transactionRecord.setBankCode("YKT03");
+//            transactionRecord.setTransDate(DateUtils.dateTimeNow("yyyyMMdd"));
+//            transactionRecord.setTransIdserial(journo);
+//            transactionRecord.setUserCode(info.getNumber());
+//            transactionRecord.setUserName(info.getName());
+//            transactionRecord.setIdNumber(info.getIdcard());
+//            transactionRecord.setBankNumber(info.getBankCardNumber());
+//            transactionRecord.setAmount(person.getRecharge().toString());
+//            transactionRecord.setStatus("0");
+//            transactionRecordService.insertTransactionRecord(transactionRecord);
+//            Merchant merchant = merchantService.selectMerchantById(1L);
+//            merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
+//            merchantService.updateMerchant(merchant);
+//            TradeRecord record = new TradeRecord();
+//            record.setJourno(journo);
+//            record.setUserNumber(person.getNumber());
+//            record.setBefore(oldBalance);
+//            record.setAfter(info.getBalance());
+//            record.setTxcode("1002");
+//            record.setTxamt(person.getRecharge());
+//            record.setToAcc(merchant.getMerchantCode());
+//            record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
+//            record.setStationCode("1001");
+//            tradeRecordService.insertTradeRecord(record);
+//            result = 1;
+//		}
+//
+//        return result;
+//	}
 
 	@Override
 	public int deletePersonAccount(String ids) {
@@ -241,21 +241,21 @@ public class PersonServiceImpl implements IPersonService
 		return 1;
 	}
 
-    @Override
-    public String queryBankBalance(Person person) {
-        String txamt = "0";
-        TransVo vo = new TransVo();
-        vo.setYktTxcode("3021");
-        vo.setBankTxcode("YKT01");
-        vo.setYktNo(person.getNumber());
-        vo.setBankCardNo(person.getBankCardNumber());
-        String queryBalance = TransOfABC.transCommMsg("3021", vo);
-        String[] balanceArray = queryBalance.split("\\|");
-        if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
-            txamt = StringUtils.fen2Yuan(balanceArray[2].trim());
-        }
-        return txamt;
-    }
+//    @Override
+//    public String queryBankBalance(Person person) {
+//        String txamt = "0";
+//        TransVo vo = new TransVo();
+//        vo.setYktTxcode("3021");
+//        vo.setBankTxcode("YKT01");
+//        vo.setYktNo(person.getNumber());
+//        vo.setBankCardNo(person.getBankCardNumber());
+//        String queryBalance = TransOfABC.transCommMsg("3021", vo);
+//        String[] balanceArray = queryBalance.split("\\|");
+//        if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
+//            txamt = StringUtils.fen2Yuan(balanceArray[2].trim());
+//        }
+//        return txamt;
+//    }
 
     @Override
     public String importUser(List<Person> personList, boolean updateSupport) {
@@ -277,23 +277,23 @@ public class PersonServiceImpl implements IPersonService
                 Person p = personMapper.selectPersonByNumber(person.getNumber());
                 if (StringUtils.isNull(p))
                 {
-                    p.setPassword(password);
-                    p.setCreateBy(operName);
-                    this.insertPerson(p);
+                    person.setPassword(password);
+                    person.setCreateBy(operName);
+                    this.insertPerson(person);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + p.getNumber() + " 导入成功");
+                    successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 导入成功");
                 }
                 else if (updateSupport)
                 {
-                    p.setUpdateBy(operName);
-                    this.updatePerson(p);
+                    person.setUpdateBy(operName);
+                    this.updatePerson(person);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + p.getNumber() + " 更新成功");
+                    successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 更新成功");
                 }
                 else
                 {
                     failureNum++;
-                    failureMsg.append("<br/>" + failureNum + "、账号 " + p.getNumber() + " 已存在");
+                    failureMsg.append("<br/>" + failureNum + "、账号 " + person.getNumber() + " 已存在");
                 }
             }
             catch (Exception e)

@@ -11,8 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="merchantCode"    column="merchant_code"    />
         <result property="orderCode"    column="order_code"    />
         <result property="txcode"    column="txcode"    />
-        <result property="before"    column="before"    />
-        <result property="after"    column="after"    />
+        <result property="before"    column="tx_before"    />
+        <result property="after"    column="tx_after"    />
         <result property="txamt"    column="txamt"    />
         <result property="fromAcc"    column="from_acc"    />
         <result property="toAcc"    column="to_acc"    />
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectTradeRecordVo">
-        select id, journo, user_number, merchant_code, order_code, txcode, before, after, txamt, from_acc, to_acc, reg_date, station_code, remark, status, create_by, create_time, update_by, update_time from bus_trade_record
+        select id, journo, user_number, merchant_code, order_code, txcode, tx_before, tx_after, txamt, from_acc, to_acc, reg_date, station_code, remark, status, create_by, create_time, update_by, update_time from bus_trade_record
     </sql>
 	
     <select id="selectTradeRecordList" parameterType="TradeRecord" resultMap="TradeRecordResult">
@@ -39,8 +39,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="merchantCode != null  and merchantCode != '' "> and merchant_code = #{merchantCode}</if>
              <if test="orderCode != null  and orderCode != '' "> and order_code = #{orderCode}</if>
              <if test="txcode != null  and txcode != '' "> and txcode = #{txcode}</if>
-             <if test="before != null "> and before = #{before}</if>
-             <if test="after != null "> and after = #{after}</if>
+             <if test="before != null "> and tx_before = #{before}</if>
+             <if test="after != null "> and tx_after = #{after}</if>
              <if test="txamt != null "> and txamt = #{txamt}</if>
              <if test="fromAcc != null  and fromAcc != '' "> and from_acc = #{fromAcc}</if>
              <if test="toAcc != null  and toAcc != '' "> and to_acc = #{toAcc}</if>
@@ -69,8 +69,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="merchantCode != null  and merchantCode != ''  ">merchant_code,</if>
 			<if test="orderCode != null  and orderCode != ''  ">order_code,</if>
 			<if test="txcode != null  and txcode != ''  ">txcode,</if>
-			<if test="before != null  ">before,</if>
-			<if test="after != null  ">after,</if>
+			<if test="before != null  ">tx_before,</if>
+			<if test="after != null  ">tx_after,</if>
 			<if test="txamt != null  ">txamt,</if>
 			<if test="fromAcc != null  and fromAcc != ''  ">from_acc,</if>
 			<if test="toAcc != null  and toAcc != ''  ">to_acc,</if>
@@ -114,8 +114,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="merchantCode != null  and merchantCode != ''  ">merchant_code = #{merchantCode},</if>
             <if test="orderCode != null  and orderCode != ''  ">order_code = #{orderCode},</if>
             <if test="txcode != null  and txcode != ''  ">txcode = #{txcode},</if>
-            <if test="before != null  ">before = #{before},</if>
-            <if test="after != null  ">after = #{after},</if>
+            <if test="before != null  ">tx_before = #{before},</if>
+            <if test="after != null  ">tx_after = #{after},</if>
             <if test="txamt != null  ">txamt = #{txamt},</if>
             <if test="fromAcc != null  and fromAcc != ''  ">from_acc = #{fromAcc},</if>
             <if test="toAcc != null  and toAcc != ''  ">to_acc = #{toAcc},</if>
