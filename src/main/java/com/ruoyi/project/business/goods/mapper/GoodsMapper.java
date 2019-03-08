@@ -61,5 +61,13 @@ public interface GoodsMapper
      * @return 结果
      */
 	public int deleteGoodsByIds(String[] ids);
+
+	/**
+	 * 查询商品信息
+	 *
+	 * @param goodCode 商品编号
+	 * @return 商品信息
+	 */
+	public Goods selectPersonByCode(String goodCode);
 	
 }

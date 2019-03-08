@@ -3,6 +3,7 @@ package com.ruoyi.project.business.goods.controller;
 import java.util.List;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -187,6 +188,40 @@ public class GoodsController extends BaseController
 	}
 
 
+	@RequiresPermissions("business:goods:view")
+	@GetMapping("/importTemplate")
+	@ResponseBody
+	public AjaxResult importTemplate()
+	{
+		ExcelUtil<Goods> util = new ExcelUtil<Goods>(Goods.class);
+		return util.importTemplateExcel("商品数据");
+	}
+
+	@Log(title = "导入商品信息", businessType = BusinessType.IMPORT)
+	@RequiresPermissions("business:goods:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+	{
+		ExcelUtil<Goods> util = new ExcelUtil<Goods>(Goods.class);
+		List<Goods> userList = util.importExcel(file.getInputStream());
+		String message = goodsService.importGoods(userList, updateSupport);
+		return AjaxResult.success(message);
+	}
+
+	/**
+	 * 导出业务（犯人）列表
+	 */
+	@RequiresPermissions("business:goods:export")
+	@Log(title = "导出商品信息", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(Goods goods)
+	{
+		List<Goods> list = goodsService.selectGoodsList(goods);
+		ExcelUtil<Goods> util = new ExcelUtil<Goods>(Goods.class);
+		return util.exportExcel(list, "goods");
+	}
 
 	
 }

@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Goods" id="GoodsResult">
         <result property="id"    column="id"    />
         <result property="categoryId"    column="category_id"    />
-        <result property="categoryName"    column="category_name"    />
         <result property="merchantId"    column="merchant_id"    />
         <result property="code"    column="code"    />
         <result property="name"    column="name"    />
@@ -21,39 +20,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
+        <association property="goodCategory" column="category_id" javaType="GoodCategory"
+                     resultMap="GoodCategoryResult"/>
+        <association property="merchant" column="merchant_id" javaType="Merchant"
+                     resultMap="MerchantResult"/>
     </resultMap>
-	
+
+    <resultMap type="GoodCategory" id="GoodCategoryResult">
+        <result property="id" column="id"/>
+        <result property="categoryCode" column="category_code"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="visible" column="visible"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <resultMap type="Merchant" id="MerchantResult">
+        <result property="id"    column="id"    />
+        <result property="merchantCode"    column="merchant_code"    />
+        <result property="merchantName"    column="merchant_name"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
 	<sql id="selectGoodsVo">
-        select id, category_id, merchant_id, code, name, price, order_num, image, visible, status , remark , create_by, create_time, update_by, update_time  from bus_goods
+        select g.id, g.category_id, g.merchant_id, g.code, g.name, g.price, g.order_num, g.image,
+               g.visible, g.status , g.remark , g.create_by, g.create_time, g.update_by, g.update_time,
+               gc.id,gc.category_code,gc.category_name,gc.parent_id,gc.order_num,gc.visible,gc.status,
+               m.id,m.merchant_code,m.merchant_name,m.status
+        FROM bus_goods g
+                 LEFT JOIN bus_good_category gc on g.category_id=gc.id
+                 LEFT JOIN bus_merchant m on g.merchant_id = m.id
     </sql>
 	
     <select id="selectGoodsList" parameterType="Goods" resultMap="GoodsResult">
         <include refid="selectGoodsVo"/>
         <where>  
-            <if test="id != null and id != ''"> and id = #{id}</if>
-             <if test="categoryId != null and categoryId != ''"> and category_id = #{categoryId}</if>
-             <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId}</if>
-             <if test="code != null and code != ''"> and code = #{code}</if>
-             <if test="name != null and name != ''"> and name like  concat('%', #{name}, '%') </if>
-             <if test="searchValue != null and searchValue != ''"> and name like  concat('%', #{searchValue}, '%') </if>
-             <if test="price != null and price != ''"> and price = #{price}</if>
-             <if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum}</if>
-             <if test="image != null and image != ''"> and image = #{image}</if>
-             <if test="visible != null and visible != ''"> and visible = #{visible}</if>
-             <if test="status != null and status != ''"> and status = #{status}</if>
-             <if test="remark != null and remark != ''"> and remark = #{remark}</if>
-            <if test="createBy != null  and createBy != '' ">and create_by = #{createBy}</if>
-            <if test="createTime != null ">and create_time = #{createTime}</if>
-            <if test="updateBy != null  and updateBy != '' ">and update_by = #{updateBy}</if>
-            <if test="updateTime != null ">and update_time = #{updateTime}</if>
+            <if test="id != null and id != ''"> and g.id = #{id}</if>
+             <if test="categoryId != null and categoryId != ''"> and g.category_id = #{categoryId}</if>
+             <if test="merchantId != null and merchantId != ''"> and g.merchant_id = #{merchantId}</if>
+             <if test="code != null and code != ''"> and g.code = #{code}</if>
+             <if test="name != null and name != ''"> and g.name like  concat('%', #{name}, '%') </if>
+             <if test="searchValue != null and searchValue != ''"> and g.name like  concat('%', #{searchValue}, '%') </if>
+             <if test="price != null and price != ''"> and g.price = #{price}</if>
+             <if test="orderNum != null and orderNum != ''"> and g.order_num = #{orderNum}</if>
+             <if test="image != null and image != ''"> and g.image = #{image}</if>
+             <if test="visible != null and visible != ''"> and g.visible = #{visible}</if>
+             <if test="status != null and status != ''"> and g.status = #{status}</if>
+             <if test="remark != null and remark != ''"> and g.remark = #{remark}</if>
+            <if test="createBy != null  and createBy != '' ">and g.create_by = #{createBy}</if>
+            <if test="createTime != null ">and g.create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' ">and g.update_by = #{updateBy}</if>
+            <if test="updateTime != null ">and g.update_time = #{updateTime}</if>
         </where>
     </select>
     
     <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult">
-        select t.id, t.category_id, t.merchant_id, t.code, t.name, t.price, t.order_num, t.image, t.visible, t.status , t.remark , t.create_by , t.create_time, t.update_by , t.update_time ,
-        (select category_name from bus_good_category where id = t.category_id) category_name
-        from bus_goods t
-        where id = #{id}
+        <include refid="selectGoodsVo"/>
+          where g.id = #{id}
     </select>
         
     <insert id="insertGoods" parameterType="Goods">
@@ -119,5 +143,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-    
+
+    <select id="selectPersonByCode" parameterType="String" resultMap="GoodsResult">
+        <include refid="selectGoodsVo"/>
+            where g.code =#{goodCode}
+    </select>
 </mapper>

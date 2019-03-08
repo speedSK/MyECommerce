@@ -1,6 +1,10 @@
 package com.ruoyi.project.business.goods.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
+import com.ruoyi.framework.aspectj.lang.annotation.Excel.Type;
 import com.ruoyi.framework.web.domain.BaseEntity;
+import com.ruoyi.project.business.goodCategory.domain.GoodCategory;
+import com.ruoyi.project.system.merchant.domain.Merchant;
 
 import java.math.BigDecimal;
 
@@ -17,25 +21,50 @@ public class Goods extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 分类id */
+	@Excel(name="分类编号",type = Type.IMPORT)
 	private Long categoryId;
-	/** 分类name */
-	private String categoryName;
 	/** 商户id */
+	@Excel(name="商户编号",type = Type.IMPORT)
 	private Long merchantId;
 	/** 编码 */
+	@Excel(name="商品编码")
 	private String code;
 	/** 名称 */
+	@Excel(name="商品名称")
 	private String name;
 	/** 价格 */
+	@Excel(name="商品价格")
 	private BigDecimal price;
 	/** 显示顺序 */
 	private Integer orderNum;
 	/** 图片 */
 	private String image;
-	/** 分类状态 */
+	/** 显示状态 */
+	@Excel(name="显示状态",readConverterExp = "0=不显示,1=显示")
 	private String visible;
 	/** 状态 */
 	private String status;
+
+	@Excel(name = "商品分类", targetAttr = "categoryName", type = Type.EXPORT)
+	private GoodCategory goodCategory;
+	@Excel(name = "商户", targetAttr = "merchantName", type = Type.EXPORT)
+	private Merchant merchant;
+
+	public GoodCategory getGoodCategory() {
+		return goodCategory;
+	}
+
+	public void setGoodCategory(GoodCategory goodCategory) {
+		this.goodCategory = goodCategory;
+	}
+
+	public Merchant getMerchant() {
+		return merchant;
+	}
+
+	public void setMerchant(Merchant merchant) {
+		this.merchant = merchant;
+	}
 
 	/**
 	 * 设置：主键
@@ -195,13 +224,5 @@ public class Goods extends BaseEntity
 	public String getStatus() 
 	{
 		return status;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
 	}
 }

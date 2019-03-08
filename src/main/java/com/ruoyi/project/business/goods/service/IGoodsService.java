@@ -50,5 +50,7 @@ public interface IGoodsService
      * @return 结果
      */
 	public int deleteGoodsByIds(String ids);
+
+	String importGoods(List<Goods> goodsList, boolean updateSupport);
 	
 }
