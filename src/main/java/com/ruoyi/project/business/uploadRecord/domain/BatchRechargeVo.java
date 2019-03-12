@@ -8,7 +8,7 @@ public class BatchRechargeVo {
 	private String number;
 	@Excel(name="充值金额")
 	private String amount;
-	@Excel(name="失败原因")
+	@Excel(name = "失败原因", type = Excel.Type.EXPORT)
 	private String failure;
 	
 	public String getNumber() {

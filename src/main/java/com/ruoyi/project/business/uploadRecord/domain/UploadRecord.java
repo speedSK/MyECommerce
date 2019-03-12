@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.uploadRecord.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import java.util.Date;
 
@@ -16,22 +17,29 @@ public class UploadRecord extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 功能模块名称 */
+	@Excel(name="功能模块名称")
 	private String module;
 	/** 上传文件名 */
+	@Excel(name="长传文件名")
 	private String uploadName;
 	/** 成功条数 */
+	@Excel(name="成功条数")
 	private Long successCount;
 	/** 失败文件名 */
+	@Excel(name="失败文件名")
 	private String failName;
 	/** 失败条数 */
+	@Excel(name="失败条数")
 	private Long failCount;
 	/** 状态 */
 	private String status;
 	/** 备注 */
 	private String remark;
 	/** 创建时间 */
+	@Excel(name="创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/** 创建人 */
+	@Excel(name="创建人")
 	private String createBy;
 	/** 修改时间 */
 	private Date updateTime;

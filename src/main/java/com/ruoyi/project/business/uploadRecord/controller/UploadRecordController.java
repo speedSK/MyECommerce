@@ -3,6 +3,8 @@ package com.ruoyi.project.business.uploadRecord.controller;
 import java.util.List;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.project.business.uploadRecord.domain.BatchRechargeVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,9 +78,10 @@ public class UploadRecordController extends BaseController {
      * 批量导入数据
      */
     @Log(title = "批量充值导入", businessType = BusinessType.IMPORT)
-    @PostMapping("/batchImport")
-    @ResponseBody
-    public AjaxResult batchImport(User user, @RequestParam("importfile") MultipartFile file) {
+    @RequiresPermissions("business:uploadRecord:import")
+	@PostMapping("/importData")
+	@ResponseBody
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) {
         try {
             if (!file.isEmpty()) {
                 return uploadRecordService.saveRecharge(file);
@@ -89,5 +92,42 @@ public class UploadRecordController extends BaseController {
             log.error("批量导入文件失败！", e);
             return error(e.getMessage());
         }
+    }
+
+    @RequiresPermissions("business:uploadRecord:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<BatchRechargeVo> util = new ExcelUtil<BatchRechargeVo>(BatchRechargeVo.class);
+        return util.importTemplateExcel("批量充值");
+    }
+
+//	@Log(title = "导入（犯人）管理", businessType = BusinessType.IMPORT)
+//	@RequiresPermissions("business:batchCost:import")
+//	@PostMapping("/importData")
+//	@ResponseBody
+//	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+//	{
+//		ExcelUtil<UploadRecord> util = new ExcelUtil<UploadRecord>(UploadRecord.class);
+//		List<UploadRecord> userList = util.importExcel(file.getInputStream());
+//		String message = batchCostService.importUser(userList, updateSupport);
+//		return AjaxResult.success(message);
+//	}
+
+    /**
+     * 导出批量消费记录
+     */
+    @RequiresPermissions("business:uploadRecord:export")
+    @Log(title = "导出批量充值记录", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(UploadRecord uploadRecord)
+    {
+        uploadRecord.setModule("批量充值导入");
+        uploadRecord.setStatus(Constants.STATUS_ACTIVE);
+        List<UploadRecord> list = uploadRecordService.selectUploadRecordList(uploadRecord);
+        ExcelUtil<UploadRecord> util = new ExcelUtil<UploadRecord>(UploadRecord.class);
+        return util.exportExcel(list, "batchRecharge");
     }
 }

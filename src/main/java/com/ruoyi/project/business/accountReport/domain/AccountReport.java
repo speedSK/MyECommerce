@@ -23,7 +23,7 @@ public class AccountReport extends BaseEntity
 	@Excel(name = "序号")
 	private Long id;
 	/** 报表日期 */
-	@Excel(name = "报表日期")
+	@Excel(name = "报表日期", width = 30, dateFormat = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date reportDate;
 	/** 账户id */
