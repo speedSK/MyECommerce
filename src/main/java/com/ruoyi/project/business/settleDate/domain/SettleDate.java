@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.settleDate.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -18,6 +19,7 @@ public class SettleDate extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 结算日期 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date settleDate;
 	/** 结算状态 */
 	private String settleStatus;
