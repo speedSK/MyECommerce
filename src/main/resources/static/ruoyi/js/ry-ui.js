@@ -177,6 +177,19 @@
                     $.modal.closeLoading();
                 });
             },
+            // 导出详情数据
+            exportDetailExcel: function(formId) {
+                var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+                $.modal.loading("正在导出数据，请稍后...");
+                $.post($.table._option.exportDetailUrl, $("#" + currentId).serializeArray(), function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        window.location.href = ctx + "common/download?fileName=" + result.msg + "&delete=" + true;
+                    } else {
+                        $.modal.alertError(result.msg);
+                    }
+                    $.modal.closeLoading();
+                });
+            },
             // 下载模板
             importTemplate: function() {
                 $.get($.table._option.importTemplateUrl, function(result) {

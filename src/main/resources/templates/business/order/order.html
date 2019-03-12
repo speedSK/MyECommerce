@@ -49,6 +49,12 @@
 			<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.batCancel()" shiro:hasPermission="business:order:remove">
 				<i class="fa fa-remove"></i> 取消
 			</a>
+			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:order:export">
+				<i class="fa fa-download"></i> 导出
+			</a>
+			<a class="btn btn-warning" onclick="$.table.exportDetailExcel()" shiro:hasPermission="business:order:exportDetail">
+				<i class="fa fa-download"></i> 导出详情
+			</a>
 		</div>
 
 		<div class="col-sm-12 select-table table-striped">
@@ -75,6 +81,8 @@
                 finishUrl: prefix + "/finish",
                 cancelUrl: prefix + "/cancel",
                 editVisibleUrl: prefix + "/editVisible",
+				exportUrl: prefix + "/export",
+				exportDetailUrl: prefix + "/exportDetail",
                 modalName: "订单",
                 search: false,
                 columns: [{
