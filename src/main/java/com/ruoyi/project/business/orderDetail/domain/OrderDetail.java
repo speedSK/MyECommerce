@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.orderDetail.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -19,22 +20,29 @@ public class OrderDetail extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 订单id */
+	@Excel(name="订单id")
 	private Long orderId;
 	/** 商家id */
 	private Long merchantId;
 	/** 商家名称 */
+	@Excel(name="商户名称")
 	private String merchantName;
 	/** 商品id */
-	private Long googsId;
+	private Long goodsId;
 	/** 商品名称 */
+	@Excel(name="商品名称")
 	private String goodsName;
 	/** 商品单价 */
+	@Excel(name="商品单价")
 	private BigDecimal goodsPrice;
 	/** 数量 */
+	@Excel(name="商品数量")
 	private Integer num;
 	/** 金额 */
+	@Excel(name="商品总金额")
 	private BigDecimal money;
 	/** 订单状态 */
+	@Excel(name="订单状态",readConverterExp = "0=配送中,1=完成,2=取消")
 	private String flag;
 	/** 状态 */
 	private String status;
@@ -75,14 +83,14 @@ public class OrderDetail extends BaseEntity
 	{
 		return merchantName;
 	}
-	public void setGoogsId(Long googsId) 
+	public void setGoodsId(Long goodsId) 
 	{
-		this.googsId = googsId;
+		this.goodsId = goodsId;
 	}
 
-	public Long getGoogsId() 
+	public Long getGoodsId() 
 	{
-		return googsId;
+		return goodsId;
 	}
 	public void setGoodsName(String goodsName) 
 	{
@@ -145,7 +153,7 @@ public class OrderDetail extends BaseEntity
             .append("orderId", getOrderId())
             .append("merchantId", getMerchantId())
             .append("merchantName", getMerchantName())
-            .append("googsId", getGoogsId())
+            .append("goodsId", getGoodsId())
             .append("goodsName", getGoodsName())
             .append("goodsPrice", getGoodsPrice())
             .append("num", getNum())
