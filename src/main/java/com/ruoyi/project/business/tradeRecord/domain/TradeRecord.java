@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.tradeRecord.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -20,28 +21,40 @@ public class TradeRecord extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 流水号 */
+	@Excel(name="流水号")
 	private String journo;
 	/** 用户编号 */
+	@Excel(name="用户编号")
 	private String userNumber;
 	/** 商户编号 */
+	@Excel(name="商户编号")
 	private String merchantCode;
 	/** 订单号 */
+	@Excel(name="订单号")
 	private String orderCode;
 	/** 交易代码 */
+	@Excel(name="交易代码")
 	private String txcode;
 	/** 消费前余额 */
+	@Excel(name="交易前金额")
 	private BigDecimal before;
 	/** 消费后余额 */
+	@Excel(name="交易后金额")
 	private BigDecimal after;
 	/** 交易金额 */
+	@Excel(name="交易金额")
 	private BigDecimal txamt;
 	/** 来源账户 */
+	@Excel(name="来源账户")
 	private String fromAcc;
 	/** 目标账户 */
+	@Excel(name="目标账户")
 	private String toAcc;
 	/** 系统入账日期 */
+	@Excel(name="系统入账日期")
 	private Date settleDate;
 	/** 设备编号 */
+	@Excel(name="设备编号")
 	private String stationCode;
 	/** 备注 */
 	private String remark;
@@ -50,6 +63,7 @@ public class TradeRecord extends BaseEntity
 	/** 创建人 */
 	private String createBy;
 	/** 创建时间 */
+	@Excel(name="创建时间")
 	private Date createTime;
 	/** 修改人 */
 	private String updateBy;

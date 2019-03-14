@@ -23,20 +23,18 @@
 							</li>
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							    <a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="system:role:export"><i class="fa fa-download"></i>&nbsp;导出</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 							</li>
 						</ul>
 					</div>
 				</form>
 			</div>
-
-			<input class="form-input" type="file" name="importfile" id="importfile"></input>
-			<div class="btn-group hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="downMoudle()" shiro:hasPermission="business:uploadRecord:add">
-					<i class="fa fa-download"></i> 模板下载
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="business:batchCost:import">
+					<i class="fa fa-upload"></i> 导入
 				</a>
-				<a class="btn btn-danger" onclick="importExcel()" shiro:hasPermission="business:uploadRecord:remove">
-					<i class="fa fa-plus"></i> 开始导入
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:batchCost:export">
+					<i class="fa fa-download"></i> 导出
 				</a>
 			</div>
 			
@@ -57,6 +55,9 @@
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+				importUrl: prefix + "/importData",
+				importTemplateUrl: prefix + "/importTemplate",
                 sortName: "createTime",
 		        sortOrder: "desc",
                 modalName: "批量消费导入",
@@ -104,14 +105,6 @@
 					field : 'createBy', 
 					title : '创建人' 
 				},
-				{
-					field : 'updateTime', 
-					title : '修改时间' 
-				},
-				{
-					field : 'updateBy', 
-					title : '修改人' 
-				},
 		        {
 		            title: '操作',
 		            align: 'center',
@@ -150,4 +143,16 @@
        	}
     </script>
 </body>
+<form id="importForm" enctype="multipart/form-data" class="mt20 mb10" style="display: none;">
+	<div class="col-xs-offset-1">
+		<input type="file" id="file" name="file"/>
+		<div class="mt10 pt5">
+			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+			&nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+		</div>
+		<font color="red" class="pull-left mt10">
+			提示：仅允许导入“xls”或“xlsx”格式文件！
+		</font>
+	</div>
+</form>
 </html>

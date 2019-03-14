@@ -8,9 +8,9 @@ public class BatchCostVo {
 	private String number;
 	@Excel(name="消费金额")
 	private String amount;
-	@Excel(name="收款商户")
+	@Excel(name="收款商户编号")
 	private String merchant;
-	@Excel(name="失败原因")
+	@Excel(name="失败原因",type = Excel.Type.EXPORT)
 	private String failure;
 	
 	public String getNumber() {

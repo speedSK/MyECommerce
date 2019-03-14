@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.order.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -20,20 +21,26 @@ public class Order extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 订单号 */
+	@Excel(name="订单号")
 	private String orderCode;
 	/** 订单总金额 */
+	@Excel(name="订单金额")
 	private BigDecimal money;
 	/** 购买人ID */
 	private Long personId;
 	/** 购买人编码 */
+	@Excel(name="购买人编号")
 	private String personCode;
 	/** 购买人姓名 */
+	@Excel(name="购买人姓名")
 	private String personName;
 	/** 订单状态 */
+	@Excel(name="订单状态",readConverterExp = "0=配送中,1=完成,2=取消")
 	private String flag;
 	/** 完成人员 */
 	private String finishUser;
 	/** 完成时间 */
+	@Excel(name="完成时间" , width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
 	private Date finishTime;
 	/** 状态 */
 	private String status;
