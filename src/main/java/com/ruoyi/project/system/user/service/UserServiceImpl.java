@@ -3,18 +3,21 @@ package com.ruoyi.project.system.user.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ruoyi.project.system.config.service.IConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.ruoyi.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.support.Convert;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import com.ruoyi.framework.shiro.service.PasswordService;
+import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.business.person.mapper.PersonMapper;
+import com.ruoyi.project.system.config.service.IConfigService;
 import com.ruoyi.project.system.post.domain.Post;
 import com.ruoyi.project.system.post.mapper.PostMapper;
 import com.ruoyi.project.system.role.domain.Role;
@@ -38,6 +41,9 @@ public class UserServiceImpl implements IUserService
 
     @Autowired
     private UserMapper userMapper;
+    
+    @Autowired
+    private PersonMapper personMapper;
 
     @Autowired
     private RoleMapper roleMapper;
@@ -84,6 +90,16 @@ public class UserServiceImpl implements IUserService
         return userMapper.selectUserByLoginName(userName);
     }
 
+    /**
+     * 通过用户名获取犯人用户
+     * @author CoderX
+     */
+	@Override
+	public Person selectBusUserByLoginName(String userName) {
+		//创建犯人mapper并获取User
+		return personMapper.selectPersonByLoginName(userName);
+	}
+	
     /**
      * 通过手机号码查询用户
      * 

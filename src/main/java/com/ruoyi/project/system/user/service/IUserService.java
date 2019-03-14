@@ -1,7 +1,9 @@
 package com.ruoyi.project.system.user.service;
 
-import com.ruoyi.project.system.user.domain.User;
 import java.util.List;
+
+import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.system.user.domain.User;
 
 /**
  * 用户 业务层
@@ -26,6 +28,14 @@ public interface IUserService
      */
     public User selectUserByLoginName(String userName);
 
+    /**
+     * 通过用户名和用户类型去相应的表查询用户
+     * OverWrite
+     * @param userName 用户名
+     * @return 用户对象信息
+     */
+    public Person selectBusUserByLoginName(String userName);
+    
     /**
      * 通过手机号码查询用户
      * 

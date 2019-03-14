@@ -1,9 +1,10 @@
 package com.ruoyi.project.business.person.mapper;
 
-import com.ruoyi.project.business.person.domain.Person;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.ruoyi.project.business.person.domain.Person;
 
 /**
  * 业务（犯人） 数据层
@@ -14,6 +15,15 @@ import java.util.List;
 @Repository
 public interface PersonMapper 
 {
+	
+	/**
+     * 通过用户名查询用户
+     * 
+     * @param userName 用户名
+     * @return 用户对象信息
+     */
+    public Person selectPersonByLoginName(String userName);
+	
 	/**
      * 查询人员管理
      * 
