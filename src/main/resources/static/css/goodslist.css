@@ -1,0 +1,40 @@
+.clearFloat {
+    zoom: 1;
+}
+.liStyle{
+	float: left;margin-left: 15px;margin-bottom: 15px;
+}
+* {
+    margin: 0px;
+    padding: 0px;
+}
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+dl, ul {
+    list-style: none;
+}
+body {
+    font-family: 微软雅黑;
+}
+.clearFloat:after {
+    height: 0px;
+    content: ".";
+    clear: both;
+    visibility: hidden;
+    display: block;
+}
+.price{
+	color:red;
+}
+/* 商品列表样式 */
+.goodsDiv{
+	overflow-y: auto;
+	height: 650px;
+}

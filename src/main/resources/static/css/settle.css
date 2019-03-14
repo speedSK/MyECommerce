@@ -1,0 +1,274 @@
+/* 买家信息栏样式 */
+.buyerUl{
+	border: 1px solid #e5e5e5;
+	height:auto;
+}
+.buyerHeadInfo{
+	margin-top: 15px;
+}
+.buyerInfo{
+	margin-top: 5px;
+}
+.buyerBottom{
+	margin-bottom: 10px;
+}
+strong.font-bold {
+    font-size: x-large;
+    margin-left: 30px;
+}
+#userBalance {
+	font-size: x-large;
+	color: red;
+}
+.redcolor{
+	color: red;
+}
+
+/* 结算表单样式 */
+.settleForm{
+	width: 100%;
+	margin-bottom: 15px;
+	overflow-y: auto;
+}
+/* 结算表单商品列表商品图片样式 */
+.goodsImg{
+	width: 90px;
+    height: 90px;
+}
+
+.cartBox .order_content {
+    border: 1px solid #ccc;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+/* 单条商品样式 */
+.order_lists {
+    width: 100%;
+    height: 130px;
+    border-bottom: 1px solid #e7e7e7;
+    margin-left: -35px;
+}
+
+ul.order_lists.cartTop {
+    height: 30px;
+}
+/* 单条商品每列样式 */
+.order_lists li {
+    float: left;
+    height: 100%;
+    text-align: center;
+}
+/* 单条商品复选框列样式 */
+.order_lists .list_chk {
+    position: relative;
+    width: 50px;
+}
+.checkbox_css{
+    position: absolute;
+    left: 18px;
+    top: 50px;
+}
+label {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    border: 1px solid #b8b8b8;
+    margin-left: 10px;
+    border-radius: 1px;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+}
+
+.order_lists .list_con {
+    width: 342px;
+}
+.order_lists .list_con .list_img {
+    width: 90px;
+    height: 90px;
+    margin-top: 20px;
+    float: left;
+}
+.cartBox .order_content a {
+    display: block;
+}
+/*商品名称*/
+.order_lists .list_con .list_text {
+    margin: 50px 0 0 10px;
+    line-height: 18px;
+    width: 200px;
+    float: left;
+}
+
+.order_lists .list_info {
+    width: 230px;
+    box-sizing: border-box;
+    padding: 0px 0;
+}
+/* 结算表单商品描述样式 */
+.order_lists .list_info div {
+    color: #9c9c9c;
+    line-height: 18px;
+    margin-left: 15px;
+    margin-top: 50px;
+}
+
+.order_lists .list_price {
+    width: 130px;
+}
+.order_lists .price_style {
+    height: 10px;
+    margin-top: 50px;
+}
+.order_lists .list_price .price {
+    margin-top: 40px;
+    line-height: 18px;
+    font-family: Verdana,Tahoma,arial;
+    color: red;
+    font-weight: 700;
+}
+/* 商品列表调整数量样式 */
+.order_lists .list_amount {
+    width: 120px;
+}
+.order_lists .list_amount .amount_box {
+    margin-top: 50px;
+    width: 95px;
+    height: 25px;
+    position: relative;
+}
+.order_lists .list_amount .amount_box .reSty {
+    color: #cbcbcb;
+}
+
+.order_lists .list_amount .amount_box .reduce {
+    left: 10px;
+}
+.order_lists .list_amount .amount_box a {
+	float: left;
+	position: absolute;
+    top: 0px;
+    left: 85px;
+    height: 23px;
+    width: 25px;
+    border: 1px solid #e5e5e5;
+    background: #f0f0f0;
+    text-align: center;
+    line-height: 23px;
+    color: #444;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+.order_lists .list_amount .amount_box input {
+    width: 50px;
+    height: 23px;
+    line-height: 15px;
+    border: 1px solid #aaa;
+    color: #343434;
+    text-align: center;
+    padding: 4px 0;
+    background-color: #fff;
+    z-index: 2;
+    position: absolute;
+    left: 35px;
+    float: left;
+}
+.order_lists .list_amount .amount_box .plus {
+    border-left-color: transparent;
+    right: 0;
+}
+
+.order_lists .list_sum {
+    width: 140px;
+}
+.order_lists .price_style {
+    height: 10px;
+    margin-top: 50px;
+}
+.order_lists .list_sum .sum_price {
+    line-height: 18px;
+    margin-top: 20px;
+    font-family: Verdana,Tahoma,arial;
+    color: red;
+    font-weight: 700;
+}
+
+.order_lists .list_op {
+    width: 164px;
+}
+.order_lists .list_op .del {
+    margin-top: 50px;
+    line-height: 18px;
+}
+/* settle bar style start */
+.bar-wrapper {
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    bottom: -1px;
+    z-index: 99;
+    background: #e5e5e5;
+}
+.bar-wrapper .bar-right {
+    float: right;
+    color: #3c3c3c;
+}
+.bar-wrapper .bar-right .piece {
+    float: left;
+    min-width: 110px;
+    margin-right: 20px;
+    height: 50px;
+    line-height: 50px;
+}
+.bar-wrapper .bar-right .piece .piece_num {
+    display: inline-block;
+    padding: 0 10px;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: tohoma,arial;
+}
+.bar-wrapper .bar-right .totalMoney {
+    float: left;
+    min-width: 100px;
+    height: 50px;
+    line-height: 50px;
+}
+.bar-wrapper .bar-right .totalMoney .total_text {
+    float: right;
+    font-weight: 400;
+    font-size: 20px;
+    font-family: Arial;
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+.bar-wrapper .bar-right strong {
+    color: #f40;
+}
+.bar-wrapper .bar-right .calBtn {
+    float: left;
+}
+.bar-wrapper .bar-right .calBtn a.btn_sty {
+    background: #f40;
+    cursor: pointer;
+}
+.bar-wrapper .bar-right .calBtn a {
+    display: block;
+    width: 120px;
+    height: 50px;
+    color: #fff;
+    background: #b0b0b0;
+    cursor: not-allowed;
+    font-size: 22px;
+    letter-spacing: 5px;
+    text-decoration: none;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 2px;
+}
+/* settle bar style end */

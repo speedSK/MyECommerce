@@ -1,0 +1,227 @@
+/* 隐藏滚动条 */
+body {
+overflow-x:hidden;
+overflow-y:hidden;
+}
+/* 购物车Form */
+.toolbar_btn {
+    position: absolute;
+	top: 140px; 
+    left: -60px;
+    width: 460px;
+    margin-left:100%;
+    margin-top: -150px;
+}
+.cartContent{
+	float: left;
+	top: 0%; 
+	width: 405px;
+    margin-left: -5px;
+    margin-top: 10px;
+    background-color: #f5f5f5;
+    border-style: 1px solid #e50000;
+    min-width: 280px;
+    background: #fafafa;
+    position: absolute;
+    top: 0;
+    left: 60px;
+    height: 100%;
+}
+
+.cart_column h4 a {
+    font-size: 20px;
+    position: absolute;
+    top: 11px;
+    right: 10px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: #bfbfbf;
+}
+//购物车X按钮样式
+.icon-close {
+    position: absolute;
+    right: 0;
+}
+/* 购物车商品UL */
+.cartUl{
+	background-color: #f5f5f5;
+	overflow-y: auto;
+	height: 535px;
+}
+.icon-LiveChat1 img {
+    width: 10%;
+    height: 10%;
+    display: block;
+    border: none;
+    margin-left: 7px;
+    margin-top: 10px;
+}
+.lmliCount {
+    font-size: 10px;
+    line-height: 11px;
+    position: absolute;
+    z-index: 3;
+    top: 10px;
+    right: 400px;
+    overflow: hidden;
+    min-width: 11px;
+    height: 14px;
+    padding: 1px 2px;
+    text-align: center;
+    color: #fff;
+    border: 1px solid #e50000;
+    border-radius: 10px;
+    background: #e50000;
+    display: block;
+}
+.cart_column li {
+    position: relative;
+    padding: 20px 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+.cart_column li .img_con {
+    float: left;
+    width: 70px;
+    margin: 20px 22px 0 38px;
+    text-align: center;
+}
+.cart_column li .checkbox_c {
+    float: left;
+    width: 15px;
+    margin-top: 50px;
+    position: absolute;
+    z-index: 4;
+    opacity: 1;
+    left: 0;
+    cursor: pointer;
+}
+.cart_column li .product_name span {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 3px;
+    padding-top: 8px;
+    cursor: pointer;
+    color: #666;
+}
+.amount_btn {
+    float: right;
+    width: 71px;
+    margin-top: -5px;
+}
+.spinner {
+    margin-left: -37px;
+    height: 25px;
+    width: 75px;
+    overflow: hidden;
+    -moz-box-shadow: 0 3px 3px -4px #aaa;
+    box-shadow: 0 3px 3px -4px #aaa;
+}
+.spinner .value {
+    background-position: 0 -100px;
+    width: 24px;
+    height: 25px;
+    border: none;
+    color: #000;
+    padding: 0;
+}
+.spinner button {
+    border: none;
+    width: 23px;
+    color: #e5312a;
+    font: 22px Arial bold;
+    padding: 0;
+    outline: none;
+}
+.spinner button, .spinner .value {
+    text-align: center;
+    display: block;
+    float: left;
+    height: 100%;
+    line-height: 20px;
+    margin: 0;
+}
+.spinner .decrease {
+    background-position: 0 -50px;
+    cursor: pointer;
+}
+.spinner .increase {
+    background-position: 0 0;
+    cursor: pointer;
+}
+.amount_btn input {
+    font-size: 12px;
+    line-height: 12px;
+    float: left;
+    width: 35px;
+    height: 15px;
+    text-align: center;
+    color: #666;
+    border: none;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.img-circle{
+	height: 60px;
+	width: 60px;
+}
+/* 购物车全选栏 */
+.count_info {
+    font-size: 12px;
+    position: relative;
+    margin: 20px;
+    
+    width: 100%;
+    height: 50px;
+    margin-bottom: 15px;
+    margin-top: -15px;
+    margin-left: 0px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+}
+.count_info label {
+    font-size: 14px;
+    float: left;
+    width: 70px;
+    color: #666;
+    margin-left: 15px;
+    margin-top: 10px;
+    text-align: center;
+}
+.count_info p {
+    font-size: 14px;
+    float: right;
+    width: 70%;
+    margin: 0;
+    text-align: right;
+    color: #666;
+    margin-right: 20px;
+}
+.count_info label input {
+    width: 15px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+/* 购物车结算栏样式 */
+.shop_function_btn {
+    margin-top: -15px;
+    background-color: #e6e6e6;
+    padding: 6px 0px 0px;
+    text-align: center;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+}
+.redbtn-moddle1 {
+    font-size: 14px;
+    line-height: 1.2;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    padding: 16px 30px;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    text-transform: capitalize;
+    color: #fff;
+    background: #e50000;
+}
