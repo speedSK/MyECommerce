@@ -13,4 +13,9 @@ public class UserBlockedException extends UserException
     {
         super("user.blocked", null);
     }
+    
+    public UserBlockedException(String reason)
+    {
+        super("user.blocked", new Object[] { reason });
+    }
 }

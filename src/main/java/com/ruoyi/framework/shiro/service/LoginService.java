@@ -3,6 +3,7 @@ package com.ruoyi.framework.shiro.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.ShiroConstants;
 import com.ruoyi.common.constant.UserConstants;
@@ -14,9 +15,11 @@ import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.MessageUtils;
 import com.ruoyi.common.utils.ServletUtils;
+import com.ruoyi.common.utils.SystemLogUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
+import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.system.user.domain.User;
 import com.ruoyi.project.system.user.domain.UserStatus;
 import com.ruoyi.project.system.user.service.IUserService;
@@ -106,6 +109,55 @@ public class LoginService
         return user;
     }
 
+    /**
+     * Person登录方法
+     */
+    public Person BusLogin(String username, String password)
+    {
+        // 用户名或密码为空 错误
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
+        {
+            SystemLogUtils.log(username, Constants.LOGIN_FAIL, MessageUtils.message("not.null"));
+            throw new UserNotExistsException();
+        }
+        // 密码如果不在指定范围内 错误
+        if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
+                || password.length() > UserConstants.PASSWORD_MAX_LENGTH)
+        {
+            SystemLogUtils.log(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match"));
+            throw new UserPasswordNotMatchException();
+        }
+
+        // 用户名不在指定范围内 错误
+        if (username.length() < UserConstants.USERNAME_MIN_LENGTH
+                || username.length() > UserConstants.USERNAME_MAX_LENGTH)
+        {
+            SystemLogUtils.log(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match"));
+            throw new UserPasswordNotMatchException();
+        }
+
+        // 查询用户信息
+		Person user = userService.selectBusUserByLoginName(username);
+
+        if (user == null || UserStatus.DISABLE.getCode().equals(user.getStatus()))
+        {
+            SystemLogUtils.log(username, Constants.LOGIN_FAIL, "账户已冻结/停用");
+            throw new UserNotExistsException();
+        }
+        //根据用户类型进行验证
+        passwordService.BusValidate(user, password);
+
+        if (UserStatus.DISABLE.getCode().equals(user.getStatus()))
+        {
+            SystemLogUtils.log(username, Constants.LOGIN_FAIL, MessageUtils.message("user.blocked", user.getRemark()));
+            throw new UserBlockedException(user.getRemark());
+        }
+        SystemLogUtils.log(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        //记录用户登录信息
+//        recordLoginInfo(user);
+        return user;
+    }
+    
     private boolean maybeEmail(String username)
     {
         if (!username.matches(UserConstants.EMAIL_PATTERN))

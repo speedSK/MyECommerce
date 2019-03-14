@@ -3,12 +3,14 @@ package com.ruoyi.common.utils.security;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
+
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.framework.shiro.realm.UserRealm;
+import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.system.user.domain.User;
 
 /**
@@ -55,6 +57,25 @@ public class ShiroUtils
         subject.runAs(newPrincipalCollection);
     }
 
+    //获取Person
+    public static Person getPerson()
+    {
+    		Person person = new Person();
+        BeanUtils.copyBeanProp(person, getSubject().getPrincipal());
+        return person;
+    }
+    
+    //设置Person
+    public static void setPerson(Person person)
+    {
+        Subject subject = getSubject();
+        PrincipalCollection principalCollection = subject.getPrincipals();
+        String realmName = principalCollection.getRealmNames().iterator().next();
+        PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(person, realmName);
+        // 重新加载Principal
+        subject.runAs(newPrincipalCollection);
+    }
+    
     public static void clearCachedAuthorizationInfo()
     {
         RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();

@@ -27,7 +27,9 @@ import com.ruoyi.common.exception.user.UserBlockedException;
 import com.ruoyi.common.exception.user.UserNotExistsException;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
 import com.ruoyi.common.exception.user.UserPasswordRetryLimitExceedException;
+import com.ruoyi.common.utils.CommonConstant;
 import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.framework.shiro.domain.UsrPwTokenExtend;
 import com.ruoyi.framework.shiro.service.LoginService;
 import com.ruoyi.project.system.menu.service.IMenuService;
 import com.ruoyi.project.system.role.service.IRoleService;
@@ -87,18 +89,35 @@ public class UserRealm extends AuthorizingRealm
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException
     {
-        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-        String username = upToken.getUsername();
-        String password = "";
-        if (upToken.getPassword() != null)
-        {
-            password = new String(upToken.getPassword());
-        }
+    		String username="";
+    		String password = "" ;
+    		String userType = "";	//用户类型
+	    	if(token.getClass().equals(UsrPwTokenExtend.class)){
+	    		UsrPwTokenExtend upToken = (UsrPwTokenExtend) token;
+	    		username = upToken.getUsername();
+	    		if (upToken.getPassword() != null)
+	            {
+	                password = new String(upToken.getPassword());
+	            }
+	    		userType = CommonConstant.USERTYPE_PRISONER;
+	    	}else{
+	    		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+	    		username = upToken.getUsername();
+	    		if (upToken.getPassword() != null)
+	            {
+	                password = new String(upToken.getPassword());
+	            }
+	    		userType = CommonConstant.USERTYPE_PRISONMANAGER;
+	    	}
 
-        User user = null;
+        Object user = null;
         try
         {
-            user = loginService.login(username, password);
+	        	if(CommonConstant.USERTYPE_PRISONMANAGER.equals(userType)){
+	        		user = loginService.login(username, password);
+	        	}else{
+	        		user = loginService.BusLogin(username, password);
+	        	}
         }
         catch (CaptchaException e)
         {

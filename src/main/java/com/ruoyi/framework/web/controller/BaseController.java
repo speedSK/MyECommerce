@@ -4,18 +4,20 @@ import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.List;
 
-import com.ruoyi.common.utils.sql.SqlUtil;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.common.utils.sql.SqlUtil;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.PageDomain;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.page.TableSupport;
+import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.system.user.domain.User;
 
 /**
@@ -148,6 +150,18 @@ public class BaseController
     public void setSysUser(User user)
     {
         ShiroUtils.setSysUser(user);
+    }
+
+    //获取Person
+    public Person getPerson()
+    {
+        return ShiroUtils.getPerson();
+    }
+
+    //设置Person
+    public void setPerson(Person person)
+    {
+        ShiroUtils.setPerson(person);
     }
 
     public Long getUserId()
