@@ -84,6 +84,12 @@ public class Constants
     public static final String ORDER_FINISH = "1"; //完成
     public static final String ORDER_CANCEL = "2"; //取消
     
+    /**
+     * 支付状态
+     */
+    public static final String PAY_STATUS_UN_PAY = "up";	//未支付
+    public static final String PAY_STATUS_ALREADY_PAY= "ap";	//已支付
+    
     public static final String BANK_UNCHECK = "0";
     public static final String BANK_CHECKED = "1";
     public static final String BANK_CHECK_fAIL = "2";
