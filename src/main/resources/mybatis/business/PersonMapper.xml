@@ -45,6 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status"   column="dept_status" />
     </resultMap>
 
+	<select id="selectPersonByLoginName" parameterType="String" resultMap="PersonResult">
+	   	select p.id, p.number, p.name, p.sex, p.age, p.nation, p.idcard, p.bank_card_number, p.build, p.photo,
+               p.mobile, p.area, p.room, p.bed, p.dept_id, p.identity_id, p.password,
+               p.salt, p.deposit, p.balance, p.already_cost, p.flag, p.status, p.remark, p.create_by,
+               p.create_time, p.update_by, p.update_time,
+               d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status
+        from bus_person p
+        left join sys_dept d on p.dept_id = d.dept_id
+		where number = #{userName}
+	</select>
+
 	<sql id="selectPersonVo">
         select p.id, p.number, p.name, p.sex, p.age, p.nation, p.idcard, p.bank_card_number, p.build, p.photo,
                p.mobile, p.area, p.room, p.bed, p.dept_id, p.identity_id, p.password,
