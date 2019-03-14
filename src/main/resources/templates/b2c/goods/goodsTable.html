@@ -1,0 +1,14 @@
+<ul id="goodsTable" class="clearFloat" >
+	<li th:each="goods : ${goodsPage.rows}" class="liStyle">
+		<div class="d"><img th:src="${goods.image}"></div>
+		<h4 th:text="${goods.name}"></h4>
+		<div class="clearFloat">
+			<span class="price fl" th:text="'¥'+${goods.price}"></span>
+		</div>
+		<a class="addCart" th:onclick="'javascript:addShoppingCart(\'' + ${goods.id} + '\'' +
+		 ',\'' + ${goods.name}+'\'' +
+		 ',\'' + ${goods.price}+'\'' +
+		 ',\'' + ${goods.image} +
+		     '\');'">加入购物车</a>
+	</li>
+</ul>
