@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap type="GoodCategory" id="GoodCategoryResult">
         <result property="id" column="id"/>
-        <result property="categoryCode" column="category_code"/>
+        <result property="ancestors" column="ancestors"/>
         <result property="categoryName" column="category_name"/>
         <result property="parentId" column="parent_id"/>
         <result property="orderNum" column="order_num"/>
@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectGoodsVo">
         select g.id, g.category_id, g.merchant_id, g.code, g.name, g.price, g.order_num, g.image,
                g.visible, g.status , g.remark , g.create_by, g.create_time, g.update_by, g.update_time,
-               gc.id,gc.category_code,gc.category_name,gc.parent_id,gc.order_num,gc.visible,gc.status,
+               gc.id,gc.ancestors,gc.category_name,gc.parent_id,gc.order_num,gc.visible,gc.status,
                m.id,m.merchant_code,m.merchant_name,m.status
         FROM bus_goods g
                  LEFT JOIN bus_good_category gc on g.category_id=gc.id

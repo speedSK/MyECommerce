@@ -2,6 +2,7 @@ package com.ruoyi.project.business.goodCategory.service;
 
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ruoyi.framework.web.domain.Ztree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.goodCategory.mapper.GoodCategoryMapper;
@@ -62,9 +64,12 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 	@Override
 	public int insertGoodCategory(GoodCategory goodCategory)
 	{
-	    goodCategory.setStatus(Constants.STATUS_ACTIVE);
-
+		GoodCategory info = goodCategoryMapper.selectGoodCategoryById(goodCategory.getParentId());
+		if (!UserConstants.NORMAL.equals(info.getStatus())) {
+			throw new BusinessException("分类停用，不允许新增");
+		}
         goodCategory.setCreateBy(ShiroUtils.getLoginName());
+		goodCategory.setAncestors(info.getAncestors() + "," + goodCategory.getParentId());
 	    return goodCategoryMapper.insertGoodCategory(goodCategory);
 	}
 	
@@ -77,8 +82,40 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 	@Override
 	public int updateGoodCategory(GoodCategory goodCategory)
 	{
-	    goodCategory.setUpdateBy(ShiroUtils.getLoginName());
-	    return goodCategoryMapper.updateGoodCategory(goodCategory);
+		GoodCategory info = goodCategoryMapper.selectGoodCategoryById(goodCategory.getParentId());
+		if (StringUtils.isNotNull(info)) {
+			String ancestors = info.getAncestors() + "," + info.getId();
+			goodCategory.setAncestors(ancestors);
+			updateChildren(info.getId(), ancestors);
+		}
+		goodCategory.setUpdateBy(ShiroUtils.getLoginName());
+		int result = goodCategoryMapper.updateGoodCategory(goodCategory);
+		if (UserConstants.NORMAL.equals(goodCategory.getStatus())) {
+			//修改所有父级分类
+			goodCategoryMapper.updateGoodCategoryStatus(goodCategory);
+		}
+		return result;
+	}
+
+	/**
+	 * 修改子元素关系
+	 *
+	 * @param goodCategoryId 分类ID
+	 * @param ancestors 元素列表
+	 */
+	public void updateChildren(Long goodCategoryId, String ancestors)
+	{
+		GoodCategory category = new GoodCategory();
+		category.setParentId(goodCategoryId);
+		List<GoodCategory> childrens = goodCategoryMapper.selectGoodCategoryList(category);
+		for (GoodCategory children : childrens)
+		{
+			children.setAncestors(ancestors + "," + category.getParentId());
+		}
+		if (childrens.size() > 0)
+		{
+			goodCategoryMapper.updateChildren(childrens);
+		}
 	}
 
 	/**
@@ -123,16 +160,10 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 	}
 
 	@Override
-	public List<Map<String, Object>> goodCategoryTreeData() {
-		List<Map<String, Object>> trees = new ArrayList<Map<String, Object>>();
-		List<GoodCategory> goodCategoryList = goodCategoryMapper.selectGoodCategoryAll();
-		trees = getTrees(goodCategoryList);
-		return trees;
-	}
-
-	@Override
-	public int selectCountGoodCategoryByParentId(Long parentId) {
-		return goodCategoryMapper.selectCountGoodCategoryByParentId(parentId);
+	public int selectGoodCategoryCount(Long parentId) {
+		GoodCategory goodCategory = new GoodCategory();
+		goodCategory.setParentId(parentId);
+		return goodCategoryMapper.selectGoodCategoryCount(goodCategory);
 	}
 
 	@Override
@@ -142,6 +173,43 @@ public class GoodCategoryServiceImpl implements IGoodCategoryService
 		goodCategory.setStatus(Constants.STATUS_REMOVED);
 		goodCategory.setUpdateBy(ShiroUtils.getLoginName());
 		return goodCategoryMapper.updateGoodCategory(goodCategory);
+	}
+
+	@Override
+	public boolean checkDeptExistGoods(Long goodCategoryId) {
+		int result = goodCategoryMapper.checkDeptExistGoods(goodCategoryId);
+		return result > 0 ? true : false;
+	}
+
+	@Override
+	public List<Ztree> selectGoodCategoryTree(GoodCategory goodCategory) {
+		List<GoodCategory> goodCategoryList = goodCategoryMapper.selectGoodCategoryList(goodCategory);
+		List<Ztree> ztrees = initZtree(goodCategoryList);
+		return ztrees;
+	}
+
+	/**
+	 * 对象转分类树
+	 *
+	 * @param goodCategoryList 分类列表
+	 * @return 树结构列表
+	 */
+	public List<Ztree> initZtree(List<GoodCategory> goodCategoryList)
+	{
+		List<Ztree> ztrees = new ArrayList<Ztree>();
+		for (GoodCategory goodCategory : goodCategoryList)
+		{
+			if (UserConstants.NORMAL.equals(goodCategory.getStatus()))
+			{
+				Ztree ztree = new Ztree();
+				ztree.setId(goodCategory.getId());
+				ztree.setpId(goodCategory.getParentId());
+				ztree.setName(goodCategory.getCategoryName());
+				ztree.setTitle(goodCategory.getCategoryName());
+				ztrees.add(ztree);
+			}
+		}
+		return ztrees;
 	}
 
 

@@ -15,7 +15,7 @@ public class GoodCategory extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 分类编码 */
-	private String categoryCode;
+	private String ancestors;
 	/** 分类名称 */
 	private String categoryName;
 	/** 父级id */
@@ -46,23 +46,15 @@ public class GoodCategory extends BaseEntity
 	{
 		return id;
 	}
-	
-	/**
-	 * 设置：分类编码
-	 */
-	public void setCategoryCode(String categoryCode) 
-	{
-		this.categoryCode = categoryCode;
+
+	public String getAncestors() {
+		return ancestors;
 	}
-	
-	/**
-	 * 获取：分类编码
-	 */
-	public String getCategoryCode() 
-	{
-		return categoryCode;
+
+	public void setAncestors(String ancestors) {
+		this.ancestors = ancestors;
 	}
-	
+
 	/**
 	 * 设置：分类名称
 	 */

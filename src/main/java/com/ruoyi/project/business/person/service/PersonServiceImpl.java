@@ -237,6 +237,25 @@ public class PersonServiceImpl implements IPersonService
             closedPerson.setUpdateTime(new Date());
             closedPersonMapper.insertClosedPerson(closedPerson);
             personMapper.deletePersonById(Long.parseLong(id));
+            TradeRecord tradeRecord = new TradeRecord();
+            Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_2_ID);
+            merchant.setBalance(merchant.getBalance().add(person.getBalance()).add(person.getDeposit()));
+            merchantService.updateMerchant(merchant);
+            tradeRecord.setToAcc(merchant.getMerchantCode());
+            merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
+            merchant.setBalance(merchant.getBalance().subtract(person.getBalance()).subtract(person.getDeposit()));
+            merchantService.updateMerchant(merchant);
+            tradeRecord.setFromAcc(merchant.getMerchantCode());
+            tradeRecord.setJourno(IdGen.getJourno());
+            tradeRecord.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
+            tradeRecord.setStationCode("0000");
+            tradeRecord.setTxamt(person.getBalance().add(person.getDeposit()));
+            tradeRecord.setTxcode("1003");
+            tradeRecord.setUserNumber(person.getNumber());
+            tradeRecord.setBefore(person.getBalance());
+            tradeRecord.setAfter(new BigDecimal(0));
+            tradeRecord.setRemark("销户押金退还" + person.getDeposit());
+            tradeRecordService.insertTradeRecord(tradeRecord);
 		}
 		return 1;
 	}

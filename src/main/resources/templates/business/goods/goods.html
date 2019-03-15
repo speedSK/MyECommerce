@@ -176,7 +176,7 @@
 					$.table.search($('form').attr('id'));
 				}}
 			}, tree, loadTree = function(){
-				$.get(ctx + "business/goodCategory/goodCategoryTreeData", function(data) {
+				$.get(ctx + "business/goodCategory/treeData", function(data) {
 				    tree = $.fn.zTree.init($("#tree"), setting, data); //.expandAll(true);
 				    // 展开第一级节点
 				    var nodes = tree.getNodesByParam("level", 0);

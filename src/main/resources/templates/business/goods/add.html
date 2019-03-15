@@ -92,7 +92,7 @@
 		/*分类管理-新增-选择分类树*/
         function selectGoodCategoryTree() {
             var treeId = $("#treeId").val();
-            var goodCategoryId = $.common.isEmpty(treeId) ? "1" : $("#treeId").val();
+            var goodCategoryId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
             var url = ctx + "business/goodCategory/selectGoodCategoryTree/" + goodCategoryId;
             var options = {
                 title: '选择分类',

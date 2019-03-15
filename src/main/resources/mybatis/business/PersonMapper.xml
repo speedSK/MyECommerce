@@ -83,7 +83,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="area != null and area != ''"> and p.area = #{area}</if>
              <if test="room != null and room != ''"> and p.room = #{room}</if>
              <if test="bed != null and bed != ''"> and p.bed = #{bed}</if>
-             <if test="deptId != null and deptId != ''"> and p.dept_id = #{deptId}</if>
              <if test="identityId != null and identityId != ''"> and p.identity_id = #{identityId}</if>
              <if test="password != null and password != ''"> and p.password = #{password}</if>
              <if test="salt != null and salt != ''"> and p.salt = #{salt}</if>
@@ -103,6 +102,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
             <if test="params.beginTime != null and params.endTime != ''"><!-- 结束时间检索 -->
                 AND date_format( p.create_time,'%y%m%d') &lt;= p.date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="deptId != null and deptId != 0">
+                AND (p.dept_id = #{deptId} OR p.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors) ))
             </if>
         </where>
     </select>

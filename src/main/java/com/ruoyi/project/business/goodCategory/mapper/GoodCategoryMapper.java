@@ -64,12 +64,12 @@ public interface GoodCategoryMapper
 	public int deleteGoodCategoryByIds(String[] ids);
 
 	/**
-	 * 查询分类数量
+	 * 查询分类是否存在有用子分类
 	 *
-	 * @param parentId 分类父ID
+	 * @param goodCategory 分类父ID
 	 * @return 结果
 	 */
-	public int selectCountGoodCategoryByParentId(Long parentId);
+	public int selectGoodCategoryCount(GoodCategory goodCategory);
 
 	/**
 	 * 查询系统所有分类
@@ -85,4 +85,15 @@ public interface GoodCategoryMapper
 	 * @return 结果
 	 */
 	public GoodCategory checkGoodCategoryNameUnique(@Param("categoryName") String categoryName, @Param("parentId") Long parentId);
+
+    public void updateGoodCategoryStatus(GoodCategory goodCategory);
+
+	public void updateChildren(@Param("childrens") List<GoodCategory> childrens);
+
+	/**
+	 * 查询分类是否存在商品
+	 * @param goodCategoryId
+	 * @return
+	 */
+    public int checkDeptExistGoods(Long goodCategoryId);
 }

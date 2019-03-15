@@ -2,6 +2,9 @@ package com.ruoyi.project.business.goodCategory.controller;
 
 import java.util.List;
 import java.util.Map;
+
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.framework.web.domain.Ztree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,15 +55,18 @@ public class GoodCategoryController extends BaseController
 	/**
 	 * 删除菜单
 	 */
-	@Log(title = "菜单管理", businessType = BusinessType.DELETE)
+	@Log(title = "分类管理", businessType = BusinessType.DELETE)
 	@RequiresPermissions("business:goodCategory:remove")
 	@PostMapping("/remove/{goodCategoryId}")
 	@ResponseBody
 	public AjaxResult remove(@PathVariable("goodCategoryId") Long goodCategoryId)
 	{
-		if (goodCategoryService.selectCountGoodCategoryByParentId(goodCategoryId) > 0)
+		if (goodCategoryService.selectGoodCategoryCount(goodCategoryId) > 0)
 		{
-			return error(1, "存在子菜单,不允许删除");
+			return error(1, "存在子分类,不允许删除");
+		}
+		if (goodCategoryService.checkDeptExistGoods(goodCategoryId)) {
+			return error(1, "分类存在商品,不允许删除");
 		}
 		return toAjax(goodCategoryService.deleteGoodCategoryById(goodCategoryId));
 	}
@@ -71,25 +77,15 @@ public class GoodCategoryController extends BaseController
 	@GetMapping("/add/{parentId}")
 	public String add(@PathVariable("parentId") Long parentId, ModelMap mmap)
 	{
-		GoodCategory goodCategory = null;
-		if (0L != parentId)
-		{
-			goodCategory = goodCategoryService.selectGoodCategoryById(parentId);
-		}
-		else
-		{
-			goodCategory = new GoodCategory();
-			goodCategory.setId(0L);
-			goodCategory.setCategoryName("主目录");
-		}
+		GoodCategory goodCategory = goodCategoryService.selectGoodCategoryById(parentId);
 		mmap.put("goodCategory", goodCategory);
 		return prefix + "/add";
 	}
 
 	/**
-	 * 新增保存菜单
+	 * 新增保存分类
 	 */
-	@Log(title = "菜单管理", businessType = BusinessType.INSERT)
+	@Log(title = "分类管理", businessType = BusinessType.INSERT)
 	@RequiresPermissions("business:goodCategory:add")
 	@PostMapping("/add")
 	@ResponseBody
@@ -99,19 +95,24 @@ public class GoodCategoryController extends BaseController
 	}
 
 	/**
-	 * 修改菜单
+	 * 修改分类
 	 */
 	@GetMapping("/edit/{goodCategoryId}")
 	public String edit(@PathVariable("goodCategoryId") Long goodCategoryId, ModelMap mmap)
 	{
-		mmap.put("goodCategory", goodCategoryService.selectGoodCategoryById(goodCategoryId));
+		GoodCategory goodCategory = goodCategoryService.selectGoodCategoryById(goodCategoryId);
+		if (StringUtils.isNotNull(goodCategory) && 100L == goodCategoryId)
+		{
+			goodCategory.setParentName("无");
+		}
+		mmap.put("goodCategory", goodCategory);
 		return prefix + "/edit";
 	}
 
 	/**
-	 * 修改保存菜单
+	 * 修改保存分类
 	 */
-	@Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+	@Log(title = "分类管理", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("business:goodCategory:edit")
 	@PostMapping("/edit")
 	@ResponseBody
@@ -121,7 +122,7 @@ public class GoodCategoryController extends BaseController
 	}
 
 	/**
-	 * 选择菜单图标
+	 * 选择分类图标
 	 */
 	@GetMapping("/icon")
 	public String icon()
@@ -130,7 +131,7 @@ public class GoodCategoryController extends BaseController
 	}
 
 	/**
-	 * 校验菜单名称
+	 * 校验分类名称
 	 */
 	@PostMapping("/checkGoodCategoryNameUnique")
 	@ResponseBody
@@ -142,18 +143,18 @@ public class GoodCategoryController extends BaseController
 
 
 	/**
-	 * 加载所有菜单列表树
+	 * 加载所有分类列表树
 	 */
-	@GetMapping("/goodCategoryTreeData")
+	@GetMapping("/treeData")
 	@ResponseBody
-	public List<Map<String, Object>> goodCategoryTreeData()
+	public List<Ztree> treeData()
 	{
-		List<Map<String, Object>> tree = goodCategoryService.goodCategoryTreeData();
+		List<Ztree> tree = goodCategoryService.selectGoodCategoryTree(new GoodCategory());
 		return tree;
 	}
 
 	/**
-	 * 选择菜单树
+	 * 选择分类树
 	 */
 	@GetMapping("/selectGoodCategoryTree/{goodCategoryId}")
 	public String selectGoodCategoryTree(@PathVariable("goodCategoryId") Long goodCategoryId, ModelMap mmap)

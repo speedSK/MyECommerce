@@ -30,10 +30,10 @@
 		</div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add(0)" shiro:hasPermission="business:goodCategory:add">
+            <a class="btn btn-success" onclick="$.operate.add(100)" shiro:hasPermission="business:goodCategory:add">
                 <i class="fa fa-plus"></i> 新增
             </a>
-            <a class="btn btn-primary" onclick="$.operate.editTree()" shiro:hasPermission="business:goodCategory:edit">
+            <a class="btn btn-primary" onclick="$.operate.edit()" shiro:hasPermission="business:goodCategory:edit">
                 <i class="fa fa-edit"></i> 修改
             </a>
             <a class="btn btn-info" id="expandAllBtn">
@@ -82,17 +82,15 @@
 		                }
 		            }
 		        },
-		        {
-		            field: 'categoryCode',
-		            title: '分类编码',
-		            width: '20%',
-		            align: "center"
-		        },
+				{
+					field: 'id',
+					title: '分类编号',
+					width: '20%'
+				},
 		        {
 		            field: 'orderNum',
 		            title: '排序',
-		            width: '10%',
-		            align: "center"
+		            width: '10%'
 		        },
 		        {
 		            field: 'visible',

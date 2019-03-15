@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.goodCategory.service;
 
+import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.business.goodCategory.domain.GoodCategory;
 import java.util.List;
 import java.util.Map;
@@ -62,21 +63,13 @@ public interface IGoodCategoryService
 	 */
 	public String checkGoodCategoryNameUnique(GoodCategory goodCategory);
 
-
-	/**
-	 * 查询所有分類信息
-	 *
-	 * @return 分類列表
-	 */
-	public List<Map<String,Object>> goodCategoryTreeData();
-
 	/**
 	 * 查询分類数量
 	 *
 	 * @param parentId 分類父ID
 	 * @return 结果
 	 */
-	public int  selectCountGoodCategoryByParentId(Long parentId);
+	public int  selectGoodCategoryCount(Long parentId);
 	
 	/**
 	 * 删除分類管理信息
@@ -86,4 +79,12 @@ public interface IGoodCategoryService
 	 */
 	public int deleteGoodCategoryById(Long id);
 
+	/**
+	 * 查询分类是否存在商品
+	 * @param goodCategoryId
+	 * @return
+	 */
+    boolean checkDeptExistGoods(Long goodCategoryId);
+
+    public List<Ztree> selectGoodCategoryTree(GoodCategory goodCategory);
 }
