@@ -210,7 +210,7 @@ public class GoodsController extends BaseController
 	}
 
 	/**
-	 * 导出业务（犯人）列表
+	 * 导出商品信息
 	 */
 	@RequiresPermissions("business:goods:export")
 	@Log(title = "导出商品信息", businessType = BusinessType.EXPORT)

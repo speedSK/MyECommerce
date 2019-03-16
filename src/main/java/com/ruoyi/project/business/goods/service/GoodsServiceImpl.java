@@ -123,7 +123,7 @@ public class GoodsServiceImpl implements IGoodsService
 			try
 			{
 				// 验证是否存在这个用户
-				Goods g = goodsMapper.selectPersonByCode(goods.getCode());
+				Goods g = goodsMapper.selectGoodsByCode(goods.getCode());
 				if (StringUtils.isNull(g))
 				{
 					goods.setCreateBy(operName);

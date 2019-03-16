@@ -1,15 +1,21 @@
 package com.ruoyi.project.system.merchant.service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
+import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.merchant.mapper.MerchantMapper;
 import com.ruoyi.project.system.merchant.domain.Merchant;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import com.ruoyi.common.support.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ruoyi.common.constant.Constants.ACCOUNT_ACTIVE_3;
 
@@ -24,6 +30,8 @@ public class MerchantServiceImpl implements IMerchantService
 {
 	@Autowired
 	private MerchantMapper merchantMapper;
+	@Autowired
+	private ITradeRecordService tradeRecordService;
 
 	/**
      * 查询商户信息
@@ -116,6 +124,41 @@ public class MerchantServiceImpl implements IMerchantService
 	@Override
 	public List<Merchant> selectMerchantAll() {
 		return merchantMapper.selectMerchantAll();
+	}
+
+	@Override
+	@Transactional
+	public int settleMerchant(Merchant merchant) {
+		Date operDate = new Date();
+		TradeRecord tradeRecord = new TradeRecord();
+		Merchant personal = merchantMapper.selectMerchantById(merchant.getId());
+		tradeRecord.setMerchantCode(personal.getId().toString());
+		tradeRecord.setBefore(merchant.getBalance());
+		tradeRecord.setAfter(new BigDecimal(0));
+		tradeRecord.setTxamt(personal.getBalance());
+		Merchant coming = merchantMapper.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
+		tradeRecord.setFromAcc(coming.getId().toString());
+		Merchant out = merchantMapper.selectMerchantById(Constants.ACCOUNT_ACTIVE_2_ID);
+		tradeRecord.setToAcc(out.getId().toString());
+		coming.setBalance(coming.getBalance().subtract(personal.getBalance()));
+		coming.setUpdateBy(ShiroUtils.getLoginName());
+		coming.setUpdateTime(operDate);
+		merchantMapper.updateMerchant(coming);
+		out.setBalance(out.getBalance().add(personal.getBalance()));
+		out.setUpdateBy(ShiroUtils.getLoginName());
+		out.setUpdateTime(operDate);
+		merchantMapper.updateMerchant(out);
+		personal.setBalance(new BigDecimal(0));
+		personal.setUpdateBy(ShiroUtils.getLoginName());
+		personal.setUpdateTime(operDate);
+		merchantMapper.updateMerchant(personal);
+		tradeRecord.setJourno(IdGen.getJourno());
+		tradeRecord.setTxcode("1006");
+		tradeRecord.setStationCode("0000");
+		tradeRecord.setRemark("商户结算");
+		tradeRecord.setCreateBy(ShiroUtils.getLoginName());
+		tradeRecord.setCreateTime(operDate);
+		return tradeRecordService.insertTradeRecord(tradeRecord);
 	}
 
 }

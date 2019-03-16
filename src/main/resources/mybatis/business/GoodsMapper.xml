@@ -144,7 +144,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-    <select id="selectPersonByCode" parameterType="String" resultMap="GoodsResult">
+    <select id="selectGoodsByCode" parameterType="String" resultMap="GoodsResult">
         <include refid="selectGoodsVo"/>
             where g.code =#{goodCode}
     </select>

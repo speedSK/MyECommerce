@@ -9,7 +9,7 @@ public class BatchCostVo {
 	@Excel(name="消费金额")
 	private String amount;
 	@Excel(name="收款商户编号")
-	private String merchant;
+	private Long merchant;
 	@Excel(name="失败原因",type = Excel.Type.EXPORT)
 	private String failure;
 	
@@ -37,11 +37,11 @@ public class BatchCostVo {
 		this.failure = failure;
 	}
 
-    public String getMerchant() {
-        return merchant;
-    }
+	public Long getMerchant() {
+		return merchant;
+	}
 
-    public void setMerchant(String merchant) {
-        this.merchant = merchant;
-    }
+	public void setMerchant(Long merchant) {
+		this.merchant = merchant;
+	}
 }

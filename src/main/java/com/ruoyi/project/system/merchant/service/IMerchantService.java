@@ -52,4 +52,6 @@ public interface IMerchantService
 	public int deleteMerchantByIds(String ids);
 
 	public List<Merchant> selectMerchantAll();
+
+    public int settleMerchant(Merchant merchant);
 }

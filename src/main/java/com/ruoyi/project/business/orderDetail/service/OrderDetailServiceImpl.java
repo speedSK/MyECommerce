@@ -10,12 +10,17 @@ import com.ruoyi.project.business.order.domain.Order;
 import com.ruoyi.project.business.order.service.IOrderService;
 import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.business.person.service.IPersonService;
+import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
+import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
+import com.ruoyi.project.system.merchant.domain.Merchant;
+import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.orderDetail.mapper.OrderDetailMapper;
 import com.ruoyi.project.business.orderDetail.domain.OrderDetail;
 import com.ruoyi.project.business.orderDetail.service.IOrderDetailService;
 import com.ruoyi.common.support.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 订单详情 服务层实现
@@ -33,6 +38,10 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	private IOrderService orderService;
     @Autowired
     private IPersonService personService;
+	@Autowired
+	private IMerchantService merchantService;
+	@Autowired
+	private ITradeRecordService tradeRecordService;
 
 
 
@@ -119,14 +128,27 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	@Override
 	public int updateFlagByOrderId(String id,String flag) {
 		OrderDetail orderDetail = new OrderDetail();
-		orderDetail.setId(Long.valueOf(id));
-		orderDetail.setFlag(flag);
-		orderDetail.setUpdateBy(ShiroUtils.getLoginName());
-		return orderDetailMapper.updateFlagByOrderId(orderDetail);
+		orderDetail.setOrderId(Long.valueOf(id));
+		if (flag.equals(Constants.ORDER_FINISH)) {
+			orderDetail.setFlag(Constants.ORDER_NORMAL);
+			List<OrderDetail> orderDetailList = orderDetailMapper.selectOrderDetailList(orderDetail);
+			for (OrderDetail o : orderDetailList) {
+				this.updateOrderDetail(o);
+			}
+		} else if (flag.equals(Constants.ORDER_CANCEL)) {
+			orderDetail.setFlag(Constants.ORDER_NORMAL);
+			List<OrderDetail> orderDetailList = orderDetailMapper.selectOrderDetailList(orderDetail);
+			for (OrderDetail o : orderDetailList) {
+				this.updateOrderDetailFlag(o.getId().toString(), flag);
+			}
+		}
+		return 1;
 	}
 
 	@Override
+	@Transactional
 	public int updateOrderDetailFlag(String id, String flag) {
+		TradeRecord record = new TradeRecord();
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(Long.parseLong(id));
         Order order = orderService.selectOrderById(orderDetail.getOrderId());
         orderDetail.setFlag(Constants.ORDER_CANCEL);
@@ -135,8 +157,22 @@ public class OrderDetailServiceImpl implements IOrderDetailService
         order.setUpdateBy(ShiroUtils.getLoginName());
         this.updateOrderDetail(orderDetail);
         orderService.updateOrder(order);
+		Merchant merchant = merchantService.selectMerchantById(orderDetail.getMerchantId());
+		merchant.setBalance(merchant.getBalance().subtract(orderDetail.getMoney()));
+		merchantService.updateMerchant(merchant);
         Person person = personService.selectPersonById(order.getPersonId());
+		record.setBefore(person.getBalance());
         person.setBalance(person.getBalance().add(orderDetail.getMoney()));
-        return personService.updatePerson(person);
+		personService.updatePerson(person);
+		record.setUserNumber(person.getNumber());
+		record.setOrderCode(order.getOrderCode());
+		record.setTxamt(orderDetail.getMoney());
+		record.setTxcode("1008");
+		record.setFromAcc(merchant.getId().toString());
+		record.setAfter(person.getBalance());
+		record.setStationCode("0000");
+		record.setCreateBy(ShiroUtils.getLoginName());
+		record.setRemark("商品退款");
+		return tradeRecordService.insertTradeRecord(record);
 	}
 }

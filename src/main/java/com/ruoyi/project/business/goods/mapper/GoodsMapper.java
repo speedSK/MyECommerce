@@ -68,6 +68,6 @@ public interface GoodsMapper
 	 * @param goodCode 商品编号
 	 * @return 商品信息
 	 */
-	public Goods selectPersonByCode(String goodCode);
+	public Goods selectGoodsByCode(String goodCode);
 	
 }

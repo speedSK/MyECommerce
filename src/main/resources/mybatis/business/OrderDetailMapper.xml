@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orderId"    column="order_id"    />
         <result property="merchantId"    column="merchant_id"    />
         <result property="merchantName"    column="merchant_name"    />
-        <result property="googsId"    column="googs_id"    />
+        <result property="goodsId"    column="goods_id"    />
         <result property="goodsName"    column="goods_name"    />
         <result property="goodsPrice"    column="goods_price"    />
         <result property="num"    column="num"    />
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectOrderDetailVo">
-        select id, order_id, merchant_id, merchant_name, googs_id, goods_name, goods_price, num, money, flag, status ,remark,create_time,update_time from bus_order_detail
+        select id, order_id, merchant_id, merchant_name, goods_id, goods_name, goods_price, num, money, flag, status ,remark,create_time,update_time from bus_order_detail
     </sql>
 	
     <select id="selectOrderDetailList" parameterType="OrderDetail" resultMap="OrderDetailResult">
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId}</if>
              <if test="merchantName != null and merchantName != ''"> and merchant_name = #{merchantName}</if>
              <if test="searchValue != null and searchValue != ''"> and merchant_name like  concat('%', #{merchantName}, '%') </if>
-             <if test="googsId != null and googsId != ''"> and googs_id = #{googsId}</if>
+             <if test="goodsId != null and goodsId != ''"> and goods_id = #{goodsId}</if>
              <if test="goodsName != null and goodsName != ''"> and goods_name = #{goodsName}</if>
              <if test="goodsPrice != null and goodsPrice != ''"> and goods_price = #{goodsPrice}</if>
              <if test="num != null and num != ''"> and num = #{num}</if>
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="orderId != null and orderId != '' ">order_id,</if>
 			<if test="merchantId != null and merchantId != '' ">merchant_id,</if>
 			<if test="merchantName != null and merchantName != '' ">merchant_name,</if>
-			<if test="googsId != null and googsId != '' ">googs_id,</if>
+			<if test="goodsId != null and goodsId != '' ">goods_id,</if>
 			<if test="goodsName != null and goodsName != '' ">goods_name,</if>
 			<if test="goodsPrice != null and goodsPrice != '' ">goods_price,</if>
 			<if test="num != null and num != '' ">num,</if>
@@ -72,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="orderId != null and orderId != ''">#{orderId},</if>
 			<if test="merchantId != null and merchantId != ''">#{merchantId},</if>
 			<if test="merchantName != null and merchantName != ''">#{merchantName},</if>
-			<if test="googsId != null and googsId != ''">#{googsId},</if>
+			<if test="goodsId != null and goodsId != ''">#{goodsId},</if>
 			<if test="goodsName != null and goodsName != ''">#{goodsName},</if>
 			<if test="goodsPrice != null and goodsPrice != ''">#{goodsPrice},</if>
 			<if test="num != null and num != ''">#{num},</if>
@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderId != null  ">order_id = #{orderId},</if>
             <if test="merchantId != null  ">merchant_id = #{merchantId},</if>
             <if test="merchantName != null  and merchantName != ''  ">merchant_name = #{merchantName},</if>
-            <if test="googsId != null  ">googs_id = #{googsId},</if>
+            <if test="goodsId != null  ">goods_id = #{goodsId},</if>
             <if test="goodsName != null  and goodsName != ''  ">goods_name = #{goodsName},</if>
             <if test="goodsPrice != null  ">goods_price = #{goodsPrice},</if>
             <if test="num != null  ">num = #{num},</if>

@@ -100,11 +100,6 @@ public class OrderServiceImpl implements IOrderService
 			case "cancel":
 				order.setFlag(Constants.ORDER_CANCEL);
 				orderDetailService.updateFlagByOrderId(id,Constants.ORDER_CANCEL);
-				Person person = personService.selectPersonById(order.getPersonId());
-                if (person != null) {
-                    person.setBalance(person.getBalance().add(order.getMoney()));
-                    personService.updatePerson(person);
-                }
                 break;
 		}
         return updateOrder(order);

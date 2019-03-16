@@ -108,5 +108,15 @@ public class MerchantController extends BaseController
 	{		
 		return toAjax(merchantService.deleteMerchantByIds(ids));
 	}
-	
+
+	@RequiresPermissions("business:person:settle")
+	@Log(title = "商户结算", businessType = BusinessType.UPDATE)
+	@PostMapping( "/settle")
+	@ResponseBody
+	public AjaxResult settle(String ids , String visible)
+	{
+		Merchant merchant = new Merchant();
+		merchant.setId(Long.valueOf(ids));
+		return toAjax(merchantService.settleMerchant(merchant));
+	}
 }

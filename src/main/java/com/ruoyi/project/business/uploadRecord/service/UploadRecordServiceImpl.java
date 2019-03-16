@@ -2,13 +2,16 @@ package com.ruoyi.project.business.uploadRecord.service;
 
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.IdGen;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.framework.web.domain.AjaxResult;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.business.settleDate.service.ISettleDateService;
@@ -164,9 +167,12 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 					record.setUserNumber(person.getNumber());
 					record.setTxcode("1003");
 					record.setTxamt(new BigDecimal(batchRechargeVo.getAmount()));
-					record.setToAcc(merchant.getMerchantCode());
-					record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
+					record.setToAcc(merchant.getId().toString());
+					record.setsettleDate(new Date());
 					record.setStationCode("1001");
+					record.setCreateBy(ShiroUtils.getLoginName());
+					record.setCreateTime(new Date());
+					record.setRemark("批量充值");
 					tradeRecordService.insertTradeRecord(record);
 				}
 			} else {
@@ -211,22 +217,18 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 					batchCostVo.setFailure("用户不存在");
 					failList.add(batchCostVo);
 				} else {
-                    Merchant merchant = new Merchant();
-                    merchant.setMerchantCode(batchCostVo.getMerchant());
-                    List<Merchant> merchants = merchantService.selectMerchantList(merchant);
-                    if (merchants == null || merchants.size() == 0) {
+					Merchant merchant = merchantService.selectMerchantById(batchCostVo.getMerchant());
+                    if (StringUtils.isNotNull(merchant)) {
                         failCount++;
                         batchCostVo.setFailure("商户不存在");
                         failList.add(batchCostVo);
                     } else {
                         successCount++;
                         person = pList.get(0);
-                        merchant = merchants.get(0);
                         BigDecimal oldBalance = person.getBalance();
                         BigDecimal cost = new BigDecimal(batchCostVo.getAmount());
                         person.setBalance(person.getBalance().subtract(cost));
                         //TODO 计算校验字段
-
                         personMapper.updatePerson(person);
                         merchant.setBalance(merchant.getBalance().add(cost));
                         merchantService.updateMerchant(merchant);
@@ -237,9 +239,12 @@ public class UploadRecordServiceImpl implements IUploadRecordService
                         record.setAfter(person.getBalance());
                         record.setTxcode("1005");
                         record.setTxamt(cost);
-                        record.setToAcc(merchant.getMerchantCode());
-                        record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
+                        record.setToAcc(merchant.getId().toString());
+                        record.setsettleDate(new Date());
                         record.setStationCode("1001");
+						record.setCreateBy(ShiroUtils.getLoginName());
+						record.setCreateTime(new Date());
+						record.setRemark("批量消费");
                         tradeRecordService.insertTradeRecord(record);
                     }
 				}

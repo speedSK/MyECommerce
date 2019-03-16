@@ -109,9 +109,12 @@ public class PersonServiceImpl implements IPersonService
         record.setUserNumber(person.getNumber());
         record.setTxcode(Constants.TX_CODE_DEPOSIT_INCOME);
         record.setTxamt(person.getDeposit());
-        record.setToAcc(merchant.getMerchantCode());
-        record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
+        record.setToAcc(merchant.getId().toString());
+        record.setsettleDate(new Date());
         record.setStationCode("0000");
+        record.setCreateBy(ShiroUtils.getLoginName());
+        record.setCreateTime(new Date());
+        record.setRemark("新增用户押金流水");
 	    return tradeRecordService.insertTradeRecord(record);
 	}
 	
@@ -167,9 +170,12 @@ public class PersonServiceImpl implements IPersonService
         record.setAfter(info.getBalance());
 		record.setTxcode(Constants.TX_CODE_CASH_RECHARGE);
 		record.setTxamt(person.getRecharge());
-		record.setToAcc(merchant.getMerchantCode());
-		record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
-		record.setStationCode("0000");
+		record.setToAcc(merchant.getId().toString());
+		record.setsettleDate(new Date());
+        record.setStationCode("0000");
+        record.setCreateBy(ShiroUtils.getLoginName());
+		record.setCreateTime(new Date());
+		record.setRemark("现金充值流水");
 		return tradeRecordService.insertTradeRecord(record);
 	}
 
@@ -241,13 +247,13 @@ public class PersonServiceImpl implements IPersonService
             Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_2_ID);
             merchant.setBalance(merchant.getBalance().add(person.getBalance()).add(person.getDeposit()));
             merchantService.updateMerchant(merchant);
-            tradeRecord.setToAcc(merchant.getMerchantCode());
+            tradeRecord.setToAcc(merchant.getId().toString());
             merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
             merchant.setBalance(merchant.getBalance().subtract(person.getBalance()).subtract(person.getDeposit()));
             merchantService.updateMerchant(merchant);
-            tradeRecord.setFromAcc(merchant.getMerchantCode());
+            tradeRecord.setFromAcc(merchant.getId().toString());
             tradeRecord.setJourno(IdGen.getJourno());
-            tradeRecord.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
+            tradeRecord.setsettleDate(new Date());
             tradeRecord.setStationCode("0000");
             tradeRecord.setTxamt(person.getBalance().add(person.getDeposit()));
             tradeRecord.setTxcode("1003");
@@ -255,6 +261,8 @@ public class PersonServiceImpl implements IPersonService
             tradeRecord.setBefore(person.getBalance());
             tradeRecord.setAfter(new BigDecimal(0));
             tradeRecord.setRemark("销户押金退还" + person.getDeposit());
+            tradeRecord.setCreateBy(ShiroUtils.getLoginName());
+            tradeRecord.setCreateTime(new Date());
             tradeRecordService.insertTradeRecord(tradeRecord);
 		}
 		return 1;
