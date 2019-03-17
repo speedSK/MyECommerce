@@ -30,8 +30,8 @@ public class RyTask {
             params = DateUtils.dateTime(DateUtils.getBeforeDay(new Date()));
         }
         List<Map> outRecords = tradeRecordService.selectOut(params);
-        List<TradeRecord> comingRecords = tradeRecordService.selectComing(params);
-        List<TradeRecord> operRecords = tradeRecordService.selectOperation(params);
+        List<Map> comingRecords = tradeRecordService.selectComing(params);
+        List<Map> operRecords = tradeRecordService.selectOperation(params);
 
 
 

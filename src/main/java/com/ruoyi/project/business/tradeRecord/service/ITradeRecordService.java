@@ -54,7 +54,7 @@ public interface ITradeRecordService
 
 	public List<Map> selectOut(String params);
 
-	public List<TradeRecord> selectComing(String params);
+	public List<Map> selectComing(String params);
 
-	public List<TradeRecord> selectOperation(String params);
+	public List<Map> selectOperation(String params);
 }

@@ -90,15 +90,13 @@ public class TradeRecordServiceImpl implements ITradeRecordService
 	}
 
 	@Override
-	public List<TradeRecord> selectComing(String params) {
-//		return tradeRecordMapper.selectInComingList(params);
-		return null;
+	public List<Map> selectComing(String params) {
+		return tradeRecordMapper.selectInComingList(params);
 	}
 
 	@Override
-	public List<TradeRecord> selectOperation(String params) {
-//		return tradeRecordMapper.selectOperation(params);
-		return null;
+	public List<Map> selectOperation(String params) {
+		return tradeRecordMapper.selectOperation(params);
 	}
 
 }
