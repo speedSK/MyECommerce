@@ -1,6 +1,7 @@
 package com.ruoyi.project.business.tradeRecord.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.common.utils.security.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,5 +83,22 @@ public class TradeRecordServiceImpl implements ITradeRecordService
 	{
 		return tradeRecordMapper.deleteTradeRecordByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<Map> selectOut(String params) {
+		return tradeRecordMapper.selectOutList(params);
+	}
+
+	@Override
+	public List<TradeRecord> selectComing(String params) {
+//		return tradeRecordMapper.selectInComingList(params);
+		return null;
+	}
+
+	@Override
+	public List<TradeRecord> selectOperation(String params) {
+//		return tradeRecordMapper.selectOperation(params);
+		return null;
+	}
+
 }

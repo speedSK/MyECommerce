@@ -5,7 +5,7 @@
 <body class="gray-bg">
     <div class="container-div">
 		<div class="col-sm-12 search-collapse">
-			<form id="accountReport-form">
+			<form id="MerchantReport-form">
 				<div class="select-list">
 					<ul>
 						<li>
@@ -27,7 +27,7 @@
 		</div>
 
 		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:accountReport:export">
+			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:MerchantReport:export">
 				<i class="fa fa-download"></i> 导出
 			</a>
 		</div>
@@ -38,7 +38,7 @@
     </div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var prefix = ctx + "business/accountReport";
+        var prefix = ctx + "business/MerchantReport";
 
         $(function() {
             var options = {
@@ -53,7 +53,15 @@
 		        },
 				{
 					field : 'id', 
-					title : '序号'
+					title : '序号',
+					visible:false
+				},
+				{
+					field: '',
+					title: '序号',
+					formatter: function (value, row, index) {
+						return index + 1;
+					}
 				},
 				{
 					field : 'reportDate', 

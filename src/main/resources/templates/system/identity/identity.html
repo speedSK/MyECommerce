@@ -37,12 +37,15 @@
 		            checkbox: true
 		        },
 				{
-					field : 'id', 
-					title : '主键' 
+					field: '',
+					title: '序号',
+					formatter: function (value, row, index) {
+						return index + 1;
+					}
 				},
 				{
-					field : 'code', 
-					title : '身份编码' 
+					field : 'id', 
+					title : '身份编号'
 				},
 				{
 					field : 'name', 

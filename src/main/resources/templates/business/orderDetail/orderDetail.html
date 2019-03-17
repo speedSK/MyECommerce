@@ -35,8 +35,16 @@
 		        },
 				{
 					field : 'id', 
-					title : '序号'
+					title : '序号',
+                    visible:false
 				},
+                {
+                    field: '',
+                    title: '序号',
+                    formatter: function (value, row, index) {
+                        return index + 1;
+                    }
+                },
 				{
 					field : 'goodsName', 
 					title : '商品名称' 

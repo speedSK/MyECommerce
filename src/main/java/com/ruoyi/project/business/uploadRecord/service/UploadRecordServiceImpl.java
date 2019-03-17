@@ -168,7 +168,6 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 					record.setTxcode("1003");
 					record.setTxamt(new BigDecimal(batchRechargeVo.getAmount()));
 					record.setToAcc(merchant.getId().toString());
-					record.setsettleDate(new Date());
 					record.setStationCode("1001");
 					record.setCreateBy(ShiroUtils.getLoginName());
 					record.setCreateTime(new Date());
@@ -240,7 +239,6 @@ public class UploadRecordServiceImpl implements IUploadRecordService
                         record.setTxcode("1005");
                         record.setTxamt(cost);
                         record.setToAcc(merchant.getId().toString());
-                        record.setsettleDate(new Date());
                         record.setStationCode("1001");
 						record.setCreateBy(ShiroUtils.getLoginName());
 						record.setCreateTime(new Date());

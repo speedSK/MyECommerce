@@ -120,91 +120,98 @@
             columns: [{
                 checkbox: true
             },
-                {
-                    field: 'id',
-                    title: '主键',
-                    visible: false
-                },
-                {
-                    field: 'journo',
-                    title: '流水号',
-                    sortable: true
-                },
-                {
-                    field: 'userNumber',
-                    title: '用户编号',
-                    sortable: true
-                },
-                {
-                    field: 'merchantCode',
-                    title: '商户编号',
-                    sortable: true
-                },
-                {
-                    field: 'orderCode',
-                    title: '订单号',
-                    sortable: true
-                },
-                {
-                    field: 'txcode',
-                    title: '交易代码',
-                    sortable: true
-                },
-                {
-                    field: 'before',
-                    title: '消费前余额',
-                    sortable: true
-                },
-                {
-                    field: 'after',
-                    title: '消费后余额',
-                    sortable: true
-                },
-                {
-                    field: 'txamt',
-                    title: '交易金额',
-                    sortable: true
-                },
-                {
-                    field: 'fromAcc',
-                    title: '来源账户',
-                    sortable: true
-                },
-                {
-                    field: 'toAcc',
-                    title: '目标账户',
-                    sortable: true
-                },
-                {
-                    field: 'settleDate',
-                    title: '系统入账日期',
-                    sortable: true
-                },
-                {
-                    field: 'stationCode',
-                    title: '设备编号',
-                    sortable: true
-                },
-                {
-                    field: 'remark',
-                    title: '备注',
-                    sortable: true
-                },
-                {
-                    field: 'status',
-                    title: '状态',
-                    sortable: true
-                },
-                {
-                    field: 'createBy',
-                    title: '创建人',
-                    sortable: true
-                },
-                {
-                    field: 'createTime',
-                    title: '创建时间',
-                    sortable: true
-                }]
+            {
+                field: 'id',
+                title: '主键',
+                visible: false
+            },
+            {
+                field: '',
+                title: '序号',
+                formatter: function (value, row, index) {
+                    return index + 1;
+                }
+            },
+            {
+                field: 'journo',
+                title: '流水号',
+                sortable: true
+            },
+            {
+                field: 'userNumber',
+                title: '用户编号',
+                sortable: true
+            },
+            {
+                field: 'merchantCode',
+                title: '商户编号',
+                sortable: true
+            },
+            {
+                field: 'orderCode',
+                title: '订单号',
+                sortable: true
+            },
+            {
+                field: 'txcode',
+                title: '交易代码',
+                sortable: true
+            },
+            {
+                field: 'before',
+                title: '消费前余额',
+                sortable: true
+            },
+            {
+                field: 'after',
+                title: '消费后余额',
+                sortable: true
+            },
+            {
+                field: 'txamt',
+                title: '交易金额',
+                sortable: true
+            },
+            {
+                field: 'fromAcc',
+                title: '来源账户',
+                sortable: true
+            },
+            {
+                field: 'toAcc',
+                title: '目标账户',
+                sortable: true
+            },
+            {
+                field: 'settleDate',
+                title: '系统入账日期',
+                sortable: true
+            },
+            {
+                field: 'stationCode',
+                title: '设备编号',
+                sortable: true
+            },
+            {
+                field: 'remark',
+                title: '备注',
+                sortable: true
+            },
+            {
+                field: 'status',
+                title: '状态',
+                sortable: true
+            },
+            {
+                field: 'createBy',
+                title: '创建人',
+                sortable: true
+            },
+            {
+                field: 'createTime',
+                title: '创建时间',
+                sortable: true
+            }]
         };
         $.table.init(options);
     });

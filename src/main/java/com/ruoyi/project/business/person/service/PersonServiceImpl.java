@@ -1,6 +1,7 @@
 package com.ruoyi.project.business.person.service;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.IdGen;
@@ -110,7 +111,6 @@ public class PersonServiceImpl implements IPersonService
         record.setTxcode(Constants.TX_CODE_DEPOSIT_INCOME);
         record.setTxamt(person.getDeposit());
         record.setToAcc(merchant.getId().toString());
-        record.setsettleDate(new Date());
         record.setStationCode("0000");
         record.setCreateBy(ShiroUtils.getLoginName());
         record.setCreateTime(new Date());
@@ -248,12 +248,7 @@ public class PersonServiceImpl implements IPersonService
             merchant.setBalance(merchant.getBalance().add(person.getBalance()).add(person.getDeposit()));
             merchantService.updateMerchant(merchant);
             tradeRecord.setToAcc(merchant.getId().toString());
-            merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
-            merchant.setBalance(merchant.getBalance().subtract(person.getBalance()).subtract(person.getDeposit()));
-            merchantService.updateMerchant(merchant);
-            tradeRecord.setFromAcc(merchant.getId().toString());
             tradeRecord.setJourno(IdGen.getJourno());
-            tradeRecord.setsettleDate(new Date());
             tradeRecord.setStationCode("0000");
             tradeRecord.setTxamt(person.getBalance().add(person.getDeposit()));
             tradeRecord.setTxcode("1003");
@@ -341,5 +336,15 @@ public class PersonServiceImpl implements IPersonService
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
+    }
+
+    @Override
+    public String checkNumberUnique(String number) {
+        int count = personMapper.checkNumberUnique(number);
+        if (count > 0)
+        {
+            return UserConstants.USER_NAME_NOT_UNIQUE;
+        }
+        return UserConstants.USER_NAME_UNIQUE;
     }
 }

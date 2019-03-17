@@ -217,5 +217,15 @@ public class PersonController extends BaseController
 		return prefix + "/avatar";
 	}
 
+	/**
+	 * 校验用户编号
+	 */
+	@PostMapping("/checkNumberUnique")
+	@ResponseBody
+	public String checkNumberUnique(Person person)
+	{
+		return personService.checkNumberUnique(person.getNumber());
+	}
+
 
 }

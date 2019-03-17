@@ -39,6 +39,13 @@
 		            checkbox: true
 		        },
 				{
+					field: '',
+					title: '序号',
+					formatter: function (value, row, index) {
+						return index + 1;
+					}
+				},
+				{
 					field : 'id', 
 					title : '商户编号'
 				},

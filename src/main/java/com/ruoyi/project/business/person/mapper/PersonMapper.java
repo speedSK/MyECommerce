@@ -79,5 +79,6 @@ public interface PersonMapper
      * @return 结果
      */
 	public int deletePersonByIds(String[] ids);
-	
+
+	public int checkNumberUnique(String number);
 }

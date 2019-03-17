@@ -4,6 +4,7 @@ import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 流水 数据层
@@ -61,5 +62,6 @@ public interface TradeRecordMapper
      * @return 结果
      */
 	public int deleteTradeRecordByIds(String[] ids);
-	
+
+	public List<Map> selectOutList(String params);
 }

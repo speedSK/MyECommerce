@@ -4,7 +4,7 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-accountReport-add">
+        <form class="form-horizontal m" id="form-MerchantReport-add">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">报表日期：</label>
 				<div class="col-sm-8">
@@ -75,15 +75,15 @@
 	</div>
     <div th:include="include::footer"></div>
     <script type="text/javascript">
-		var prefix = ctx + "business/accountReport"
-		$("#form-accountReport-add").validate({
+		var prefix = ctx + "business/MerchantReport"
+		$("#form-MerchantReport-add").validate({
 			rules:{
 				xxxx:{
 					required:true,
 				},
 			},
 			submitHandler: function(form) {
-				$.operate.save(prefix + "/add", $('#form-accountReport-add').serialize());
+				$.operate.save(prefix + "/add", $('#form-MerchantReport-add').serialize());
 			}
 		});
 	</script>

@@ -62,4 +62,6 @@ public interface IPersonService
 //	public String queryBankBalance(Person person);
 
     String importUser(List<Person> userList, boolean updateSupport);
+
+    String checkNumberUnique(String number);
 }

@@ -1,4 +1,4 @@
-package com.ruoyi.project.business.accountReport.domain;
+package com.ruoyi.project.business.merchantReport.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
@@ -10,12 +10,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 系统账户报表 bus_account_report
+ * 系统账户报表 bus_merchant_report
  * 
  * @author LiuNing
  * @date 2018-08-15
  */
-public class AccountReport extends BaseEntity
+public class MerchantReport extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	

@@ -2,6 +2,7 @@ package com.ruoyi.project.business.tradeRecord.service;
 
 import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 流水 服务层
@@ -50,5 +51,10 @@ public interface ITradeRecordService
      * @return 结果
      */
 	public int deleteTradeRecordByIds(String ids);
-	
+
+	public List<Map> selectOut(String params);
+
+	public List<TradeRecord> selectComing(String params);
+
+	public List<TradeRecord> selectOperation(String params);
 }

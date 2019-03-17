@@ -39,12 +39,15 @@
 		            checkbox: true
 		        },
 				{
-					field : 'id', 
-					title : '序号'
+					field: '',
+					title: '序号',
+					formatter: function (value, row, index) {
+						return index + 1;
+					}
 				},
 				{
-					field : 'code', 
-					title : '编号' 
+					field : 'id', 
+					title : '设备编号'
 				},
 				{
 					field : 'name', 

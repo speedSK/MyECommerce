@@ -221,5 +221,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="checkNumberUnique" parameterType="String" resultType="int">
+        select count(1) from bus_person where number=#{number}
+    </select>
     
 </mapper>
