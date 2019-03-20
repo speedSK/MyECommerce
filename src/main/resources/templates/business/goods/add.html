@@ -65,22 +65,46 @@
     <script type="text/javascript">
 		var prefix = ctx + "business/goods"
 		$("#form-goods-add").validate({
-			rules:{
-				name:{
+			rules: {
+				name: {
+					required: true,
+				},code:{
 					required:true,
-				},merchantId:{
-					required:true,
-				},categoryName:{
-					required:true,
-				},orderNum:{
-        			required:true,
-        			digits:true
-        		},price:{
-        			required:true,
-        			number:true
-        		}
+					digits:true,
+					minlength: 2,
+					maxlength: 20,
+					remote: {
+						url: prefix + "/checkCodeUnique",
+						type: "post",
+						dataType: "json",
+						data: {
+							name : function() {
+								return $.common.trim($("#code").val());
+							}
+						},
+						dataFilter: function(data, type) {
+							return $.validate.unique(data);
+						}
+					}
+				}, merchantId: {
+					required: true,
+				}, categoryName: {
+					required: true,
+				}, orderNum: {
+					required: true,
+					digits: true
+				}, price: {
+					required: true,
+					number: true
+				}
 
-			}
+			},
+			messages: {
+				"code": {
+					remote: "编号已经存在"
+				}
+			},
+			focusCleanup: true
 		});
 
         function submitHandler() {

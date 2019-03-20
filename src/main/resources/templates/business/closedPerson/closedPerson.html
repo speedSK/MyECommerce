@@ -3,22 +3,39 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    <div class="container-div">
-		<!--<div class="btn-group-sm hidden-xs" id="toolbar" role="group">-->
-			<!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="business:closedPerson:add">-->
-				<!--<i class="fa fa-plus"></i> 添加-->
-			<!--</a>-->
-			<!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="business:closedPerson:edit">-->
-	            <!--<i class="fa fa-edit"></i> 修改-->
-	        <!--</a>-->
-			<!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="business:closedPerson:remove">-->
-				<!--<i class="fa fa-remove"></i> 删除-->
-			<!--</a>-->
-		<!--</div>-->
-			
-		<div class="col-sm-12 select-table table-striped">
-			<table id="bootstrap-table" data-mobile-responsive="true"></table>
-		</div>
+    <div class="container-div ui-layout-center">
+        <div class="row">
+            <div class="col-sm-12  search-collapse">
+                <form id="user-form">
+                    <input type="hidden" id="deptId" name="deptId">
+                    <input type="hidden" id="parentId" name="parentId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                姓名：<input type="text" name="name"/>
+                            </li>
+                            <li>
+                                编号：<input type="text" name="number"/>
+                            </li>
+                            <li class="select-time">
+                                <label>销户时间： </label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table" data-mobile-responsive="true"></table>
+            </div>
+        </div>
     </div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
@@ -29,6 +46,7 @@
         $(function() {
             var options = {
                 url: prefix + "/list",
+                uniqueId:"id",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",

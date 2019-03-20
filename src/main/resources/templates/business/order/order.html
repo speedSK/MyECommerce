@@ -13,13 +13,13 @@
 				<div class="select-list">
 					<ul>
 						<li>
-							订单编号：<input type="text" name="orderCode"/>
+							订单号：<input type="text" name="orderCode"/>
 						</li>
 						<li>
-							人员编号：<input type="text" name="personCode"/>
+							编号：<input type="text" name="personCode"/>
 						</li>
 						<li>
-							人员姓名：<input type="text" name="personName"/>
+							姓名：<input type="text" name="personName"/>
 						</li>
 						<li>
 							订单状态：<select name="flag" th:with="type=${@dict.getType('bus_order_flag')}">
@@ -75,6 +75,7 @@
         $(function() {
             var options = {
                 url: prefix + "/list",
+				uniqueId:"id",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",

@@ -22,26 +22,26 @@ public interface IMerchantReportService
 	/**
      * 查询系统账户报列表
      * 
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 系统账户报集合
      */
-	public List<MerchantReport> selectMerchantReportList(MerchantReport MerchantReport);
+	public List<MerchantReport> selectMerchantReportList(MerchantReport merchantReport);
 	
 	/**
      * 新增系统账户报
      * 
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 结果
      */
-	public int insertMerchantReport(MerchantReport MerchantReport);
+	public int insertMerchantReport(MerchantReport merchantReport);
 	
 	/**
      * 修改系统账户报
      * 
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 结果
      */
-	public int updateMerchantReport(MerchantReport MerchantReport);
+	public int updateMerchantReport(MerchantReport merchantReport);
 		
 	/**
      * 删除系统账户报信息
@@ -50,5 +50,8 @@ public interface IMerchantReportService
      * @return 结果
      */
 	public int deleteMerchantReportByIds(String ids);
-	
+
+	List<MerchantReport> selectOut(String params);
+
+	List<MerchantReport> selectInComing(String params);
 }

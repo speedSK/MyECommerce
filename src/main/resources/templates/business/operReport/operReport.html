@@ -9,13 +9,16 @@
 				<div class="select-list">
 					<ul>
 						<li>
-							交易代码：<input type="text" name="tradeCode"/>
+							交易代码：<select name="tradeCode" th:with="type=${@dict.getType('bus_txcode')}">
+							<option value="">所有</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+						</select>
 						</li>
 						<li class="select-time">
-							<label>创建时间： </label>
-							<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+							<label>日期： </label>
+							<input type="text" class="time-input" id="startTime" placeholder="开始日期" name="params[beginTime]"/>
 							<span>-</span>
-							<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+							<input type="text" class="time-input" id="endTime" placeholder="结束日期" name="params[endTime]"/>
 						</li>
 						<li>
 							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -37,12 +40,14 @@
 		</div>
     </div>
     <div th:include="include :: footer"></div>
+	<script th:src="@{/ajax/libs/select/select2.js}"></script>
     <script th:inline="javascript">
         var prefix = ctx + "business/operReport";
 
         $(function() {
             var options = {
                 url: prefix + "/list",
+				uniqueId:"id",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
@@ -81,7 +86,7 @@
 				},
 				{
 					field : 'remark', 
-					title : '备注'
+					title : '交易名称'
 				},
 				{
 					field : 'status', 

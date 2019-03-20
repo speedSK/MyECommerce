@@ -139,12 +139,12 @@
 
     <update id="updateChildren" parameterType="java.util.List">
         update bus_good_category set ancestors =
-        <foreach collection="categorys" item="item" index="index"
+        <foreach collection="childrens" item="item" index="index"
                  separator=" " open="case id" close="end">
             when #{item.id} then #{item.ancestors}
         </foreach>
         where id in
-        <foreach collection="categorys" item="item" index="index"
+        <foreach collection="childrens" item="item" index="index"
                  separator="," open="(" close=")">
             #{item.id}
         </foreach>

@@ -22,26 +22,26 @@ public interface MerchantReportMapper
 	/**
      * 查询系统账户报列表
      * 
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 系统账户报集合
      */
-	public List<MerchantReport> selectMerchantReportList(MerchantReport MerchantReport);
+	public List<MerchantReport> selectMerchantReportList(MerchantReport merchantReport);
 	
 	/**
      * 新增系统账户报
      * 
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 结果
      */
-	public int insertMerchantReport(MerchantReport MerchantReport);
+	public int insertMerchantReport(MerchantReport merchantReport);
 	
 	/**
      * 修改系统账户报
      * 
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 结果
      */
-	public int updateMerchantReport(MerchantReport MerchantReport);
+	public int updateMerchantReport(MerchantReport merchantReport);
 	
 	/**
      * 删除系统账户报
@@ -58,5 +58,8 @@ public interface MerchantReportMapper
      * @return 结果
      */
 	public int deleteMerchantReportByIds(String[] ids);
-	
+
+	List<MerchantReport> selectOuting(String params);
+
+	List<MerchantReport> selectInComing(String params);
 }

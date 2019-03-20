@@ -17,10 +17,10 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            人员名称：<input type="text" name="name"/>
+                            姓名：<input type="text" name="name"/>
                         </li>
                         <li>
-                            人员编号：<input type="text" name="number"/>
+                            编号：<input type="text" name="number"/>
                         </li>
                         <li class="select-time">
                             <label>创建时间： </label>
@@ -51,6 +51,7 @@
         $(function() {
             var options = {
                 url: prefix + "/list",
+                uniqueId:"id",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/close",

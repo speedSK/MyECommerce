@@ -23,6 +23,9 @@ public class Order extends BaseEntity
 	/** 订单号 */
 	@Excel(name="订单号")
 	private String orderCode;
+	@Excel(name = "部门名称")
+	private String deptName;
+	private Long deptId;
 	/** 订单总金额 */
 	@Excel(name="订单金额")
 	private BigDecimal money;
@@ -45,7 +48,23 @@ public class Order extends BaseEntity
 	/** 状态 */
 	private String status;
 
-	public void setId(Long id) 
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
+
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

@@ -63,9 +63,4 @@ public interface TradeRecordMapper
      */
 	public int deleteTradeRecordByIds(String[] ids);
 
-	public List<Map> selectOutList(String params);
-
-	List<Map> selectInComingList(String params);
-
-	List<Map> selectOperation(String params);
 }

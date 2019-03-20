@@ -84,19 +84,4 @@ public class TradeRecordServiceImpl implements ITradeRecordService
 		return tradeRecordMapper.deleteTradeRecordByIds(Convert.toStrArray(ids));
 	}
 
-	@Override
-	public List<Map> selectOut(String params) {
-		return tradeRecordMapper.selectOutList(params);
-	}
-
-	@Override
-	public List<Map> selectComing(String params) {
-		return tradeRecordMapper.selectInComingList(params);
-	}
-
-	@Override
-	public List<Map> selectOperation(String params) {
-		return tradeRecordMapper.selectOperation(params);
-	}
-
 }

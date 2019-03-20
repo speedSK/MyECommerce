@@ -36,6 +36,9 @@
 				<div class="select-list gd">
 					<ul>
 						<li>
+							商品编码：<input type="text" name="code"/>
+						</li>
+						<li>
 							商品名称：<input type="text" name="name"/>
 						</li>
 						<li>
@@ -96,6 +99,7 @@
 		function queryUserList() {
 		    var options = {
 		        url: prefix + "/list",
+				uniqueId:"id",
 		        createUrl: prefix + "/add",
 		        updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove",

@@ -52,5 +52,6 @@ public interface IGoodsService
 	public int deleteGoodsByIds(String ids);
 
 	String importGoods(List<Goods> goodsList, boolean updateSupport);
-	
+
+    String checkCodeUnique(String code);
 }

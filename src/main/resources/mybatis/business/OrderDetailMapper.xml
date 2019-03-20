@@ -19,36 +19,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
+        <result property="personNumber"    column="number"    />
+        <result property="deptName"    column="dept_name"    />
     </resultMap>
 	
 	<sql id="selectOrderDetailVo">
-        select id, order_id, merchant_id, merchant_name, goods_id, goods_name, goods_price, num, money, flag, status ,remark,create_time,update_time from bus_order_detail
+        select od.*, p.number, d.dept_name
+        from bus_order_detail od
+                 LEFT JOIN bus_order o on od.order_id = o.id
+                 LEFT JOIN bus_person p on o.person_id = p.id
+                 LEFT JOIN sys_dept d on p.dept_id = d.dept_id
     </sql>
 	
     <select id="selectOrderDetailList" parameterType="OrderDetail" resultMap="OrderDetailResult">
         <include refid="selectOrderDetailVo"/>
         <where>  
-            <if test="id != null and id != ''"> and id = #{id}</if>
-             <if test="orderId != null and orderId != ''"> and order_id = #{orderId}</if>
-             <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId}</if>
-             <if test="merchantName != null and merchantName != ''"> and merchant_name = #{merchantName}</if>
-             <if test="searchValue != null and searchValue != ''"> and merchant_name like  concat('%', #{merchantName}, '%') </if>
-             <if test="goodsId != null and goodsId != ''"> and goods_id = #{goodsId}</if>
-             <if test="goodsName != null and goodsName != ''"> and goods_name = #{goodsName}</if>
-             <if test="goodsPrice != null and goodsPrice != ''"> and goods_price = #{goodsPrice}</if>
-             <if test="num != null and num != ''"> and num = #{num}</if>
-             <if test="money != null and money != ''"> and money = #{money}</if>
-             <if test="flag != null and flag != ''"> and flag = #{flag}</if>
-             <if test="status != null and status != ''"> and status = #{status}</if>
-              <if test="remark != null and remark != ''"> and remark = #{remark}</if>
-             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
-             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+            <if test="id != null and id != ''"> and od.id = #{id}</if>
+             <if test="orderId != null and orderId != ''"> and od.order_id = #{orderId}</if>
+             <if test="merchantId != null and merchantId != ''"> and od.merchant_id = #{merchantId}</if>
+             <if test="merchantName != null and merchantName != ''"> and od.merchant_name = #{merchantName}</if>
+             <if test="searchValue != null and searchValue != ''"> and od.merchant_name like  concat('%', #{merchantName}, '%') </if>
+             <if test="goodsId != null and goodsId != ''"> and od.goods_id = #{goodsId}</if>
+             <if test="goodsName != null and goodsName != ''"> and od.goods_name = #{goodsName}</if>
+             <if test="goodsPrice != null and goodsPrice != ''"> and od.goods_price = #{goodsPrice}</if>
+             <if test="num != null and num != ''"> and od.num = #{num}</if>
+             <if test="money != null and money != ''"> and od.money = #{money}</if>
+             <if test="flag != null and flag != ''"> and od.flag = #{flag}</if>
+             <if test="status != null and status != ''"> and od.status = #{status}</if>
+              <if test="remark != null and remark != ''"> and od.remark = #{remark}</if>
+             <if test="createTime != null and createTime != ''"> and od.create_time = #{createTime}</if>
+             <if test="updateTime != null and updateTime != ''"> and od.update_time = #{updateTime}</if>
         </where>
     </select>
     
     <select id="selectOrderDetailById" parameterType="Long" resultMap="OrderDetailResult">
         <include refid="selectOrderDetailVo"/>
-        where id = #{id}
+        where od.id = #{id}
     </select>
         
     <insert id="insertOrderDetail" parameterType="OrderDetail">

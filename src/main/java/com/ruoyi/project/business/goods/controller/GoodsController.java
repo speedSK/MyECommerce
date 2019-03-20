@@ -223,5 +223,14 @@ public class GoodsController extends BaseController
 		return util.exportExcel(list, "goods");
 	}
 
+	/**
+	 * 校验商品编号
+	 */
+	@PostMapping("/checkCodeUnique")
+	@ResponseBody
+	public String checkNumberUnique(Goods goods)
+	{
+		return goodsService.checkCodeUnique(goods.getCode());
+	}
 	
 }

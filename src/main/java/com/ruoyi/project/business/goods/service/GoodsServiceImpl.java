@@ -1,6 +1,7 @@
 package com.ruoyi.project.business.goods.service;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
@@ -162,6 +163,16 @@ public class GoodsServiceImpl implements IGoodsService
 			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
 		}
 		return successMsg.toString();
+	}
+
+	@Override
+	public String checkCodeUnique(String code) {
+		Goods goods = goodsMapper.selectGoodsByCode(code);
+		if (StringUtils.isNotNull(goods)) {
+
+			return UserConstants.USER_NAME_NOT_UNIQUE;
+		}
+		return UserConstants.USER_NAME_UNIQUE;
 	}
 
 }

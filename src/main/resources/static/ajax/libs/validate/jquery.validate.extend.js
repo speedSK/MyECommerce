@@ -4,7 +4,20 @@ $(document).ready(function(){
 		  submitHandler: function(form) {    
 		 		form.submit();    
 		}       
-	});  
+	});
+	jQuery.validator.addMethod('isIP', function(value,element) {
+		var split = value.split('.');
+		if (split.length != 4)
+			return this.optional(element)||false;
+
+		for (var i=0; i<split.length; i++) {
+			var s = split[i];
+			if (s.length==0 || isNaN(s) || s<0 || s>255)
+				return this.optional(element) || false;
+		}
+
+		return this.optional(element)||true;
+	}, "请填写正确的IP地址");
 	//手机号码验证身份证正则合并：(^\d{15}$)|(^\d{17}([0-9]|X)$)
 	jQuery.validator.addMethod("isPhone",function(value,element){
 		var length = value.length;

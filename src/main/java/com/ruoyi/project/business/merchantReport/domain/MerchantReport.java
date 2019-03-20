@@ -2,6 +2,7 @@ package com.ruoyi.project.business.merchantReport.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
+import com.ruoyi.project.system.merchant.domain.Merchant;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -27,7 +28,6 @@ public class MerchantReport extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date reportDate;
 	/** 账户id */
-	@Excel(name = "账户编号")
 	private String accountCode;
 	/** 收入笔数 */
 	@Excel(name = "收入笔数")
@@ -52,7 +52,18 @@ public class MerchantReport extends BaseEntity
 	/**  */
 	private Date updateTime;
 
-	public void setId(Long id) 
+	@Excel(name = "账户编号",targetAttr = "merchantName",type = Excel.Type.EXPORT)
+	private Merchant merchant;
+
+	public Merchant getMerchant() {
+		return merchant;
+	}
+
+	public void setMerchant(Merchant merchant) {
+		this.merchant = merchant;
+	}
+
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

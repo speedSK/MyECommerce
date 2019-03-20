@@ -1,25 +1,20 @@
 package com.ruoyi.project.business.goodCategory.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.framework.web.domain.Ztree;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.business.goodCategory.domain.GoodCategory;
 import com.ruoyi.project.business.goodCategory.service.IGoodCategoryService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 菜单信息
@@ -61,8 +56,10 @@ public class GoodCategoryController extends BaseController
 	@ResponseBody
 	public AjaxResult remove(@PathVariable("goodCategoryId") Long goodCategoryId)
 	{
-		if (goodCategoryService.selectGoodCategoryCount(goodCategoryId) > 0)
-		{
+		if (goodCategoryId == 100) {
+			return error(1, "顶级分类,不允许删除");
+		}
+		if (goodCategoryService.selectGoodCategoryCount(goodCategoryId) > 0) {
 			return error(1, "存在子分类,不允许删除");
 		}
 		if (goodCategoryService.checkDeptExistGoods(goodCategoryId)) {

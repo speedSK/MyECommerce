@@ -27,31 +27,31 @@ import com.ruoyi.framework.web.domain.AjaxResult;
  * @date 2018-08-15
  */
 @Controller
-@RequestMapping("/business/MerchantReport")
+@RequestMapping("/business/merchantReport")
 public class MerchantReportController extends BaseController
 {
-    private String prefix = "business/MerchantReport";
+    private String prefix = "business/merchantReport";
 	
 	@Autowired
-	private IMerchantReportService MerchantReportService;
+	private IMerchantReportService merchantReportService;
 	
-	@RequiresPermissions("business:MerchantReport:view")
+	@RequiresPermissions("business:merchantReport:view")
 	@GetMapping()
-	public String MerchantReport()
+	public String merchantReport()
 	{
-	    return prefix + "/MerchantReport";
+	    return prefix + "/merchantReport";
 	}
 	
 	/**
 	 * 查询系统账户报列表
 	 */
-	@RequiresPermissions("business:MerchantReport:list")
+	@RequiresPermissions("business:merchantReport:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(MerchantReport MerchantReport)
+	public TableDataInfo list(MerchantReport merchantReport)
 	{
 		startPage();
-        List<MerchantReport> list = MerchantReportService.selectMerchantReportList(MerchantReport);
+        List<MerchantReport> list = merchantReportService.selectMerchantReportList(merchantReport);
 		return getDataTable(list);
 	}
 
@@ -59,12 +59,12 @@ public class MerchantReportController extends BaseController
 	 * 查询系统账户报列表
 	 */
     @Log(title = "系统账户报", businessType = BusinessType.EXPORT)
-	@RequiresPermissions("business:MerchantReport:export")
+	@RequiresPermissions("business:merchantReport:export")
 	@PostMapping("/export")
 	@ResponseBody
-	public AjaxResult export(MerchantReport MerchantReport)
+	public AjaxResult export(MerchantReport merchantReport)
 	{
-		List<MerchantReport> list = MerchantReportService.selectMerchantReportList(MerchantReport);
+		List<MerchantReport> list = merchantReportService.selectMerchantReportList(merchantReport);
         ExcelUtil<MerchantReport> util = new ExcelUtil<MerchantReport>(MerchantReport.class);
         return util.exportExcel(list, "MerchantReport");
 	}
@@ -81,13 +81,13 @@ public class MerchantReportController extends BaseController
 	/**
 	 * 新增保存系统账户报
 	 */
-	@RequiresPermissions("business:MerchantReport:add")
+	@RequiresPermissions("business:merchantReport:add")
 	@Log(title = "系统账户报", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(MerchantReport MerchantReport)
+	public AjaxResult addSave(MerchantReport merchantReport)
 	{		
-		return toAjax(MerchantReportService.insertMerchantReport(MerchantReport));
+		return toAjax(merchantReportService.insertMerchantReport(merchantReport));
 	}
 
 	/**
@@ -96,33 +96,33 @@ public class MerchantReportController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap)
 	{
-		MerchantReport MerchantReport = MerchantReportService.selectMerchantReportById(id);
-		mmap.put("MerchantReport", MerchantReport);
+		MerchantReport merchantReport = merchantReportService.selectMerchantReportById(id);
+		mmap.put("merchantReport", merchantReport);
 	    return prefix + "/edit";
 	}
 	
 	/**
 	 * 修改保存系统账户报
 	 */
-	@RequiresPermissions("business:MerchantReport:edit")
+	@RequiresPermissions("business:merchantReport:edit")
 	@Log(title = "系统账户报", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(MerchantReport MerchantReport)
+	public AjaxResult editSave(MerchantReport merchantReport)
 	{		
-		return toAjax(MerchantReportService.updateMerchantReport(MerchantReport));
+		return toAjax(merchantReportService.updateMerchantReport(merchantReport));
 	}
 	
 	/**
 	 * 删除系统账户报
 	 */
-	@RequiresPermissions("business:MerchantReport:remove")
+	@RequiresPermissions("business:merchantReport:remove")
 	@Log(title = "系统账户报", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{		
-		return toAjax(MerchantReportService.deleteMerchantReportByIds(ids));
+		return toAjax(merchantReportService.deleteMerchantReportByIds(ids));
 	}
 	
 }

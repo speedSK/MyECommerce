@@ -36,42 +36,39 @@ public class MerchantReportServiceImpl implements IMerchantReportService
 	/**
      * 查询系统账户报列表
      *
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 系统账户报集合
      */
 	@Override
-	public List<MerchantReport> selectMerchantReportList(MerchantReport MerchantReport)
+	public List<MerchantReport> selectMerchantReportList(MerchantReport merchantReport)
 	{
-	    MerchantReport.setStatus(Constants.STATUS_ACTIVE);
-	    return merchantReportMapper.selectMerchantReportList(MerchantReport);
+	    merchantReport.setStatus(Constants.STATUS_ACTIVE);
+	    return merchantReportMapper.selectMerchantReportList(merchantReport);
 	}
 
     /**
      * 新增系统账户报
      *
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 结果
      */
 	@Override
-	public int insertMerchantReport(MerchantReport MerchantReport)
+	public int insertMerchantReport(MerchantReport merchantReport)
 	{
-	    MerchantReport.setStatus(Constants.STATUS_ACTIVE);
-
-        MerchantReport.setCreateBy(ShiroUtils.getLoginName());
-	    return merchantReportMapper.insertMerchantReport(MerchantReport);
+	    merchantReport.setStatus(Constants.STATUS_ACTIVE);
+	    return merchantReportMapper.insertMerchantReport(merchantReport);
 	}
 
 	/**
      * 修改系统账户报
      *
-     * @param MerchantReport 系统账户报信息
+     * @param merchantReport 系统账户报信息
      * @return 结果
      */
 	@Override
-	public int updateMerchantReport(MerchantReport MerchantReport)
+	public int updateMerchantReport(MerchantReport merchantReport)
 	{
-	    MerchantReport.setUpdateBy(ShiroUtils.getLoginName());
-	    return merchantReportMapper.updateMerchantReport(MerchantReport);
+	    return merchantReportMapper.updateMerchantReport(merchantReport);
 	}
 
 	/**
@@ -86,19 +83,29 @@ public class MerchantReportServiceImpl implements IMerchantReportService
 	    String [] idsArray = Convert.toStrArray(ids);
         for (String id: idsArray) {
 
-            MerchantReport MerchantReport = new MerchantReport();
-            MerchantReport.setId(Long.valueOf(id));
+            MerchantReport merchantReport = new MerchantReport();
+            merchantReport.setId(Long.valueOf(id));
             //初始化數據信息
 
-            MerchantReport.setStatus(Constants.STATUS_REMOVED);
+            merchantReport.setStatus(Constants.STATUS_REMOVED);
 
-            MerchantReport.setUpdateBy(ShiroUtils.getLoginName());
+            merchantReport.setUpdateBy(ShiroUtils.getLoginName());
 
-            merchantReportMapper.updateMerchantReport(MerchantReport);
+            merchantReportMapper.updateMerchantReport(merchantReport);
 
         }
 
         return 1;
 	}
-	
+
+	@Override
+	public List<MerchantReport> selectOut(String params) {
+		return merchantReportMapper.selectOuting(params);
+	}
+
+	@Override
+	public List<MerchantReport> selectInComing(String params) {
+		return merchantReportMapper.selectInComing(params);
+	}
+
 }

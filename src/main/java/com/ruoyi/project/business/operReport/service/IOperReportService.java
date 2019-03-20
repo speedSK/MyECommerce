@@ -50,5 +50,6 @@ public interface IOperReportService
      * @return 结果
      */
 	public int deleteOperReportByIds(String ids);
-	
+
+    List<OperReport> selectOperation(String params);
 }

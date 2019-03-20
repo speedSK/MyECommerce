@@ -5,17 +5,21 @@
 <body class="gray-bg">
     <div class="container-div">
 		<div class="col-sm-12 search-collapse">
-			<form id="MerchantReport-form">
+			<form id="merchant-form">
 				<div class="select-list">
 					<ul>
 						<li>
-							账户编号：<input type="text" name="accountCode"/>
+							商户号：
+							<select name="accountCode" th:with="type=${@merchant.getAllMerchant()}">
+								<option value="">所有</option>
+								<option th:each="dict : ${type}" th:text="${dict.merchantName}" th:value="${dict.id}"></option>
+							</select>
 						</li>
 						<li class="select-time">
-							<label>创建时间： </label>
-							<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+							<label>日期： </label>
+							<input type="text" class="time-input" id="startTime" placeholder="开始日期" name="params[beginTime]"/>
 							<span>-</span>
-							<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+							<input type="text" class="time-input" id="endTime" placeholder="结束日期" name="params[endTime]"/>
 						</li>
 						<li>
 							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -27,7 +31,7 @@
 		</div>
 
 		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:MerchantReport:export">
+			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:merchantReport:export">
 				<i class="fa fa-download"></i> 导出
 			</a>
 		</div>
@@ -38,11 +42,12 @@
     </div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var prefix = ctx + "business/MerchantReport";
+        var prefix = ctx + "business/merchantReport";
 
         $(function() {
             var options = {
                 url: prefix + "/list",
+				uniqueId:"id",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
@@ -68,8 +73,8 @@
 					title : '报表日期' 
 				},
 				{
-					field : 'accountCode', 
-					title : '账户id' 
+					field : 'merchant.merchantName',
+					title : '商户名称'
 				},
 				{
 					field : 'incomeNum', 

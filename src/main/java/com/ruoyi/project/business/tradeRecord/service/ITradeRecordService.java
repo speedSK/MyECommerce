@@ -52,9 +52,4 @@ public interface ITradeRecordService
      */
 	public int deleteTradeRecordByIds(String ids);
 
-	public List<Map> selectOut(String params);
-
-	public List<Map> selectComing(String params);
-
-	public List<Map> selectOperation(String params);
 }

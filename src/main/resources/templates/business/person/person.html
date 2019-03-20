@@ -36,10 +36,10 @@
 			<div class="select-list">
 				<ul>
 					<li>
-						人员名称：<input type="text" name="name"/>
+						姓名：<input type="text" name="name"/>
 					</li>
 					<li>
-						人员编号：<input type="text" name="number"/>
+						编号：<input type="text" name="number"/>
 					</li>
 					<li>
 						人员状态：<select name="flag" th:with="type=${@dict.getType('bus_person_flag')}">
@@ -48,7 +48,7 @@
 					</select>
 					</li>
 					<li class="select-time">
-						<label>创建时间： </label>
+						<label>开户时间： </label>
 						<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
 						<span>-</span>
 						<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
@@ -56,7 +56,6 @@
 					<li>
 						<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 						<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-						<a class="btn btn-success btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="business:person:export"><i class="fa fa-download"></i>&nbsp;导出</a>
 					</li>
 				</ul>
 			</div>
@@ -100,6 +99,7 @@
 		function queryUserList() {
 		    var options = {
 		        url: prefix + "/list",
+				uniqueId:"id",
 		        createUrl: prefix + "/add",
 		        updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove",
@@ -162,7 +162,7 @@
                         if ("0" == row.flag) {
                             actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                             actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.editVisible(\'' + row.id + '\',\'lock\',\'冻结\')"><i class="fa fa-edit"></i>冻结</a> ');
-                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.editVisible(\'' + row.id + '\',\'prep\',\'预销户\')"><i class="fa fa-remove"></i>预销户</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.editVisible(\'' + row.id + '\',\'prep\',\'预销户（不可恢复）\')"><i class="fa fa-remove"></i>预销户</a> ');
                             actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="#" onclick="uploadImage(\'' + row.id + '\')"><i class="fa fa-key"></i>上传头像</a>');
                         } else if ("1" == row.flag) {
                             actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.editVisible(\'' + row.id + '\',\'unlock\',\'解冻\')"><i class="fa fa-edit"></i>解冻</a> ');

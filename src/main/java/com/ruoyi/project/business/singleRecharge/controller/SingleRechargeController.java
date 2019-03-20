@@ -50,11 +50,12 @@ public class SingleRechargeController extends BaseController
 		Person user = new Person();
 		user.setNumber(number);
 		user.setStatus(Constants.STATUS_ACTIVE);
+		user.setFlag(Constants.PERSON_ACTIVE);
 		List<Person> userlist = personService.selectPersonList(user);
 		if (userlist!=null&&userlist.size()>0) {
 			return success();
 		}
-		return error("用户不存在");
+		return error("用户不存在或状态异常");
 	}
 
 	/**

@@ -22,6 +22,10 @@ public class OrderDetail extends BaseEntity
 	/** 订单id */
 	@Excel(name="订单id")
 	private Long orderId;
+	@Excel(name = "部门名称")
+	private String deptName;
+	@Excel(name="编号")
+	private String personNumber;
 	/** 商家id */
 	private Long merchantId;
 	/** 商家名称 */
@@ -47,7 +51,23 @@ public class OrderDetail extends BaseEntity
 	/** 状态 */
 	private String status;
 
-	public void setId(Long id) 
+	public String getPersonNumber() {
+		return personNumber;
+	}
+
+	public void setPersonNumber(String personNumber) {
+		this.personNumber = personNumber;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

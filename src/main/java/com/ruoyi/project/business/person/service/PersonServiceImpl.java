@@ -308,6 +308,7 @@ public class PersonServiceImpl implements IPersonService
                 else if (updateSupport)
                 {
                     person.setUpdateBy(operName);
+                    person.setDeposit(null);
                     this.updatePerson(person);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 更新成功");

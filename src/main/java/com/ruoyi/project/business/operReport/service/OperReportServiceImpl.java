@@ -57,8 +57,6 @@ public class OperReportServiceImpl implements IOperReportService
 	public int insertOperReport(OperReport operReport)
 	{
 	    operReport.setStatus(Constants.STATUS_ACTIVE);
-
-        operReport.setCreateBy(ShiroUtils.getLoginName());
 	    return operReportMapper.insertOperReport(operReport);
 	}
 
@@ -101,5 +99,10 @@ public class OperReportServiceImpl implements IOperReportService
 
         return 1;
 	}
-	
+
+	@Override
+	public List<OperReport> selectOperation(String params) {
+		return operReportMapper.selectOperation(params);
+	}
+
 }

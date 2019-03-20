@@ -10,81 +10,39 @@
             <form id="formId">
                 <div class="select-list">
                     <ul>
-																																		                                    <li>
-										流水号：<input type="text" name="journo"/>
-                                    </li>
+                        <li>
+                            流水号：<input type="text" name="journo"/>
+                        </li>
 
-																																				                                    <li>
-										用户编号：<input type="text" name="userNumber"/>
-                                    </li>
+                        <li>
+                            编号：<input type="text" name="userNumber"/>
+                        </li>
 
-																																				                                    <li>
-										商户编号：<input type="text" name="merchantCode"/>
-                                    </li>
+                        <li>
+                            商户号：<input type="text" name="merchantCode"/>
+                        </li>
 
-																																				                                    <li>
-										订单号：<input type="text" name="orderCode"/>
-                                    </li>
+                        <li>
+                            订单号：<input type="text" name="orderCode"/>
+                        </li>
 
-																																				                                    <li>
-										交易代码：<input type="text" name="txcode"/>
-                                    </li>
+                        <li>
+                            交易代码：<input type="text" name="txcode"/>
+                        </li>
 
-																																				                                    <li>
-										消费前余额：<input type="text" name="before"/>
-                                    </li>
+                        <li>
+                            设备编号：<input type="text" name="stationCode"/>
+                        </li>
 
-																																				                                    <li>
-										消费后余额：<input type="text" name="after"/>
-                                    </li>
+                        <li>
+                            状态：<input type="text" name="status"/>
+                        </li>
 
-																																				                                    <li>
-										交易金额：<input type="text" name="txamt"/>
-                                    </li>
-
-																																				                                    <li>
-										来源账户：<input type="text" name="fromAcc"/>
-                                    </li>
-
-																																				                                    <li>
-										目标账户：<input type="text" name="toAcc"/>
-                                    </li>
-
-																																				                                    <li>
-										系统入账日期：<input type="text" name="settleDate"/>
-                                    </li>
-
-																																				                                    <li>
-										设备编号：<input type="text" name="stationCode"/>
-                                    </li>
-
-																																				                                    <li>
-										备注：<input type="text" name="remark"/>
-                                    </li>
-
-																																				                                    <li>
-										状态：<input type="text" name="status"/>
-                                    </li>
-
-																																				                                    <li>
-										创建人：<input type="text" name="createBy"/>
-                                    </li>
-
-																																				                                    <li>
-										创建时间：<input type="text" name="createTime"/>
-                                    </li>
-
-																																				                                    <li>
-										修改人：<input type="text" name="updateBy"/>
-                                    </li>
-
-																																				                                    <li>
-										修改时间：<input type="text" name="updateTime"/>
-                                    </li>
-
-																					                        <li>
-                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
                     </ul>
                 </div>
@@ -110,6 +68,7 @@
     $(function() {
         var options = {
             url: prefix + "/list",
+            uniqueId:"id",
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
@@ -139,7 +98,7 @@
             },
             {
                 field: 'userNumber',
-                title: '用户编号',
+                title: '编号',
                 sortable: true
             },
             {
