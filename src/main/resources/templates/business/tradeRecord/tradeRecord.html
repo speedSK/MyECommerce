@@ -19,7 +19,11 @@
                         </li>
 
                         <li>
-                            商户号：<input type="text" name="merchantCode"/>
+                            商户号：
+                            <select name="merchantCode" th:with="type=${@merchant.getAllMerchant()}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.merchantName}" th:value="${dict.id}"></option>
+                            </select>
                         </li>
 
                         <li>
@@ -27,16 +31,21 @@
                         </li>
 
                         <li>
-                            交易代码：<input type="text" name="txcode"/>
+                            交易代码：<select name="txcode" th:with="type=${@dict.getType('bus_txcode')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li class="select-time">
+                            <label>日期： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始日期" name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束日期" name="params[endTime]"/>
                         </li>
 
-                        <li>
-                            设备编号：<input type="text" name="stationCode"/>
-                        </li>
-
-                        <li>
-                            状态：<input type="text" name="status"/>
-                        </li>
+                        <!--<li>-->
+                            <!--设备编号：<input type="text" name="stationCode"/>-->
+                        <!--</li>-->
 
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
@@ -102,9 +111,8 @@
                 sortable: true
             },
             {
-                field: 'merchantCode',
-                title: '商户编号',
-                sortable: true
+                field: 'merchantName',
+                title: '商户名称',
             },
             {
                 field: 'orderCode',
@@ -119,12 +127,10 @@
             {
                 field: 'before',
                 title: '消费前余额',
-                sortable: true
             },
             {
                 field: 'after',
                 title: '消费后余额',
-                sortable: true
             },
             {
                 field: 'txamt',
@@ -134,37 +140,29 @@
             {
                 field: 'fromAcc',
                 title: '来源账户',
-                sortable: true
+                visible:false
             },
             {
                 field: 'toAcc',
                 title: '目标账户',
-                sortable: true
+                visible:false
             },
             {
-                field: 'settleDate',
-                title: '系统入账日期',
-                sortable: true
-            },
-            {
-                field: 'stationCode',
-                title: '设备编号',
-                sortable: true
+                field: 'stationName',
+                title: '设备名称',
+                visible:false
             },
             {
                 field: 'remark',
                 title: '备注',
-                sortable: true
             },
             {
                 field: 'status',
                 title: '状态',
-                sortable: true
             },
             {
                 field: 'createBy',
                 title: '创建人',
-                sortable: true
             },
             {
                 field: 'createTime',

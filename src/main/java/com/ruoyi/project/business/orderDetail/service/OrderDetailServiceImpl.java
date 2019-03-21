@@ -1,6 +1,7 @@
 package com.ruoyi.project.business.orderDetail.service;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.security.ShiroUtils;
 
 import java.util.Date;
@@ -12,13 +13,13 @@ import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.business.person.service.IPersonService;
 import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
 import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
+import com.ruoyi.project.system.device.service.IDeviceService;
 import com.ruoyi.project.system.merchant.domain.Merchant;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.orderDetail.mapper.OrderDetailMapper;
 import com.ruoyi.project.business.orderDetail.domain.OrderDetail;
-import com.ruoyi.project.business.orderDetail.service.IOrderDetailService;
 import com.ruoyi.common.support.Convert;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,8 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	private IMerchantService merchantService;
 	@Autowired
 	private ITradeRecordService tradeRecordService;
+	@Autowired
+	private IDeviceService deviceService;
 
 
 
@@ -149,6 +152,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	@Transactional
 	public int updateOrderDetailFlag(String id, String flag) {
 		TradeRecord record = new TradeRecord();
+		record.setJourno(IdGen.getJourno());
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(Long.parseLong(id));
         Order order = orderService.selectOrderById(orderDetail.getOrderId());
         orderDetail.setFlag(Constants.ORDER_CANCEL);
@@ -164,13 +168,14 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 		record.setBefore(person.getBalance());
         person.setBalance(person.getBalance().add(orderDetail.getMoney()));
 		personService.updatePerson(person);
+		String deviceCode = deviceService.getDeviceCode();
 		record.setUserNumber(person.getNumber());
 		record.setOrderCode(order.getOrderCode());
 		record.setTxamt(orderDetail.getMoney());
 		record.setTxcode("1008");
 		record.setFromAcc(merchant.getId().toString());
 		record.setAfter(person.getBalance());
-		record.setStationCode("0000");
+		record.setStationCode(deviceCode);
 		record.setCreateBy(ShiroUtils.getLoginName());
 		record.setRemark("商品退款");
 		return tradeRecordService.insertTradeRecord(record);

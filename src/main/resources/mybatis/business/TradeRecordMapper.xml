@@ -1,111 +1,121 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.business.tradeRecord.mapper.TradeRecordMapper">
-    
+
     <resultMap type="TradeRecord" id="TradeRecordResult">
-        <result property="id"    column="id"    />
-        <result property="journo"    column="journo"    />
-        <result property="userNumber"    column="user_number"    />
-        <result property="merchantCode"    column="merchant_code"    />
-        <result property="orderCode"    column="order_code"    />
-        <result property="txcode"    column="txcode"    />
-        <result property="before"    column="tx_before"    />
-        <result property="after"    column="tx_after"    />
-        <result property="txamt"    column="txamt"    />
-        <result property="fromAcc"    column="from_acc"    />
-        <result property="toAcc"    column="to_acc"    />
-        <result property="settleDate"    column="settle_date"    />
-        <result property="stationCode"    column="station_code"    />
-        <result property="remark"    column="remark"    />
-        <result property="status"    column="status"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="id" column="id"/>
+        <result property="journo" column="journo"/>
+        <result property="userNumber" column="user_number"/>
+        <result property="merchantCode" column="merchant_code"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="txcode" column="txcode"/>
+        <result property="before" column="tx_before"/>
+        <result property="after" column="tx_after"/>
+        <result property="txamt" column="txamt"/>
+        <result property="fromAcc" column="from_acc"/>
+        <result property="toAcc" column="to_acc"/>
+        <result property="settleDate" column="settle_date"/>
+        <result property="stationCode" column="station_code"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="merchantName" column="merchant_name"/>
+        <result property="stationName" column="station_name"/>
     </resultMap>
-	
-	<sql id="selectTradeRecordVo">
-        select id, journo, user_number, merchant_code, order_code, txcode, tx_before, tx_after, txamt, from_acc, to_acc, reg_date, station_code, remark, status, create_by, create_time, update_by, update_time from bus_trade_record
+
+    <sql id="selectTradeRecordVo">
+        select t.*, p.number user_number, m.merchant_name, dv.name station_name
+        from bus_trade_record t
+                 LEFT JOIN bus_person p on t.user_number = p.number
+                 LEFT JOIN sys_dept d on p.dept_id = d.dept_id
+                 LEFT JOIN bus_merchant m on t.merchant_code = m.id
+                 LEFT JOIN bus_device dv on dv.id = t.station_code
     </sql>
-	
+
     <select id="selectTradeRecordList" parameterType="TradeRecord" resultMap="TradeRecordResult">
         <include refid="selectTradeRecordVo"/>
-        <where>  
-            <if test="id != null "> and id = #{id}</if>
-             <if test="journo != null  and journo != '' "> and journo = #{journo}</if>
-             <if test="userNumber != null  and userNumber != '' "> and user_number = #{userNumber}</if>
-             <if test="merchantCode != null  and merchantCode != '' "> and merchant_code = #{merchantCode}</if>
-             <if test="orderCode != null  and orderCode != '' "> and order_code = #{orderCode}</if>
-             <if test="txcode != null  and txcode != '' "> and txcode = #{txcode}</if>
-             <if test="before != null "> and tx_before = #{before}</if>
-             <if test="after != null "> and tx_after = #{after}</if>
-             <if test="txamt != null "> and txamt = #{txamt}</if>
-             <if test="fromAcc != null  and fromAcc != '' "> and from_acc = #{fromAcc}</if>
-             <if test="toAcc != null  and toAcc != '' "> and to_acc = #{toAcc}</if>
-             <if test="settleDate != null "> and reg_date = #{settleDate}</if>
-             <if test="stationCode != null  and stationCode != '' "> and station_code = #{stationCode}</if>
-             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="status != null  and status != '' "> and status = #{status}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
-         </where>
+        <where>
+            <if test="id != null ">and t.id = #{id}</if>
+            <if test="journo != null  and journo != '' ">and t.journo = #{journo}</if>
+            <if test="userNumber != null  and userNumber != '' ">and p.id = #{userNumber}</if>
+            <if test="merchantCode != null  and merchantCode != '' ">and t.merchant_code = #{merchantCode}</if>
+            <if test="orderCode != null  and orderCode != '' ">and t.order_code = #{orderCode}</if>
+            <if test="txcode != null  and txcode != '' ">and t.txcode = #{txcode}</if>
+            <if test="before != null ">and t.tx_before = #{before}</if>
+            <if test="after != null ">and t.tx_after = #{after}</if>
+            <if test="txamt != null ">and t.txamt = #{txamt}</if>
+            <if test="fromAcc != null  and fromAcc != '' ">and t.from_acc = #{fromAcc}</if>
+            <if test="toAcc != null  and toAcc != '' ">and t.to_acc = #{toAcc}</if>
+            <if test="settleDate != null ">and t.reg_date = #{settleDate}</if>
+            <if test="stationCode != null  and stationCode != '' ">and t.station_code = #{stationCode}</if>
+            <if test="remark != null  and remark != '' ">and t.remark = #{remark}</if>
+            <if test="status != null  and status != '' ">and t.status = #{status}</if>
+            <if test="createBy != null  and createBy != '' ">and t.create_by = #{createBy}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format( t.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.beginTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format( t.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
     </select>
-    
+
     <select id="selectTradeRecordById" parameterType="Long" resultMap="TradeRecordResult">
         <include refid="selectTradeRecordVo"/>
-        where id = #{id}
+        where t.id = #{id}
     </select>
-        
+
     <insert id="insertTradeRecord" parameterType="TradeRecord">
         insert into bus_trade_record
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">id,</if>
-			<if test="journo != null  and journo != ''  ">journo,</if>
-			<if test="userNumber != null  and userNumber != ''  ">user_number,</if>
-			<if test="merchantCode != null  and merchantCode != ''  ">merchant_code,</if>
-			<if test="orderCode != null  and orderCode != ''  ">order_code,</if>
-			<if test="txcode != null  and txcode != ''  ">txcode,</if>
-			<if test="before != null  ">tx_before,</if>
-			<if test="after != null  ">tx_after,</if>
-			<if test="txamt != null  ">txamt,</if>
-			<if test="fromAcc != null  and fromAcc != ''  ">from_acc,</if>
-			<if test="toAcc != null  and toAcc != ''  ">to_acc,</if>
-			<if test="settleDate != null  ">reg_date,</if>
-			<if test="stationCode != null  and stationCode != ''  ">station_code,</if>
-			<if test="remark != null  and remark != ''  ">remark,</if>
-			<if test="status != null  and status != ''  ">status,</if>
-			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createTime != null  ">create_time,</if>
-			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updateTime != null  ">update_time,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">id,</if>
+            <if test="journo != null  and journo != ''  ">journo,</if>
+            <if test="userNumber != null  and userNumber != ''  ">user_number,</if>
+            <if test="merchantCode != null  and merchantCode != ''  ">merchant_code,</if>
+            <if test="orderCode != null  and orderCode != ''  ">order_code,</if>
+            <if test="txcode != null  and txcode != ''  ">txcode,</if>
+            <if test="before != null  ">tx_before,</if>
+            <if test="after != null  ">tx_after,</if>
+            <if test="txamt != null  ">txamt,</if>
+            <if test="fromAcc != null  and fromAcc != ''  ">from_acc,</if>
+            <if test="toAcc != null  and toAcc != ''  ">to_acc,</if>
+            <if test="settleDate != null  ">reg_date,</if>
+            <if test="stationCode != null  and stationCode != ''  ">station_code,</if>
+            <if test="remark != null  and remark != ''  ">remark,</if>
+            <if test="status != null  and status != ''  ">status,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
+            <if test="createTime != null  ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+            <if test="updateTime != null  ">update_time,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">#{id},</if>
-			<if test="journo != null  and journo != ''  ">#{journo},</if>
-			<if test="userNumber != null  and userNumber != ''  ">#{userNumber},</if>
-			<if test="merchantCode != null  and merchantCode != ''  ">#{merchantCode},</if>
-			<if test="orderCode != null  and orderCode != ''  ">#{orderCode},</if>
-			<if test="txcode != null  and txcode != ''  ">#{txcode},</if>
-			<if test="before != null  ">#{before},</if>
-			<if test="after != null  ">#{after},</if>
-			<if test="txamt != null  ">#{txamt},</if>
-			<if test="fromAcc != null  and fromAcc != ''  ">#{fromAcc},</if>
-			<if test="toAcc != null  and toAcc != ''  ">#{toAcc},</if>
-			<if test="settleDate != null  ">#{settleDate},</if>
-			<if test="stationCode != null  and stationCode != ''  ">#{stationCode},</if>
-			<if test="remark != null  and remark != ''  ">#{remark},</if>
-			<if test="status != null  and status != ''  ">#{status},</if>
-			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createTime != null  ">#{createTime},</if>
-			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updateTime != null  ">#{updateTime},</if>
-         </trim>
+            <if test="id != null  ">#{id},</if>
+            <if test="journo != null  and journo != ''  ">#{journo},</if>
+            <if test="userNumber != null  and userNumber != ''  ">#{userNumber},</if>
+            <if test="merchantCode != null  and merchantCode != ''  ">#{merchantCode},</if>
+            <if test="orderCode != null  and orderCode != ''  ">#{orderCode},</if>
+            <if test="txcode != null  and txcode != ''  ">#{txcode},</if>
+            <if test="before != null  ">#{before},</if>
+            <if test="after != null  ">#{after},</if>
+            <if test="txamt != null  ">#{txamt},</if>
+            <if test="fromAcc != null  and fromAcc != ''  ">#{fromAcc},</if>
+            <if test="toAcc != null  and toAcc != ''  ">#{toAcc},</if>
+            <if test="settleDate != null  ">#{settleDate},</if>
+            <if test="stationCode != null  and stationCode != ''  ">#{stationCode},</if>
+            <if test="remark != null  and remark != ''  ">#{remark},</if>
+            <if test="status != null  and status != ''  ">#{status},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            <if test="createTime != null  ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+            <if test="updateTime != null  ">#{updateTime},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateTradeRecord" parameterType="TradeRecord">
         update bus_trade_record
         <trim prefix="SET" suffixOverrides=",">
@@ -131,15 +141,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-	<delete id="deleteTradeRecordById" parameterType="Long">
-        delete from bus_trade_record where id = #{id}
+    <delete id="deleteTradeRecordById" parameterType="Long">
+        delete
+        from bus_trade_record
+        where id = #{id}
     </delete>
-	
+
     <delete id="deleteTradeRecordByIds" parameterType="String">
-        delete from bus_trade_record where id in 
+        delete from bus_trade_record where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>

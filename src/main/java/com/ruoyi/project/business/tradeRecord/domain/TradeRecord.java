@@ -24,11 +24,13 @@ public class TradeRecord extends BaseEntity
 	@Excel(name="流水号")
 	private String journo;
 	/** 用户编号 */
-	@Excel(name="用户编号")
+	@Excel(name="编号")
 	private String userNumber;
 	/** 商户编号 */
-	@Excel(name="商户编号")
+	@Excel(name="商户号")
 	private String merchantCode;
+	@Excel(name="商户名称")
+	private String merchantName;
 	/** 订单号 */
 	@Excel(name="订单号")
 	private String orderCode;
@@ -56,6 +58,8 @@ public class TradeRecord extends BaseEntity
 	/** 设备编号 */
 	@Excel(name="设备编号")
 	private String stationCode;
+	@Excel(name="设备名称")
+	private String stationName;
 	/** 备注 */
 	private String remark;
 	/** 状态 */
@@ -70,7 +74,23 @@ public class TradeRecord extends BaseEntity
 	/** 修改时间 */
 	private Date updateTime;
 
-	public void setId(Long id) 
+	public String getMerchantName() {
+		return merchantName;
+	}
+
+	public void setMerchantName(String merchantName) {
+		this.merchantName = merchantName;
+	}
+
+	public String getStationName() {
+		return stationName;
+	}
+
+	public void setStationName(String stationName) {
+		this.stationName = stationName;
+	}
+
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

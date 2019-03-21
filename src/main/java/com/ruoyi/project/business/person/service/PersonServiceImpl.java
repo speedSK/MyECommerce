@@ -23,6 +23,7 @@ import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import com.ruoyi.project.business.transactionRecord.domain.TransactionRecord;
 import com.ruoyi.project.business.transactionRecord.service.ITransactionRecordService;
 import com.ruoyi.project.system.config.service.IConfigService;
+import com.ruoyi.project.system.device.service.IDeviceService;
 import com.ruoyi.project.system.merchant.domain.Merchant;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.slf4j.Logger;
@@ -56,9 +57,7 @@ public class PersonServiceImpl implements IPersonService
     @Autowired
     private IMerchantService merchantService;
     @Autowired
-    private ISettleDateService settleDateService;
-    @Autowired
-    private ITransactionRecordService transactionRecordService;
+    private IDeviceService deviceService;
     @Autowired
     private IConfigService configService;
 
@@ -105,16 +104,17 @@ public class PersonServiceImpl implements IPersonService
         Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
         merchant.setBalance(merchant.getBalance().add(person.getDeposit()));
         merchantService.updateMerchant(merchant);
+        String deviceCode = deviceService.getDeviceCode();
         TradeRecord record = new TradeRecord();
         record.setJourno(IdGen.getJourno());
         record.setUserNumber(person.getNumber());
         record.setTxcode(Constants.TX_CODE_DEPOSIT_INCOME);
         record.setTxamt(person.getDeposit());
         record.setToAcc(merchant.getId().toString());
-        record.setStationCode("0000");
+        record.setStationCode(deviceCode);
         record.setCreateBy(ShiroUtils.getLoginName());
         record.setCreateTime(new Date());
-        record.setRemark("新增用户押金流水");
+        record.setRemark("用户押金");
 	    return tradeRecordService.insertTradeRecord(record);
 	}
 	
@@ -163,6 +163,7 @@ public class PersonServiceImpl implements IPersonService
 		Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
 		merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
         merchantService.updateMerchant(merchant);
+        String deviceCode = deviceService.getDeviceCode();
 		TradeRecord record = new TradeRecord();
 		record.setJourno(IdGen.getJourno());
 		record.setUserNumber(person.getNumber());
@@ -172,10 +173,10 @@ public class PersonServiceImpl implements IPersonService
 		record.setTxamt(person.getRecharge());
 		record.setToAcc(merchant.getId().toString());
 		record.setsettleDate(new Date());
-        record.setStationCode("0000");
+        record.setStationCode(deviceCode);
         record.setCreateBy(ShiroUtils.getLoginName());
 		record.setCreateTime(new Date());
-		record.setRemark("现金充值流水");
+		record.setRemark("现金充值");
 		return tradeRecordService.insertTradeRecord(record);
 	}
 
@@ -247,15 +248,16 @@ public class PersonServiceImpl implements IPersonService
             Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_2_ID);
             merchant.setBalance(merchant.getBalance().add(person.getBalance()).add(person.getDeposit()));
             merchantService.updateMerchant(merchant);
+            String deviceCode = deviceService.getDeviceCode();
             tradeRecord.setToAcc(merchant.getId().toString());
             tradeRecord.setJourno(IdGen.getJourno());
-            tradeRecord.setStationCode("0000");
+            tradeRecord.setStationCode(deviceCode);
             tradeRecord.setTxamt(person.getBalance().add(person.getDeposit()));
             tradeRecord.setTxcode("1003");
             tradeRecord.setUserNumber(person.getNumber());
             tradeRecord.setBefore(person.getBalance());
             tradeRecord.setAfter(new BigDecimal(0));
-            tradeRecord.setRemark("销户押金退还" + person.getDeposit());
+            tradeRecord.setRemark("销户退还");
             tradeRecord.setCreateBy(ShiroUtils.getLoginName());
             tradeRecord.setCreateTime(new Date());
             tradeRecordService.insertTradeRecord(tradeRecord);

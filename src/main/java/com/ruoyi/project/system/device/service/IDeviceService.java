@@ -50,5 +50,6 @@ public interface IDeviceService
      * @return 结果
      */
 	public int deleteDeviceByIds(String ids);
-	
+
+    String getDeviceCode();
 }

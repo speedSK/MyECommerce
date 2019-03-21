@@ -18,6 +18,8 @@ import com.ruoyi.project.business.settleDate.service.ISettleDateService;
 import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
 import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import com.ruoyi.project.business.uploadRecord.domain.BatchCostVo;
+import com.ruoyi.project.system.device.domain.Device;
+import com.ruoyi.project.system.device.service.IDeviceService;
 import com.ruoyi.project.system.merchant.domain.Merchant;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
     @Autowired
     private IMerchantService merchantService;
     @Autowired
-    private ISettleDateService settleDateService;
+    private IDeviceService deviceService;
 
 	/**
      * 查询功能导入记录信息
@@ -141,6 +143,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		UploadRecord uploadRecord = new UploadRecord();
 		uploadRecord.setModule("批量充值导入");
 		uploadRecord.setUploadName(file.getOriginalFilename());
+		String deviceCode = deviceService.getDeviceCode();
 		long successCount = 0;
 		long failCount = 0 ;
 		for (BatchRechargeVo batchRechargeVo : list) {
@@ -164,11 +167,11 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 					merchant.setBalance(merchant.getBalance().add(person.getDeposit()));
 					TradeRecord record = new TradeRecord();
 					record.setJourno(IdGen.getJourno());
-					record.setUserNumber(person.getNumber());
+					record.setUserNumber(person.getId().toString());
 					record.setTxcode("1003");
 					record.setTxamt(new BigDecimal(batchRechargeVo.getAmount()));
 					record.setToAcc(merchant.getId().toString());
-					record.setStationCode("1001");
+					record.setStationCode(deviceCode);
 					record.setCreateBy(ShiroUtils.getLoginName());
 					record.setCreateTime(new Date());
 					record.setRemark("批量充值");
@@ -203,6 +206,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		UploadRecord uploadRecord = new UploadRecord();
 		uploadRecord.setModule("批量消费导入");
 		uploadRecord.setUploadName(file.getOriginalFilename());
+		String deviceCode = deviceService.getDeviceCode();
 		long successCount = 0;
 		long failCount = 0 ;
 		for (BatchCostVo batchCostVo : list) {
@@ -239,7 +243,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
                         record.setTxcode("1005");
                         record.setTxamt(cost);
                         record.setToAcc(merchant.getId().toString());
-                        record.setStationCode("1001");
+                        record.setStationCode(deviceCode);
 						record.setCreateBy(ShiroUtils.getLoginName());
 						record.setCreateTime(new Date());
 						record.setRemark("批量消费");

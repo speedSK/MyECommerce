@@ -5,7 +5,6 @@ import java.util.List;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
-import com.ruoyi.project.system.dict.mapper.DictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.device.mapper.DeviceMapper;
@@ -23,9 +22,6 @@ public class DeviceServiceImpl implements IDeviceService
 {
 	@Autowired
 	private DeviceMapper deviceMapper;
-
-	@Autowired
-	private DictDataMapper dictDataMapper;
 
 	/**
      * 查询设备信息
@@ -115,5 +111,17 @@ public class DeviceServiceImpl implements IDeviceService
 
 		return 1;
 	}
-	
+
+	@Override
+	public String getDeviceCode() {
+		Device device = new Device();
+		device.setIp(ShiroUtils.getIp());
+		List<Device> deviceList = this.selectDeviceList(device);
+		String deviceCode = "0000";
+		if (StringUtils.isNotEmpty(deviceList)) {
+			deviceCode = deviceList.get(0).getId().toString();
+		}
+		return deviceCode;
+	}
+
 }
