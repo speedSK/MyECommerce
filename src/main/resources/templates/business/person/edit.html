@@ -156,15 +156,31 @@
         			digits:true
         		},
 				idcard:{
-        			required:true,
         			isIdentity:true
         		},
 				bankCardNumber:{
-        			required:true,
         			digits:true
         		},
+                number:{
+                    required:true,
+                    digits:true,
+                    minlength: 2,
+                    maxlength: 20,
+                    remote: {
+                        url: prefix + "/checkNumberUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            name : function() {
+                                return $.common.trim($("#number").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
 				mobile:{
-        			required:true,
         			isPhone:true
         		},
 				deposit:{
@@ -178,7 +194,13 @@
 				identity:{
         			required:true
         		}
-			}
+			},
+            messages: {
+                "number": {
+                    remote: "编号已经存在"
+                }
+            },
+            focusCleanup: true
 		});
 
         function submitHandler() {

@@ -1,6 +1,8 @@
 package com.ruoyi.project.business.closedPerson.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,17 @@ public class ClosedPersonController extends BaseController
 		startPage();
         List<ClosedPerson> list = closedPersonService.selectClosedPersonList(closedPerson);
 		return getDataTable(list);
+	}
+
+	@RequiresPermissions("business:closedPerson:export")
+	@Log(title = "导出销户信息）", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(ClosedPerson closedPerson)
+	{
+		List<ClosedPerson> list = closedPersonService.selectClosedPersonList(closedPerson);
+		ExcelUtil<ClosedPerson> util = new ExcelUtil<ClosedPerson>(ClosedPerson.class);
+		return util.exportExcel(list, "销户信息");
 	}
 	
 	/**

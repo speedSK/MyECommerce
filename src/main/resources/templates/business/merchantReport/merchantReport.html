@@ -9,7 +9,7 @@
 				<div class="select-list">
 					<ul>
 						<li>
-							商户号：
+							商户名称：
 							<select name="accountCode" th:with="type=${@merchant.getAllMerchant()}">
 								<option value="">所有</option>
 								<option th:each="dict : ${type}" th:text="${dict.merchantName}" th:value="${dict.id}"></option>

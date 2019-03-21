@@ -9,7 +9,7 @@
 				<div class="select-list">
 					<ul>
 						<li>
-							交易代码：<select name="tradeCode" th:with="type=${@dict.getType('bus_txcode')}">
+							交易名称：<select name="tradeCode" th:with="type=${@dict.getType('bus_txcode')}">
 							<option value="">所有</option>
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 						</select>
@@ -74,7 +74,8 @@
 				},
 				{
 					field : 'tradeCode', 
-					title : '交易码' 
+					title : '交易代码',
+					visible:false
 				},
 				{
 					field : 'tradeNum', 

@@ -85,9 +85,10 @@
 <script th:inline="javascript">
 		var editFlag = [[${@permission.hasPermi('business:person:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('business:person:remove')}]];
-		var resetPwdFlag = [[${@permission.hasPermi('business:person:resetPwd')}]];
+		// var resetPwdFlag = [[${@permission.hasPermi('business:person:resetPwd')}]];
 		var flagDatas = [[${@dict.getType('bus_person_flag')}]];
 		var sexDatas = [[${@dict.getType('sys_user_sex')}]];
+		var nations = [[${@dict.getType('bus_person_nation')}]];
 		var prefix = ctx + "business/person"
 
 		$(document).ready(function(){
@@ -136,12 +137,60 @@
 					title : '姓名'
 				},
 				{
+					field : 'sex',
+					title : '性别',
+					formatter: function(value, row, index) {
+						return $.table.selectDictLabel(sexDatas, value);
+					}
+				},
+				{
+					field : 'nation',
+					title : '民族',
+					formatter: function(value, row, index) {
+						return $.table.selectDictLabel(nations, value);
+					}
+				},
+				{
+					field : 'identity.name',
+					title : '身份'
+				},
+				{
+					field : 'balance',
+					title : '余额'
+				},
+				{
 					field : 'dept.deptName',
 					title : '部门名称'
 				},
 				{
 					field : 'idcard',
-					title : '身份证号'
+					title : '身份证号',
+					visible:false
+				},
+				{
+					field : 'bankCardNumber',
+					title : '银行卡号',
+					visible:false
+				},
+				{
+					field : 'build',
+					title : '楼号',
+					visible:false
+				},
+				{
+					field : 'area',
+					title : '监区',
+					visible:false
+				},
+				{
+					field : 'room',
+					title : '房间',
+					visible:false
+				},
+				{
+					field : 'bed',
+					title : '床号',
+					visible:false
 				},
 				{
 					field : 'balance',

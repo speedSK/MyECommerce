@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.closedPerson.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -20,32 +21,45 @@ public class ClosedPerson extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 编号 */
+	@Excel(name="编号")
 	private String number;
 	/** 姓名 */
+	@Excel(name="姓名")
 	private String name;
 	/** 性别 */
+	@Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
 	private String sex;
 	/** 年龄 */
+	@Excel(name = "年龄")
 	private Integer age;
 	/** 民族 */
+	@Excel(name = "民族",readConverterExp = "1=汉族,2=蒙古族,3=回族,4=藏族,5=维吾尔族,6=苗族,7=彝族,8=壮族,9=布依族,10=朝鲜族,11=满族,12=侗族,13=瑶族,14=白族,15=土家族,16=哈尼族,17=哈萨克族,18=傣族,19=黎族,20=傈僳族,21=佤族,22=畲族,23=高山族,24=拉祜族,25=水族,26=东乡族,27=纳西族,28=景颇族,29=柯尔克孜族,30=土族,31=达斡尔族,32=仫佬族,33=羌族,34=布朗族,35=撒拉族,36=毛难族,37=仡佬族,38=锡伯族,39=阿昌族,40=普米族,41=塔吉克族,42=怒族,43=乌孜别克族,44=俄罗斯族,45=鄂温克族,46=崩龙族,47=保安族,48=裕固族,49=京族,50=塔塔尔族,51=独龙族,52=鄂伦春族,53=赫哲族,54=门巴族,55=珞巴族,56=基诺族")
 	private Long nation;
 	/** 身份证号 */
+	@Excel(name = "身份证号")
 	private String idcard;
 	/** 银行卡号 */
+	@Excel(name = "银行卡号")
 	private String bankCardNumber;
-	/** 楼号 */
-	private String build;
 	/** 照片 */
 	private String photo;
 	/** 手机号 */
+	@Excel(name = "手机号码")
 	private String mobile;
+	/** 楼号 */
+	@Excel(name = "楼号")
+	private String build;
 	/** 监区 */
+	@Excel(name = "监区")
 	private String area;
 	/** 房间 */
+	@Excel(name = "房间")
 	private String room;
 	/** 床号 */
+	@Excel(name = "床号")
 	private String bed;
 	/** 部门 */
+	@Excel(name = "部门编号", type = Excel.Type.IMPORT)
 	private Long deptId;
 	/** 身份 */
 	private Long identityId;
@@ -60,6 +74,7 @@ public class ClosedPerson extends BaseEntity
 	/** 当月已经消费 */
 	private BigDecimal alreadyCost;
 	/** 账户状态 */
+	@Excel(name="账户状态",readConverterExp = "0=正常,1=冻结,2=预销户,3=销户")
 	private String flag;
 	/** 状态 */
 	private String status;

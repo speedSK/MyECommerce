@@ -221,7 +221,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 					failList.add(batchCostVo);
 				} else {
 					Merchant merchant = merchantService.selectMerchantById(batchCostVo.getMerchant());
-                    if (StringUtils.isNotNull(merchant)) {
+                    if (StringUtils.isNull(merchant)) {
                         failCount++;
                         batchCostVo.setFailure("商户不存在");
                         failList.add(batchCostVo);

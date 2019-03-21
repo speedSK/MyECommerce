@@ -4,6 +4,7 @@ import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel.Type;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import com.ruoyi.project.system.dept.domain.Dept;
+import com.ruoyi.project.system.identity.domain.Identity;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 
 import java.math.BigDecimal;
@@ -68,6 +69,8 @@ public class Person extends BaseEntity
 	private Dept dept;
 	/** 身份 */
 	private Long identityId;
+	@Excel(name = "身份名称", targetAttr = "name", type = Type.EXPORT)
+	private Identity identity;
 	/** 密码（用于登录） */
 	private String password;
 	/** 盐加密 */
@@ -96,6 +99,14 @@ public class Person extends BaseEntity
 
 	public void setBankBalance(String bankBalance) {
 		this.bankBalance = bankBalance;
+	}
+
+	public Identity getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(Identity identity) {
+		this.identity = identity;
 	}
 
 	/**

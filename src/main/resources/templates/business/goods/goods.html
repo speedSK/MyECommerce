@@ -62,9 +62,6 @@
 			<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="business:goods:add">
 				<i class="fa fa-plus"></i> 添加
 			</a>
-			<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="business:goods:edit">
-				<i class="fa fa-edit"></i> 修改
-			</a>
 			<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="business:goods:remove">
 				<i class="fa fa-remove"></i> 删除
 			</a>
@@ -141,7 +138,8 @@
 				},
 				{
 					field : 'orderNum',
-					title : '显示顺序'
+					title : '显示顺序',
+					visible:false
 				},
 				{
 					field : 'visible',

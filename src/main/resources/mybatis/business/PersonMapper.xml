@@ -1,101 +1,138 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.business.person.mapper.PersonMapper">
-    
+
     <resultMap type="Person" id="PersonResult">
-        <result property="id"    column="id"    />
-        <result property="number"    column="number"    />
-        <result property="name"    column="name"    />
-        <result property="sex"    column="sex"    />
-        <result property="age"    column="age"    />
-        <result property="nation"    column="nation"    />
-        <result property="idcard"    column="idcard"    />
-        <result property="bankCardNumber"    column="bank_card_number"    />
-        <result property="build"    column="build"    />
-        <result property="photo"    column="photo"    />
-        <result property="mobile"    column="mobile"    />
-        <result property="area"    column="area"    />
-        <result property="room"    column="room"    />
-        <result property="bed"    column="bed"    />
-        <result property="deptId"    column="dept_id"    />
-        <result property="deptName"    column="deptName"    />
-        <result property="identityId"    column="identity_id"    />
-        <result property="password"    column="password"    />
-        <result property="salt"    column="salt"    />
-        <result property="deposit"    column="deposit"    />
-        <result property="balance"    column="balance"    />
-        <result property="alreadyCost"    column="already_cost"    />
-        <result property="flag"    column="flag"    />
-        <result property="status"    column="status"    />
-        <result property="remark"    column="remark"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
-        <association property="dept"    column="dept_id" javaType="Dept" resultMap="deptResult" />
+        <result property="id" column="id"/>
+        <result property="number" column="number"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="nation" column="nation"/>
+        <result property="idcard" column="idcard"/>
+        <result property="bankCardNumber" column="bank_card_number"/>
+        <result property="build" column="build"/>
+        <result property="photo" column="photo"/>
+        <result property="mobile" column="mobile"/>
+        <result property="area" column="area"/>
+        <result property="room" column="room"/>
+        <result property="bed" column="bed"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="deptName"/>
+        <result property="identityId" column="identity_id"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="deposit" column="deposit"/>
+        <result property="balance" column="balance"/>
+        <result property="alreadyCost" column="already_cost"/>
+        <result property="flag" column="flag"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="dept" column="dept_id" javaType="Dept" resultMap="deptResult"/>
+        <association property="identity" column="identity_id" javaType="Identity" resultMap="IdentityResult"/>
     </resultMap>
 
     <resultMap id="deptResult" type="Dept">
-        <id     property="deptId"   column="dept_id"     />
-        <result property="parentId" column="parent_id"   />
-        <result property="deptName" column="dept_name"   />
-        <result property="orderNum" column="order_num"   />
-        <result property="status"   column="dept_status" />
+        <id property="deptId" column="dept_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="status" column="dept_status"/>
     </resultMap>
 
-	<select id="selectPersonByLoginName" parameterType="String" resultMap="PersonResult">
-	   	select p.id, p.number, p.name, p.sex, p.age, p.nation, p.idcard, p.bank_card_number, p.build, p.photo,
-               p.mobile, p.area, p.room, p.bed, p.dept_id, p.identity_id, p.password,
-               p.salt, p.deposit, p.balance, p.already_cost, p.flag, p.status, p.remark, p.create_by,
-               p.create_time, p.update_by, p.update_time,
-               d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status
-        from bus_person p
-        left join sys_dept d on p.dept_id = d.dept_id
-		where number = #{userName}
-	</select>
+    <resultMap type="Identity" id="IdentityResult">
+        <result property="id" column="identity_code"/>
+        <result property="name" column="identity_name"/>
+        <result property="costTotal" column="cost_total"/>
+    </resultMap>
 
-	<sql id="selectPersonVo">
+    <select id="selectPersonByLoginName" parameterType="String" resultMap="PersonResult">
+        select p.id,
+               p.number,
+               p.name,
+               p.sex,
+               p.age,
+               p.nation,
+               p.idcard,
+               p.bank_card_number,
+               p.build,
+               p.photo,
+               p.mobile,
+               p.area,
+               p.room,
+               p.bed,
+               p.dept_id,
+               p.identity_id,
+               p.password,
+               p.salt,
+               p.deposit,
+               p.balance,
+               p.already_cost,
+               p.flag,
+               p.status,
+               p.remark,
+               p.create_by,
+               p.create_time,
+               p.update_by,
+               p.update_time,
+               d.dept_id,
+               d.parent_id,
+               d.dept_name,
+               d.order_num,
+               d.status as dept_status
+        from bus_person p
+                 left join sys_dept d on p.dept_id = d.dept_id
+        where number = #{userName}
+    </select>
+
+    <sql id="selectPersonVo">
         select p.id, p.number, p.name, p.sex, p.age, p.nation, p.idcard, p.bank_card_number, p.build, p.photo,
                p.mobile, p.area, p.room, p.bed, p.dept_id, p.identity_id, p.password,
                p.salt, p.deposit, p.balance, p.already_cost, p.flag, p.status, p.remark, p.create_by,
                p.create_time, p.update_by, p.update_time,
-               d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status
+               d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status,
+               i.id as identity_code,i.name as identity_name,i.cost_total
         from bus_person p
                  left join sys_dept d on p.dept_id = d.dept_id
+                 LEFT JOIN bus_identity i on p.identity_id = i.id
     </sql>
-	
+
     <select id="selectPersonList" parameterType="Person" resultMap="PersonResult">
         <include refid="selectPersonVo"/>
-        <where>  
-            <if test="id != null and id != ''"> and p.id = #{id}</if>
-             <if test="number != null and number != ''"> and p.number = #{number}</if>
-             <if test="name != null and name != ''"> and p.name like concat('%', #{name}, '%') </if>
-             <if test="sex != null and sex != ''"> and p.sex = #{sex}</if>
-             <if test="age != null and age != ''"> and p.age = #{age}</if>
-             <if test="nation != null and nation != ''"> and p.nation = #{nation}</if>
-             <if test="idcard != null and idcard != ''"> and p.idcard = #{idcard}</if>
-             <if test="bankCardNumber != null and bankCardNumber != ''"> and p.bank_card_number = #{bankCardNumber}</if>
-             <if test="build != null and build != ''"> and p.build = #{build}</if>
-             <if test="photo != null and photo != ''"> and p.photo = #{photo}</if>
-             <if test="mobile != null and mobile != ''"> and p.mobile = #{mobile}</if>
-             <if test="area != null and area != ''"> and p.area = #{area}</if>
-             <if test="room != null and room != ''"> and p.room = #{room}</if>
-             <if test="bed != null and bed != ''"> and p.bed = #{bed}</if>
-             <if test="identityId != null and identityId != ''"> and p.identity_id = #{identityId}</if>
-             <if test="password != null and password != ''"> and p.password = #{password}</if>
-             <if test="salt != null and salt != ''"> and p.salt = #{salt}</if>
-             <if test="deposit != null and deposit != ''"> and p.deposit = #{deposit}</if>
-             <if test="balance != null and balance != ''"> and p.balance = #{balance}</if>
-             <if test="alreadyCost != null and alreadyCost != ''"> and p.already_cost = #{alreadyCost}</if>
-             <if test="flag != null and flag != ''"> and p.flag = #{flag}</if>
-             <if test="status != null and status != ''"> and p.status = #{status}</if>
-             <if test="remark != null and remark != ''"> and p.remark = #{remark}</if>
-            <if test="createBy != null  and createBy != '' "> and p.create_by = #{createBy}</if>
-            <if test="createTime != null "> and p.create_time = #{createTime}</if>
-            <if test="updateBy != null  and updateBy != '' "> and p.update_by = #{updateBy}</if>
-            <if test="updateTime != null "> and p.update_time = #{updateTime}</if>
+        <where>
+            <if test="id != null and id != ''">and p.id = #{id}</if>
+            <if test="number != null and number != ''">and p.number = #{number}</if>
+            <if test="name != null and name != ''">and p.name like concat('%', #{name}, '%')</if>
+            <if test="sex != null and sex != ''">and p.sex = #{sex}</if>
+            <if test="age != null and age != ''">and p.age = #{age}</if>
+            <if test="nation != null and nation != ''">and p.nation = #{nation}</if>
+            <if test="idcard != null and idcard != ''">and p.idcard = #{idcard}</if>
+            <if test="bankCardNumber != null and bankCardNumber != ''">and p.bank_card_number = #{bankCardNumber}</if>
+            <if test="build != null and build != ''">and p.build = #{build}</if>
+            <if test="photo != null and photo != ''">and p.photo = #{photo}</if>
+            <if test="mobile != null and mobile != ''">and p.mobile = #{mobile}</if>
+            <if test="area != null and area != ''">and p.area = #{area}</if>
+            <if test="room != null and room != ''">and p.room = #{room}</if>
+            <if test="bed != null and bed != ''">and p.bed = #{bed}</if>
+            <if test="identityId != null and identityId != ''">and p.identity_id = #{identityId}</if>
+            <if test="password != null and password != ''">and p.password = #{password}</if>
+            <if test="salt != null and salt != ''">and p.salt = #{salt}</if>
+            <if test="deposit != null and deposit != ''">and p.deposit = #{deposit}</if>
+            <if test="balance != null and balance != ''">and p.balance = #{balance}</if>
+            <if test="alreadyCost != null and alreadyCost != ''">and p.already_cost = #{alreadyCost}</if>
+            <if test="flag != null and flag != ''">and p.flag = #{flag}</if>
+            <if test="status != null and status != ''">and p.status = #{status}</if>
+            <if test="remark != null and remark != ''">and p.remark = #{remark}</if>
+            <if test="createBy != null  and createBy != '' ">and p.create_by = #{createBy}</if>
+            <if test="createTime != null ">and p.create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' ">and p.update_by = #{updateBy}</if>
+            <if test="updateTime != null ">and p.update_time = #{updateTime}</if>
 
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND date_format( p.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
@@ -104,81 +141,82 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 AND date_format( p.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
             <if test="deptId != null and deptId != 0">
-                AND (p.dept_id = #{deptId} OR p.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors) ))
+                AND (p.dept_id = #{deptId} OR p.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET
+                (#{deptId},ancestors) ))
             </if>
         </where>
     </select>
-    
+
     <select id="selectPersonById" parameterType="Long" resultMap="PersonResult">
         <include refid="selectPersonVo"/>
-            where p.id =#{id}
+        where p.id =#{id}
     </select>
 
     <select id="selectPersonByNumber" parameterType="String" resultMap="PersonResult">
         <include refid="selectPersonVo"/>
         where p.number =#{number}
     </select>
-        
+
     <insert id="insertPerson" parameterType="Person">
         insert into bus_person
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null and id != '' ">id,</if>
-			<if test="number != null and number != '' ">number,</if>
-			<if test="name != null and name != '' ">name,</if>
-			<if test="sex != null and sex != '' ">sex,</if>
-			<if test="age != null and age != '' ">age,</if>
-			<if test="nation != null and nation != '' ">nation,</if>
-			<if test="idcard != null and idcard != '' ">idcard,</if>
-			<if test="bankCardNumber != null and bankCardNumber != '' ">bank_card_number,</if>
-			<if test="build != null and build != '' ">build,</if>
-			<if test="photo != null and photo != '' ">photo,</if>
-			<if test="mobile != null and mobile != '' ">mobile,</if>
-			<if test="area != null and area != '' ">area,</if>
-			<if test="room != null and room != '' ">room,</if>
-			<if test="bed != null and bed != '' ">bed,</if>
-			<if test="deptId != null and deptId != '' ">dept_id,</if>
-			<if test="identityId != null and identityId != '' ">identity_id,</if>
-			<if test="password != null and password != '' ">password,</if>
-			<if test="salt != null and salt != '' ">salt,</if>
-			<if test="deposit != null and deposit != '' ">deposit,</if>
-			<if test="balance != null and balance != '' ">balance,</if>
-			<if test="alreadyCost != null and alreadyCost != '' ">already_cost,</if>
-			<if test="flag != null and flag != '' ">flag,</if>
-			<if test="status != null and status != '' ">status,</if>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != '' ">id,</if>
+            <if test="number != null and number != '' ">number,</if>
+            <if test="name != null and name != '' ">name,</if>
+            <if test="sex != null and sex != '' ">sex,</if>
+            <if test="age != null and age != '' ">age,</if>
+            <if test="nation != null and nation != '' ">nation,</if>
+            <if test="idcard != null and idcard != '' ">idcard,</if>
+            <if test="bankCardNumber != null and bankCardNumber != '' ">bank_card_number,</if>
+            <if test="build != null and build != '' ">build,</if>
+            <if test="photo != null and photo != '' ">photo,</if>
+            <if test="mobile != null and mobile != '' ">mobile,</if>
+            <if test="area != null and area != '' ">area,</if>
+            <if test="room != null and room != '' ">room,</if>
+            <if test="bed != null and bed != '' ">bed,</if>
+            <if test="deptId != null and deptId != '' ">dept_id,</if>
+            <if test="identityId != null and identityId != '' ">identity_id,</if>
+            <if test="password != null and password != '' ">password,</if>
+            <if test="salt != null and salt != '' ">salt,</if>
+            <if test="deposit != null and deposit != '' ">deposit,</if>
+            <if test="balance != null and balance != '' ">balance,</if>
+            <if test="alreadyCost != null and alreadyCost != '' ">already_cost,</if>
+            <if test="flag != null and flag != '' ">flag,</if>
+            <if test="status != null and status != '' ">status,</if>
             <if test="remark != null  and remark != ''  ">remark,</if>
             <if test="createBy != null  and createBy != ''  ">create_by,</if>
             create_time
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null and id != ''">#{id},</if>
-			<if test="number != null and number != ''">#{number},</if>
-			<if test="name != null and name != ''">#{name},</if>
-			<if test="sex != null and sex != ''">#{sex},</if>
-			<if test="age != null and age != ''">#{age},</if>
-			<if test="nation != null and nation != ''">#{nation},</if>
-			<if test="idcard != null and idcard != ''">#{idcard},</if>
-			<if test="bankCardNumber != null and bankCardNumber != ''">#{bankCardNumber},</if>
-			<if test="build != null and build != ''">#{build},</if>
-			<if test="photo != null and photo != ''">#{photo},</if>
-			<if test="mobile != null and mobile != ''">#{mobile},</if>
-			<if test="area != null and area != ''">#{area},</if>
-			<if test="room != null and room != ''">#{room},</if>
-			<if test="bed != null and bed != ''">#{bed},</if>
-			<if test="deptId != null and deptId != ''">#{deptId},</if>
-			<if test="identityId != null and identityId != ''">#{identityId},</if>
-			<if test="password != null and password != ''">#{password},</if>
-			<if test="salt != null and salt != ''">#{salt},</if>
-			<if test="deposit != null and deposit != ''">#{deposit},</if>
-			<if test="balance != null and balance != ''">#{balance},</if>
-			<if test="alreadyCost != null and alreadyCost != ''">#{alreadyCost},</if>
-			<if test="flag != null and flag != ''">#{flag},</if>
-			<if test="status != null and status != ''">#{status},</if>
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="number != null and number != ''">#{number},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="age != null and age != ''">#{age},</if>
+            <if test="nation != null and nation != ''">#{nation},</if>
+            <if test="idcard != null and idcard != ''">#{idcard},</if>
+            <if test="bankCardNumber != null and bankCardNumber != ''">#{bankCardNumber},</if>
+            <if test="build != null and build != ''">#{build},</if>
+            <if test="photo != null and photo != ''">#{photo},</if>
+            <if test="mobile != null and mobile != ''">#{mobile},</if>
+            <if test="area != null and area != ''">#{area},</if>
+            <if test="room != null and room != ''">#{room},</if>
+            <if test="bed != null and bed != ''">#{bed},</if>
+            <if test="deptId != null and deptId != ''">#{deptId},</if>
+            <if test="identityId != null and identityId != ''">#{identityId},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="salt != null and salt != ''">#{salt},</if>
+            <if test="deposit != null and deposit != ''">#{deposit},</if>
+            <if test="balance != null and balance != ''">#{balance},</if>
+            <if test="alreadyCost != null and alreadyCost != ''">#{alreadyCost},</if>
+            <if test="flag != null and flag != ''">#{flag},</if>
+            <if test="status != null and status != ''">#{status},</if>
             <if test="remark != null  and remark != ''  ">#{remark},</if>
             <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
             sysdate()
-         </trim>
+        </trim>
     </insert>
-	 
+
     <update id="updatePerson" parameterType="Person">
         update bus_person
         <trim prefix="SET" suffixOverrides=",">
@@ -211,19 +249,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-	<delete id="deletePersonById" parameterType="Long">
-        delete from bus_person where id = #{id}
+    <delete id="deletePersonById" parameterType="Long">
+        delete
+        from bus_person
+        where id = #{id}
     </delete>
-	
+
     <delete id="deletePersonByIds" parameterType="String">
-        delete from bus_person where id in 
+        delete from bus_person where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
 
     <select id="checkNumberUnique" parameterType="String" resultType="int">
-        select count(1) from bus_person where number=#{number}
+        select count(1)
+        from bus_person
+        where number = #{number}
     </select>
-    
+
 </mapper>

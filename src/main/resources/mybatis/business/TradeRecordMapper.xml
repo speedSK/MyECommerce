@@ -29,7 +29,27 @@
     </resultMap>
 
     <sql id="selectTradeRecordVo">
-        select t.*, p.number user_number, m.merchant_name, dv.name station_name
+        select t.id,
+               t.journo,
+               t.merchant_code,
+               t.order_code,
+               t.txcode,
+               t.tx_before,
+               t.tx_after,
+               t.txamt,
+               t.from_acc,
+               t.to_acc,
+               t.reg_date,
+               t.station_code,
+               t.remark,
+               t.status,
+               t.create_by,
+               t.create_time,
+               t.update_by,
+               t.update_time,
+               p.number user_number,
+               m.merchant_name,
+               dv.name  station_name
         from bus_trade_record t
                  LEFT JOIN bus_person p on t.user_number = p.number
                  LEFT JOIN sys_dept d on p.dept_id = d.dept_id
@@ -42,7 +62,7 @@
         <where>
             <if test="id != null ">and t.id = #{id}</if>
             <if test="journo != null  and journo != '' ">and t.journo = #{journo}</if>
-            <if test="userNumber != null  and userNumber != '' ">and p.id = #{userNumber}</if>
+            <if test="userNumber != null  and userNumber != '' ">and p.number = #{userNumber}</if>
             <if test="merchantCode != null  and merchantCode != '' ">and t.merchant_code = #{merchantCode}</if>
             <if test="orderCode != null  and orderCode != '' ">and t.order_code = #{orderCode}</if>
             <if test="txcode != null  and txcode != '' ">and t.txcode = #{txcode}</if>
