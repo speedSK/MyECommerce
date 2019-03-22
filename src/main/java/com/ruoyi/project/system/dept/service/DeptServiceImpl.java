@@ -267,4 +267,5 @@ public class DeptServiceImpl implements IDeptService
         }
         return UserConstants.DEPT_NAME_UNIQUE;
     }
+
 }

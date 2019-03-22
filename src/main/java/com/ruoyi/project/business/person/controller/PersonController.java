@@ -75,7 +75,7 @@ public class PersonController extends BaseController
 	 * 新增保存业务（犯人）
 	 */
 	@RequiresPermissions("business:person:add")
-	@Log(title = "添加人员（犯人）", businessType = BusinessType.INSERT)
+	@Log(title = "添加人员", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Person person)
@@ -99,7 +99,7 @@ public class PersonController extends BaseController
 	 * 修改保存业务（犯人）
 	 */
 	@RequiresPermissions("business:person:edit")
-	@Log(title = "修改人员（犯人）", businessType = BusinessType.UPDATE)
+	@Log(title = "修改人员", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Person person)
@@ -111,7 +111,7 @@ public class PersonController extends BaseController
 	 * 删除业务（犯人）
 	 */
 	@RequiresPermissions("business:person:remove")
-	@Log(title = "删除人员（犯人）", businessType = BusinessType.DELETE)
+	@Log(title = "删除人员", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
@@ -123,7 +123,7 @@ public class PersonController extends BaseController
 	 * 冻结业务（犯人）
 	 */
 	@RequiresPermissions("business:person:editFlag")
-	@Log(title = "冻结、解冻（犯人）", businessType = BusinessType.UPDATE)
+	@Log(title = "冻结、解冻", businessType = BusinessType.UPDATE)
 	@PostMapping( "/editFlag")
 	@ResponseBody
 	public AjaxResult editFlag(String ids , String visible)
@@ -153,7 +153,7 @@ public class PersonController extends BaseController
         return util.importTemplateExcel("用户数据");
     }
 
-	@Log(title = "导入（犯人）管理", businessType = BusinessType.IMPORT)
+	@Log(title = "导入管理", businessType = BusinessType.IMPORT)
 	@RequiresPermissions("business:person:import")
 	@PostMapping("/importData")
 	@ResponseBody
@@ -169,7 +169,7 @@ public class PersonController extends BaseController
 	 * 导出业务（犯人）列表
 	 */
 	@RequiresPermissions("business:person:export")
-	@Log(title = "导出信息（犯人）", businessType = BusinessType.EXPORT)
+	@Log(title = "导出信息", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(Person person)

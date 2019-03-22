@@ -159,13 +159,15 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 				} else {
 					successCount++;
 					person = pList.get(0);
+					TradeRecord record = new TradeRecord();
+					record.setBefore(person.getBalance());
 					person.setBalance(person.getBalance().add(new BigDecimal(batchRechargeVo.getAmount())));
+					record.setAfter(person.getBalance());
 					//TODO 计算校验字段
 					personMapper.updatePerson(person);
-					Merchant merchant = merchantService.selectMerchantById(1L);
+					Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
+					merchant.setBalance(merchant.getBalance().add(person.getBalance()));
 					merchantService.updateMerchant(merchant);
-					merchant.setBalance(merchant.getBalance().add(person.getDeposit()));
-					TradeRecord record = new TradeRecord();
 					record.setJourno(IdGen.getJourno());
 					record.setUserNumber(person.getId().toString());
 					record.setTxcode("1003");
@@ -237,7 +239,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
                         merchantService.updateMerchant(merchant);
                         TradeRecord record = new TradeRecord();
                         record.setJourno(IdGen.getJourno());
-                        record.setUserNumber(person.getNumber());
+                        record.setUserNumber(person.getId().toString());
                         record.setBefore(oldBalance);
                         record.setAfter(person.getBalance());
                         record.setTxcode("1005");

@@ -51,7 +51,7 @@
                m.merchant_name,
                dv.name  station_name
         from bus_trade_record t
-                 LEFT JOIN bus_person p on t.user_number = p.number
+                 LEFT JOIN bus_person p on t.user_number = p.id
                  LEFT JOIN sys_dept d on p.dept_id = d.dept_id
                  LEFT JOIN bus_merchant m on t.merchant_code = m.id
                  LEFT JOIN bus_device dv on dv.id = t.station_code

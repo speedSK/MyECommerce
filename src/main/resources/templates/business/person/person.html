@@ -42,6 +42,24 @@
 						编号：<input type="text" name="number"/>
 					</li>
 					<li>
+						性别：<select name="sex" th:with="type=${@dict.getType('sys_user_sex')}">
+						<option value="">所有</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
+					</li>
+					<li>
+						民族：<select name="nation" th:with="type=${@dict.getType('bus_person_nation')}">
+						<option value="">所有</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
+					</li>
+					<li>
+						身份：<select name="identityId" th:with="type=${@identity.getIdentities()}">
+						<option value="">所有</option>
+						<option th:each="dict : ${type}" th:text="${dict.name}" th:value="${dict.id}"></option>
+					</select>
+					</li>
+					<li>
 						人员状态：<select name="flag" th:with="type=${@dict.getType('bus_person_flag')}">
 						<option value="">所有</option>
 						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>

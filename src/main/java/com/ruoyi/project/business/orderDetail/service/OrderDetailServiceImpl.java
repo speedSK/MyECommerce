@@ -169,7 +169,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService
         person.setBalance(person.getBalance().add(orderDetail.getMoney()));
 		personService.updatePerson(person);
 		String deviceCode = deviceService.getDeviceCode();
-		record.setUserNumber(person.getNumber());
+		record.setUserNumber(person.getId().toString());
 		record.setOrderCode(order.getOrderCode());
 		record.setTxamt(orderDetail.getMoney());
 		record.setTxcode("1008");

@@ -23,6 +23,8 @@ import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import com.ruoyi.project.business.transactionRecord.domain.TransactionRecord;
 import com.ruoyi.project.business.transactionRecord.service.ITransactionRecordService;
 import com.ruoyi.project.system.config.service.IConfigService;
+import com.ruoyi.project.system.dept.domain.Dept;
+import com.ruoyi.project.system.dept.service.IDeptService;
 import com.ruoyi.project.system.device.service.IDeviceService;
 import com.ruoyi.project.system.merchant.domain.Merchant;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
@@ -60,6 +62,8 @@ public class PersonServiceImpl implements IPersonService
     private IDeviceService deviceService;
     @Autowired
     private IConfigService configService;
+    @Autowired
+    private IDeptService deptService;
 
 	/**
      * 查询人员管理信息
@@ -107,7 +111,7 @@ public class PersonServiceImpl implements IPersonService
         String deviceCode = deviceService.getDeviceCode();
         TradeRecord record = new TradeRecord();
         record.setJourno(IdGen.getJourno());
-        record.setUserNumber(person.getNumber());
+        record.setUserNumber(person.getId().toString());
         record.setTxcode(Constants.TX_CODE_DEPOSIT_INCOME);
         record.setTxamt(person.getDeposit());
         record.setToAcc(merchant.getId().toString());
@@ -166,7 +170,7 @@ public class PersonServiceImpl implements IPersonService
         String deviceCode = deviceService.getDeviceCode();
 		TradeRecord record = new TradeRecord();
 		record.setJourno(IdGen.getJourno());
-		record.setUserNumber(person.getNumber());
+		record.setUserNumber(person.getId().toString());
         record.setBefore(oldBalance);
         record.setAfter(info.getBalance());
 		record.setTxcode(Constants.TX_CODE_CASH_RECHARGE);
@@ -254,7 +258,7 @@ public class PersonServiceImpl implements IPersonService
             tradeRecord.setStationCode(deviceCode);
             tradeRecord.setTxamt(person.getBalance().add(person.getDeposit()));
             tradeRecord.setTxcode("1003");
-            tradeRecord.setUserNumber(person.getNumber());
+            tradeRecord.setUserNumber(person.getId().toString());
             tradeRecord.setBefore(person.getBalance());
             tradeRecord.setAfter(new BigDecimal(0));
             tradeRecord.setRemark("销户退还");
@@ -301,11 +305,17 @@ public class PersonServiceImpl implements IPersonService
                 Person p = personMapper.selectPersonByNumber(person.getNumber());
                 if (StringUtils.isNull(p))
                 {
-                    person.setPassword(password);
-                    person.setCreateBy(operName);
-                    this.insertPerson(person);
-                    successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 导入成功");
+                    int isParent = deptService.selectDeptCount(person.getDeptId());
+                    if (isParent == 0) {
+                        person.setPassword(password);
+                        person.setCreateBy(operName);
+                        this.insertPerson(person);
+                        successNum++;
+                        successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 导入成功");
+                    } else {
+                        failureNum++;
+                        failureMsg.append("<br/>" + failureNum + "、账号 " + person.getNumber() + " 不可选择父级部门");
+                    }
                 }
                 else if (updateSupport)
                 {
