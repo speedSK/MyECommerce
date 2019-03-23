@@ -41,7 +41,14 @@ function subtractGoods(goodsId){
 		//step2:后续处理
 		afterHandler();
 	}
-	
+}
+
+//移除商品
+function delGoods(goodsId){
+	//step1:修改商品数量
+	$("#"+goodsId).remove();
+	//step2:后续处理
+	afterHandler();
 }
 
 //结算列表商品变更以后执行的逻辑。例如：重新计算订单金额等等...
