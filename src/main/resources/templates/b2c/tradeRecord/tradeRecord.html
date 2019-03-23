@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            流水号：<input type="text" name="journo"/>
+                        </li>
+                        <li>
+                            商户号：
+                            <select name="merchantCode" th:with="type=${@merchant.getAllMerchant()}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.merchantName}" th:value="${dict.id}"></option>
+                            </select>
+                        </li>
+
+                        <li>
+                            订单号：<input type="text" name="orderCode"/>
+                        </li>
+
+                        <li>
+                            交易名称：<select name="txcode" th:with="type=${@dict.getType('bus_txcode')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li class="select-time">
+                            <label>日期： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始日期" name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束日期" name="params[endTime]"/>
+                        </li>
+
+                        <!--<li>-->
+                            <!--设备编号：<input type="text" name="stationCode"/>-->
+                        <!--</li>-->
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "b2c/tradeRecord";
+                                                                                                                                                                                                                                                                                                                                                                                                    
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            uniqueId:"id",
+            modalName: "流水",
+            search: false,
+            showExport: false,
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'id',
+                title: '主键',
+                visible: false
+            },
+            {
+                field: '',
+                title: '序号',
+                formatter: function (value, row, index) {
+                    return index + 1;
+                }
+            },
+            {
+                field: 'journo',
+                title: '流水号',
+                sortable: true
+            },
+            {
+                field: 'userNumber',
+                title: '编号',
+                sortable: true
+            },
+            {
+                field: 'merchantName',
+                title: '商户名称',
+            },
+            {
+                field: 'orderCode',
+                title: '订单号',
+                sortable: true
+            },
+            {
+                field: 'txcode',
+                title: '交易代码',
+                visible:false,
+                sortable: true
+            },
+            {
+                field: 'before',
+                title: '消费前余额',
+                visible:false
+            },
+            {
+                field: 'after',
+                title: '余额',
+            },
+            {
+                field: 'txamt',
+                title: '交易金额',
+                sortable: true
+            },
+            {
+                field: 'fromAcc',
+                title: '来源账户',
+                visible:false
+            },
+            {
+                field: 'toAcc',
+                title: '目标账户',
+                visible:false
+            },
+            {
+                field: 'stationName',
+                title: '设备名称',
+                visible:false
+            },
+            {
+                field: 'remark',
+                title: '交易名称',
+            },
+            {
+                field: 'status',
+                title: '状态',
+            },
+            {
+                field: 'createBy',
+                title: '操作人',
+            },
+            {
+                field: 'createTime',
+                title: '创建时间',
+                sortable: true
+            }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>
