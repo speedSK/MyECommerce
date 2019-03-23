@@ -51,6 +51,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="findOrderListForMap" parameterType="java.util.Map" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>
+            <if test="id != null and id != ''"> and id = #{id}</if>
+            <if test="orderCode != null and orderCode != ''"> and order_code = #{orderCode}</if>
+            <if test="money != null and money != ''"> and money = #{money}</if>
+            <if test="personId != null and personId != ''"> and person_id = #{personId}</if>
+            <if test="personCode != null and personCode != ''"> and person_code = #{personCode}</if>
+            <if test="personName != null and personName != ''"> and person_name like concat('%', #{personName}, '%') </if>
+            <if test="flag != null and flag != ''"> and flag = #{flag}</if>
+            <if test="finishUser != null and finishUser != ''"> and finish_user = #{finishUser}</if>
+            <if test="finishTime != null and finishTime != ''"> and finish_time = #{finishTime}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+            <if test="params != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format( create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format( create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
     <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         where o.id = #{id}

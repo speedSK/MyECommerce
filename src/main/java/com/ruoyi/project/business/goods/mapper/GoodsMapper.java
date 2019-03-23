@@ -4,6 +4,7 @@ import com.ruoyi.project.business.goods.domain.Goods;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品 数据层
@@ -22,6 +23,13 @@ public interface GoodsMapper
      */
 	public Goods selectGoodsById(Long id);
 	
+	/**
+	 * 根据Map参数获取商品列表
+	 * @param param
+	 * @return
+	 */
+	List<Goods> findGoodsListForMap(Map<String, Object> param);
+
 	/**
      * 查询商品列表
      * 

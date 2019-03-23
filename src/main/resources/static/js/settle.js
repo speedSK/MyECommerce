@@ -1,5 +1,5 @@
 /**
- * Created by CoderX on 2018/8/14
+ * Created by CoderX on 2019/3/14
  */
 
 var minUnitNum = 1;	//商品的最小单位数量
@@ -87,8 +87,12 @@ function submitOrder(){
 	var canSettleFlag = false;
 	var userBalance = parseFloat($("#userBalance").html());
 	var totalMoney = parseFloat($("#totalMoney").html());
+	var quota = parseFloat($("#quota").val());
 	if(userBalance < totalMoney){
 		alert("用户可用余额不足！");
+		return;
+	}else if(quota < totalMoney){
+		alert("下单金额超过用户限额，请调整下单商品金额以完成下单！");
 		return;
 	}else{
 		var confirmSettle = window.confirm("确认提交订单！");
@@ -105,11 +109,31 @@ function submitOrder(){
 	});
 	//step2:提交购物车表单 虚拟表单提交
 	if(canSettleFlag){
+
+//		var tempForm = $("<form></form>");
+//		$(tempForm).append(borrowUl);
+//		$(tempForm).attr("action",ctx + "b2c/order/submitOrder").attr("method","POST").css("display","none");
+//		$("body").append(tempForm);
+//		$(tempForm).submit();
+
 		var tempForm = $("<form></form>");
 		$(tempForm).append(borrowUl);
-		$(tempForm).attr("action",ctx + "order/submitOrder").attr("method","POST").css("display","none");
-		$("body").append(tempForm);
-		$(tempForm).submit();
+		$.ajax({
+	        type: "post",
+	        url: ctx + "b2c/order/submitOrder",
+	        data: $(tempForm).serialize(),
+	        datatype:"json",
+	        success: function(res) {
+	        	//返回的分类列表展示出来
+	        	if(res.resCode=="0"){
+	        		alert(res.resMessage);
+	        		window.location.href = ctx + "b2c/goods/goodsList";
+	        	}else{
+	        		alert(res.resMessage);
+	        		window.location.href = ctx + "b2c/goods/goodsList";
+	        	}
+	        }
+	    });
 	}
 	
 }

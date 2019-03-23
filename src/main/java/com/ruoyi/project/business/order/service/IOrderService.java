@@ -2,6 +2,11 @@ package com.ruoyi.project.business.order.service;
 
 import com.ruoyi.project.business.order.domain.Order;
 import java.util.List;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSONObject;
+import com.ruoyi.project.business.orderDetail.domain.OrderDetail;
+import com.ruoyi.project.business.person.domain.Person;
 
 /**
  * 订单 服务层
@@ -50,4 +55,26 @@ public interface IOrderService
 	 * @return
 	 */
 	public int updateOrderFlag(String id, String flag);
+
+	/**
+	 * 提交订单
+	 * @param goodsId
+	 * @param goodsNum
+	 * @param user
+	 */
+	public JSONObject submitOrder(String[] goodsId, Integer[] goodsNum, Person user);
+
+	/**
+	 * 获取用户订单列表
+	 * @param param
+	 * @return List<BusOrder>
+	 */
+	public List<Order> findOrderList(Map<String, Object> param);
+
+	/**
+	 * 查询订单明细
+	 * @param param
+	 * @return
+	 */
+	public List<OrderDetail> findOrderDetails(Map<String, Object> param);
 }

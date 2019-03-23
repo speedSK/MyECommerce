@@ -2,6 +2,7 @@ package com.ruoyi.project.business.goods.service;
 
 import com.ruoyi.project.business.goods.domain.Goods;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品 服务层
@@ -27,6 +28,12 @@ public interface IGoodsService
      */
 	public List<Goods> selectGoodsList(Goods goods);
 	
+	/**
+	 * 根据Map查询商品列表
+	 * @param map
+	 * @return
+	 */
+	public List<Goods> findGoodsListForMap(Map<String,Object> map);
 	/**
      * 新增商品
      * 

@@ -37,6 +37,8 @@ public class Goods extends BaseEntity
 	private BigDecimal price;
 	/** 显示顺序 */
 	private Integer orderNum;
+	/** 商品数量，仅用于页面展示 **/
+	private Long num;
 	/** 图片 */
 	private String image;
 	/** 显示状态 */
@@ -225,4 +227,17 @@ public class Goods extends BaseEntity
 	{
 		return status;
 	}
+	/**
+	 * 获取：数量
+	 */
+	public Long getNum() {
+		return num;
+	}
+	/**
+	 * 设置：数量
+	 */
+	public void setNum(Long num) {
+		this.num = num;
+	}
+
 }

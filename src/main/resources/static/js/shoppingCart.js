@@ -45,7 +45,11 @@ function closeCart() {
 };
 
 //添加商品到购物车
-function addShoppingCart(id,name,price,image){
+function addShoppingCart(obj){
+	var id = $(obj).attr("data-id");
+	var name = $(obj).attr("data-name");
+	var price = $(obj).attr("data-price");
+	var image = $(obj).attr("data-image");
 	var originalHtml = $("#cartUl").html();	//购物车原来的商品html
 	//step1:判断是否已经包含该商品,包含则修改数量，不包含则增加商品
 	var tempUl = document.createElement("ul");//购物车列表Ul替身，处理完应该将替身的innerHtml替换回cartUl中
@@ -68,7 +72,7 @@ function addShoppingCart(id,name,price,image){
 		li = null;//防止内存泄漏
 	}
 	//step2:商品变化后续处理逻辑
-	afterHandler();
+	scAfterHandler();
 };
 
 //从购物车移除商品
@@ -77,7 +81,7 @@ function delGoods(goodsId){
 	var goodsNum = $("#" + goodsId + " input[name='goodsNum']").val();
 	$("#" + goodsId).remove();
 	//step2:商品变化后续处理逻辑
-	afterHandler();
+	scAfterHandler();
 }
 
 //购物车商品数量增加
@@ -87,7 +91,7 @@ function addGoods(goodsId){
 	goodsNum = parseInt(goodsNum) + parseInt(minUnitNum);
 	$("#" + goodsId + " input[name='goodsNum']").val(goodsNum);
 	//step2:商品变化后续处理逻辑
-	afterHandler();
+	scAfterHandler();
 }
 
 //购物车商品数量减少
@@ -98,12 +102,12 @@ function subtractGoods(goodsId){
 		goodsNum = parseInt(goodsNum) - parseInt(minUnitNum);
 		$("#" + goodsId + " input[name='goodsNum']").val(goodsNum);
 		//step2:商品变化后续处理逻辑
-		afterHandler();
+		scAfterHandler();
 	}
 }
 
 //购物车商品数量变更以后执行的逻辑。例如：刷新购物车logo上的数量...
-function afterHandler(){
+function scAfterHandler(){
 	var selectNum = 0;
 	var selectTotalPrice = 0;
 	$(".checkbox_c").each(function(){
@@ -174,7 +178,7 @@ function checkAll(){
 		$(this).prop("checked",$("#checkAll").prop('checked'));
 	});
 	//商品变化后续处理逻辑
-	afterHandler();
+	scAfterHandler();
 }
 
 //单个商品选中或取消勾选事件
@@ -182,7 +186,7 @@ function singleCheck(){
 	//反选该商品
 	$(this).prop("checked",$(this).prop("checked")?false:true);
 	//商品变化后续处理逻辑
-	afterHandler();
+	scAfterHandler();
 }
 
 //购物车去结算
@@ -200,7 +204,7 @@ function settle(){
 	if(canSettleFlag){
 		var tempForm = document.createElement("form");
 		$(tempForm).append(borrowUl);
-		$(tempForm).attr("action",ctx + "order/settlePage").attr("method","POST").css("display","none");
+		$(tempForm).attr("action",ctx + "b2c/order/settlePage").attr("method","POST").css("display","none");
 		$("body").append(tempForm);
 		$(tempForm).submit();
 	}

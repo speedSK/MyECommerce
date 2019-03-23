@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -45,6 +47,29 @@ public class GoodCategoryController extends BaseController
 	{
 		List<GoodCategory> goodCategoryList = goodCategoryService.selectGoodCategoryList(goodCategory);
 		return goodCategoryList;
+	}
+
+	/**
+	 * 获取商品列表局部页面（包含分页栏）
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PostMapping(value="categoryList")
+	public String getGoodsInfo(HttpServletRequest request, String parentId, HttpServletResponse response, ModelMap modelMap){
+			//获取用户信息
+//	        Person user = getPerson();
+	        startPage();
+	        GoodCategory goodCategory  =  new GoodCategory();
+	        if(StringUtils.isNotBlank(parentId)){
+	        		goodCategory.setParentId(Long.valueOf(parentId));
+	        }else{
+	        		//分类的根节点parentID为0
+	        		goodCategory.setParentId(0L);
+	        }
+	        List<GoodCategory> goodsCategoryList = goodCategoryService.selectGoodCategoryList(goodCategory);
+	        modelMap.put("categoryPage", getDataTable(goodsCategoryList));
+	        return "b2c/goods/goodsCategoryTable";
 	}
 
 	/**

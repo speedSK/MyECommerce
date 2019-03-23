@@ -1,8 +1,14 @@
+/* 商品列表样式 start*/
 .clearFloat {
     zoom: 1;
 }
 .liStyle{
 	float: left;margin-left: 15px;margin-bottom: 15px;
+}
+/* 限制商品图片大小 */
+.d img {
+    height: 120px;
+    width: 120px;
 }
 * {
     margin: 0px;
@@ -35,6 +41,159 @@ body {
 }
 /* 商品列表样式 */
 .goodsDiv{
+	clear: both;
 	overflow-y: auto;
 	height: 650px;
+}
+/* 商品列表样式 end*/
+
+
+
+/* 商品筛选栏样式 start*/
+.nav-attrs-group {
+	font: 12px "微软雅黑",Microsoft YaHei,Arial,simsun,Helvetica,sans-serif;
+    padding: 0 12px 0 17px;
+    border-bottom: 1px solid #e5e5e5;
+    background: #f5f5f5;
+    height: 35px;
+}
+.nav-attrs-group h3 {
+    float: left;
+    margin: 11px 25px 0 0;
+    font-size: 14px;
+    color: #535353;
+}
+.nav-attrs-crumble {
+    position: relative;
+    float: left;
+    padding-right: 100px;
+    padding-bottom: 5px;
+    width: auto;
+}
+.nav-attrs-crumble a {
+    float: left;
+    margin: 7px 8px 0 0;
+    padding-left: 7px;
+    height: 22px;
+    line-height: 22px;
+    cursor: pointer;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    max-width: 700px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.nav-attrs-crumble a {
+    color: #5d5d5d;
+    text-decoration: none;
+    outline: none;
+}
+.close-icon {
+    float: right;
+    margin-left: 10px;
+    width: 23px;
+    height: 22px;
+    background-position: -24px -745px;
+}
+.nav-attrs-crumble a span {
+    color: #ff4200;
+}
+.nav-attrs-crumble i {
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url(../img/icon.png);
+    background-repeat: no-repeat;
+}
+.nav-attrs-operation {
+    float: left;
+    position: relative;
+    width: 220px;
+    height: 33px;
+}
+.nav-attrs-operation .link {
+    float: left;
+    margin-left: 6px;
+    margin-top: 6px;
+    font-size: 12px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    color: #333;
+    padding: 2px 9px 3px 12px;
+}
+.nav-attrs-operation a {
+    color: #5d5d5d;
+    text-decoration: none;
+    outline: none;
+}
+.nav-attrs-operation .del-icon {
+    margin-left: 8px;
+    width: 9px;
+    height: 10px;
+    background-position: -64px -523px;
+}
+.history-view-pop {
+    display: block;
+    position: absolute;
+    top: 34px;
+    right: -13px;
+    width: 345px;
+    height: 315px;
+    border: 1px solid #ddd;
+    background: #fff;
+    z-index: 5;
+}
+/* 商品筛选栏样式 end*/
+
+/* 商品分类栏样式 start*/
+.list-attrs-item {
+    line-height: 25px;
+    background: #fff;
+/*     border-bottom: 1px solid #e5e5e5; */
+/*     border-right: 1px solid #e5e5e5; */
+    max-width: 60%;
+}
+.list-attrs-item dt {
+    float: left;
+    padding: 12px 5px 9px 5px;
+    width: 90px;
+    font-size: 13px;
+    text-align: right;
+}
+.list-attrs-item dd {
+    float: left;
+/*     margin: -10px 80px 0px 80px; */
+    padding: 0px 0px 0px 10px;
+    max-width: 100%;
+    background: #fff;
+}
+
+.list-attrBrand {
+	padding-left: 20px;
+    float: left;
+    width: 100%;
+}
+.lA-Category li {
+    /* width: 78px; */
+    text-overflow: clip;
+}
+.list-attrBrand li {
+    float: left;
+    margin-right: 4px;
+/*     padding-left: 5px; */
+    width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #2E6CA9;
+}
+.list-attrBrand li a {
+    color: #2E6CA9;
+}
+
+.list-attrBrand a {
+    padding: 2px 3px;
+    color: #474747;
+    text-decoration: none;
+    outline: none;
 }

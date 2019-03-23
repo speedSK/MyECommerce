@@ -5,10 +5,7 @@
 		<div class="clearFloat">
 			<span class="price fl" th:text="'¥'+${goods.price}"></span>
 		</div>
-		<a class="addCart" th:onclick="'javascript:addShoppingCart(\'' + ${goods.id} + '\'' +
-		 ',\'' + ${goods.name}+'\'' +
-		 ',\'' + ${goods.price}+'\'' +
-		 ',\'' + ${goods.image} +
-		     '\');'">加入购物车</a>
+		<a class="addCart" th:data-id="${goods.id}" th:data-name="${goods.name}" th:data-price="${goods.price}"
+		   th:data-image="${goods.image}" th:onclick="@{javascript:addShoppingCart(this);}">加入购物车</a>
 	</li>
 </ul>

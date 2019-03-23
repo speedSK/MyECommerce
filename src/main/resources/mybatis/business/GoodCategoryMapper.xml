@@ -36,7 +36,7 @@
             <if test="searchValue != null and searchValue != ''">and category_name like concat('%', #{searchValue},
                 '%')
             </if>
-            <if test="parentId != null and parentId != ''">and parent_id = #{parentId}</if>
+            <if test="parentId != null">and parent_id = #{parentId}</if>
             <if test="orderNum != null and orderNum != ''">and order_num = #{orderNum}</if>
             <if test="icon != null and icon != ''">and icon = #{icon}</if>
             <if test="visible != null and visible != ''">and visible = #{visible}</if>

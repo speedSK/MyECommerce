@@ -6,6 +6,7 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,6 +164,11 @@ public class GoodsServiceImpl implements IGoodsService
 			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
 		}
 		return successMsg.toString();
+	}
+
+	@Override
+	public List<Goods> findGoodsListForMap(Map<String, Object> param) {
+		return goodsMapper.findGoodsListForMap(param);
 	}
 
 	@Override

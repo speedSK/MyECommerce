@@ -4,6 +4,7 @@ import com.ruoyi.project.business.orderDetail.domain.OrderDetail;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单详情 数据层
@@ -63,4 +64,11 @@ public interface OrderDetailMapper
 	public int deleteOrderDetailByIds(String[] ids);
 
 	public  int updateFlagByOrderId(OrderDetail orderDetail);
+
+	/**
+	 * 获取订单明细列表
+	 * @param param
+	 * @return
+	 */
+	public List<OrderDetail> findOrderDetailListForMap(Map<String, Object> param);
 }

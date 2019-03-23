@@ -75,6 +75,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
+    <select id="findGoodsListForMap" parameterType="java.util.Map" resultMap="GoodsResult">
+    	<include refid="selectGoodsVo"/>
+	    <where>
+	   	    <if test="id != null and id != ''"> and g.id = #{id}</if>
+	   	    <if test="goodsIds != null">
+		    	and g.id in
+			    <foreach item="goodsId" collection="goodsIds" open="(" close=")" separator=",">
+			    	#{goodsId,jdbcType=BIGINT}
+			    </foreach>
+		    </if>
+	        <if test="categoryId != null and categoryId != ''"> and g.category_id = #{categoryId}</if>
+	        <if test="belongCategoryId != null and belongCategoryId != ''">
+	         	and (concat(concat(",",gc.ancestors),",") like concat('%,', #{belongCategoryId}, ',%') or g.category_id = #{belongCategoryId})
+	         </if>
+	        <if test="merchantId != null and merchantId != ''"> and g.merchant_id = #{merchantId}</if>
+	        <if test="code != null and code != ''"> and g.code = #{code}</if>
+	        <if test="name != null and name != ''"> and g.name like  concat('%', #{name}, '%') </if>
+	        <if test="searchValue != null and searchValue != ''"> and g.name like  concat('%', #{searchValue}, '%') </if>
+	        <if test="price != null and price != ''"> and g.price = #{price}</if>
+	        <if test="orderNum != null and orderNum != ''"> and g.order_num = #{orderNum}</if>
+	        <if test="image != null and image != ''"> and g.image = #{image}</if>
+	        <if test="visible != null and visible != ''"> and g.visible = #{visible}</if>
+	        <if test="status != null and status != ''"> and g.status = #{status}</if>
+	        <if test="remark != null and remark != ''"> and g.remark = #{remark}</if>
+			<if test="createBy != null  and createBy != '' ">and g.create_by = #{createBy}</if>
+			<if test="createTime != null ">and g.create_time = #{createTime}</if>
+			<if test="updateBy != null  and updateBy != '' ">and g.update_by = #{updateBy}</if>
+			<if test="updateTime != null ">and g.update_time = #{updateTime}</if>
+	    </where>
+  </select>
+
     <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult">
         <include refid="selectGoodsVo"/>
           where g.id = #{id}

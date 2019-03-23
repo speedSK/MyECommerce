@@ -1,9 +1,11 @@
 package com.ruoyi.project.business.order.mapper;
 
-import com.ruoyi.project.business.order.domain.Order;
+import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.ruoyi.project.business.order.domain.Order;
 
 /**
  * 订单 数据层
@@ -36,6 +38,8 @@ public interface OrderMapper
      * @param order 订单信息
      * @return 结果
      */
+//	@Options(useGeneratedKeys=true,keyProperty="id")
+	@SelectKey(statement="SELECT LAST_INSERT_ID()",keyProperty="id",before=false,resultType=Long.class)
 	public int insertOrder(Order order);
 	
 	/**
@@ -64,7 +68,11 @@ public interface OrderMapper
 
 	public int updateMoneyById(Long id);
 
-
-
+	/**
+	 * 获取订单列表
+	 * @param param
+	 * @return
+	 */
+	public List<Order> findOrderListForMap(Map<String, Object> param);
 	
 }

@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>农行“金管家”管理系统 - 登录</title>
-    <meta name="keywords" content="农行“金管家”管理系统">
+    <title>塔城戒毒所管理系统 - 登录</title>
+    <meta name="keywords" content="塔城戒毒所管理系统">
     <meta name="description" content="LiuNing">
     <link href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" rel="stylesheet"/>
     <link href="../static/css/mynumkb.css" th:href="@{css/mynumkb.css}" rel="stylesheet"/>
@@ -24,25 +24,25 @@
 
 <body class="signin">
 
-    <div class="signinpanel">
-        <div class="row">
-            <div class="col-sm-5">
-                <form id="signupForm">
-                    <h4 class="no-margins">登录：</h4>
-                    <p class="m-t-md">请输入用户名和密码</p>
-                    <input type="text"     name="username" id="username" class="form-control uname"		placeholder="用户名" />
-                    <input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码" />
-                    <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
-                    <a th:href="@{forgetpwd}" class="link" id="forgetpwd" target="_blank" style="float:right;">忘了密码？</a>
-                </form>
-            </div>
-        </div>
-        <div class="signup-footer">
-            <div class="pull-left">
-                &copy; 2018 All Rights Reserved. CoderX
-            </div>
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-5">
+            <form id="signupForm">
+                <h4 class="no-margins">登录：</h4>
+                <p class="m-t-md">请输入用户名和密码</p>
+                <input type="text"     name="username" id="username" class="form-control uname"		placeholder="用户名" />
+                <input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码" />
+                <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+                <a th:href="@{forgetpwd}" class="link" id="forgetpwd" target="_blank" style="float:right;">忘了密码？</a>
+            </form>
         </div>
     </div>
+    <div class="signup-footer">
+        <div class="pull-left">
+            &copy; 2018 All Rights Reserved. CoderX
+        </div>
+    </div>
+</div>
 <script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
 
 <!-- 全局js -->
@@ -51,9 +51,9 @@
 <script src="../static/js/mynumkb.js" th:src="@{/js/mynumkb.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script type="text/javascript">
-	//输入框绑定虚拟键盘
-	$("#username").mynumkb();
-	$("#password").mynumkb();
+    //输入框绑定虚拟键盘
+    $("#username").mynumkb();
+    $("#password").mynumkb();
 </script>
 <!-- 验证插件 -->
 <script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
