@@ -14,7 +14,7 @@
 	    		<li class="buyerHeadInfo">
 	    			<strong style="">购买人信息：</strong>
 	    			<strong class="font-bold">[[${user.name}]]</strong><strong class="font-bold">[[${user.mobile}]]</strong>
-	    			<strong  class="font-bold" th:text="${user.build} + '-' + ${user.room} + '-' + ${user.bed}"></strong>
+	    			<strong  class="font-bold" th:text="(${user.build!=null}?${user.build}+'-':'') + (${user.room!=null}?${user.room}+'-':'') + (${user.bed!=null}?${user.bed}:'')"></strong>
 	    		</li>
 	    		<li class="buyerHeadInfo">
 	    			<strong style="">账户可用余额：</strong>
