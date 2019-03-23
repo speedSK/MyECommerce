@@ -1,7 +1,7 @@
 package com.ruoyi.common.utils;
 
 /**
- * 操作状态
+ * 通用常量
  * 
  * @author CoderX
  *
@@ -13,9 +13,10 @@ public class CommonConstant {
     /** 监狱犯人 */
     public static final String USERTYPE_PRISONER = "2";
     
-    /** 支付方式:余额支付 */
-    public static final String PAYTYPE_BALANCE = "1";
-    /** 支付方式:现金 */
-    public static final String PAYTYPE_CASH = "2";
+    /** 用户类型表示 */
+    public static final String USERTYPE= "userType";
+    
+    /** 服刑人员登录地址 **/
+    public static final String LOGIN_PERSON_URL= "/prisonLogin";
     
 }
