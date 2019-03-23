@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>结算</title>
+	    <link href="/static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+	    <link href="/static/css/settle.css" th:href="@{/css/settle.css}" rel="stylesheet"/>
+	</head>
+	<body class="gray-bg">
+		<!-- buyer Info div -->
+	    <div id="buyerInfoDiv" class="row border-bottom">
+	    	<ul class="buyerUl">
+	    		<li class="buyerHeadInfo">
+	    			<strong style="">购买人信息：</strong>
+	    			<strong class="font-bold">[[${user.name}]]</strong><strong class="font-bold">[[${user.mobile}]]</strong>
+	    			<strong  class="font-bold" th:text="${user.build} + '-' + ${user.room} + '-' + ${user.bed}"></strong>
+	    		</li>
+	    		<li class="buyerHeadInfo">
+	    			<strong style="">账户可用余额：</strong>
+	    			<strong class="font-bold redcolor">￥</strong><strong id="userBalance" class="">[[${user.balance}]]</strong>
+	    		</li>
+<!-- 	    		<li class="buyerInfo"> -->
+<!-- 	    		</li> -->
+<!-- 	    		<li class="buyerInfo buyerBottom"> -->
+<!-- 	    		</li> -->
+	    	</ul>
+	    </div>
+	    <!-- settle form -->
+    	<form id="settleForm" class="settleForm" style="">
+			<div class="order_content">
+				<ul class="order_lists cartTop">
+					<li class="list_chk">
+						<input type="checkbox" id="checkAll" class="whole_check" />
+					</li>
+					<li class="list_con">商品信息</li>
+					<li class="list_info">商品参数</li>
+					<li class="list_price">单价</li>
+					<li class="list_amount">数量</li>
+					<li class="list_sum">金额</li>
+					<li class="list_op">操作</li>
+				</ul>
+				<ul class="order_lists settleGoodsUl" th:id="${goods.id}" th:each="goods : ${goodsList}" >
+					<li class="list_chk">
+						<input id="checkbox_goodsId" class="checkbox_c checkbox_css" name="goodsId" th:value="${goods.id}"  type="checkbox" />
+					</li>
+					<li class="list_con">
+						<div class="list_img"><a href="javascript:;"><img class="goodsImg" th:src="${goods.image}" /></a></div>
+						<div class="list_text"><a href="javascript:;" th:text="${goods.name}" /></div>
+					</li>
+					<li class="list_info">
+<!-- 						<div class="list_desc" th:text="${goods.des}" /> -->
+						<div class="list_desc" />
+					</li>
+					<li class="list_price price_style">
+						<span class="price">￥</span>
+						<span th:id="'goodsPrice_'+${goods.id}" class="price"  th:text="${goods.price}" />
+						<!-- <p class="price" th:text="'¥'+${goods.price}" /> -->
+					</li>
+					<li class="list_amount">
+						<div class="amount_box">
+							<a href="javascript:;" th:onclick="'javascript:subtractGoods(\'' + ${goods.id} +'\');'" class="reduce reSty">-</a>
+							<input type="text" name="goodsNum"  th:value="${goods.num}" class="sum" />
+							<a href="javascript:;" th:onclick="'javascript:addGoods(\'' + ${goods.id} +'\');'" class="plus">+</a>
+						</div>
+					</li>
+					<li class="list_sum price_style">
+						<span class="price">￥</span>
+						<span th:id="'totalPrice'+${goods.id}" class="sum_price"  th:text="${goods.price*goods.num}" />
+						<!-- <p class="sum_price" th:text="${goods.price*goods.num}" /> -->
+					</li>
+					<li class="list_op">
+						<p class="del"><a href="javascript:;" th:onclick="'javascript:delGoods(\'' + ${goods.id} +'\');'" class="delBtn">移除商品</a></p>
+					</li>
+				</ul>
+			</div>
+    	</form>
+    	<!-- settle bar Div -->
+    	<div class="bar-wrapper">
+			<div class="bar-right">
+				<div class="piece">已选商品<strong id="totalNum" class="piece_num">0</strong>件</div>
+				<div class="totalMoney">共计 ：<strong class="redcolor">￥</strong><strong id="totalMoney" class="total_text">0</strong></div>
+				<div class="calBtn"><a href="javascript:;" onclick="javascript:submitOrder();" class="btn_sty">提交订单</a></div>
+			</div>
+		</div>
+    	<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+		<script th:src="@{/js/jquery-1.10.2.js}"></script>
+	    <script th:src="@{/js/bootstrap.min.js}"></script>
+	    <script th:src="@{/js/settle.js}"></script>
+	    <script type="text/javascript">
+		    $(function (){
+		    	$(".settleForm").css("height",$(window).height()-112);
+		    });
+	    </script>
+	</body>
+</html>

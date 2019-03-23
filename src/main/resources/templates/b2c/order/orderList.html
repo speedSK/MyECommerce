@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>结算</title>
+	    <link href="/static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+	    <link href="/static/css/goodslist.css" th:href="@{/css/goodslist.css}" rel="stylesheet"/>
+	    <link href="/static/css/shoppingcart.css" th:href="@{/css/shoppingcart.css}" rel="stylesheet"/>
+	    <!-- shoppingCart Html import -->
+	    
+	</head>
+	<body class="gray-bg">
+		<!-- buyer List DIV -->
+	    <div id="buyerInfoDiv" class="row border-bottom">
+	    </div>
+	    <!-- ShoppingCartDIV -->
+    	<form id="cartForm" class="toolbar_btn center">
+    		<!-- shoppingcart button bar -->
+    		<a id="cartbar" class="cartbar">
+				<samp>
+					<i class="iconi icon-LiveChat1">
+						<img style="background-color:#040404;" src="/img/cartLogo.png" >
+					</i>
+				</samp>
+				<span id="lmliCount" class="lmliCount">0</span>
+			</a>
+			<div id="shop_cart" class="cartContent cart_column">
+				<h4 style="text-align:center;">购物车<a href="javascript:closeCart();" class="icon-close">X</a></h4>
+				<ul id="cartUl" class="cartUl" >
+				</ul>
+				<div class="count_info clearfix">
+					<label>
+						<input id="checkAll" type="checkbox" class="select_all" checked="checkbox">
+						<span class="text">全选</span>
+					</label>
+					<p>
+						共计： <span id="totalNum">0</span>个商品
+					</p>
+				</div>
+				<div class="shop_function_btn clearfix">
+					<a id="btn_settle" href="javascript:settle();" class="more redbtn-moddle1">
+						<span>结算</span>
+					</a>
+				</div>
+			</div>
+    	</form>
+    	<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+		<script th:src="@{/js/jquery-1.10.2.js}"></script>
+	    <script th:src="@{/js/bootstrap.min.js}"></script>
+	    <script th:src="@{/js/shoppingCart.js}"></script>
+	    <script type="text/javascript">
+	    	$(function (){
+	    		
+		    	//发起ajax请求获取商品列表
+	    		$.ajax({
+	    	        type: "post",
+	    	        url: ctx + "goods/goodsInfo",
+	    	        data: {
+// 	    	        	更加商品分类查询商品列表
+// 	    	            "goodsCategory": 1
+	    	        },
+	    	        success: function(res) {
+	    	        	//返回的商品列表展示出来
+	    	        	$("#goodsTableDiv").html(res);
+	    	        }
+	    	    });
+		    	
+	    	});
+	    	
+	    </script>
+	</body>
+</html>

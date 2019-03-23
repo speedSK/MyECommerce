@@ -1,0 +1,5 @@
+<ul class="list-attrBrand lA-Category fix">
+	<li th:each="category : ${categoryPage.rows}">
+		<a th:id="${category.id}" th:title="${category.categoryName}" th:categoryName="${category.categoryName}" th:categoryId="${category.id}" th:onclick="@{javascript:selectCategory(this);}" class="evnet-search-category" href="javascript:void(0);" th:text="${category.categoryName}"></a>
+	</li>
+</ul>

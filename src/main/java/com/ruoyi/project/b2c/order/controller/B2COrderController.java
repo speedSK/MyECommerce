@@ -1,0 +1,115 @@
+package com.ruoyi.project.b2c.order.controller;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.el.lang.ELArithmetic.BigDecimalDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
+import com.ruoyi.common.utils.CommonConstant;
+import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.project.business.goods.domain.Goods;
+import com.ruoyi.project.business.goods.service.IGoodsService;
+import com.ruoyi.project.business.order.domain.Order;
+import com.ruoyi.project.business.order.service.IOrderService;
+import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.business.person.mapper.PersonMapper;
+import com.ruoyi.project.business.person.service.IPersonService;
+import com.ruoyi.project.system.identity.domain.Identity;
+import com.ruoyi.project.system.identity.service.IIdentityService;
+
+/**
+ * 订单controller
+ * @author CoderX
+ */
+@RequestMapping(value="/b2c/order/")
+@Controller
+public class B2COrderController extends BaseController {
+	
+	@Autowired
+	private IGoodsService goodsService;
+	
+	@Autowired
+	private IOrderService orderService;
+	
+	@Autowired
+	private IIdentityService identityService;
+	
+	@Autowired
+	private IPersonService personService;
+	
+	/**
+	 * 结算页面
+	 * @return
+	 */
+	@PostMapping(value="settlePage")
+	public String getSettlePage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, String[] goodsId, Long[] goodsNum){
+		//购物人信息(getPerson是从shiro中获取的，已消费额度不是实时的)
+		Person user = personService.selectPersonById(getPerson().getId());
+		modelMap.put("user", user);
+		//身份信息(从身份信息获取消费限额)
+		Identity identity = identityService.selectIdentityById(user.getIdentityId());
+		//此次下单限额
+		Double quota = BigDecimalDelegate.subtract(identity.getCostTotal(), user.getAlreadyCost()).doubleValue();
+		//结算商品列表
+		Map<String,Object> param = new HashMap<String,Object>();
+		List<String> goodsIds = new ArrayList<String>();
+		goodsIds = Arrays.asList(goodsId);
+		param.put("goodsIds", goodsIds);
+		List<Goods> goodsList= goodsService.findGoodsListForMap(param);
+		//设置商品购买数量用于结算页面展示
+		for(Goods goods : goodsList){
+			for(int i=0; i<goodsId.length; i++){
+				if(goodsId[i].equals(goods.getId().toString())){
+					goods.setNum(goodsNum[i]);
+				}
+			}
+		}
+		modelMap.put("goodsList", goodsList);
+		//支付方式列表
+		Map<String,Object> payType = new HashMap<String,Object>();
+		payType.put(CommonConstant.PAYTYPE_BALANCE, "余额支付");
+		payType.put(CommonConstant.PAYTYPE_CASH, "现金支付");
+		modelMap.put("payType", payType);
+		modelMap.put("quota", quota);
+		return "b2c/order/settleInfo";
+	}
+	
+	/**
+	 * 提交订单，返回提交结果
+	 * @return
+	 */
+	@PostMapping(value="submitOrder")
+	@ResponseBody
+	public JSONObject submitOrder(HttpServletRequest request,  HttpServletResponse response,  ModelMap modelMap, String[] goodsId, Integer[] goodsNum){
+		//订单提交结果
+		JSONObject res = new JSONObject();
+		res = orderService.submitOrder(goodsId, goodsNum, getPerson());
+		return res;
+	}
+	
+	/**
+	 * 获取订单列表
+	 * @return
+	 */
+	@RequestMapping(value="orderList")
+	public String getOrderList(Model model){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		List<Order> orderList = orderService.findOrderList(paramMap);
+		model.addAttribute("orderList", orderList);
+		return "b2c/order/orderList";
+	}
+}
