@@ -83,4 +83,9 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
         return 1;
     }
 
+    @Override
+    public int insertIntoModifyPwd(ModifyPwd modifyPwd) {
+        return modifyPwdMapper.insertModifyPwd(modifyPwd);
+    }
+
 }

@@ -35,6 +35,7 @@ public interface IModifyPwdService
      * @return 结果
      */
 	public int updateModifyPwd(ModifyPwd modifyPwd);
-		
 
+
+    int insertIntoModifyPwd(ModifyPwd modifyPwd);
 }
