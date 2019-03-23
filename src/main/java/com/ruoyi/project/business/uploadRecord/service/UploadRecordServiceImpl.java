@@ -168,9 +168,10 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 					Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
 					merchant.setBalance(merchant.getBalance().add(person.getBalance()));
 					merchantService.updateMerchant(merchant);
+					record.setMerchantCode(merchant.getId().toString());
 					record.setJourno(IdGen.getJourno());
 					record.setUserNumber(person.getId().toString());
-					record.setTxcode("1003");
+					record.setTxcode(Constants.TX_CODE_IMPORT_RECHARGE);
 					record.setTxamt(new BigDecimal(batchRechargeVo.getAmount()));
 					record.setToAcc(merchant.getId().toString());
 					record.setStationCode(deviceCode);
@@ -238,11 +239,12 @@ public class UploadRecordServiceImpl implements IUploadRecordService
                         merchant.setBalance(merchant.getBalance().add(cost));
                         merchantService.updateMerchant(merchant);
                         TradeRecord record = new TradeRecord();
+						record.setMerchantCode(merchant.getId().toString());
                         record.setJourno(IdGen.getJourno());
                         record.setUserNumber(person.getId().toString());
                         record.setBefore(oldBalance);
                         record.setAfter(person.getBalance());
-                        record.setTxcode("1005");
+                        record.setTxcode(Constants.TX_CODE_IMPORT_COST);
                         record.setTxamt(cost);
                         record.setToAcc(merchant.getId().toString());
                         record.setStationCode(deviceCode);

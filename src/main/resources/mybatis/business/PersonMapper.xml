@@ -217,6 +217,66 @@
         </trim>
     </insert>
 
+    <insert id="insertAndGetId" useGeneratedKeys="true" keyColumn="id" keyProperty="id"  parameterType="Person">
+        insert into bus_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != '' ">id,</if>
+            <if test="number != null and number != '' ">number,</if>
+            <if test="name != null and name != '' ">name,</if>
+            <if test="sex != null and sex != '' ">sex,</if>
+            <if test="age != null and age != '' ">age,</if>
+            <if test="nation != null and nation != '' ">nation,</if>
+            <if test="idcard != null and idcard != '' ">idcard,</if>
+            <if test="bankCardNumber != null and bankCardNumber != '' ">bank_card_number,</if>
+            <if test="build != null and build != '' ">build,</if>
+            <if test="photo != null and photo != '' ">photo,</if>
+            <if test="mobile != null and mobile != '' ">mobile,</if>
+            <if test="area != null and area != '' ">area,</if>
+            <if test="room != null and room != '' ">room,</if>
+            <if test="bed != null and bed != '' ">bed,</if>
+            <if test="deptId != null and deptId != '' ">dept_id,</if>
+            <if test="identityId != null and identityId != '' ">identity_id,</if>
+            <if test="password != null and password != '' ">password,</if>
+            <if test="salt != null and salt != '' ">salt,</if>
+            <if test="deposit != null and deposit != '' ">deposit,</if>
+            <if test="balance != null and balance != '' ">balance,</if>
+            <if test="alreadyCost != null and alreadyCost != '' ">already_cost,</if>
+            <if test="flag != null and flag != '' ">flag,</if>
+            <if test="status != null and status != '' ">status,</if>
+            <if test="remark != null  and remark != ''  ">remark,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="number != null and number != ''">#{number},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="age != null and age != ''">#{age},</if>
+            <if test="nation != null and nation != ''">#{nation},</if>
+            <if test="idcard != null and idcard != ''">#{idcard},</if>
+            <if test="bankCardNumber != null and bankCardNumber != ''">#{bankCardNumber},</if>
+            <if test="build != null and build != ''">#{build},</if>
+            <if test="photo != null and photo != ''">#{photo},</if>
+            <if test="mobile != null and mobile != ''">#{mobile},</if>
+            <if test="area != null and area != ''">#{area},</if>
+            <if test="room != null and room != ''">#{room},</if>
+            <if test="bed != null and bed != ''">#{bed},</if>
+            <if test="deptId != null and deptId != ''">#{deptId},</if>
+            <if test="identityId != null and identityId != ''">#{identityId},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="salt != null and salt != ''">#{salt},</if>
+            <if test="deposit != null and deposit != ''">#{deposit},</if>
+            <if test="balance != null and balance != ''">#{balance},</if>
+            <if test="alreadyCost != null and alreadyCost != ''">#{alreadyCost},</if>
+            <if test="flag != null and flag != ''">#{flag},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="remark != null  and remark != ''  ">#{remark},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            sysdate()
+        </trim>
+    </insert>
+
     <update id="updatePerson" parameterType="Person">
         update bus_person
         <trim prefix="SET" suffixOverrides=",">

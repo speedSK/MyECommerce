@@ -227,5 +227,17 @@ public class PersonController extends BaseController
 		return personService.checkNumberUnique(person.getNumber());
 	}
 
+	/**
+	 * 查询人员详细信息
+	 */
+//	@RequiresPermissions("system:dict:list")
+	@GetMapping("/detail/{id}")
+	public String detail(@PathVariable("id") Long id, ModelMap mmap)
+	{
+		Person person = personService.selectPersonById(id);
+		mmap.put("person", person);
+		mmap.put("identitys", identityService.selectPostAll());
+		return prefix + "/detail";
+	}
 
 }

@@ -153,7 +153,7 @@ public class MerchantServiceImpl implements IMerchantService
 		personal.setUpdateTime(operDate);
 		merchantMapper.updateMerchant(personal);
 		tradeRecord.setJourno(IdGen.getJourno());
-		tradeRecord.setTxcode("1006");
+		tradeRecord.setTxcode(Constants.TX_CODE_MERCHANT_SETTLE);
 		tradeRecord.setStationCode("0000");
 		tradeRecord.setRemark("商户结算");
 		tradeRecord.setCreateBy(ShiroUtils.getLoginName());

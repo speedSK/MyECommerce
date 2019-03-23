@@ -95,6 +95,17 @@ public class Constants
     public static final String BANK_CHECK_fAIL = "2";
     public static final String BANK_CHECK_DETAIL = "3";
 
-    public static final String TX_CODE_DEPOSIT_INCOME = "1000";//系统押金收入交易码
-    public static final String TX_CODE_CASH_RECHARGE = "1001";//系统押金收入交易码
+    public static final String TX_CODE_CASH_RECHARGE = "1000";//现金充值
+    public static final String TX_CODE_IMPORT_RECHARGE = "1001";//导入充值
+    public static final String TX_CODE_BANK_BATCH_RECHARGE = "1002";//银行批量
+    public static final String TX_CODE_BANK_RECHARGE = "1003";//银行单笔
+    public static final String TX_CODE_DEPOSIT_INCOME = "1004";//开户押金
+
+    public static final String TX_CODE_BUY_COST = "2000";//购买商品
+    public static final String TX_CODE_IMPORT_COST = "2001";//导入消费
+
+    public static final String TX_CODE_GOOD_REFUND = "3000";//商品退款
+    public static final String TX_CODE_CLOSE_ACCOUNT = "3001";//销户退款
+
+    public static final String TX_CODE_MERCHANT_SETTLE = "4000";//商户结算
 }

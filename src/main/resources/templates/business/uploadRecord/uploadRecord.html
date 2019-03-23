@@ -10,10 +10,7 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								数据状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
-									<option value="">所有</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-								</select>
+								导入文件名:<input name="uploadName" type="text">
 							</li>
 							<li class="select-time">
 								<label>创建时间： </label>
@@ -94,7 +91,8 @@
 				},
 				{
 					field : 'failName', 
-					title : '失败文件名' 
+					title : '失败文件名' ,
+					visible:false
 				},
 				{
 					field : 'failCount', 
@@ -114,7 +112,7 @@
 				},
 				{
 					field : 'createBy', 
-					title : '创建人' 
+					title : '操作人'
 				},
 		        {
 		            title: '操作',

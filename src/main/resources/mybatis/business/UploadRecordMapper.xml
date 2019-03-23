@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="id != null and id != ''"> and id = #{id}</if>
              <if test="module != null and module != ''"> and module = #{module}</if>
-             <if test="uploadName != null and uploadName != ''"> and upload_name = #{uploadName}</if>
+             <if test="uploadName != null and uploadName != ''"> and upload_name like concat('%', #{uploadName}, '%')</if>
              <if test="successCount != null and successCount != ''"> and success_count = #{successCount}</if>
              <if test="failName != null and failName != ''"> and fail_name = #{failName}</if>
              <if test="failCount != null and failCount != ''"> and fail_count = #{failCount}</if>

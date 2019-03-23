@@ -121,6 +121,7 @@
 				uniqueId:"id",
 		        createUrl: prefix + "/add",
 		        updateUrl: prefix + "/edit/{id}",
+				detailUrl: prefix + "/detail/{id}",
 		        removeUrl: prefix + "/remove",
 		        exportUrl: prefix + "/export",
                 importUrl: prefix + "/importData",
@@ -148,7 +149,10 @@
 				},
 				{
 					field : 'number',
-					title : '编号'
+					title : '编号',
+					formatter: function(value, row, index) {
+						return '<a href="#" onclick="$.operate.detail(\'' + row.id + '\')">' + value + '</a>';
+					}
 				},
 				{
 					field : 'name',
@@ -209,10 +213,6 @@
 					field : 'bed',
 					title : '床号',
 					visible:false
-				},
-				{
-					field : 'balance',
-					title : '账户余额'
 				},
 				{
 					field : 'flag',

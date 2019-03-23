@@ -55,7 +55,10 @@ public interface PersonMapper
      * @return 结果
      */
 	public int insertPerson(Person person);
-	
+
+
+	public Long insertAndGetId(Person person);
+
 	/**
      * 修改业务（犯人）
      * 
