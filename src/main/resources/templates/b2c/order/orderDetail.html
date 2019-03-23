@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <div class="container-div">
+
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+		<input name="orderId"  type="hidden"   th:field="${order.id}"   id="orderId"/>
+
+    </div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var cancelFlag = [[${@permission.hasPermi('business:order:cancel')}]];
+        var flagDatas = [[${@dict.getType('bus_order_flag')}]];
+
+        var prefix = ctx + "b2c/order"
+
+        $(function() {
+            var options = {
+                url: prefix + "/DetailList",
+                uniqueId:"id",
+                queryParams: queryParams,
+                modalName: "订单详情",
+                search: false,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '序号',
+                    visible:false
+				},
+                {
+                    field: '',
+                    title: '序号',
+                    formatter: function (value, row, index) {
+                        return index + 1;
+                    }
+                },
+				{
+					field : 'goodsName', 
+					title : '商品名称' 
+				},
+				{
+					field : 'goodsPrice', 
+					title : '商品单价' 
+				},
+				{
+					field : 'num', 
+					title : '数量' 
+				},
+				{
+					field : 'money', 
+					title : '金额' 
+				},
+				{
+					field : 'flag', 
+					title : '订单状态',
+					formatter: function(value, row, index) {
+		            	return $.table.selectDictLabel(flagDatas, value);
+		            }
+				}]
+            };
+            $.table.init(options);
+        });
+        function queryParams(params) {
+			return {
+				orderId:       $("#orderId").val()
+			};
+		}
+    </script>
+</body>
+</html>

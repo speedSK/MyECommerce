@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div ui-layout-center">
+	<div class="row">
+		<div class="col-sm-12  search-collapse">
+			<form id="user-form">
+				<input type="hidden" id="deptId" name="deptId">
+				<input type="hidden" id="parentId" name="parentId">
+				<div class="select-list">
+					<ul>
+						<li>
+							订单号：<input type="text" name="orderCode"/>
+						</li>
+						<li>
+							订单状态：<select name="flag" th:with="type=${@dict.getType('bus_order_flag')}">
+							<option value="">所有</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+						</select>
+						</li>
+						<li class="select-time">
+							<label>创建时间： </label>
+							<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+							<span>-</span>
+							<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+						</li>
+						<li>
+							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+						</li>
+					</ul>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-sm-12 select-table table-striped">
+			<table id="bootstrap-table" data-mobile-responsive="true"></table>
+		</div>
+	</div>
+</div>
+
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var flagDatas = [[${@dict.getType('bus_order_flag')}]];
+        var prefix = ctx + "b2c/order"
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+				uniqueId:"id",
+                modalName: "订单",
+                search: false,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '主键' ,
+					visible:false
+				},
+				{
+					field: '',
+					title: '序号',
+					formatter: function (value, row, index) {
+						return index + 1;
+					}
+				},
+				{
+					field : 'orderCode',
+					title : '订单号' 
+				},
+				{
+					field : 'money', 
+					title : '订单总金额' 
+				},
+				{
+					field : 'personCode', 
+					title : '编号'
+				},
+				{
+					field : 'personName', 
+					title : '姓名'
+				},
+				{
+					field : 'flag', 
+					title : '订单状态',
+					formatter: function(value, row, index) {
+		            	return $.table.selectDictLabel(flagDatas, value);
+		            }
+				},
+				{
+					field : 'createTime',
+					title : '创建时间'
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-info btn-xs" href="#" onclick="detail(\'' + row.id + '\')"><i class="fa fa-list-ul"></i>详情</a> ');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+
+        /*字典列表-详细*/
+		function detail(id) {
+		    var url = prefix + '/detail/' + id;
+		    createMenuItem(url, "订单详情");
+		}
+
+    </script>
+</body>
+</html>

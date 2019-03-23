@@ -9,14 +9,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.framework.web.page.TableDataInfo;
+import com.ruoyi.project.business.orderDetail.domain.OrderDetail;
+import com.ruoyi.project.business.orderDetail.service.IOrderDetailService;
 import org.apache.el.lang.ELArithmetic.BigDecimalDelegate;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.utils.CommonConstant;
@@ -38,6 +40,8 @@ import com.ruoyi.project.system.identity.service.IIdentityService;
 @RequestMapping(value="/b2c/order/")
 @Controller
 public class B2COrderController extends BaseController {
+
+	private String prefix = "b2c/order";
 	
 	@Autowired
 	private IGoodsService goodsService;
@@ -50,7 +54,49 @@ public class B2COrderController extends BaseController {
 	
 	@Autowired
 	private IPersonService personService;
-	
+
+	@Autowired
+	private IOrderDetailService orderDetailService;
+
+	@GetMapping("/order")
+	public String order()
+	{
+		return prefix + "/order";
+	}
+
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(Order order)
+	{
+		startPage();
+		List<Order> list = orderService.selectOrderList(order);
+		return getDataTable(list);
+	}
+
+	/**
+	 * 查询字典详细
+	 */
+	@GetMapping("/detail/{id}")
+	public String detail(@PathVariable("id") Long id, ModelMap mmap)
+	{
+		if(0 != id){
+			Order order = orderService.selectOrderById(id);
+			mmap.put("order", order);
+		}
+		return prefix + "/orderDetail";
+	}
+
+	/**
+	 * 查询订单详情列表
+	 */
+	@PostMapping("/DetailList")
+	@ResponseBody
+	public TableDataInfo DetailList(OrderDetail orderDetail)
+	{
+		startPage();
+		List<OrderDetail> list = orderDetailService.selectOrderDetailList(orderDetail);
+		return getDataTable(list);
+	}
 	/**
 	 * 结算页面
 	 * @return
