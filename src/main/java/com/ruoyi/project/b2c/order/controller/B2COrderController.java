@@ -127,8 +127,6 @@ public class B2COrderController extends BaseController {
 		modelMap.put("goodsList", goodsList);
 		//支付方式列表
 		Map<String,Object> payType = new HashMap<String,Object>();
-		payType.put(CommonConstant.PAYTYPE_BALANCE, "余额支付");
-		payType.put(CommonConstant.PAYTYPE_CASH, "现金支付");
 		modelMap.put("payType", payType);
 		modelMap.put("quota", quota);
 		return "b2c/order/settleInfo";
