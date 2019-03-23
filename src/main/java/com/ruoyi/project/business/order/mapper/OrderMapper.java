@@ -2,6 +2,7 @@ package com.ruoyi.project.business.order.mapper;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Repository;
 
@@ -38,7 +39,6 @@ public interface OrderMapper
      * @param order 订单信息
      * @return 结果
      */
-//	@Options(useGeneratedKeys=true,keyProperty="id")
 	@SelectKey(statement="SELECT LAST_INSERT_ID()",keyProperty="id",before=false,resultType=Long.class)
 	public int insertOrder(Order order);
 	

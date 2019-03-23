@@ -81,12 +81,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where o.id = #{id}
     </select>
 
-    <insert id="insertOrder" parameterType="Order">
+    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
         insert into bus_order
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != '' ">id,</if>
 			<if test="orderCode != null and orderCode != '' ">order_code,</if>
-			<if test="money != null and money != '' ">money,</if>
+			<if test="money != null">money,</if>
 			<if test="personId != null and personId != '' ">person_id,</if>
 			<if test="personCode != null and personCode != '' ">person_code,</if>
 			<if test="personName != null and personName != '' ">person_name,</if>
@@ -99,7 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null and id != ''">#{id},</if>
 			<if test="orderCode != null and orderCode != ''">#{orderCode},</if>
-			<if test="money != null and money != ''">#{money},</if>
+			<if test="money != null">#{money},</if>
 			<if test="personId != null and personId != ''">#{personId},</if>
 			<if test="personCode != null and personCode != ''">#{personCode},</if>
 			<if test="personName != null and personName != ''">#{personName},</if>
