@@ -116,6 +116,7 @@ public class DeviceServiceImpl implements IDeviceService
 	public String getDeviceCode() {
 		Device device = new Device();
 		device.setIp(ShiroUtils.getIp());
+		device.setStatus(Constants.STATUS_ACTIVE);
 		List<Device> deviceList = this.selectDeviceList(device);
 		String deviceCode = "0000";
 		if (StringUtils.isNotEmpty(deviceList)) {

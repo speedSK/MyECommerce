@@ -22,45 +22,19 @@ public class Person extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 编号 */
-    @Excel(name = "人员编号")
+    @Excel(name = "人员编号 注：必填项")
 	private String number;
 	/** 姓名 */
-    @Excel(name = "姓名")
+    @Excel(name = "姓名 注：必填项")
 	private String name;
 	/** 性别 */
-	@Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
+	@Excel(name = "用户性别 注：必填项", readConverterExp = "0=男,1=女,2=未知")
 	private String sex;
-	/** 年龄 */
-    @Excel(name = "年龄")
-	private Integer age;
 	/** 民族 */
-	@Excel(name = "民族",readConverterExp = "1=汉族,2=蒙古族,3=回族,4=藏族,5=维吾尔族,6=苗族,7=彝族,8=壮族,9=布依族,10=朝鲜族,11=满族,12=侗族,13=瑶族,14=白族,15=土家族,16=哈尼族,17=哈萨克族,18=傣族,19=黎族,20=傈僳族,21=佤族,22=畲族,23=高山族,24=拉祜族,25=水族,26=东乡族,27=纳西族,28=景颇族,29=柯尔克孜族,30=土族,31=达斡尔族,32=仫佬族,33=羌族,34=布朗族,35=撒拉族,36=毛难族,37=仡佬族,38=锡伯族,39=阿昌族,40=普米族,41=塔吉克族,42=怒族,43=乌孜别克族,44=俄罗斯族,45=鄂温克族,46=崩龙族,47=保安族,48=裕固族,49=京族,50=塔塔尔族,51=独龙族,52=鄂伦春族,53=赫哲族,54=门巴族,55=珞巴族,56=基诺族")
+	@Excel(name = "民族 注：必填项",readConverterExp = "1=汉族,2=蒙古族,3=回族,4=藏族,5=维吾尔族,6=苗族,7=彝族,8=壮族,9=布依族,10=朝鲜族,11=满族,12=侗族,13=瑶族,14=白族,15=土家族,16=哈尼族,17=哈萨克族,18=傣族,19=黎族,20=傈僳族,21=佤族,22=畲族,23=高山族,24=拉祜族,25=水族,26=东乡族,27=纳西族,28=景颇族,29=柯尔克孜族,30=土族,31=达斡尔族,32=仫佬族,33=羌族,34=布朗族,35=撒拉族,36=毛难族,37=仡佬族,38=锡伯族,39=阿昌族,40=普米族,41=塔吉克族,42=怒族,43=乌孜别克族,44=俄罗斯族,45=鄂温克族,46=崩龙族,47=保安族,48=裕固族,49=京族,50=塔塔尔族,51=独龙族,52=鄂伦春族,53=赫哲族,54=门巴族,55=珞巴族,56=基诺族")
 	private String nation;
-	/** 身份证号 */
-    @Excel(name = "身份证号")
-	private String idcard;
-	/** 银行卡号 */
-    @Excel(name = "银行卡号")
-	private String bankCardNumber;
-	/** 照片 */
-	private String photo;
-	/** 手机号 */
-	@Excel(name = "手机号码")
-	private String mobile;
-	/** 楼号 */
-    @Excel(name = "楼号")
-	private String build;
-	/** 监区 */
-    @Excel(name = "监区")
-	private String area;
-	/** 房间 */
-    @Excel(name = "房间")
-	private String room;
-	/** 床号 */
-    @Excel(name = "床号")
-	private String bed;
 	/** 部门 */
-	@Excel(name = "部门编号", type = Type.IMPORT)
+	@Excel(name = "部门编号 注：必填项", type = Type.IMPORT)
 	private Long deptId;
 	/**
 	 * 部门
@@ -68,6 +42,7 @@ public class Person extends BaseEntity
 	@Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT)
 	private Dept dept;
 	/** 身份 */
+	@Excel(name = "身份编号 注：必填项", type = Type.IMPORT)
 	private Long identityId;
 	@Excel(name = "身份名称", targetAttr = "name", type = Type.EXPORT)
 	private Identity identity;
@@ -76,7 +51,7 @@ public class Person extends BaseEntity
 	/** 盐加密 */
 	private String salt;
 	/** 押金 */
-	@Excel(name="押金",type = Type.IMPORT)
+	@Excel(name="押金 注：必填项",type = Type.IMPORT)
 	private BigDecimal deposit;
 	/** 账户余额 */
 	@Excel(name="余额",type = Type.EXPORT)
@@ -84,8 +59,34 @@ public class Person extends BaseEntity
 	/** 当月已经消费 */
 	private BigDecimal alreadyCost;
 	/** 账户状态 */
-	@Excel(name="账户状态",readConverterExp = "0=正常,1=冻结,2=预销户,4=销户")
+	@Excel(name="账户状态 注：必填项",readConverterExp = "0=正常,1=冻结,2=预销户,3=销户")
 	private String flag;
+	/** 年龄 */
+	@Excel(name = "年龄")
+	private Integer age;
+	/** 身份证号 */
+	@Excel(name = "身份证号")
+	private String idcard;
+	/** 银行卡号 */
+	@Excel(name = "银行卡号")
+	private String bankCardNumber;
+	/** 照片 */
+	private String photo;
+	/** 手机号 */
+	@Excel(name = "手机号码")
+	private String mobile;
+	/** 楼号 */
+	@Excel(name = "楼号")
+	private String build;
+	/** 监区 */
+	@Excel(name = "监区")
+	private String area;
+	/** 房间 */
+	@Excel(name = "房间")
+	private String room;
+	/** 床号 */
+	@Excel(name = "床号")
+	private String bed;
 	/** 状态 */
 	private String status;
 	/**充值金额*/

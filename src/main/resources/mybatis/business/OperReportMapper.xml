@@ -121,10 +121,12 @@
         select txcode                               trade_code,
                count(txcode)                        trade_num,
                sum(txamt)                           trade_sum,
-               DATE_FORMAT(create_time, '%Y-%m-%d') report_date
+               DATE_FORMAT(create_time, '%Y-%m-%d') report_date,
+               remark
         from bus_trade_record
         where DATE_FORMAT(create_time, '%Y-%m-%d') = #{params}
         GROUP BY txcode;
+
     </select>
 
 </mapper>
