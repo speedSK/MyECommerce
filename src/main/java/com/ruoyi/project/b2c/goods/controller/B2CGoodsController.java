@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ruoyi.common.utils.GoodsConstant;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.project.business.goods.domain.Goods;
@@ -53,6 +54,7 @@ public class B2CGoodsController extends BaseController {
 	        if(StringUtils.isNotBlank(categoryId)){
 	        		param.put("belongCategoryId", categoryId);
 	        }
+	        param.put("visible", GoodsConstant.GOODS_VISIBLE_UP);
 	        List<Goods> list = goodsService.findGoodsListForMap(param);
 	        modelMap.put("goodsPage", getDataTable(list));
 	        return "b2c/goods/goodsTable";
