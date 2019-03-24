@@ -17,6 +17,16 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
     <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">
+    	.form-control {
+		    font-size: 30px;
+    		height: 70px;
+		}
+		.login-btn{
+			font-size: 25px;
+    		height: 50px;
+		}
+    </style>
     <script>
         if(window.top!==window.self){window.top.location=window.location};
     </script>
@@ -30,9 +40,9 @@
             <form id="signupForm">
                 <h4 class="no-margins">登录：</h4>
                 <p class="m-t-md">请输入用户名和密码</p>
-                <input type="text"     name="username" id="username" class="form-control uname"		placeholder="用户名" />
+                <input type="text" name="username" id="username" class="form-control uname" placeholder="用户名" />
                 <input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码" />
-                <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+                <button class="btn btn-success btn-block login-btn" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
 <!--                 <a th:href="@{forgetpwd}" class="link" id="forgetpwd" target="_blank" style="float:right;">忘了密码？</a> -->
             </form>
         </div>

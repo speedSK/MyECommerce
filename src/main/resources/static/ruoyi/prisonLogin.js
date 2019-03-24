@@ -6,6 +6,13 @@ $(function() {
 		var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
 		$(".imgcode").attr("src", url);
 	});
+	
+	//为小键盘的确定按钮绑定登录事件
+	$("body").on("click", ".func.sure", function() {
+		$("#btnSubmit").click();
+    });
+	//进入登录页显示小键盘
+	$("#username").click();
 });
 
 $.validator.setDefaults({
