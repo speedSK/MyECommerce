@@ -1,30 +1,32 @@
 package com.ruoyi.project.business.order.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.security.ShiroUtils;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.el.lang.ELArithmetic;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.fastjson.JSONObject;
+import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.CommonUtils;
+import com.ruoyi.common.utils.IdGen;
+import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.project.business.goods.domain.Goods;
 import com.ruoyi.project.business.goods.service.IGoodsService;
+import com.ruoyi.project.business.order.domain.Order;
+import com.ruoyi.project.business.order.mapper.OrderMapper;
 import com.ruoyi.project.business.orderDetail.domain.OrderDetail;
 import com.ruoyi.project.business.orderDetail.mapper.OrderDetailMapper;
 import com.ruoyi.project.business.orderDetail.service.IOrderDetailService;
 import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.business.person.service.IPersonService;
-import org.apache.el.lang.ELArithmetic;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.ruoyi.project.business.order.mapper.OrderMapper;
-import com.ruoyi.project.business.order.domain.Order;
-import com.ruoyi.project.business.order.service.IOrderService;
-import com.ruoyi.common.support.Convert;
-import org.springframework.transaction.annotation.Transactional;
+import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
+import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
+import com.ruoyi.project.system.device.service.IDeviceService;
 
 /**
  * 订单 服务层实现
@@ -45,6 +47,10 @@ public class OrderServiceImpl implements IOrderService
 	private IOrderDetailService orderDetailService;
     @Autowired
     private IPersonService personService;
+    @Autowired
+    private IDeviceService deviceService;
+    @Autowired
+    private ITradeRecordService tradeRecordService;
 
 	/**
      * 查询订单信息
@@ -133,7 +139,7 @@ public class OrderServiceImpl implements IOrderService
 		try {
 			//创建订单
 			Order order = new Order();
-			order.setOrderCode("1");	//订单编号
+			order.setOrderCode(CommonUtils.getOrderCode(user));	//订单编号
 			order.setPersonId(user.getId());
 			order.setPersonCode(user.getNumber());
 			order.setPersonName(user.getName());
@@ -160,6 +166,23 @@ public class OrderServiceImpl implements IOrderService
 				orderDetail.setCreateTime(new Date());
 				totalMoney = (BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.add(totalMoney, orderDetail.getMoney()).doubleValue())) ;
 				orderDetailMapper.insertOrderDetail(orderDetail);
+				//增加流水
+				TradeRecord record = new TradeRecord();
+				record.setJourno(IdGen.getJourno());
+				record.setUserNumber(user.getId().toString());
+				record.setMerchantCode(goods.getMerchantId().toString());
+				record.setMerchantCode(goods.getMerchant().getMerchantName());
+				record.setOrderCode(order.getOrderCode());
+				record.setTxcode(Constants.TX_CODE_BUY_COST);
+				record.setTxamt(BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.multiply(goods.getPrice(), goodsNum[index]).doubleValue()));
+				record.setFromAcc(user.getId().toString());
+				record.setToAcc(goods.getMerchantId().toString());
+				record.setsettleDate(new Date());
+				record.setStationCode(deviceService.getDeviceCode());
+				record.setRemark("购买商品");
+				record.setCreateBy(ShiroUtils.getPerson().getNumber());
+				record.setCreateTime(new Date());
+				tradeRecordService.insertTradeRecord(record);
 			}
 			//更新user的已消费金额
 			user.setAlreadyCost(BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.add(totalMoney, user.getAlreadyCost()).doubleValue()));
