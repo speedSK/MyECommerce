@@ -12,15 +12,6 @@
 				<input type="hidden" id="parentId" name="parentId">
 				<div class="select-list">
 					<ul>
-						<li>
-							订单号：<input type="text" name="orderCode"/>
-						</li>
-						<li>
-							订单状态：<select name="flag" th:with="type=${@dict.getType('bus_order_flag')}">
-							<option value="">所有</option>
-							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-						</select>
-						</li>
 						<li class="select-time">
 							<label>创建时间： </label>
 							<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>

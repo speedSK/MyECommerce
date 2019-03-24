@@ -363,4 +363,11 @@ public class PersonServiceImpl implements IPersonService
         }
         return UserConstants.USER_NAME_UNIQUE;
     }
+
+    @Override
+    public int resetPersonPwd(Person person) {
+        person.randomSalt();
+        person.setPassword(passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt()));
+        return updatePerson(person);
+    }
 }

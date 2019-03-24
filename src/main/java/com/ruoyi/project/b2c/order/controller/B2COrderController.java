@@ -69,6 +69,7 @@ public class B2COrderController extends BaseController {
 	public TableDataInfo list(Order order)
 	{
 		startPage();
+		order.setPersonId(getPerson().getId());
 		List<Order> list = orderService.selectOrderList(order);
 		return getDataTable(list);
 	}

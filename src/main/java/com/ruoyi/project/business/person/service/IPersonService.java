@@ -64,4 +64,6 @@ public interface IPersonService
     String importUser(List<Person> userList, boolean updateSupport);
 
     String checkNumberUnique(String number);
+
+    int resetPersonPwd(Person person);
 }

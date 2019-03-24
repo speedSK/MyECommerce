@@ -10,27 +10,6 @@
             <form id="formId">
                 <div class="select-list">
                     <ul>
-                        <li>
-                            流水号：<input type="text" name="journo"/>
-                        </li>
-                        <li>
-                            商户号：
-                            <select name="merchantCode" th:with="type=${@merchant.getAllMerchant()}">
-                                <option value="">所有</option>
-                                <option th:each="dict : ${type}" th:text="${dict.merchantName}" th:value="${dict.id}"></option>
-                            </select>
-                        </li>
-
-                        <li>
-                            订单号：<input type="text" name="orderCode"/>
-                        </li>
-
-                        <li>
-                            交易名称：<select name="txcode" th:with="type=${@dict.getType('bus_txcode')}">
-                                <option value="">所有</option>
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                            </select>
-                        </li>
                         <li class="select-time">
                             <label>日期： </label>
                             <input type="text" class="time-input" id="startTime" placeholder="开始日期" name="params[beginTime]"/>

@@ -240,4 +240,22 @@ public class PersonController extends BaseController
 		return prefix + "/detail";
 	}
 
+	@RequiresPermissions("business:person:edit")
+	@Log(title = "重置密码", businessType = BusinessType.UPDATE)
+	@GetMapping("/resetPwd/{id}")
+	public String resetPwd(@PathVariable("id") Long id, ModelMap mmap)
+	{
+		mmap.put("person", personService.selectPersonById(id));
+		return prefix + "/resetPwd";
+	}
+
+	@RequiresPermissions("business:person:edit")
+	@Log(title = "重置密码", businessType = BusinessType.UPDATE)
+	@PostMapping("/resetPwd")
+	@ResponseBody
+	public AjaxResult resetPwd(Person person)
+	{
+		return toAjax(personService.resetPersonPwd(person));
+	}
+
 }

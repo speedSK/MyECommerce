@@ -35,6 +35,7 @@ public class B2CTradeRecordController extends BaseController {
     public TableDataInfo list(TradeRecord tradeRecord)
     {
         startPage();
+        tradeRecord.setUserNumber(getPerson().getNumber());
         List<TradeRecord> list = tradeRecordService.selectTradeRecordList(tradeRecord);
         return getDataTable(list);
     }
