@@ -25,6 +25,7 @@
 <!-- 	    		<li class="buyerInfo buyerBottom"> -->
 <!-- 	    		</li> -->
 	    	</ul>
+	    	<input type="hidden" id="quota" th:value="${quota}" />
 	    </div>
 	    <!-- settle form -->
     	<form id="settleForm" class="settleForm" style="">
@@ -55,7 +56,6 @@
 					<li class="list_price price_style">
 						<span class="price">￥</span>
 						<span th:id="'goodsPrice_'+${goods.id}" class="price"  th:text="${goods.price}" />
-						<!-- <p class="price" th:text="'¥'+${goods.price}" /> -->
 					</li>
 					<li class="list_amount">
 						<div class="amount_box">
@@ -67,7 +67,6 @@
 					<li class="list_sum price_style">
 						<span class="price">￥</span>
 						<span th:id="'totalPrice'+${goods.id}" class="sum_price"  th:text="${goods.price*goods.num}" />
-						<!-- <p class="sum_price" th:text="${goods.price*goods.num}" /> -->
 					</li>
 					<li class="list_op">
 						<p class="del"><a href="javascript:;" th:onclick="'javascript:delGoods(\'' + ${goods.id} +'\');'" class="delBtn">移除商品</a></p>
