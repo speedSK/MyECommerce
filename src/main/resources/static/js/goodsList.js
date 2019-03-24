@@ -17,6 +17,11 @@ $(function (){
 		//step3:查询全部的商品
 		asynGetGoodsList("");
     });
+	
+	//为商品列表的图片添加加入到购物车事件
+	$("body").on("click", ".goods-image-event", function() {
+		$(".addCart[data-id='"+$(this).attr("data-id")+"']").click();
+    });
 });
 
 /**
