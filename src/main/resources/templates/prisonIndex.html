@@ -19,6 +19,7 @@
     <style type="text/css">
         .nav > li:hover .dropdown-menu {display: block;}
         #content-main.max { height: calc(100% - 110px); overflow: hidden; width: 100%; height: 100%; left: 0px; position: absolute; top: 0px; z-index: 9998; margin: 0; }
+    	.user-info-css {text-align: left;margin-left: 20%;color: #1c84c6;}
     </style>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden" th:classappend="${@config.getKey('sys.index.skinName')}">
@@ -39,7 +40,7 @@
             			<a class="menuItem" title="个人中心" th:href="@{/system/user/profile}">
             				<div class="hide" th:text="个人中心"></div>
 					        <div class="pull-left image">
-		                    	<img th:src="(${user.photo} == '') ? @{/img/profile.jpg} : @{/profile/avatar/} + ${user.photo}" class="img-circle" alt="User Image">
+		                    	<img th:src="(${user.photo} == '') ? @{/img/profile.jpg} : @{/profile/photos/} + ${user.photo}" class="img-circle" alt="User Image">
 					        </div>
 				        </a>
 				        <div class="pull-left info">
@@ -48,6 +49,12 @@
 				          <!-- userType:1-user/2-person -->
 				          <a th:href="@{logout}+'?userType=2'" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 注销</a>
 				        </div>
+				    </div>
+				    <div class="user-info-css">
+				        <span>[['编号：'+${user.number}]]</span><br/>
+				        <span>[['姓名：'+${user.name}]]</span><br/>
+				        <span>[['余额：￥'+${user.balance}]]</span><br/>
+				        <span>[['身份：'+${identity.name}]]</span><br/>
 				    </div>
             	</li>
                  <li class="active">
@@ -78,7 +85,7 @@
 	                <li><a title="全屏显示" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏显示</a></li>
                     <li class="dropdown user-menu">
 						<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-							<img th:src="(${user.photo} == '') ? @{/img/profile.jpg} : @{/profile/avatar/} + ${user.photo}" class="user-image">
+							<img th:src="(${user.photo} == '') ? @{/img/profile.jpg} : @{/profile/photos/} + ${user.photo}" class="user-image">
 							<span class="hidden-xs">[[${user.name}]]</span>
 						</a>
 						<ul class="dropdown-menu">
