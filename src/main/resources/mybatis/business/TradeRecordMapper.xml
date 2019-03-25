@@ -63,6 +63,7 @@
             <if test="id != null ">and t.id = #{id}</if>
             <if test="journo != null  and journo != '' ">and t.journo = #{journo}</if>
             <if test="userNumber != null  and userNumber != '' ">and p.number = #{userNumber}</if>
+            <if test="userName != null  and userName != '' ">and p.name = like concat('%', #{userName}, '%')</if>
             <if test="merchantCode != null  and merchantCode != '' ">and t.merchant_code = #{merchantCode}</if>
             <if test="orderCode != null  and orderCode != '' ">and t.order_code = #{orderCode}</if>
             <if test="txcode != null  and txcode != '' ">and t.txcode = #{txcode}</if>

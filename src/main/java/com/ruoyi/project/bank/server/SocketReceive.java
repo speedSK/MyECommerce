@@ -25,27 +25,18 @@ public class SocketReceive implements Runnable {
 			OutputStream outputStream = this.socket.getOutputStream();
 			byte[] buf = new byte[1024];
 			inputStream.read(buf);
-			String backMsg = new String(buf, "GBK");
+			String backMsg = new String(buf, "UTF-8");
 			logger.info("银行发起报文:{},报文长度{}",backMsg,backMsg.length());
 			if (backMsg != null && backMsg.length() > 0) {
 				String txcode = backMsg.substring(4, 8);
 				logger.info("银行发起的交易码banktxcode:{}",txcode);
 				byte[] bckMsg;
-				if (txcode.equals("3031")) {
-					logger.info("SocketReceive银行发起查询3031交易\n,报文:{},报文中编号:{}.",backMsg,new String(buf, 13, 20));
-					bckMsg = TransOfABC.queryUserInfoSign(buf);
-					outputStream.write(bckMsg, 0, bckMsg.length);
-				}
-				if (txcode.equals("3001")) {
-					logger.info("SocketReceive银行发起查询3001交易\n,报文:{},报文中编号:{}.",backMsg,new String(buf, 54, 20));
-					bckMsg = TransOfABC.querySign(buf);
-					outputStream.write(bckMsg, 0, bckMsg.length);
-				}
-                if (txcode.equals("3061")) {
-                    logger.info("SocketReceive银行发起查询3061交易\n,报文:{},报文中编号:{}.",backMsg,new String(buf, 54, 20));
-                    bckMsg = TransOfABC.queryChangeSign(buf);
-                    outputStream.write(bckMsg, 0, bckMsg.length);
-                }
+
+				logger.info("SocketReceive银行发起查询3031交易\n,报文:{},报文中编号:{}.",backMsg,new String(buf, 13, 20));
+				bckMsg = new String(buf).getBytes();
+				outputStream.write(bckMsg, 0, bckMsg.length);
+
+
 			}
 
 			inputStream.close();

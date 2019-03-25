@@ -170,6 +170,13 @@
 			<version>${fastjson.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
 		<!-- 解析客户端操作系统、浏览器等 -->
 		<dependency>
 			<groupId>eu.bitwalker</groupId>

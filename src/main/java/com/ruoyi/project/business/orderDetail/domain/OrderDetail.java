@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 订单详情表 bus_order_detail
@@ -20,7 +21,7 @@ public class OrderDetail extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 订单id */
-	@Excel(name="订单id")
+	@Excel(name="订单编号")
 	private Long orderId;
 	@Excel(name = "部门名称")
 	private String deptName;
@@ -50,6 +51,19 @@ public class OrderDetail extends BaseEntity
 	private String flag;
 	/** 状态 */
 	private String status;
+
+	@Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
+	private Date createTime;
+
+	@Override
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	@Override
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 	public String getPersonNumber() {
 		return personNumber;

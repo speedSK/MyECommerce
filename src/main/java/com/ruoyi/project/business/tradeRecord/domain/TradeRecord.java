@@ -74,6 +74,16 @@ public class TradeRecord extends BaseEntity
 	/** 修改时间 */
 	private Date updateTime;
 
+	private String userName;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getMerchantName() {
 		return merchantName;
 	}
