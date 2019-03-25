@@ -10,6 +10,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.UserBlockedException;
 import com.ruoyi.common.exception.user.UserDeleteException;
+import com.ruoyi.common.exception.user.UserException;
 import com.ruoyi.common.exception.user.UserNotExistsException;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
 import com.ruoyi.common.utils.DateUtils;
@@ -139,10 +140,14 @@ public class LoginService
         // 查询用户信息
 		Person user = userService.selectBusUserByLoginName(username);
 
-        if (user == null || UserStatus.DISABLE.getCode().equals(user.getStatus()))
+        if (user == null || UserStatus.DISABLE.getCode().equals(user.getFlag()))
         {
             SystemLogUtils.log(username, Constants.LOGIN_FAIL, "账户已冻结/停用");
-            throw new UserNotExistsException();
+            throw new UserBlockedException();
+        }
+        if(UserStatus.DELETED.getCode().equals(user.getFlag())){
+	        	SystemLogUtils.log(username, Constants.LOGIN_FAIL, "账户预销户/销户");
+	        	throw new UserException("user.account.cancellation", null);
         }
         //根据用户类型进行验证
         passwordService.BusValidate(user, password);
