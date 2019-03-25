@@ -147,6 +147,8 @@ public class OrderServiceImpl implements IOrderService
 			order.setCreateTime(new Date());
 			order.setCreateBy(person.getNumber());
 			order.setFlag(Constants.ORDER_NORMAL);
+			//TODO 后期优化逻辑
+			order.setMoney(new BigDecimal(0));
 			orderMapper.insertOrder(order);
 			BigDecimal totalMoney = new BigDecimal(0);
 			//订单明细处理
