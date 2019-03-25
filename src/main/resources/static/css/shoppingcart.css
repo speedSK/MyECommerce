@@ -112,7 +112,7 @@ overflow-y:hidden;
 .spinner {
     margin-left: -37px;
     margin-top: -40px;
-    height: 25px;
+    height: 35px;
     width: 75px;
     overflow: hidden;
     -moz-box-shadow: 0 3px 3px -4px #aaa;
@@ -139,16 +139,24 @@ overflow-y:hidden;
     display: block;
     float: left;
     height: 100%;
-    line-height: 20px;
+    line-height: 21px;
     margin: 0;
 }
 .spinner .decrease {
     background-position: 0 -50px;
     cursor: pointer;
+    font-size: 30px;
+    text-align: center;
+    margin-top: -2px;
+    height: 105%;
 }
 .spinner .increase {
     background-position: 0 0;
     cursor: pointer;
+    font-size: 30px;
+    text-align: center;
+    margin-top: -2px;
+    height: 105%;
 }
 .amount_btn input {
     font-size: 12px;
