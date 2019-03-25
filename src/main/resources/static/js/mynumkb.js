@@ -75,8 +75,9 @@
             var left = position.left+10;
             $keyboard.css({
             	//top:position.top+height-20+"px",	//相对位置
-                top:height-70+"px",	//绝对位置
-                left:left+width+400+"px"
+                top:"0%",	//绝对位置
+//                top:height-70+"px",	//绝对位置
+                left:"50%"
             });
         },
         _eClick:function(e){
