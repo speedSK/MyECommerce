@@ -72,9 +72,10 @@
             var $keyboard = $("#mykeyboard"+me.count);
             var ulWidth = $keyboard.outerWidth();
             var ulHeight = $keyboard.outerHeight();
-            var left = position.left;
+            var left = position.left+10;
             $keyboard.css({
-                top:position.top+height-20+"px",
+            	//top:position.top+height-20+"px",	//相对位置
+                top:height-70+"px",	//绝对位置
                 left:left+width+350+"px"
             });
         },
