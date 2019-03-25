@@ -127,28 +127,28 @@ public class OrderServiceImpl implements IOrderService
 	 * 提交订单
 	 * @param goodsId
 	 * @param goodsNum
-	 * @param user
+	 * @param person
 	 */
 	@Transactional
 	@Override
-	public JSONObject submitOrder(String[] goodsId, Integer[] goodsNum, Person user) {
+	public JSONObject submitOrder(String[] goodsId, Integer[] goodsNum, Person person) {
 		//订单提交结果
 		JSONObject res = new JSONObject();
 		res.put("resCode", Constants.SUCCESS);
 		res.put("resMessage", "订单提交成功！");
 		try {
+			person = personService.selectPersonById(person.getId());
 			//创建订单
 			Order order = new Order();
-			order.setOrderCode(CommonUtils.getOrderCode(user));	//订单编号
-			order.setPersonId(user.getId());
-			order.setPersonCode(user.getNumber());
-			order.setPersonName(user.getName());
+			order.setOrderCode(CommonUtils.getOrderCode(person));	//订单编号
+			order.setPersonId(person.getId());
+			order.setPersonCode(person.getNumber());
+			order.setPersonName(person.getName());
 			order.setCreateTime(new Date());
-			order.setCreateBy(Constants.IDENTITY_TYPE);
+			order.setCreateBy(person.getNumber());
 			order.setFlag(Constants.ORDER_NORMAL);
-			order.setMoney(new BigDecimal(0D));
 			orderMapper.insertOrder(order);
-			BigDecimal totalMoney = new BigDecimal(0D);
+			BigDecimal totalMoney = new BigDecimal(0);
 			//订单明细处理
 			for(int index=0; index < goodsId.length; index++){
 				Goods goods = goodsService.selectGoodsById(Long.valueOf(goodsId[index]));
@@ -160,22 +160,27 @@ public class OrderServiceImpl implements IOrderService
 				orderDetail.setGoodsName(goods.getName());
 				orderDetail.setGoodsPrice(goods.getPrice());
 				orderDetail.setNum(goodsNum[index]);
-				orderDetail.setMoney(BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.multiply(goods.getPrice(), goodsNum[index]).doubleValue()));
+				//商品总价
+				BigDecimal goodSum = goods.getPrice().multiply(new BigDecimal(goodsNum[index]));
+				orderDetail.setMoney(goodSum);
 				orderDetail.setFlag(Constants.ORDER_NORMAL);
-				orderDetail.setCreateBy(Constants.IDENTITY_TYPE);
+				orderDetail.setCreateBy(person.getNumber());
 				orderDetail.setCreateTime(new Date());
-				totalMoney = (BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.add(totalMoney, orderDetail.getMoney()).doubleValue())) ;
+				totalMoney = totalMoney.add(goodSum);
 				orderDetailMapper.insertOrderDetail(orderDetail);
 				//增加流水
 				TradeRecord record = new TradeRecord();
 				record.setJourno(IdGen.getJourno());
-				record.setUserNumber(user.getId().toString());
+				record.setUserNumber(person.getId().toString());
 				record.setMerchantCode(goods.getMerchantId().toString());
-				record.setMerchantCode(goods.getMerchant().getMerchantName());
+				record.setMerchantName(goods.getMerchant().getMerchantName());
 				record.setOrderCode(order.getOrderCode());
 				record.setTxcode(Constants.TX_CODE_BUY_COST);
-				record.setTxamt(BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.multiply(goods.getPrice(), goodsNum[index]).doubleValue()));
-				record.setFromAcc(user.getId().toString());
+				record.setTxamt(goodSum);
+				record.setBefore(person.getBalance());
+				person.setBalance(person.getBalance().subtract(goodSum));
+				person.setAlreadyCost(person.getAlreadyCost().add(goodSum));
+				record.setAfter(person.getBalance());
 				record.setToAcc(goods.getMerchantId().toString());
 				record.setsettleDate(new Date());
 				record.setStationCode(deviceService.getDeviceCode());
@@ -184,10 +189,7 @@ public class OrderServiceImpl implements IOrderService
 				record.setCreateTime(new Date());
 				tradeRecordService.insertTradeRecord(record);
 			}
-			//更新user的已消费金额
-			user.setAlreadyCost(BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.add(totalMoney, user.getAlreadyCost()).doubleValue()));
-			user.setBalance(BigDecimal.valueOf(ELArithmetic.BigDecimalDelegate.subtract(user.getBalance(), totalMoney).doubleValue()));
-			personService.updatePerson(user);
+			personService.updatePerson(person);
 			//更新订单总金额
 			order.setMoney(totalMoney);
 			orderMapper.updateOrder(order);
