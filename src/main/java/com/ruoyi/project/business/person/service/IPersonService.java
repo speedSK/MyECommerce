@@ -66,4 +66,8 @@ public interface IPersonService
     String checkNumberUnique(String number);
 
     int resetPersonPwd(Person person);
+
+    int openAccount(String ids);
+
+	List<Person> selectUnopenedList(Person person);
 }

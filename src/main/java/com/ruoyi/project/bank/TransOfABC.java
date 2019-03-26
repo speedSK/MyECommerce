@@ -38,17 +38,17 @@ public class TransOfABC {
 			Socket socket = new Socket("127.0.0.1", 8801);
 //			Socket socket = new Socket(serverIp, Integer.parseInt(port));
 			OutputStream outputstream = socket.getOutputStream();
-			if ("3002".equals(txCode)) {
+			if ("CMLT40".equals(txCode)) {
 				sendPackage = XmlUtils.createAddXml();
 				logger.info("增加子账簿交易\n,报文:{}.", sendPackage);
-			} else if ("3011".equals(txCode)) {
+			} else if ("CQRD02".equals(txCode)) {
 				sendPackage = XmlUtils.createQueryXml();
 				logger.info("查询子账簿余额交易\n,报文:{}.", sendPackage);
 			}
 
 			outputstream.write(sendPackage.getBytes());
 			DataInputStream datainputstream = new DataInputStream(socket.getInputStream());
-			byte[] buf = new byte[1024];
+			byte[] buf = new byte[2048];
 			datainputstream.read(buf);
 			if ("3002".equals(txCode)) {
 				backMsg = dealMsg3002(buf);

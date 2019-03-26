@@ -84,4 +84,6 @@ public interface PersonMapper
 	public int deletePersonByIds(String[] ids);
 
 	public int checkNumberUnique(String number);
+
+    List<Person> selectUnopenedList(Person person);
 }

@@ -370,4 +370,15 @@ public class PersonServiceImpl implements IPersonService
         person.setPassword(passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt()));
         return updatePerson(person);
     }
+
+    @Override
+    public int openAccount(String ids) {
+        return 0;
+    }
+
+    @Override
+    public List<Person> selectUnopenedList(Person person) {
+        return personMapper.selectUnopenedList(person);
+    }
+
 }

@@ -21,8 +21,9 @@ public class OrderDetail extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 订单id */
-	@Excel(name="订单编号")
 	private Long orderId;
+	@Excel(name="订单编号")
+	private String orderCode;
 	@Excel(name = "部门名称")
 	private String deptName;
 	@Excel(name="编号")
@@ -52,7 +53,7 @@ public class OrderDetail extends BaseEntity
 	/** 状态 */
 	private String status;
 
-	@Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
+	@Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
 	private Date createTime;
 
 	@Override
@@ -63,6 +64,14 @@ public class OrderDetail extends BaseEntity
 	@Override
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getOrderCode() {
+		return orderCode;
+	}
+
+	public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
 	}
 
 	public String getPersonNumber() {

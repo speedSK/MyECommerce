@@ -21,10 +21,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="personNumber"    column="number"    />
         <result property="deptName"    column="dept_name"    />
+        <result property="orderCode"    column="order_code"    />
     </resultMap>
 	
 	<sql id="selectOrderDetailVo">
-        select od.*, p.number, d.dept_name
+        select od.*, p.number, d.dept_name, o.order_code
         from bus_order_detail od
                  LEFT JOIN bus_order o on od.order_id = o.id
                  LEFT JOIN bus_person p on o.person_id = p.id

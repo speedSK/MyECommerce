@@ -36,15 +36,16 @@
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </li>
+
+                        <li>
+                            操作人：<input type="text" name="createBy"/>
+                        </li>
+
                         <li class="select-time">
                             <label>日期： </label>
                             <input type="text" class="time-input" id="startTime" placeholder="开始日期" name="params[beginTime]"/>
                             <span>-</span>
                             <input type="text" class="time-input" id="endTime" placeholder="结束日期" name="params[endTime]"/>
-                        </li>
-
-                        <li>
-                            操作人：<input type="text" name="createBy"/>
                         </li>
 
                         <li>

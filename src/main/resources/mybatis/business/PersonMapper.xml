@@ -328,4 +328,48 @@
         where number = #{number}
     </select>
 
+    <select id="selectUnopenedList" parameterType="Person" resultMap="PersonResult">
+        <include refid="selectPersonVo"/>
+        <where>
+            <if test="id != null and id != ''">and p.id = #{id}</if>
+            <if test="number != null and number != ''">and p.number = #{number}</if>
+            <if test="name != null and name != ''">and p.name like concat('%', #{name}, '%')</if>
+            <if test="sex != null and sex != ''">and p.sex = #{sex}</if>
+            <if test="age != null and age != ''">and p.age = #{age}</if>
+            <if test="nation != null and nation != ''">and p.nation = #{nation}</if>
+            <if test="idcard != null and idcard != ''">and p.idcard = #{idcard}</if>
+            <if test="build != null and build != ''">and p.build = #{build}</if>
+            <if test="photo != null and photo != ''">and p.photo = #{photo}</if>
+            <if test="mobile != null and mobile != ''">and p.mobile = #{mobile}</if>
+            <if test="area != null and area != ''">and p.area = #{area}</if>
+            <if test="room != null and room != ''">and p.room = #{room}</if>
+            <if test="bed != null and bed != ''">and p.bed = #{bed}</if>
+            <if test="identityId != null and identityId != ''">and p.identity_id = #{identityId}</if>
+            <if test="password != null and password != ''">and p.password = #{password}</if>
+            <if test="salt != null and salt != ''">and p.salt = #{salt}</if>
+            <if test="deposit != null and deposit != ''">and p.deposit = #{deposit}</if>
+            <if test="balance != null and balance != ''">and p.balance = #{balance}</if>
+            <if test="alreadyCost != null and alreadyCost != ''">and p.already_cost = #{alreadyCost}</if>
+            <if test="flag != null and flag != ''">and p.flag = #{flag}</if>
+            <if test="status != null and status != ''">and p.status = #{status}</if>
+            <if test="remark != null and remark != ''">and p.remark = #{remark}</if>
+            <if test="createBy != null  and createBy != '' ">and p.create_by = #{createBy}</if>
+            <if test="createTime != null ">and p.create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' ">and p.update_by = #{updateBy}</if>
+            <if test="updateTime != null ">and p.update_time = #{updateTime}</if>
+
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format( p.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.beginTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format( p.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="deptId != null and deptId != 0">
+                AND (p.dept_id = #{deptId} OR p.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET
+                (#{deptId},ancestors) ))
+            </if>
+            and p.bank_card_number is null
+        </where>
+    </select>
+
 </mapper>
