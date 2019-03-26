@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.business.account.mapper.AccountMapper">
+    
+    <resultMap type="Account" id="AccountResult">
+        <result property="id"    column="id"    />
+        <result property="personAccount"    column="person_account"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectAccountVo">
+        select id, person_account, create_by, create_time from bus_account
+    </sql>
+	
+    <select id="selectAccountList" parameterType="Account" resultMap="AccountResult">
+        <include refid="selectAccountVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="personAccount != null  and personAccount != '' "> and person_account = #{personAccount}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectAccountById" parameterType="Long" resultMap="AccountResult">
+        <include refid="selectAccountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAccount" parameterType="Account" useGeneratedKeys="true" keyProperty="id">
+        insert into bus_account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="personAccount != null  and personAccount != ''  ">person_account,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="personAccount != null  and personAccount != ''  ">#{personAccount},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateAccount" parameterType="Account">
+        update bus_account
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="personAccount != null  and personAccount != ''  ">person_account = #{personAccount},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteAccountById" parameterType="Long">
+        delete from bus_account where id = #{id}
+    </delete>
+	
+    <delete id="deleteAccountByIds" parameterType="String">
+        delete from bus_account where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
