@@ -1,7 +1,9 @@
 package com.ruoyi.project.business.account.mapper;
 
 import com.ruoyi.project.business.account.domain.Account;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 用户账户 数据层
@@ -9,6 +11,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2019-03-26
  */
+@Repository
 public interface AccountMapper 
 {
 	/**

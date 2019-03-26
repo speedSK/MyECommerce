@@ -15,6 +15,7 @@ import java.util.List;
 import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.bank.TransOfABC;
 import com.ruoyi.project.bank.domain.TransVo;
+import com.ruoyi.project.business.account.mapper.AccountMapper;
 import com.ruoyi.project.business.closedPerson.domain.ClosedPerson;
 import com.ruoyi.project.business.closedPerson.mapper.ClosedPersonMapper;
 import com.ruoyi.project.business.settleDate.service.ISettleDateService;
@@ -64,6 +65,8 @@ public class PersonServiceImpl implements IPersonService
     private IConfigService configService;
     @Autowired
     private IDeptService deptService;
+    @Autowired
+    private AccountMapper accountMapper;
 
 	/**
      * 查询人员管理信息
