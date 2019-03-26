@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.business.person.service.IPersonService;
 import com.ruoyi.project.system.identity.domain.Identity;
 import com.ruoyi.project.system.identity.service.IIdentityService;
 import com.ruoyi.project.system.menu.service.IMenuService;
@@ -25,6 +26,9 @@ public class PrisonIndexController extends BaseController
     
     @Autowired
     private IIdentityService identityService;
+    
+    @Autowired
+    private IPersonService personService;
 
     @Autowired
     private RuoYiConfig prisonConfig;
@@ -34,7 +38,7 @@ public class PrisonIndexController extends BaseController
     public String index(ModelMap mmap)
     {
         // 取身份信息
-        Person user = getPerson();
+        Person user = personService.selectPersonById(getPerson().getId());
       //身份信息(从身份信息获取消费限额)
   		Identity identity = identityService.selectIdentityById(user.getIdentityId());
         // 根据用户id取出菜单

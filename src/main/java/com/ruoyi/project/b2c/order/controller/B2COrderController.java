@@ -144,6 +144,9 @@ public class B2COrderController extends BaseController {
 		//订单提交结果
 		JSONObject res = new JSONObject();
 		res = orderService.submitOrder(goodsId, goodsNum, getPerson());
+		//获取用户最新余额
+		Person user = personService.selectPersonById(getPerson().getId());
+		res.put("userBalance", user.getBalance());
 		return res;
 	}
 	

@@ -139,6 +139,8 @@ function submitOrder(){
 	        		alert(res.resMessage);
 	        		window.location.href = ctx + "b2c/goods/goodsList";
 	        	}
+	        	//刷新用户最新余额
+	        	$("#user-balance-info",parent.document).html("余额：￥"+res.userBalance);
 	        }
 	    });
 	}
