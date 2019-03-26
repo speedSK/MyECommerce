@@ -46,7 +46,7 @@
 						<input id="checkbox_goodsId" class="checkbox_c checkbox_css" name="goodsId" th:value="${goods.id}"  type="checkbox" />
 					</li>
 					<li class="list_con">
-						<div class="list_img"><a href="javascript:;"><img class="goodsImg" th:src="${goods.image}" /></a></div>
+						<div class="list_img"><a href="javascript:;"><img class="goodsImg" th:src="(${goods.image == null || goods.image == ''}) ? @{/img/goods.jpg} : @{/profile/goods/} + ${goods.image}" /></a></div>
 						<div class="list_text"><a href="javascript:;" th:text="${goods.name}" /></div>
 					</li>
 					<li class="list_info">
