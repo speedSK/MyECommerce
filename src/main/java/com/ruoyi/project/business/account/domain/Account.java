@@ -1,4 +1,4 @@
-package com.ruoyi.project.account.domain;
+package com.ruoyi.project.business.account.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

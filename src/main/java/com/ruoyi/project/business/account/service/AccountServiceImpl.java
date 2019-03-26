@@ -1,11 +1,10 @@
-package com.ruoyi.project.account.service;
+package com.ruoyi.project.business.account.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.account.mapper.AccountMapper;
 import com.ruoyi.project.business.account.domain.Account;
-import com.ruoyi.project.business.account.service.IAccountService;
 import com.ruoyi.common.support.Convert;
 
 /**

@@ -1,4 +1,4 @@
-package com.ruoyi.project.account.service;
+package com.ruoyi.project.business.account.service;
 
 import com.ruoyi.project.business.account.domain.Account;
 import java.util.List;

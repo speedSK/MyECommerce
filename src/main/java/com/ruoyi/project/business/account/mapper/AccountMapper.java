@@ -1,4 +1,4 @@
-package com.ruoyi.project.account.mapper;
+package com.ruoyi.project.business.account.mapper;
 
 import com.ruoyi.project.business.account.domain.Account;
 import java.util.List;	
