@@ -1,6 +1,9 @@
 package com.ruoyi.project.business.account.controller;
 
 import java.util.List;
+
+import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.business.person.service.IPersonService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,102 +29,46 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
  * @date 2019-03-26
  */
 @Controller
-@RequestMapping("/business/account")
+@RequestMapping("/business/openAccount")
 public class AccountController extends BaseController
 {
-    private String prefix = "business/account";
+    private String prefix = "business/openAccount";
 
     @Autowired
-    private IAccountService accountService;
+    private IPersonService personService;
+
 
     @RequiresPermissions("business:account:view")
     @GetMapping()
-    public String account()
+    public String openAccount()
     {
-        return prefix + "/account";
+        return prefix + "/person";
     }
 
     /**
-     * 查询用户账户列表
+     * 查询未开户列表
      */
     @RequiresPermissions("business:account:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Account account)
+    public TableDataInfo list(Person person)
     {
         startPage();
-        List<Account> list = accountService.selectAccountList(account);
+        List<Person> list = personService.selectUnopenedList(person);
         return getDataTable(list);
     }
 
-
     /**
-     * 导出用户账户列表
+     * 用户开户
      */
-    @RequiresPermissions("business:account:export")
-    @PostMapping("/export")
+    @RequiresPermissions("business:account:openAccount")
+    @Log(title = "用户开户", businessType = BusinessType.UPDATE)
+    @PostMapping( "/openAccount")
     @ResponseBody
-    public AjaxResult export(Account account)
+    public AjaxResult openAccount(String ids)
     {
-        List<Account> list = accountService.selectAccountList(account);
-        ExcelUtil<Account> util = new ExcelUtil<Account>(Account.class);
-        return util.exportExcel(list, "account");
-    }
 
-    /**
-     * 新增用户账户
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
-
-    /**
-     * 新增保存用户账户
-     */
-    @RequiresPermissions("business:account:add")
-    @Log(title = "用户账户", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(Account account)
-    {
-        return toAjax(accountService.insertAccount(account));
-    }
-
-    /**
-     * 修改用户账户
-     */
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-		Account account = accountService.selectAccountById(id);
-        mmap.put("account", account);
-        return prefix + "/edit";
-    }
-
-    /**
-     * 修改保存用户账户
-     */
-    @RequiresPermissions("business:account:edit")
-    @Log(title = "用户账户", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(Account account)
-    {
-        return toAjax(accountService.updateAccount(account));
-    }
-
-    /**
-     * 删除用户账户
-     */
-    @RequiresPermissions("business:account:remove")
-    @Log(title = "用户账户", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(accountService.deleteAccountByIds(ids));
+        return toAjax(personService.openAccount(ids));
     }
 
 }
