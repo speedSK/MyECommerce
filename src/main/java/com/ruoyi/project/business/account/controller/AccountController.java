@@ -38,7 +38,7 @@ public class AccountController extends BaseController
     private IPersonService personService;
 
 
-    @RequiresPermissions("business:account:view")
+    @RequiresPermissions("business:openAccount:view")
     @GetMapping()
     public String openAccount()
     {
@@ -48,7 +48,7 @@ public class AccountController extends BaseController
     /**
      * 查询未开户列表
      */
-    @RequiresPermissions("business:account:list")
+    @RequiresPermissions("business:openAccount:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Person person)
@@ -61,7 +61,7 @@ public class AccountController extends BaseController
     /**
      * 用户开户
      */
-    @RequiresPermissions("business:account:openAccount")
+    @RequiresPermissions("business:openAccount:openAccount")
     @Log(title = "用户开户", businessType = BusinessType.UPDATE)
     @PostMapping( "/openAccount")
     @ResponseBody

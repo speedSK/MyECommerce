@@ -17,6 +17,8 @@ public class Account extends BaseEntity
 	
 	/** 主键 */
 	private Long id;
+	/** 用户id */
+	private Long personId;
 	/** 账户号 */
 	private String personAccount;
 	/** 创建人 */
@@ -32,6 +34,15 @@ public class Account extends BaseEntity
 	public Long getId() 
 	{
 		return id;
+	}
+	public void setPersonId(Long personId) 
+	{
+		this.personId = personId;
+	}
+
+	public Long getPersonId() 
+	{
+		return personId;
 	}
 	public void setPersonAccount(String personAccount) 
 	{
@@ -64,6 +75,7 @@ public class Account extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("personId", getPersonId())
             .append("personAccount", getPersonAccount())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
