@@ -41,9 +41,6 @@ public class PrisonIndexController extends BaseController
         Person user = personService.selectPersonById(getPerson().getId());
       //身份信息(从身份信息获取消费限额)
   		Identity identity = identityService.selectIdentityById(user.getIdentityId());
-        // 根据用户id取出菜单
-//        List<Menu> menus = menuService.selectMenusByUserId(user.getUserId());
-//        mmap.put("menus", menus);
         mmap.put("user", user);
         mmap.put("identity", identity);
         mmap.put("copyrightYear", prisonConfig.getCopyrightYear());
