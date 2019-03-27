@@ -1,5 +1,6 @@
 package com.ruoyi.common.utils.xml;
 
+import com.ruoyi.common.utils.SysConfigUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -15,47 +16,49 @@ public class XmlUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(XmlUtils.class);
 
+    private static String CorpNo = SysConfigUtil.getNodeValue("bank.server.CorpNo");
+
     public static synchronized String createAddXml() {
         StringBuilder xmlBuilder = new StringBuilder();
         xmlBuilder.append("<ap>");
         xmlBuilder.append("<CCTransCode>CMLT40</CCTransCode>");
         xmlBuilder.append("<ProductID>ICC</ProductID>");
         xmlBuilder.append("<ChannelType>ERP</ChannelType>");
-        xmlBuilder.append("<CorpNo>企业技监局号码/客户号</CorpNo>");
-        xmlBuilder.append("<OpNo>企业操作员编号</OpNo>");
-        xmlBuilder.append("<AuthNo>认证码</AuthNo>");
+        xmlBuilder.append("<CorpNo>" + CorpNo + "</CorpNo>");
+        xmlBuilder.append("<OpNo></OpNo>");
+        xmlBuilder.append("<AuthNo></AuthNo>");
         xmlBuilder.append("<ReqSeqNo>请求方流水号</ReqSeqNo>");
-        xmlBuilder.append("<ReqDate>请求日期</ReqDate>");
-        xmlBuilder.append("<ReqTime>请求时间</ReqTime>");
-        xmlBuilder.append("<Sign>数字签名</Sign>");
+        xmlBuilder.append("<ReqDate></ReqDate>");
+        xmlBuilder.append("<ReqTime></ReqTime>");
+        xmlBuilder.append("<Sign></Sign>");
 
         xmlBuilder.append("<Corp>");
         xmlBuilder.append("<DbLogAccName>多级账簿名称</DbLogAccName>");
-        xmlBuilder.append("<IntTyp>计息方式</IntTyp>");
-        xmlBuilder.append("<DbIntType>借方利息类型</DbIntType>");
-        xmlBuilder.append("<DbRit>借方自定义利率</DbRit>");
-        xmlBuilder.append("<DbAddType>借方利率浮动方式</DbAddType>");
-        xmlBuilder.append("<DbRatType>借方利率代码</DbRatType>");
-        xmlBuilder.append("<DbRatPct>借方浮比</DbRatPct>");
-        xmlBuilder.append("<DbRatAdd>借方浮点</DbRatAdd>");
-        xmlBuilder.append("<CrIntType>贷方利息类型</CrIntType>");
-        xmlBuilder.append("<CrRit>贷方自定义利率</CrRit>");
-        xmlBuilder.append("<CrAddType>贷方利率浮动方式</CrAddType>");
-        xmlBuilder.append("<CrRatType>贷方利率代码</CrRatType>");
-        xmlBuilder.append("<CrRatPct>贷方浮比</CrRatPct>");
-        xmlBuilder.append("<CrRatAdd>贷方浮点</CrRatAdd>");
-        xmlBuilder.append("<PmtHd>账簿支取方式</PmtHd>");
-        xmlBuilder.append("<ActInf>存款动帐通知书生成标识</ActInf>");
+        xmlBuilder.append("<IntTyp>0</IntTyp>");
+        xmlBuilder.append("<DbIntType>F</DbIntType>");
+        xmlBuilder.append("<DbRit></DbRit>");
+        xmlBuilder.append("<DbAddType></DbAddType>");
+        xmlBuilder.append("<DbRatType></DbRatType>");
+        xmlBuilder.append("<DbRatPct></DbRatPct>");
+        xmlBuilder.append("<DbRatAdd></DbRatAdd>");
+        xmlBuilder.append("<CrIntType>F</CrIntType>");
+        xmlBuilder.append("<CrRit></CrRit>");
+        xmlBuilder.append("<CrAddType></CrAddType>");
+        xmlBuilder.append("<CrRatType></CrRatType>");
+        xmlBuilder.append("<CrRatPct></CrRatPct>");
+        xmlBuilder.append("<CrRatAdd></CrRatAdd>");
+        xmlBuilder.append("<PmtHd>01</PmtHd>");
+        xmlBuilder.append("<ActInf></ActInf>");
         xmlBuilder.append("</Corp>");
         xmlBuilder.append("<Cmp>");
         xmlBuilder.append("<DbProv>省市代码</DbProv>");
         xmlBuilder.append("<DbAccNo>账号</DbAccNo>");
         xmlBuilder.append("<DbCur>币种</DbCur>");
         xmlBuilder.append("<CrLogAccNo>多级账簿上级编号</CrLogAccNo>");
-        xmlBuilder.append("<DbLogAccNo>多级账簿编号</DbLogAccNo>");
-        xmlBuilder.append("<LogAccBkOInd>多级账簿输出标志</LogAccBkOInd>");
-        xmlBuilder.append("<AuthAmt>账簿超额额度</AuthAmt>");
-        xmlBuilder.append("<StatInd>统计标识</StatInd>");
+        xmlBuilder.append("<DbLogAccNo></DbLogAccNo>");
+        xmlBuilder.append("<LogAccBkOInd>1</LogAccBkOInd>");
+        xmlBuilder.append("<AuthAmt></AuthAmt>");
+        xmlBuilder.append("<StatInd></StatInd>");
         xmlBuilder.append("</Cmp>");
         xmlBuilder.append("</ap>");
         return xmlBuilder.toString();
@@ -67,27 +70,30 @@ public class XmlUtils {
         xmlBuilder.append("<CCTransCode>CQRD02</CCTransCode>");
         xmlBuilder.append("<ProductID>ICC</ProductID>");
         xmlBuilder.append("<ChannelType>ERP</ChannelType>");
-        xmlBuilder.append("<CorpNo>企业技监局号码/客户号</CorpNo>");
-        xmlBuilder.append("<OpNo>企业操作员编号</OpNo>");
-        xmlBuilder.append("<AuthNo>认证码</AuthNo>");
+        xmlBuilder.append("<CorpNo>" + CorpNo + "</CorpNo>");
+        xmlBuilder.append("<OpNo></OpNo>");
+        xmlBuilder.append("<AuthNo></AuthNo>");
         xmlBuilder.append("<ReqSeqNo>请求方流水号</ReqSeqNo>");
-        xmlBuilder.append("<ReqDate>请求日期</ReqDate>");
-        xmlBuilder.append("<ReqTime>请求时间</ReqTime>");
-        xmlBuilder.append("<Sign>数字签名</Sign>");
+        xmlBuilder.append("<ReqDate></ReqDate>");
+        xmlBuilder.append("<ReqTime></ReqTime>");
+        xmlBuilder.append("<Sign></Sign>");
 
-        xmlBuilder.append("<CCTransCode>CQRA14</CCTransCode>");
+        xmlBuilder.append("<Cmp>");
+        xmlBuilder.append("<DbProv>省市代码</DbProv>");
+        xmlBuilder.append("<DbAccNo>账号</DbAccNo>");
+        xmlBuilder.append("<DbCur>币种</DbCur>");
+        xmlBuilder.append("<DbLogAccNo>起始账薄编号</DbLogAccNo>");
+        xmlBuilder.append("<CrLogAccNo>终止账薄编号</CrLogAccNo>");
+        xmlBuilder.append("</Cmp>");
         xmlBuilder.append("<Corp>");
         xmlBuilder.append("<StartDate>起始日期</StartDate>");
         xmlBuilder.append("<EndDate>终止日期</EndDate>");
         xmlBuilder.append("</Corp>");
-        xmlBuilder.append("<Cmp>");
-        xmlBuilder.append("<DbProv>借方省市代码</DbProv>");
-        xmlBuilder.append("<DbAccNo>借方账号</DbAccNo>");
-        xmlBuilder.append("<DbCur>借方货币码</DbCur>");
-        xmlBuilder.append("<DbLogAccNo>起始多级账簿号</DbLogAccNo>");
-        xmlBuilder.append("<CrLogAccNo>终止多级账簿号</CrLogAccNo>");
-        xmlBuilder.append("</Cmp>");
-        xmlBuilder.append("</ap>");
+        xmlBuilder.append("<Cme>");
+        xmlBuilder.append("<ContLast>续查条件<ContLast>");
+        xmlBuilder.append("</Cme>");
+
+                xmlBuilder.append("<FileFlag>文件标识</FileFlag>");
         return xmlBuilder.toString();
     }
 
@@ -96,8 +102,8 @@ public class XmlUtils {
      * @param xml
      * @return Map
      */
-    public static Map readStringXmlOut(String xml) {
-        Map map = new HashMap();
+    public static Map<String, String> readStringXmlOut(String xml) {
+        Map<String, String> map = new HashMap();
         Document doc = null;
         try {
             // 将字符串转为XML
@@ -110,6 +116,8 @@ public class XmlUtils {
             map.put("ReqSeqNo", ReqSeqNo);
             String RespSeqNo = rootElt.elementTextTrim("RespSeqNo");
             map.put("RespSeqNo", RespSeqNo);
+            String RespSource = rootElt.elementTextTrim("RespSource");
+            map.put("RespSource", RespSource);
             String RespCode = rootElt.elementTextTrim("RespCode");
             map.put("RespCode", RespCode);
             String RespInfo = rootElt.elementTextTrim("RespInfo");
@@ -125,6 +133,8 @@ public class XmlUtils {
                 Element recordEle = (Element) iter.next();
                 String RecordNum = recordEle.elementTextTrim("RecordNum");
                 map.put("RecordNum", RecordNum);
+                String ContLast = recordEle.elementTextTrim("ContLast");
+                map.put("ContLast", ContLast);
                 String FieldNum = recordEle.elementTextTrim("FieldNum");
                 map.put("FieldNum", FieldNum);
             }
@@ -135,6 +145,8 @@ public class XmlUtils {
                 Element recordEle = (Element) cmpIter.next();
                 String RespPrvData = recordEle.elementTextTrim("RespPrvData"); // 拿到Cmp节点下的子节点BatchFileName值
                 map.put("RespPrvData", RespPrvData);
+                String ContFlag = recordEle.elementTextTrim("ContFlag"); // 拿到Cmp节点下的子节点BatchFileName值
+                map.put("ContFlag", ContFlag);
                 String BatchFileName = recordEle.elementTextTrim("BatchFileName"); // 拿到Cmp节点下的子节点BatchFileName值
                 map.put("BatchFileName", BatchFileName);
             }

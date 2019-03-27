@@ -104,4 +104,10 @@ public class Constants
     public static final String TX_CODE_CLOSE_ACCOUNT = "3001";//销户退款
 
     public static final String TX_CODE_MERCHANT_SETTLE = "4000";//商户结算
+
+
+    public static final String BANK_OPEN_CODE = "CMLT40";//商户结算
+    public static final String BANK_QUERY_CODE = "CQRD01";//商户结算
+
+
 }
