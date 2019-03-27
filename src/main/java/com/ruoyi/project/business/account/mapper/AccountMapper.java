@@ -61,5 +61,6 @@ public interface AccountMapper
      * @return 结果
      */
 	public int deleteAccountByIds(String[] ids);
-	
+
+	Account selectMacAccount();
 }

@@ -20,8 +20,7 @@ public class RuoYiApplication
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(RuoYiApplication.class, args);
-		SocketServer.getInstance();//银行socket服务
-		System.out.println(
-				"系统启动成功......  \n");
+//		SocketServer.getInstance();//银行socket服务
+		System.out.println("系统启动成功......  \n");
 	}
 }

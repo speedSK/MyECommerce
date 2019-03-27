@@ -15,6 +15,7 @@ import java.util.List;
 import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.bank.TransOfABC;
 import com.ruoyi.project.bank.domain.TransVo;
+import com.ruoyi.project.business.account.domain.Account;
 import com.ruoyi.project.business.account.mapper.AccountMapper;
 import com.ruoyi.project.business.closedPerson.domain.ClosedPerson;
 import com.ruoyi.project.business.closedPerson.mapper.ClosedPersonMapper;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.project.business.person.mapper.PersonMapper;
 import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.common.support.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 人员管理 服务层实现
@@ -375,9 +377,19 @@ public class PersonServiceImpl implements IPersonService
     }
 
     @Override
+    @Transactional
     public int openAccount(String ids) {
-
-        return 0;
+        Account account = accountMapper.selectMacAccount();
+        String newAccount = String.format("%010d", Long.parseLong(account.getPersonAccount())+1);
+        Person person = personMapper.selectPersonById(Long.parseLong(ids));
+        person.setBankCardNumber(newAccount);
+        person.setUpdateBy(ShiroUtils.getLoginName());
+        personMapper.updatePerson(person);
+        account = new Account();
+        account.setPersonAccount(newAccount);
+        account.setPersonId(person.getId());
+        account.setCreateBy(ShiroUtils.getLoginName());
+        return accountMapper.insertAccount(account);
     }
 
     @Override
