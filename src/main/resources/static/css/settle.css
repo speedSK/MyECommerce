@@ -24,6 +24,9 @@ strong.font-bold {
 	color: red;
 }
 
+/* 禁用横向滚动条*/
+.gray-bg {overflow-x: hidden}
+
 /* 结算表单样式 */
 .settleForm{
 	width: 100%;
@@ -64,11 +67,12 @@ ul.order_lists.cartTop {
 /* 单条商品复选框列样式 */
 .order_lists .list_chk {
     position: relative;
-    width: 50px;
+/*     width: 50px; */
+    width: 5%;
 }
 .checkbox_css{
     position: absolute;
-    left: 18px;
+    left: 20px;
     top: 50px;
 }
 label {
@@ -84,12 +88,13 @@ label {
 }
 
 .order_lists .list_con {
-    width: 342px;
+    width: 30%;
 }
 .order_lists .list_con .list_img {
     width: 90px;
     height: 90px;
     margin-top: 20px;
+    margin-left: 20%;
     float: left;
 }
 .cartBox .order_content a {
@@ -97,14 +102,15 @@ label {
 }
 /*商品名称*/
 .order_lists .list_con .list_text {
-    margin: 50px 0 0 10px;
-    line-height: 18px;
-    width: 200px;
+    margin: 50px 0 0 0;
+    line-height: 25px;
+    margin-left: 10%;
     float: left;
 }
 
 .order_lists .list_info {
     width: 230px;
+    width: 35%;
     box-sizing: border-box;
     padding: 0px 0;
 }
@@ -117,11 +123,13 @@ label {
 }
 
 .order_lists .list_price {
-    width: 130px;
+    width: 20%;
 }
+/* 商品价格样式 */
 .order_lists .price_style {
     height: 10px;
     margin-top: 50px;
+    width: 20%;
 }
 .order_lists .list_price .price {
     margin-top: 40px;
@@ -132,11 +140,12 @@ label {
 }
 /* 商品列表调整数量样式 */
 .order_lists .list_amount {
-    width: 120px;
+    width: 20%;
 }
 .order_lists .list_amount .amount_box {
     margin-top: 50px;
-    width: 95px;
+    margin-left: 25%;
+    width: 15%;
     height: 25px;
     position: relative;
 }
@@ -184,7 +193,7 @@ a {
 }
 
 .order_lists .list_sum {
-    width: 140px;
+    width: 10%;
 }
 .order_lists .price_style {
     height: 10px;
@@ -199,7 +208,7 @@ a {
 }
 
 .order_lists .list_op {
-    width: 164px;
+    width: 10%;
 }
 .order_lists .list_op .del {
     margin-top: 50px;

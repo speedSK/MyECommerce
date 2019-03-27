@@ -35,7 +35,6 @@
 						<input type="checkbox" id="checkAll" class="whole_check" />
 					</li>
 					<li class="list_con">商品信息</li>
-					<li class="list_info">商品参数</li>
 					<li class="list_price">单价</li>
 					<li class="list_amount">数量</li>
 					<li class="list_sum">金额</li>
@@ -48,10 +47,6 @@
 					<li class="list_con">
 						<div class="list_img"><a href="javascript:;"><img class="goodsImg" th:src="(${goods.image == null || goods.image == ''}) ? @{/img/goods.jpg} : @{/profile/goods/} + ${goods.image}" /></a></div>
 						<div class="list_text"><a href="javascript:;" th:text="${goods.name}" /></div>
-					</li>
-					<li class="list_info">
-<!-- 						<div class="list_desc" th:text="${goods.des}" /> -->
-						<div class="list_desc" />
 					</li>
 					<li class="list_price price_style">
 						<span class="price">￥</span>
@@ -88,7 +83,7 @@
 	    <script th:src="@{/js/settle.js}"></script>
 	    <script type="text/javascript">
 		    $(function (){
-		    	$(".settleForm").css("height",$(window).height()-112);
+		    	$(".settleForm").css("height",$(window).height()-150);
 		    });
 	    </script>
 	</body>
