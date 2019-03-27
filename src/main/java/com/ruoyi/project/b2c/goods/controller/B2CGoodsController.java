@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruoyi.common.utils.GoodsConstant;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.project.business.goodCategory.domain.GoodCategory;
+import com.ruoyi.project.business.goodCategory.service.IGoodCategoryService;
 import com.ruoyi.project.business.goods.domain.Goods;
 import com.ruoyi.project.business.goods.service.IGoodsService;
 import com.ruoyi.project.business.person.domain.Person;
@@ -26,6 +28,9 @@ public class B2CGoodsController extends BaseController {
 	@Autowired
 	IGoodsService goodsService;
 	
+	@Autowired
+	IGoodCategoryService goodCategoryService;
+	
 	/**
 	 * 进入商品页面
 	 * @param request
@@ -35,7 +40,13 @@ public class B2CGoodsController extends BaseController {
 	 */
 	@RequestMapping(value="goodsList")
 	public String getGoodsList(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap){
+		//用户信息
 		Person user = getPerson();
+		//获取商品分类root的Id
+		GoodCategory goodCategory = new GoodCategory();
+  		goodCategory.setParentId(0L);
+  		Long rootGoodCategoryId = goodCategoryService.selectGoodCategoryList(goodCategory).get(0).getId();
+  		modelMap.put("rootGoodCategoryId", rootGoodCategoryId);
 		modelMap.put("user", user);
 		return "b2c/goods/goodsList";
 	}

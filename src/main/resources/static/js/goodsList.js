@@ -2,8 +2,10 @@
  * Created by CoderX on 2019/3/15
  */
 $(function (){
+	
+	
 	//进入页面获取分类栏信息
-	asynGetGoodsCategoryList("");
+	asynGetGoodsCategoryList($("#rootGoodCategoryId").val());
 	
 	//进入页面获取全面商品
 	asynGetGoodsList("");
@@ -13,7 +15,7 @@ $(function (){
 		//step1:清空商品筛选栏的已选分类
 		clearCategory();
 		//step2:重新刷新分类列表
-		asynGetGoodsCategoryList("");
+		asynGetGoodsCategoryList($("#rootGoodCategoryId").val());
 		//step3:查询全部的商品
 		asynGetGoodsList("");
     });
@@ -59,7 +61,9 @@ function asynGetGoodsList(categoryId){
         	//返回的商品列表展示出来
         	$("#goodsTableDiv").html(res);
         	//根据屏幕高度设置商品列表.goodsDiv的高度 650px;
-	    	$(".goodsDiv").css("height",$(window).height());
+	    	$(".goodsDiv").css("height",$(window).height()-70);
+        	//设置商品列表的宽度
+//        	alert($("#goodsTableDiv").css("height"));
         }
     });
 }
