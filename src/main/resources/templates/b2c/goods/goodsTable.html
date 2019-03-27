@@ -1,4 +1,4 @@
-<ul id="goodsTable" class="clearFloat" >
+<ul id="goodsTable" class="clearFloat singleGoods" >
 	<li th:each="goods : ${goodsPage.rows}" class="liStyle">
 		<div class="d"><img class="goods-image-event" th:data-id="${goods.id}" th:src="(${goods.image == null || goods.image == ''}) ? @{/img/goods.jpg} : @{/profile/goods/} + ${goods.image}" /></div>
 		<h4 th:text="${goods.name}"></h4>
