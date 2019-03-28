@@ -166,19 +166,19 @@ public class XmlUtils {
                 "\t<RespSource>返回来源</RespSource>\n" +
                 "\t<RespSeqNo>应答流水号</RespSeqNo>\n" +
                 "\t<RespDate>返回日期</RespDate>\n" +
-                "<RespTime>返回时间</RespTime>\n" +
+                "\t<RespTime>返回时间</RespTime>\n" +
                 "\t<RespCode>返回码</RespCode>\n" +
                 "\t<RespInfo>返回信息</RespInfo>\n" +
                 "\t<RxtInfo>返回扩展信息</RxtInfo>\n" +
                 "\t<FileFlag>数据文件标识</FileFlag>\n" +
-                "<Cme>\n" +
-                "<RecordNum>记录总数</RecordNum>\n" +
-                "<FieldNum>字段数</FieldNum>\n" +
-                "</Cme>\n" +
-                "<Cmp>\n" +
-                "<BatchFileName>批量文件名</BatchFileName>\n" +
-                "</Cmp>\n" +
-                "</ap>\n";
+                "\t<Cme>\n" +
+                "\t<RecordNum>记录总数</RecordNum>\n" +
+                "\t<FieldNum>字段数</FieldNum>\n" +
+                "\t</Cme>\n" +
+                "\t<Cmp>\n" +
+                "\t<BatchFileName>批量文件名</BatchFileName>\n" +
+                "\t</Cmp>\n" +
+                "\t</ap>\n";
         System.out.println(new TransVo());
 
 //        System.out.println(readStringXmlOut(xml));

@@ -377,8 +377,6 @@
         set already_cost = '0';
     </update>
 
-    selectPersonBybankNumber
-
     <select id="selectPersonByBankNumber" parameterType="string" resultMap="PersonResult">
         <include refid="selectPersonVo"/>
         where p.bank_card_number =#{bankNumber}
