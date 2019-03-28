@@ -47,9 +47,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="returnMessage != null  and returnMessage != '' "> and return_message = #{returnMessage}</if>
              <if test="bankIdserial != null  and bankIdserial != '' "> and bank_idserial = #{bankIdserial}</if>
              <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
          </where>
     </select>
     
@@ -60,45 +57,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         
     <insert id="insertTransactionRecord" parameterType="TransactionRecord">
         insert into bank_transaction_record
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">id,</if>
-			<if test="code != null  and code != ''  ">code,</if>
-			<if test="bankCode != null  and bankCode != ''  ">bank_code,</if>
-			<if test="transDate != null  and transDate != ''  ">trans_date,</if>
-			<if test="transIdserial != null  and transIdserial != ''  ">trans_idserial,</if>
-			<if test="userCode != null  and userCode != ''  ">user_code,</if>
-			<if test="userName != null  and userName != ''  ">user_name,</if>
-			<if test="idNumber != null  and idNumber != ''  ">id_number,</if>
-			<if test="bankNumber != null  and bankNumber != ''  ">bank_number,</if>
-			<if test="amount != null  and amount != ''  ">amount,</if>
-			<if test="status != null  and status != ''  ">status,</if>
-			<if test="returnCode != null  and returnCode != ''  ">return_code,</if>
-			<if test="returnMessage != null  and returnMessage != ''  ">return_message,</if>
-			<if test="bankIdserial != null  and bankIdserial != ''  ">bank_idserial,</if>
-			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createTime != null  ">create_time,</if>
-			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updateTime != null  ">update_time,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">id,</if>
+            <if test="code != null  and code != ''  ">code,</if>
+            <if test="bankCode != null  and bankCode != ''  ">bank_code,</if>
+            <if test="transDate != null  and transDate != ''  ">trans_date,</if>
+            <if test="transIdserial != null  and transIdserial != ''  ">trans_idserial,</if>
+            <if test="userCode != null  and userCode != ''  ">user_code,</if>
+            <if test="userName != null  and userName != ''  ">user_name,</if>
+            <if test="idNumber != null  and idNumber != ''  ">id_number,</if>
+            <if test="bankNumber != null  and bankNumber != ''  ">bank_number,</if>
+            <if test="amount != null  and amount != ''  ">amount,</if>
+            <if test="status != null  and status != ''  ">status,</if>
+            <if test="returnCode != null  and returnCode != ''  ">return_code,</if>
+            <if test="returnMessage != null  and returnMessage != ''  ">return_message,</if>
+            <if test="bankIdserial != null  and bankIdserial != ''  ">bank_idserial,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
+            createTime
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">#{id},</if>
-			<if test="code != null  and code != ''  ">#{code},</if>
-			<if test="bankCode != null  and bankCode != ''  ">#{bankCode},</if>
-			<if test="transDate != null  and transDate != ''  ">#{transDate},</if>
-			<if test="transIdserial != null  and transIdserial != ''  ">#{transIdserial},</if>
-			<if test="userCode != null  and userCode != ''  ">#{userCode},</if>
-			<if test="userName != null  and userName != ''  ">#{userName},</if>
-			<if test="idNumber != null  and idNumber != ''  ">#{idNumber},</if>
-			<if test="bankNumber != null  and bankNumber != ''  ">#{bankNumber},</if>
-			<if test="amount != null  and amount != ''  ">#{amount},</if>
-			<if test="status != null  and status != ''  ">#{status},</if>
-			<if test="returnCode != null  and returnCode != ''  ">#{returnCode},</if>
-			<if test="returnMessage != null  and returnMessage != ''  ">#{returnMessage},</if>
-			<if test="bankIdserial != null  and bankIdserial != ''  ">#{bankIdserial},</if>
-			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createTime != null  ">#{createTime},</if>
-			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updateTime != null  ">#{updateTime},</if>
+            <if test="id != null  ">#{id},</if>
+            <if test="code != null  and code != ''  ">#{code},</if>
+            <if test="bankCode != null  and bankCode != ''  ">#{bankCode},</if>
+            <if test="transDate != null  and transDate != ''  ">#{transDate},</if>
+            <if test="transIdserial != null  and transIdserial != ''  ">#{transIdserial},</if>
+            <if test="userCode != null  and userCode != ''  ">#{userCode},</if>
+            <if test="userName != null  and userName != ''  ">#{userName},</if>
+            <if test="idNumber != null  and idNumber != ''  ">#{idNumber},</if>
+            <if test="bankNumber != null  and bankNumber != ''  ">#{bankNumber},</if>
+            <if test="amount != null  and amount != ''  ">#{amount},</if>
+            <if test="status != null  and status != ''  ">#{status},</if>
+            <if test="returnCode != null  and returnCode != ''  ">#{returnCode},</if>
+            <if test="returnMessage != null  and returnMessage != ''  ">#{returnMessage},</if>
+            <if test="bankIdserial != null  and bankIdserial != ''  ">#{bankIdserial},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            sysdate()
          </trim>
     </insert>
 	 

@@ -1,6 +1,7 @@
 package com.ruoyi.common.utils.xml;
 
 import com.ruoyi.common.utils.SysConfigUtil;
+import com.ruoyi.project.bank.domain.TransVo;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -17,8 +18,12 @@ public class XmlUtils {
     private static final Logger logger = LoggerFactory.getLogger(XmlUtils.class);
 
     private static String CorpNo = SysConfigUtil.getNodeValue("bank.server.CorpNo");
+    private static String DbLogAccName = SysConfigUtil.getNodeValue("bank.server.DbLogAccName");
+    private static String DbProv = SysConfigUtil.getNodeValue("bank.server.DbProv");
+    private static String DbAccNo = SysConfigUtil.getNodeValue("bank.server.DbAccNo");
+    private static String DbCur = SysConfigUtil.getNodeValue("bank.server.DbCur");
 
-    public static synchronized String createAddXml() {
+    public static String createAddXml(TransVo vo) {
         StringBuilder xmlBuilder = new StringBuilder();
         xmlBuilder.append("<ap>");
         xmlBuilder.append("<CCTransCode>CMLT40</CCTransCode>");
@@ -27,13 +32,13 @@ public class XmlUtils {
         xmlBuilder.append("<CorpNo>" + CorpNo + "</CorpNo>");
         xmlBuilder.append("<OpNo></OpNo>");
         xmlBuilder.append("<AuthNo></AuthNo>");
-        xmlBuilder.append("<ReqSeqNo>请求方流水号</ReqSeqNo>");
+        xmlBuilder.append("<ReqSeqNo>" + vo.getJourno() + "</ReqSeqNo>");
         xmlBuilder.append("<ReqDate></ReqDate>");
         xmlBuilder.append("<ReqTime></ReqTime>");
         xmlBuilder.append("<Sign></Sign>");
 
         xmlBuilder.append("<Corp>");
-        xmlBuilder.append("<DbLogAccName>多级账簿名称</DbLogAccName>");
+        xmlBuilder.append("<DbLogAccName>" + DbLogAccName + "</DbLogAccName>");
         xmlBuilder.append("<IntTyp>0</IntTyp>");
         xmlBuilder.append("<DbIntType>F</DbIntType>");
         xmlBuilder.append("<DbRit></DbRit>");
@@ -51,10 +56,10 @@ public class XmlUtils {
         xmlBuilder.append("<ActInf></ActInf>");
         xmlBuilder.append("</Corp>");
         xmlBuilder.append("<Cmp>");
-        xmlBuilder.append("<DbProv>省市代码</DbProv>");
-        xmlBuilder.append("<DbAccNo>账号</DbAccNo>");
-        xmlBuilder.append("<DbCur>币种</DbCur>");
-        xmlBuilder.append("<CrLogAccNo>多级账簿上级编号</CrLogAccNo>");
+        xmlBuilder.append("<DbProv>" + DbProv + "</DbProv>");
+        xmlBuilder.append("<DbAccNo>" + DbAccNo + "</DbAccNo>");
+        xmlBuilder.append("<DbCur>" + DbCur + "</DbCur>");
+        xmlBuilder.append("<CrLogAccNo>" + vo.getAccNumber() + "</CrLogAccNo>");
         xmlBuilder.append("<DbLogAccNo></DbLogAccNo>");
         xmlBuilder.append("<LogAccBkOInd>1</LogAccBkOInd>");
         xmlBuilder.append("<AuthAmt></AuthAmt>");
@@ -64,7 +69,7 @@ public class XmlUtils {
         return xmlBuilder.toString();
     }
 
-    public static synchronized String createQueryXml() {
+    public static String createQueryXml(TransVo vo) {
         StringBuilder xmlBuilder = new StringBuilder();
         xmlBuilder.append("<ap>");
         xmlBuilder.append("<CCTransCode>CQRD02</CCTransCode>");
@@ -73,27 +78,24 @@ public class XmlUtils {
         xmlBuilder.append("<CorpNo>" + CorpNo + "</CorpNo>");
         xmlBuilder.append("<OpNo></OpNo>");
         xmlBuilder.append("<AuthNo></AuthNo>");
-        xmlBuilder.append("<ReqSeqNo>请求方流水号</ReqSeqNo>");
+        xmlBuilder.append("<ReqSeqNo>" + vo.getJourno() + "</ReqSeqNo>");
         xmlBuilder.append("<ReqDate></ReqDate>");
         xmlBuilder.append("<ReqTime></ReqTime>");
         xmlBuilder.append("<Sign></Sign>");
-
         xmlBuilder.append("<Cmp>");
-        xmlBuilder.append("<DbProv>省市代码</DbProv>");
-        xmlBuilder.append("<DbAccNo>账号</DbAccNo>");
-        xmlBuilder.append("<DbCur>币种</DbCur>");
-        xmlBuilder.append("<DbLogAccNo>起始账薄编号</DbLogAccNo>");
-        xmlBuilder.append("<CrLogAccNo>终止账薄编号</CrLogAccNo>");
+        xmlBuilder.append("<DbProv>" + DbProv + "</DbProv>");
+        xmlBuilder.append("<DbAccNo>" + DbAccNo + "</DbAccNo>");
+        xmlBuilder.append("<DbCur>" + DbCur + "</DbCur>");
+        xmlBuilder.append("<DbLogAccNo>" + vo.getStartNumber() + "</DbLogAccNo>");
+        xmlBuilder.append("<CrLogAccNo>" + vo.getEndNumber() + "</CrLogAccNo>");
         xmlBuilder.append("</Cmp>");
         xmlBuilder.append("<Corp>");
-        xmlBuilder.append("<StartDate>起始日期</StartDate>");
-        xmlBuilder.append("<EndDate>终止日期</EndDate>");
+        xmlBuilder.append("<StartDate>" + vo.getStartTime() + "</StartDate>");
+        xmlBuilder.append("<EndDate>" + vo.getEndTime() + "</EndDate>");
         xmlBuilder.append("</Corp>");
         xmlBuilder.append("<Cme>");
-        xmlBuilder.append("<ContLast>续查条件<ContLast>");
+        xmlBuilder.append("<ContLast>" + vo.getContLast() + "<ContLast>");
         xmlBuilder.append("</Cme>");
-
-                xmlBuilder.append("<FileFlag>文件标识</FileFlag>");
         return xmlBuilder.toString();
     }
 
@@ -103,7 +105,7 @@ public class XmlUtils {
      * @return Map
      */
     public static Map<String, String> readStringXmlOut(String xml) {
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         Document doc = null;
         try {
             // 将字符串转为XML
@@ -164,20 +166,22 @@ public class XmlUtils {
                 "\t<RespSource>返回来源</RespSource>\n" +
                 "\t<RespSeqNo>应答流水号</RespSeqNo>\n" +
                 "\t<RespDate>返回日期</RespDate>\n" +
-                "<RespTime>返回时间</RespTime>\n" +
+                "\t<RespTime>返回时间</RespTime>\n" +
                 "\t<RespCode>返回码</RespCode>\n" +
                 "\t<RespInfo>返回信息</RespInfo>\n" +
                 "\t<RxtInfo>返回扩展信息</RxtInfo>\n" +
                 "\t<FileFlag>数据文件标识</FileFlag>\n" +
-                "<Cme>\n" +
-                "<RecordNum>记录总数</RecordNum>\n" +
-                "<FieldNum>字段数</FieldNum>\n" +
-                "</Cme>\n" +
-                "<Cmp>\n" +
-                "<BatchFileName>批量文件名</BatchFileName>\n" +
-                "</Cmp>\n" +
-                "</ap>\n";
-        System.out.println(readStringXmlOut(xml));
+                "\t<Cme>\n" +
+                "\t<RecordNum>记录总数</RecordNum>\n" +
+                "\t<FieldNum>字段数</FieldNum>\n" +
+                "\t</Cme>\n" +
+                "\t<Cmp>\n" +
+                "\t<BatchFileName>批量文件名</BatchFileName>\n" +
+                "\t</Cmp>\n" +
+                "\t</ap>\n";
+        System.out.println(new TransVo());
+
+//        System.out.println(readStringXmlOut(xml));
 
     }
 }

@@ -148,22 +148,26 @@
 					title : '性别',
 					formatter: function(value, row, index) {
 						return $.table.selectDictLabel(sexDatas, value);
-					}
+					},
+					visible:false
 				},
 				{
 					field : 'nation',
 					title : '民族',
 					formatter: function(value, row, index) {
 						return $.table.selectDictLabel(nations, value);
-					}
+					},
+					visible:false
 				},
 				{
 					field : 'identity.name',
-					title : '身份'
+					title : '身份',
+					visible:false
 				},
 				{
 					field : 'balance',
-					title : '余额'
+					title : '余额',
+					visible:false
 				},
 				{
 					field : 'dept.deptName',

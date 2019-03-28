@@ -69,6 +69,8 @@ public class PersonServiceImpl implements IPersonService
     private IDeptService deptService;
     @Autowired
     private AccountMapper accountMapper;
+    @Autowired
+    private ITransactionRecordService transactionRecordService;
 
 	/**
      * 查询人员管理信息
@@ -381,7 +383,10 @@ public class PersonServiceImpl implements IPersonService
     public int openAccount(String ids) {
         Account account = accountMapper.selectMacAccount();
         String newAccount = String.format("%010d", Long.parseLong(account.getPersonAccount())+1);
-        String result = TransOfABC.transCommMsg(Constants.BANK_OPEN_CODE, new TransVo());
+        TransVo transVo = new TransVo();
+        transVo.setJourno(IdGen.getJourno());
+        transVo.setAccNumber(newAccount);
+        String result = TransOfABC.transCommMsg(Constants.BANK_OPEN_CODE, transVo);
         if (result.equals("0000")) {
             Person person = personMapper.selectPersonById(Long.parseLong(ids));
             person.setBankCardNumber(newAccount);
@@ -401,4 +406,49 @@ public class PersonServiceImpl implements IPersonService
         return personMapper.selectUnopenedList(person);
     }
 
+    @Override
+    public void clearAlreadyCost() {
+        personMapper.clearAlreadyCost();
+    }
+
+    @Override
+    public void bankBatchRecharge(String[] split) {
+        Person person = personMapper.selectPersonByBankNumber(split[2]);
+        if (StringUtils.isNotNull(person)) {
+            BigDecimal recharge = new BigDecimal(split[14]);
+            person.setBalance(person.getBalance().add(recharge));
+            TradeRecord record = new TradeRecord();
+            record.setJourno(IdGen.getJourno());
+            Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
+            merchant.setBalance(merchant.getBalance().add(recharge));
+            merchantService.updateMerchant(merchant);
+            String deviceCode = deviceService.getDeviceCode();
+            record.setMerchantCode(merchant.getId().toString());
+            record.setJourno(IdGen.getJourno());
+            record.setUserNumber(person.getId().toString());
+            record.setTxcode(Constants.TX_CODE_BANK_RECHARGE);
+            record.setTxamt(recharge);
+            record.setToAcc(merchant.getId().toString());
+            record.setStationCode(deviceCode);
+            record.setCreateBy("system");
+            record.setCreateTime(new Date());
+            record.setRemark("银行充值");
+            TransactionRecord transactionRecord = new TransactionRecord();
+            transactionRecord.setCode(Constants.TX_CODE_BANK_RECHARGE);
+            transactionRecord.setIdNumber(person.getNumber());
+            transactionRecord.setUserName(person.getName());
+            transactionRecord.setBankNumber(split[2]);
+            transactionRecord.setTransDate(split[4]+" "+split[6]);
+            transactionRecord.setAmount(split[14]);
+            transactionRecord.setBankCode(split[18]);
+            transactionRecord.setCreateBy("system");
+            bankRecharge(person, record, transactionRecord);
+        }
+    }
+    @Transactional
+    public void bankRecharge(Person person, TradeRecord record, TransactionRecord transactionRecord) {
+        personMapper.updatePerson(person);
+        tradeRecordService.insertTradeRecord(record);
+        transactionRecordService.insertTransactionRecord(transactionRecord);
+    }
 }

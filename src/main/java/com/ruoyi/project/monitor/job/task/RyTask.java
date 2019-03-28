@@ -1,19 +1,27 @@
 package com.ruoyi.project.monitor.job.task;
 
+import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.framework.config.RuoYiConfig;
+import com.ruoyi.project.bank.TransOfABC;
+import com.ruoyi.project.bank.domain.TransVo;
 import com.ruoyi.project.business.merchantReport.domain.MerchantReport;
 import com.ruoyi.project.business.merchantReport.service.IMerchantReportService;
 import com.ruoyi.project.business.operReport.domain.OperReport;
 import com.ruoyi.project.business.operReport.service.IOperReportService;
+import com.ruoyi.project.business.person.service.IPersonService;
 import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
 import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +39,8 @@ public class RyTask {
     private IMerchantReportService merchantReportService;
     @Autowired
     private IOperReportService operReportService;
+    @Autowired
+    private IPersonService personService;
 
     public void settleHistoryData(String params)
     {
@@ -69,5 +79,32 @@ public class RyTask {
         }
     }
 
+    public void batchQueryForRecharge() {
+        TransVo transVo = new TransVo();
+        String msg = TransOfABC.transCommMsg(Constants.BANK_QUERY_CODE, transVo);
+        String[] msgs = msg.split("@");
+        if (msgs[0].equals("0000") && StringUtils.isNotEmpty(msgs[1])) {
+            File file = new File(RuoYiConfig.getProfile());
+            try {
+                List<String> strings = FileUtils.readLines(file, "UTF-8");
+                dealStrings(strings);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    private void dealStrings(List<String> strings) {
+        if (StringUtils.isNotEmpty(strings)) {
+            for (String string : strings) {
+                String[] split = StringUtils.split(string, "\\|");
+                personService.bankBatchRecharge(split);
+            }
+        }
+    }
+
+
+    public void clearAlreadyCost() {
+        personService.clearAlreadyCost();
+    }
 }

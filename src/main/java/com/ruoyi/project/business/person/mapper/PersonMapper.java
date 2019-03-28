@@ -86,4 +86,8 @@ public interface PersonMapper
 	public int checkNumberUnique(String number);
 
     List<Person> selectUnopenedList(Person person);
+
+    void clearAlreadyCost();
+
+    Person selectPersonByBankNumber(String bankNumber);
 }
