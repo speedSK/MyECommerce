@@ -25,12 +25,8 @@ import com.ruoyi.project.business.person.domain.Person;
 public class TransOfABC {
 	
 	private static Logger logger = LoggerFactory.getLogger(TransOfABC.class);
-//	private static String serverIp = SysConfigUtil.getNodeValue("bank.server.IP");
-//	private static String port = SysConfigUtil.getNodeValue("bank.server.port");
-//	private static String sysFlag = SysConfigUtil.getNodeValue("bank.server.flag");
 	private static String encodeType = "utf-8";
-//	//通过springApplicationContextAware获取bean
-//	private static IBankService bankService = (IBankService) SpringUtils.getBean(BankServiceImpl.class);
+
 
 	public static synchronized String transCommMsg(String txCode, TransVo vo) {
 		String backMsg = "";
@@ -55,7 +51,7 @@ public class TransOfABC {
 			if (Constants.BANK_OPEN_CODE.equals(txCode)) {
 				backMsg = dealMsgCMLT40(buf);
 			} else if (Constants.BANK_QUERY_CODE.equals(txCode)) {
-				backMsg = dealMsgCQRD01(buf);
+				backMsg = dealMsgCQRD01(buf, vo);
 			}
 
 			outputstream.close();
@@ -68,14 +64,14 @@ public class TransOfABC {
 	}
 
 	private static String createPkgCMLT40(TransVo vo) {
-		String addXml = XmlUtils.createAddXml();
+		String addXml = XmlUtils.createAddXml(vo);
 		String pkgLength = "0" + getRealString(1, getPackageLen(addXml), 6);
 		return pkgLength + addXml;
 	}
 
 	private static String createPkgCQRD01(TransVo vo) {
-		String queryXml = XmlUtils.createQueryXml();
-		String pkgLength = "0" + getRealString(1, getPackageLen(queryXml), 4);
+		String queryXml = XmlUtils.createQueryXml(vo);
+		String pkgLength = "0" + getRealString(1, getPackageLen(queryXml), 6);
 		return pkgLength + queryXml;
 	}
 
@@ -92,17 +88,23 @@ public class TransOfABC {
 		}
 	}
 
-	private static String dealMsgCQRD01(byte[] buf) {
+	private static String dealMsgCQRD01(byte[] buf, TransVo vo) {
 		String str = new String(buf);
 		logger.info("dealMsgCQRD01:" + str);
 		Map<String, String> map = XmlUtils.readStringXmlOut(str);
 		String responseCode = map.get("RespCode");
 		if (responseCode.equals("0000")) {
-			return responseCode;
+			String contFlag = map.get("ContFlag");
+			if (contFlag.equals("1")) {
+				vo.setContLast(map.get("ContLast"));
+				transCommMsg(Constants.BANK_QUERY_CODE, vo);
+			} else {
+				return responseCode + "@" + map.get("FileFlag");
+			}
 		} else {
 			logger.info("查询余额错误编码{}，错误信息{}:", responseCode, map.get("RespInfo"));
-			return responseCode;
 		}
+		return responseCode + "@" + map.get("FileFlag");
 	}
 
 	private static String getRealString(int type, String oldString, int length) {

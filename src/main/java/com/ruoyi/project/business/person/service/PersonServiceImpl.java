@@ -381,7 +381,10 @@ public class PersonServiceImpl implements IPersonService
     public int openAccount(String ids) {
         Account account = accountMapper.selectMacAccount();
         String newAccount = String.format("%010d", Long.parseLong(account.getPersonAccount())+1);
-        String result = TransOfABC.transCommMsg(Constants.BANK_OPEN_CODE, new TransVo());
+        TransVo transVo = new TransVo();
+        transVo.setJourno(IdGen.getJourno());
+        transVo.setAccNumber(newAccount);
+        String result = TransOfABC.transCommMsg(Constants.BANK_OPEN_CODE, transVo);
         if (result.equals("0000")) {
             Person person = personMapper.selectPersonById(Long.parseLong(ids));
             person.setBankCardNumber(newAccount);
@@ -401,4 +404,21 @@ public class PersonServiceImpl implements IPersonService
         return personMapper.selectUnopenedList(person);
     }
 
+    @Override
+    public void clearAlreadyCost() {
+        personMapper.clearAlreadyCost();
+    }
+
+    @Override
+    public void bankBatchRecharge(String[] split) {
+        Person person = personMapper.selectPersonByBankNumber(split[2]);
+        if (StringUtils.isNotNull(person)) {
+            person.setBalance(person.getBalance().add(new BigDecimal(split[14])));
+            bankRecharge(person);
+        }
+    }
+    
+    public void bankRecharge(Person person) {
+        personMapper.updatePerson(person);
+    }
 }

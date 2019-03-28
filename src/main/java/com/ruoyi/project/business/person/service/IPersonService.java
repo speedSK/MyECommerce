@@ -70,4 +70,8 @@ public interface IPersonService
     int openAccount(String ids);
 
 	List<Person> selectUnopenedList(Person person);
+
+    void clearAlreadyCost();
+
+	void bankBatchRecharge(String[] split);
 }
