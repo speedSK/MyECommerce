@@ -92,12 +92,42 @@
     </select>
 
     <sql id="selectPersonVo">
-        select p.id, p.number, p.name, p.sex, p.age, p.nation, p.idcard, p.bank_card_number, p.build, p.photo,
-               p.mobile, p.area, p.room, p.bed, p.dept_id, p.identity_id, p.password,
-               p.salt, p.deposit, p.balance, p.already_cost, p.flag, p.status, p.remark, p.create_by,
-               p.create_time, p.update_by, p.update_time,
-               d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status,
-               i.id as identity_code,i.name as identity_name,i.cost_total
+        select p.id,
+               p.number,
+               p.name,
+               p.sex,
+               p.age,
+               p.nation,
+               p.idcard,
+               p.bank_card_number,
+               p.build,
+               p.photo,
+               p.mobile,
+               p.area,
+               p.room,
+               p.bed,
+               p.dept_id,
+               p.identity_id,
+               p.password,
+               p.salt,
+               p.deposit,
+               p.balance,
+               p.already_cost,
+               p.flag,
+               p.status,
+               p.remark,
+               p.create_by,
+               p.create_time,
+               p.update_by,
+               p.update_time,
+               d.dept_id,
+               d.parent_id,
+               d.dept_name,
+               d.order_num,
+               d.status as dept_status,
+               i.id     as identity_code,
+               i.name   as identity_name,
+               i.cost_total
         from bus_person p
                  left join sys_dept d on p.dept_id = d.dept_id
                  LEFT JOIN bus_identity i on p.identity_id = i.id
@@ -114,6 +144,8 @@
             <if test="nation != null and nation != ''">and p.nation = #{nation}</if>
             <if test="idcard != null and idcard != ''">and p.idcard = #{idcard}</if>
             <if test="bankCardNumber != null and bankCardNumber != ''">and p.bank_card_number = #{bankCardNumber}</if>
+            <if test="accountFlag != null and accountFlag != '' and accountFlag == '0'.toString()">and p.bank_card_number is null</if>
+            <if test="accountFlag != null and accountFlag != '' and accountFlag == '1'.toString()">and p.bank_card_number is not null</if>
             <if test="build != null and build != ''">and p.build = #{build}</if>
             <if test="photo != null and photo != ''">and p.photo = #{photo}</if>
             <if test="mobile != null and mobile != ''">and p.mobile = #{mobile}</if>
@@ -130,9 +162,7 @@
             <if test="status != null and status != ''">and p.status = #{status}</if>
             <if test="remark != null and remark != ''">and p.remark = #{remark}</if>
             <if test="createBy != null  and createBy != '' ">and p.create_by = #{createBy}</if>
-            <if test="createTime != null ">and p.create_time = #{createTime}</if>
             <if test="updateBy != null  and updateBy != '' ">and p.update_by = #{updateBy}</if>
-            <if test="updateTime != null ">and p.update_time = #{updateTime}</if>
 
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND date_format( p.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')

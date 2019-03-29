@@ -74,6 +74,14 @@
                                     th:value="${dict.dictValue}"></option>
                         </select>
                         </li>
+
+                        <li>
+                            开户状态：<select name="accountFlag">
+                            <option value="">所有</option>
+                            <option value="1">已开户</option>
+                            <option value="0">未开户</option>
+                        </select>
+                        </li>
                         <li class="select-time">
                             <label>开户时间： </label>
                             <input type="text" class="time-input" id="startTime" placeholder="开始时间"
