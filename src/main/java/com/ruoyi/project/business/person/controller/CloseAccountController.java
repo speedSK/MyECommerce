@@ -32,25 +32,25 @@ import java.util.List;
  * 销户类
  */
 @Controller
-@RequestMapping("/business/account")
+@RequestMapping("/business/closeAccount")
 public class CloseAccountController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(CloseAccountController.class);
-    private String prefix = "business/account";
+    private String prefix = "business/closeAccount";
 
     @Autowired
     private IPersonService personService;
 
-    @RequiresPermissions("business:account:view")
+    @RequiresPermissions("business:closeAccount:view")
     @GetMapping()
     public String person()
     {
-        return prefix + "/account";
+        return prefix + "/closeAccount";
     }
 
     /**
      * 可销户（犯人）列表
      */
-    @RequiresPermissions("business:account:list")
+    @RequiresPermissions("business:closeAccount:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Person person)
@@ -64,7 +64,7 @@ public class CloseAccountController extends BaseController {
     /**
      * 销户业务（犯人）
      */
-    @RequiresPermissions("business:account:close")
+    @RequiresPermissions("business:closeAccount:close")
     @Log(title = "销户（犯人）", businessType = BusinessType.DELETE)
     @PostMapping( "/close")
     @ResponseBody

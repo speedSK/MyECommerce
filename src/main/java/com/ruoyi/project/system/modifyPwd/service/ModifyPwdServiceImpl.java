@@ -74,7 +74,7 @@ public class ModifyPwdServiceImpl implements IModifyPwdService
                 Person person = new Person();
                 person.setId(modifyPwd.getUserid());
                 person.randomSalt();
-                person.setPassword(passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt()));
+                person.setPassword(passwordService.encryptPassword(modifyPwd.getNumber(), modifyPwd.getNewPwd(), person.getSalt()));
                 person.setUpdateBy(ShiroUtils.getLoginName());
                 personMapper.updatePerson(person);
             }

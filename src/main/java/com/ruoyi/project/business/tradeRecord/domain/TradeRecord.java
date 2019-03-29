@@ -67,7 +67,7 @@ public class TradeRecord extends BaseEntity
 	/** 创建人 */
 	private String createBy;
 	/** 创建时间 */
-	@Excel(name="创建时间")
+	@Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
 	private Date createTime;
 	/** 修改人 */
 	private String updateBy;

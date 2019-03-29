@@ -193,58 +193,6 @@ public class PersonServiceImpl implements IPersonService
 		return tradeRecordService.insertTradeRecord(record);
 	}
 
-//	@Override
-//	public int saveBankCharge(Person person) {
-//        int result = 0;
-//		Person info = personMapper.selectPersonById(person.getId());
-//        BigDecimal oldBalance = info.getBalance();
-//        String journo = IdGen.getJourno();
-//		TransVo vo = new TransVo();
-//		vo.setYktTxcode("3011");
-//		vo.setBankTxcode("YKT03");
-//        vo.setYktNo(info.getNumber());
-//        vo.setTxamt(StringUtils.yuan2Fen(person.getBankBalance()));
-//        vo.setYktJourno(journo);
-//		vo.setUsername(info.getName());
-//		vo.setIdserial2(info.getIdcard());
-//		vo.setBankCardNo(info.getBankCardNumber());
-//		String transResult = TransOfABC.transCommMsg("3011", vo);
-//		String[] transArray = transResult.split("\\|");
-//		if (StringUtils.isNotEmpty(transArray[0]) && transArray[0].equals("000000")) {
-//			info.setBalance(info.getBalance().add(new BigDecimal(person.getBankBalance())));
-//            personMapper.updatePerson(info);
-//            TransactionRecord transactionRecord = new TransactionRecord();
-//            transactionRecord.setCode("1002");
-//            transactionRecord.setBankCode("YKT03");
-//            transactionRecord.setTransDate(DateUtils.dateTimeNow("yyyyMMdd"));
-//            transactionRecord.setTransIdserial(journo);
-//            transactionRecord.setUserCode(info.getNumber());
-//            transactionRecord.setUserName(info.getName());
-//            transactionRecord.setIdNumber(info.getIdcard());
-//            transactionRecord.setBankNumber(info.getBankCardNumber());
-//            transactionRecord.setAmount(person.getRecharge().toString());
-//            transactionRecord.setStatus("0");
-//            transactionRecordService.insertTransactionRecord(transactionRecord);
-//            Merchant merchant = merchantService.selectMerchantById(1L);
-//            merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
-//            merchantService.updateMerchant(merchant);
-//            TradeRecord record = new TradeRecord();
-//            record.setJourno(journo);
-//            record.setUserNumber(person.getNumber());
-//            record.setBefore(oldBalance);
-//            record.setAfter(info.getBalance());
-//            record.setTxcode("1002");
-//            record.setTxamt(person.getRecharge());
-//            record.setToAcc(merchant.getMerchantCode());
-//            record.setsettleDate(settleDateService.selectSettleDateById(1L).getSettleDate());
-//            record.setStationCode("1001");
-//            tradeRecordService.insertTradeRecord(record);
-//            result = 1;
-//		}
-//
-//        return result;
-//	}
-
 	@Override
 	public int deletePersonAccount(String ids) {
 		String [] idsArray = Convert.toStrArray(ids);
@@ -374,7 +322,8 @@ public class PersonServiceImpl implements IPersonService
     @Override
     public int resetPersonPwd(Person person) {
         person.randomSalt();
-        person.setPassword(passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt()));
+        String newPassWord = passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt());
+        person.setPassword(newPassWord);
         return updatePerson(person);
     }
 
