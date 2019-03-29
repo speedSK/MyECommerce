@@ -18,10 +18,11 @@ public class XmlUtils {
     private static final Logger logger = LoggerFactory.getLogger(XmlUtils.class);
 
     private static String CorpNo = SysConfigUtil.getNodeValue("bank.server.CorpNo");
-    private static String DbLogAccName = SysConfigUtil.getNodeValue("bank.server.DbLogAccName");
     private static String DbProv = SysConfigUtil.getNodeValue("bank.server.DbProv");
     private static String DbAccNo = SysConfigUtil.getNodeValue("bank.server.DbAccNo");
     private static String DbCur = SysConfigUtil.getNodeValue("bank.server.DbCur");
+    private static String OpNo = SysConfigUtil.getNodeValue("bank.server.OpNo");
+    private static String CrLogAccNo = SysConfigUtil.getNodeValue("bank.server.CrLogAccNo");
 
     public static String createAddXml(TransVo vo) {
         StringBuilder xmlBuilder = new StringBuilder();
@@ -30,7 +31,7 @@ public class XmlUtils {
         xmlBuilder.append("<ProductID>ICC</ProductID>");
         xmlBuilder.append("<ChannelType>ERP</ChannelType>");
         xmlBuilder.append("<CorpNo>" + CorpNo + "</CorpNo>");
-        xmlBuilder.append("<OpNo></OpNo>");
+        xmlBuilder.append("<OpNo>" + OpNo + "</OpNo>");
         xmlBuilder.append("<AuthNo></AuthNo>");
         xmlBuilder.append("<ReqSeqNo>" + vo.getJourno() + "</ReqSeqNo>");
         xmlBuilder.append("<ReqDate></ReqDate>");
@@ -38,7 +39,7 @@ public class XmlUtils {
         xmlBuilder.append("<Sign></Sign>");
 
         xmlBuilder.append("<Corp>");
-        xmlBuilder.append("<DbLogAccName>" + DbLogAccName + "</DbLogAccName>");
+        xmlBuilder.append("<DbLogAccName>" + vo.getAccName() + "</DbLogAccName>");
         xmlBuilder.append("<IntTyp>0</IntTyp>");
         xmlBuilder.append("<DbIntType>F</DbIntType>");
         xmlBuilder.append("<DbRit></DbRit>");
@@ -53,14 +54,14 @@ public class XmlUtils {
         xmlBuilder.append("<CrRatPct></CrRatPct>");
         xmlBuilder.append("<CrRatAdd></CrRatAdd>");
         xmlBuilder.append("<PmtHd>01</PmtHd>");
-        xmlBuilder.append("<ActInf></ActInf>");
+        xmlBuilder.append("<ActInf>1</ActInf>");
         xmlBuilder.append("</Corp>");
         xmlBuilder.append("<Cmp>");
         xmlBuilder.append("<DbProv>" + DbProv + "</DbProv>");
         xmlBuilder.append("<DbAccNo>" + DbAccNo + "</DbAccNo>");
         xmlBuilder.append("<DbCur>" + DbCur + "</DbCur>");
-        xmlBuilder.append("<CrLogAccNo>" + vo.getAccNumber() + "</CrLogAccNo>");
-        xmlBuilder.append("<DbLogAccNo></DbLogAccNo>");
+        xmlBuilder.append("<CrLogAccNo>" + CrLogAccNo + "</CrLogAccNo>");
+        xmlBuilder.append("<DbLogAccNo>" + vo.getAccNumber() + "</DbLogAccNo>");
         xmlBuilder.append("<LogAccBkOInd>1</LogAccBkOInd>");
         xmlBuilder.append("<AuthAmt></AuthAmt>");
         xmlBuilder.append("<StatInd></StatInd>");

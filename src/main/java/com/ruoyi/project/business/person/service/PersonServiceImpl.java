@@ -332,12 +332,13 @@ public class PersonServiceImpl implements IPersonService
     public int openAccount(String ids) {
         Account account = accountMapper.selectMacAccount();
         String newAccount = String.format("%010d", Long.parseLong(account.getPersonAccount())+1);
+        Person person = personMapper.selectPersonById(Long.parseLong(ids));
         TransVo transVo = new TransVo();
         transVo.setJourno(IdGen.getJourno());
         transVo.setAccNumber(newAccount);
+        transVo.setAccName(person.getName());
         String result = TransOfABC.transCommMsg(Constants.BANK_OPEN_CODE, transVo);
         if (result.equals("0000")) {
-            Person person = personMapper.selectPersonById(Long.parseLong(ids));
             person.setBankCardNumber(newAccount);
             person.setUpdateBy(ShiroUtils.getLoginName());
             personMapper.updatePerson(person);

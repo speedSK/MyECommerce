@@ -1,7 +1,9 @@
 package com.ruoyi.project.business.transactionRecord.mapper;
 
 import com.ruoyi.project.business.transactionRecord.domain.TransactionRecord;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 银行转账 数据层
@@ -9,6 +11,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2018-12-10
  */
+@Repository
 public interface TransactionRecordMapper 
 {
 	/**
