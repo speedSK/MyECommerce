@@ -66,6 +66,7 @@ public class SingleRechargeController extends BaseController
 	{
 		Person user = new Person();
 		user.setNumber(number);
+		user.setFlag(Constants.PERSON_ACTIVE);
 		List<Person> userlist = personService.selectPersonList(user);
 		if (userlist!=null&&userlist.size()>0) {
 			user = userlist.get(0);

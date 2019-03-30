@@ -68,7 +68,7 @@
                         </select>
                         </li>
                         <li>
-                            人员状态：<select name="flag" th:with="type=${@dict.getType('bus_person_flag')}">
+                            状态：<select name="flag" th:with="type=${@dict.getType('bus_person_flag')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -76,7 +76,7 @@
                         </li>
 
                         <li>
-                            开户状态：<select name="accountFlag">
+                            银行开户：<select name="accountFlag">
                             <option value="">所有</option>
                             <option value="1">已开户</option>
                             <option value="0">未开户</option>
@@ -199,7 +199,8 @@
                 },
                 {
                     field: 'mobile',
-                    title: '手机号'
+                    title: '手机号',
+                    visible:false
                 },
                 {
                     field: 'balance',
@@ -241,7 +242,7 @@
                 },
                 {
                     field: 'flag',
-                    title: '账户状态',
+                    title: '状态',
                     formatter: function (value, row, index) {
                         return $.table.selectDictLabel(flagDatas, value);
                     }

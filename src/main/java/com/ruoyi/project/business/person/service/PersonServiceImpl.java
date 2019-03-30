@@ -105,6 +105,7 @@ public class PersonServiceImpl implements IPersonService
      * @return 结果
      */
 	@Override
+    @Transactional
 	public int insertPerson(Person person)
 	{
 	    person.randomSalt();
@@ -137,6 +138,7 @@ public class PersonServiceImpl implements IPersonService
      * @return 结果
      */
 	@Override
+    @Transactional
 	public int updatePerson(Person person)
 	{
 	    person.setUpdateBy(ShiroUtils.getLoginName());
@@ -150,6 +152,7 @@ public class PersonServiceImpl implements IPersonService
      * @return 结果
      */
 	@Override
+    @Transactional
 	public int deletePersonByIds(String ids)
 	{
 	    String [] idsArray = Convert.toStrArray(ids);
@@ -167,8 +170,12 @@ public class PersonServiceImpl implements IPersonService
 	}
 
 	@Override
+    @Transactional
 	public int saveCash(Person person) {
 		Person info = personMapper.selectPersonById(person.getId());
+        if (info.getBalance().add(person.getRecharge()).compareTo(new BigDecimal(0)) == -1) {
+            return 0;
+        }
         BigDecimal oldBalance = info.getBalance();
 		info.setBalance(oldBalance.add(person.getRecharge()));
 		personMapper.updatePerson(info);
@@ -194,6 +201,7 @@ public class PersonServiceImpl implements IPersonService
 	}
 
 	@Override
+    @Transactional
 	public int deletePersonAccount(String ids) {
 		String [] idsArray = Convert.toStrArray(ids);
 		for (String id: idsArray) {
@@ -227,22 +235,6 @@ public class PersonServiceImpl implements IPersonService
 		return 1;
 	}
 
-//    @Override
-//    public String queryBankBalance(Person person) {
-//        String txamt = "0";
-//        TransVo vo = new TransVo();
-//        vo.setYktTxcode("3021");
-//        vo.setBankTxcode("YKT01");
-//        vo.setYktNo(person.getNumber());
-//        vo.setBankCardNo(person.getBankCardNumber());
-//        String queryBalance = TransOfABC.transCommMsg("3021", vo);
-//        String[] balanceArray = queryBalance.split("\\|");
-//        if (StringUtils.isNotEmpty(balanceArray[0]) && balanceArray[0].equals("000000")) {
-//            txamt = StringUtils.fen2Yuan(balanceArray[2].trim());
-//        }
-//        return txamt;
-//    }
-
     @Override
     public String importUser(List<Person> personList, boolean updateSupport) {
         if (StringUtils.isNull(personList) || personList.size() == 0)
@@ -261,30 +253,27 @@ public class PersonServiceImpl implements IPersonService
             {
                 // 验证是否存在这个用户
                 Person p = personMapper.selectPersonByNumber(person.getNumber());
-                if (StringUtils.isNull(p))
-                {
-                    int isParent = deptService.selectDeptCount(person.getDeptId());
-                    if (isParent == 0) {
-                        person.setPassword(password);
-                        person.setCreateBy(operName);
-                        this.insertPerson(person);
-                        successNum++;
-                        successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 导入成功");
-                    } else {
-                        failureNum++;
-                        failureMsg.append("<br/>" + failureNum + "、账号 " + person.getNumber() + " 不可选择父级部门");
-                    }
-                }
-                else if (updateSupport)
-                {
+                Dept dept = deptService.selectDeptById(person.getDeptId());
+                int isParent = deptService.selectDeptCount(person.getDeptId());
+                if (StringUtils.isNull(dept)) {
+                    failureNum++;
+                    failureMsg.append("<br/>" + failureNum + "、账号 " + person.getNumber() + " 部门不存在");
+                } else if (isParent != 0) {
+                    failureNum++;
+                    failureMsg.append("<br/>" + failureNum + "、账号 " + person.getNumber() + " 不可选择父级部门");
+                } else if (StringUtils.isNull(p)) {
+                    person.setPassword(password);
+                    person.setCreateBy(operName);
+                    this.insertPerson(person);
+                    successNum++;
+                    successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 导入成功");
+                } else if (updateSupport) {
                     person.setUpdateBy(operName);
                     person.setDeposit(null);
                     this.updatePerson(person);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + person.getNumber() + " 更新成功");
-                }
-                else
-                {
+                } else {
                     failureNum++;
                     failureMsg.append("<br/>" + failureNum + "、账号 " + person.getNumber() + " 已存在");
                 }
@@ -320,6 +309,7 @@ public class PersonServiceImpl implements IPersonService
     }
 
     @Override
+    @Transactional
     public int resetPersonPwd(Person person) {
         person.randomSalt();
         String newPassWord = passwordService.encryptPassword(person.getNumber(), person.getPassword(), person.getSalt());

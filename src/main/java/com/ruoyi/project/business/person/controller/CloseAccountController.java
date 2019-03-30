@@ -76,7 +76,7 @@ public class CloseAccountController extends BaseController {
     /**
      * 生成销户单
      */
-//    @RequiresPermissions("business:account:createPDF")
+    @RequiresPermissions("business:account:createPDF")
     @Log(title = "生成销户单", businessType = BusinessType.EXPORT)
     @GetMapping( "/createPDF/{id}")
     public void createPDF(@PathVariable("id") Long id, HttpServletResponse response, HttpServletRequest request)

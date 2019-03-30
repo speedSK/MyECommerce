@@ -43,8 +43,8 @@
     </div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('business:closeAccount:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('business:closeAccount:remove')}]];
+        var editFlag = [[${@permission.hasPermi('business:closeAccount:createPDF')}]];
+        var removeFlag = [[${@permission.hasPermi('business:closeAccount:close')}]];
         var flagDatas = [[${@dict.getType('bus_person_flag')}]];
         var prefix = ctx + "business/closeAccount";
 
@@ -95,7 +95,7 @@
 				},
 				{
 					field : 'flag',
-					title : '账户状态',
+					title : '状态',
 					formatter: function(value, row, index) {
 						return $.table.selectDictLabel(flagDatas, value);
 					}
@@ -107,7 +107,7 @@
 		            	var actions = [];
 		            	var url = "";
                         // actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-key"></i>生成销户单</a>');
-                        actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="#" onclick="$.modal.open(\'生成\' + $.table._option.modalName, \'/PDF/web/viewer.html?file=/business/closeAccount/createPDF/' + row.id + '\');"><i class="fa fa-key"></i>生成销户单</a>');
+                        actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="#" onclick="$.modal.open(\'生成\' + $.table._option.modalName, \'/PDF/web/viewer.html?file=/business/closeAccount/createPDF/' + row.id + '\');"><i class="fa fa-key"></i>生成销户单</a>');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.editVisible(\'' + row.id + '\',\'close\',\'销户\')"><i class="fa fa-remove"></i>确认销户</a>');
 						return actions.join('');
 		            }
