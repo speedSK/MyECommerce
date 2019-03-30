@@ -1,5 +1,6 @@
 
 $(function() {
+	//用户名密码非空校验
     validateRule();
     $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green-login"});
 	$('.imgcode').click(function() {
@@ -11,8 +12,14 @@ $(function() {
 	$("body").on("click", ".func.sure", function() {
 		$("#btnSubmit").click();
     });
+	
 	//进入登录页显示小键盘
 	$("#username").click();
+	
+	//禁用系统软键盘
+	$("#username,#password,.num,.del,.clearall").focus(function(){
+		this.blur();
+    });
 });
 
 $.validator.setDefaults({
@@ -21,6 +28,7 @@ $.validator.setDefaults({
     }
 });
 
+//登录事件
 function login() {
 	$.modal.loading($("#btnSubmit").data("loading"));
 	var username = $("input[name='username']").val().trim();
