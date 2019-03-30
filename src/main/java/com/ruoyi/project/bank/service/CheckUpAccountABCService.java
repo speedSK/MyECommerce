@@ -26,10 +26,10 @@ import com.ruoyi.project.business.transactionRecord.mapper.TransactionRecordMapp
 public class CheckUpAccountABCService {
 
     public static Logger logger = LoggerFactory.getLogger(CheckUpAccountABCService.class);
-    private static String ftpIp = SysConfigUtil.getNodeValue("check.ftp.address");
-    private static String ftpUserName = SysConfigUtil.getNodeValue("check.ftp.username");
-    private static String ftpPassword = SysConfigUtil.getNodeValue("check.ftp.password");
-    private static int port = Integer.parseInt(SysConfigUtil.getNodeValue("check.ftp.port"));
+//    private static String ftpIp = SysConfigUtil.getNodeValue("check.ftp.address");
+//    private static String ftpUserName = SysConfigUtil.getNodeValue("check.ftp.username");
+//    private static String ftpPassword = SysConfigUtil.getNodeValue("check.ftp.password");
+//    private static int port = Integer.parseInt(SysConfigUtil.getNodeValue("check.ftp.port"));
     //	private static String ftpPath = SysConfigUtil.getNodeValue("ftpPath");
     private static FTPClient ftpClient = null;
     @Autowired
@@ -39,17 +39,18 @@ public class CheckUpAccountABCService {
 
 
     public static boolean connectFtpServer() {
-        try {
-            ftpClient.connect(ftpIp, port);
-            ftpClient.login(ftpUserName, ftpPassword);
-            return true;
-        } catch (SocketException se) {
-            logger.error("ftpSocket连接失败", se);
-            return false;
-        } catch (IOException ie) {
-            logger.error("ftpIO连接失败", ie);
-            return false;
-        }
+//        try {
+//            ftpClient.connect(ftpIp, port);
+//            ftpClient.login(ftpUserName, ftpPassword);
+//            return true;
+//        } catch (SocketException se) {
+//            logger.error("ftpSocket连接失败", se);
+//            return false;
+//        } catch (IOException ie) {
+//            logger.error("ftpIO连接失败", ie);
+//            return false;
+//        }
+        return false;
     }
 
     public static void closeConnectFtpServer() {

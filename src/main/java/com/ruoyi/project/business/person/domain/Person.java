@@ -68,7 +68,7 @@ public class Person extends BaseEntity
 	@Excel(name = "身份证号")
 	private String idcard;
 	/** 银行卡号 */
-	@Excel(name = "银行卡号")
+	@Excel(name = "银行卡号", type = Type.EXPORT)
 	private String bankCardNumber;
 	/** 照片 */
 	private String photo;
@@ -93,6 +93,16 @@ public class Person extends BaseEntity
 	private BigDecimal recharge;
 	/**银行卡余额*/
 	private String bankBalance;
+	/**用户开户状态*/
+	private String accountFlag;
+
+	public String getAccountFlag() {
+		return accountFlag;
+	}
+
+	public void setAccountFlag(String accountFlag) {
+		this.accountFlag = accountFlag;
+	}
 
 	public String getBankBalance() {
 		return bankBalance;

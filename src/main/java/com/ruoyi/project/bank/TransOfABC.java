@@ -2,7 +2,6 @@ package com.ruoyi.project.bank;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,16 +14,14 @@ import org.slf4j.LoggerFactory;
 
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.SysConfigUtil;
-import com.ruoyi.common.utils.spring.SpringUtils;
-import com.ruoyi.project.bank.domain.ReceiveFromBankInfo;
 import com.ruoyi.project.bank.domain.TransVo;
-import com.ruoyi.project.bank.service.BankServiceImpl;
-import com.ruoyi.project.bank.service.IBankService;
-import com.ruoyi.project.business.person.domain.Person;
 
 public class TransOfABC {
 	
 	private static Logger logger = LoggerFactory.getLogger(TransOfABC.class);
+
+	private static String serverIp = SysConfigUtil.getNodeValue("bank.server.IP");
+	private static String port = SysConfigUtil.getNodeValue("bank.server.port");
 	private static String encodeType = "utf-8";
 
 
@@ -33,8 +30,7 @@ public class TransOfABC {
 		String sendPackage = "";
 
 		try {
-			Socket socket = new Socket("127.0.0.1", 8801);
-//			Socket socket = new Socket(serverIp, Integer.parseInt(port));
+			Socket socket = new Socket(serverIp, Integer.parseInt(port));
 			OutputStream outputstream = socket.getOutputStream();
 			if (Constants.BANK_OPEN_CODE.equals(txCode)) {
 				sendPackage = createPkgCMLT40(vo);
@@ -77,8 +73,9 @@ public class TransOfABC {
 
 	private static String dealMsgCMLT40(byte[] buf) {
 		String str = new String(buf);
+		int length = Integer.parseInt(StringUtils.substring(str, 1, 7).trim());
 		logger.info("dealMsgCMLT40:" + str);
-		Map<String, String> map = XmlUtils.readStringXmlOut(str);
+		Map<String, String> map = XmlUtils.readStringXmlOut(StringUtils.substring(str, 7, 7 + length));
 		String responseCode = map.get("RespCode");
 		if (responseCode.equals("0000")) {
 			return responseCode;
@@ -90,8 +87,9 @@ public class TransOfABC {
 
 	private static String dealMsgCQRD01(byte[] buf, TransVo vo) {
 		String str = new String(buf);
+		int length = Integer.parseInt(StringUtils.substring(str, 1, 7).trim());
 		logger.info("dealMsgCQRD01:" + str);
-		Map<String, String> map = XmlUtils.readStringXmlOut(str);
+		Map<String, String> map = XmlUtils.readStringXmlOut(StringUtils.substring(str, 7, 7 + length));
 		String responseCode = map.get("RespCode");
 		if (responseCode.equals("0000")) {
 			String contFlag = map.get("ContFlag");
