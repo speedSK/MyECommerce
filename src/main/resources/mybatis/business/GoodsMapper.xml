@@ -57,7 +57,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectGoodsVo"/>
         <where>  
             <if test="id != null and id != ''"> and g.id = #{id}</if>
-             <if test="categoryId != null and categoryId != ''"> and g.category_id = #{categoryId}</if>
              <if test="merchantId != null and merchantId != ''"> and g.merchant_id = #{merchantId}</if>
              <if test="code != null and code != ''"> and g.code = #{code}</if>
              <if test="name != null and name != ''"> and g.name like  concat('%', #{name}, '%') </if>
@@ -72,6 +71,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null ">and g.create_time = #{createTime}</if>
             <if test="updateBy != null  and updateBy != '' ">and g.update_by = #{updateBy}</if>
             <if test="updateTime != null ">and g.update_time = #{updateTime}</if>
+            <if test="categoryId != null and categoryId != 0">
+                AND (g.category_id = #{categoryId} OR g.category_id IN ( SELECT t.id FROM bus_good_category t WHERE FIND_IN_SET
+                (#{categoryId},ancestors) ))
+            </if>
         </where>
     </select>
     

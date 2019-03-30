@@ -171,6 +171,7 @@
                 {
                     field: 'number',
                     title: '编号',
+                    sortable:true,
                     formatter: function (value, row, index) {
                         return '<a href="#" onclick="$.operate.detail(\'' + row.id + '\')">' + value + '</a>';
                     }
