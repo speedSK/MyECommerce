@@ -30,6 +30,13 @@
                     <input id="recharge" name="recharge" class="form-control" type="text">
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">操作类型：</label>
+                <div class="col-sm-8">
+                    <label class="radio-box"> <input type="radio" name="rechargeType" value="C" /> 充值 </label>
+                    <label class="radio-box"> <input type="radio" name="rechargeType" value="X" /> 消费 </label>
+                </div>
+            </div>
 		</form>
     </div>
     <div th:include="include::footer"></div>
@@ -39,6 +46,7 @@
 			rules:{
 				recharge:{
 					required:true,
+                    digits:true
 				},
 			}
 		});

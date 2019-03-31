@@ -136,6 +136,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 			orderDetail.setFlag(Constants.ORDER_NORMAL);
 			List<OrderDetail> orderDetailList = orderDetailMapper.selectOrderDetailList(orderDetail);
 			for (OrderDetail o : orderDetailList) {
+				o.setFlag(Constants.ORDER_FINISH);
 				this.updateOrderDetail(o);
 			}
 		} else if (flag.equals(Constants.ORDER_CANCEL)) {

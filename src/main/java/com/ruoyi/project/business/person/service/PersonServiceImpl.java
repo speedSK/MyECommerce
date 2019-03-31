@@ -172,32 +172,46 @@ public class PersonServiceImpl implements IPersonService
 	@Override
     @Transactional
 	public int saveCash(Person person) {
+        int result = 0;
 		Person info = personMapper.selectPersonById(person.getId());
         if (info.getBalance().add(person.getRecharge()).compareTo(new BigDecimal(0)) == -1) {
-            return 0;
+            return result;
         }
         BigDecimal oldBalance = info.getBalance();
-		info.setBalance(oldBalance.add(person.getRecharge()));
-		personMapper.updatePerson(info);
-		Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
-		merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
-        merchantService.updateMerchant(merchant);
         String deviceCode = deviceService.getDeviceCode();
-		TradeRecord record = new TradeRecord();
-		record.setJourno(IdGen.getJourno());
-		record.setUserNumber(person.getId().toString());
+        TradeRecord record = new TradeRecord();
+        record.setJourno(IdGen.getJourno());
+        record.setUserNumber(person.getId().toString());
         record.setBefore(oldBalance);
-        record.setMerchantCode(merchant.getId().toString());
-        record.setAfter(info.getBalance());
-		record.setTxcode(Constants.TX_CODE_CASH_RECHARGE);
-		record.setTxamt(person.getRecharge());
-		record.setToAcc(merchant.getId().toString());
-		record.setsettleDate(new Date());
         record.setStationCode(deviceCode);
         record.setCreateBy(ShiroUtils.getLoginName());
-		record.setCreateTime(new Date());
-		record.setRemark("现金充值");
-		return tradeRecordService.insertTradeRecord(record);
+        record.setCreateTime(new Date());
+        record.setTxamt(person.getRecharge());
+        if (person.getRechargeType().equals("C")) {
+            info.setBalance(oldBalance.add(person.getRecharge()));
+            personMapper.updatePerson(info);
+            Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
+            merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
+            merchantService.updateMerchant(merchant);
+            record.setMerchantCode(merchant.getId().toString());
+            record.setAfter(info.getBalance());
+            record.setTxcode(Constants.TX_CODE_CASH_RECHARGE);
+            record.setToAcc(merchant.getId().toString());
+            record.setRemark("现金充值");
+        } else if (person.getRechargeType().equals("X")) {
+            info.setBalance(oldBalance.subtract(person.getRecharge()));
+            personMapper.updatePerson(info);
+            Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_2_ID);
+            merchant.setBalance(merchant.getBalance().add(person.getRecharge()));
+            merchantService.updateMerchant(merchant);
+            record.setMerchantCode(merchant.getId().toString());
+            record.setAfter(info.getBalance());
+            record.setTxcode(Constants.TX_CODE_SINGLE_COST);
+            record.setToAcc(merchant.getId().toString());
+            record.setRemark("手动消费");
+        }
+        result = tradeRecordService.insertTradeRecord(record);
+        return result;
 	}
 
 	@Override

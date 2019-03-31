@@ -96,6 +96,7 @@ public class Constants
     public static final String TX_CODE_BANK_BATCH_RECHARGE = "1002";//银行批量
     public static final String TX_CODE_BANK_RECHARGE = "1003";//银行单笔
     public static final String TX_CODE_DEPOSIT_INCOME = "1004";//开户押金
+    public static final String TX_CODE_SINGLE_COST = "1005";//手动消费
 
     public static final String TX_CODE_BUY_COST = "2000";//购买商品
     public static final String TX_CODE_IMPORT_COST = "2001";//导入消费

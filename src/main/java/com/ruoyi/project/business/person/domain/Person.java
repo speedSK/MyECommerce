@@ -96,7 +96,17 @@ public class Person extends BaseEntity
 	/**用户开户状态*/
 	private String accountFlag;
 
-	public String getAccountFlag() {
+    private String rechargeType;
+
+    public String getRechargeType() {
+        return rechargeType;
+    }
+
+    public void setRechargeType(String rechargeType) {
+        this.rechargeType = rechargeType;
+    }
+
+    public String getAccountFlag() {
 		return accountFlag;
 	}
 

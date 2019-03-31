@@ -184,7 +184,6 @@ public class OrderServiceImpl implements IOrderService
 				person.setAlreadyCost(person.getAlreadyCost().add(goodSum));
 				record.setAfter(person.getBalance());
 				record.setToAcc(goods.getMerchantId().toString());
-				record.setsettleDate(new Date());
 				record.setStationCode(deviceService.getDeviceCode());
 				record.setRemark("购买商品");
 				record.setCreateBy(ShiroUtils.getPerson().getNumber());
