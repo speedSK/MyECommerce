@@ -127,7 +127,7 @@ public class PersonServiceImpl implements IPersonService
         record.setStationCode(deviceCode);
         record.setCreateBy(ShiroUtils.getLoginName());
         record.setCreateTime(new Date());
-        record.setRemark("用户押金");
+        record.setRemark("开户押金");
 	    return tradeRecordService.insertTradeRecord(record);
 	}
 	

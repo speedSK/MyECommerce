@@ -232,19 +232,23 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 				person.setStatus(Constants.STATUS_ACTIVE);
 				person.setFlag(Constants.PERSON_ACTIVE);
 				List<Person> pList = personMapper.selectPersonList(person);
-				if (pList==null||pList.size()==0) {
+				if (new BigDecimal(batchCostVo.getAmount()).compareTo(new BigDecimal(0)) == -1) {
+					failCount++;
+					batchCostVo.setFailure("不可消费负金额");
+					failList.add(batchCostVo);
+				} else if (pList == null || pList.size() == 0) {
 					failCount++;
 					batchCostVo.setFailure("用户不存在或状态异常");
 					failList.add(batchCostVo);
 				} else {
 					Merchant merchant = merchantService.selectMerchantById(batchCostVo.getMerchant());
-                    if (StringUtils.isNull(merchant)) {
-                        failCount++;
-                        batchCostVo.setFailure("商户不存在");
-                        failList.add(batchCostVo);
-                    } else {
-                        person = pList.get(0);
-                        BigDecimal oldBalance = person.getBalance();
+					if (StringUtils.isNull(merchant)) {
+						failCount++;
+						batchCostVo.setFailure("商户不存在");
+						failList.add(batchCostVo);
+					} else {
+						person = pList.get(0);
+						BigDecimal oldBalance = person.getBalance();
 						if (person.getBalance().subtract(new BigDecimal(batchCostVo.getAmount())).compareTo(new BigDecimal(0)) == -1) {
 							failCount++;
 							batchCostVo.setFailure("余额不能为负");
@@ -272,7 +276,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 							record.setRemark("批量消费");
 							tradeRecordService.insertTradeRecord(record);
 						}
-                    }
+					}
 				}
 			} else {
 				failCount++;
@@ -283,6 +287,7 @@ public class UploadRecordServiceImpl implements IUploadRecordService
 		uploadRecord.setSuccessCount(successCount);
 		uploadRecord.setFailCount(failCount);
 		uploadRecord.setStatus(Constants.STATUS_ACTIVE);
+		uploadRecord.setCreateBy(ShiroUtils.getLoginName());
 		
 		if (!failList.isEmpty()) {
 			resultJson = util.exportExcel(failList, "批量消费");

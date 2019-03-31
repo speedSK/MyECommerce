@@ -16,6 +16,7 @@ import com.ruoyi.project.business.goods.mapper.GoodsMapper;
 import com.ruoyi.project.business.goods.domain.Goods;
 import com.ruoyi.project.business.goods.service.IGoodsService;
 import com.ruoyi.common.support.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 商品 服务层实现
@@ -89,23 +90,13 @@ public class GoodsServiceImpl implements IGoodsService
      * @return 结果
      */
 	@Override
+	@Transactional
 	public int deleteGoodsByIds(String ids)
 	{
 	    String [] idsArray = Convert.toStrArray(ids);
         for (String id: idsArray) {
-
-            Goods goods = new Goods();
-            goods.setId(Long.valueOf(id));
-            //初始化數據信息
-
-            goods.setStatus(Constants.STATUS_REMOVED);
-
-            goods.setUpdateBy(ShiroUtils.getLoginName());
-
-            goodsMapper.updateGoods(goods);
-
+			goodsMapper.deleteGoodsById(Long.valueOf(id));
         }
-
         return 1;
 	}
 

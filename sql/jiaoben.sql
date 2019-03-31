@@ -505,7 +505,7 @@ DROP TABLE IF EXISTS `bus_upload_record`;
 CREATE TABLE `bus_upload_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `module` varchar(50) DEFAULT NULL COMMENT '功能模块名称',
-  `upload_name` varchar(30) DEFAULT NULL COMMENT '上传文件名',
+  `upload_name` varchar(30) DEFAULT NULL COMMENT '导入文件名',
   `success_count` bigint(20) DEFAULT NULL COMMENT '成功条数',
   `fail_name` varchar(100) DEFAULT NULL COMMENT '失败文件名',
   `fail_count` bigint(20) DEFAULT NULL COMMENT '失败条数',

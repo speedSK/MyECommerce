@@ -3,67 +3,73 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    <div class="container-div ui-layout-center">
-        <div class="row">
-            <div class="col-sm-12  search-collapse">
-                <form id="user-form">
-                    <input type="hidden" id="deptId" name="deptId">
-                    <input type="hidden" id="parentId" name="parentId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                姓名：<input type="text" name="name"/>
-                            </li>
-                            <li>
-                                编号：<input type="text" name="number"/>
-                            </li>
-                            <li class="select-time">
-                                <label>销户时间： </label>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+<div class="container-div ui-layout-center">
+    <div class="row">
+        <div class="col-sm-12  search-collapse">
+            <form id="user-form">
+                <input type="hidden" id="deptId" name="deptId">
+                <input type="hidden" id="parentId" name="parentId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            姓名：<input type="text" name="name"/>
+                        </li>
+                        <li>
+                            编号：<input type="text" name="number"/>
+                        </li>
+                        <li class="select-time">
+                            <label>销户时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间"
+                                   name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间"
+                                   name="params[endTime]"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:person:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-            </div>
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:person:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
 
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table" data-mobile-responsive="true"></table>
-            </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
     </div>
-    <div th:include="include :: footer"></div>
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('business:closedPerson:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('business:closedPerson:remove')}]];
-        var prefix = ctx + "business/closedPerson";
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('business:closedPerson:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('business:closedPerson:remove')}]];
+    var sexDatas = [[${@dict.getType('sys_user_sex')}]];
+    var nations = [[${@dict.getType('bus_person_nation')}]];
+    var prefix = ctx + "business/closedPerson";
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                uniqueId:"id",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "销户人员管理",
-                columns: [
-				{
-					field : 'id', 
-					title : '序号',
-                    visible:false
-				},
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            uniqueId: "id",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "销户人员管理",
+            columns: [
+                {
+                    field: 'id',
+                    title: '序号',
+                    visible: false
+                },
                 {
                     field: '',
                     title: '序号',
@@ -71,57 +77,64 @@
                         return index + 1;
                     }
                 },
-				{
-					field : 'number', 
-					title : '编号' 
-				},
-				{
-					field : 'name', 
-					title : '姓名' 
-				},
-				{
-					field : 'sex', 
-					title : '性别' 
-				},
-				{
-					field : 'age', 
-					title : '年龄' 
-				},
-				{
-					field : 'nation', 
-					title : '民族' 
-				},
-				{
-					field : 'idcard', 
-					title : '身份证号' 
-				},
-				{
-					field : 'mobile', 
-					title : '手机号' 
-				},
-				{
-					field : 'deptId', 
-					title : '部门' 
-				},
-				{
-					field : 'identityId', 
-					title : '身份' 
-				},
-				{
-					field : 'flag', 
-					title : '状态'
-				},
-				{
-					field : 'updateBy', 
-					title : '修改人' 
-				},
-				{
-					field : 'updateTime', 
-					title : '修改时间' 
-				}]
-            };
-            $.table.init(options);
-        });
-    </script>
+                {
+                    field: 'number',
+                    title: '编号'
+                },
+                {
+                    field: 'name',
+                    title: '姓名'
+                },
+                {
+                    field: 'sex',
+                    title: '性别',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(sexDatas, value);
+                    }
+                },
+                {
+                    field: 'age',
+                    title: '年龄',
+                    visible:false
+                },
+                {
+                    field: 'nation',
+                    title: '民族',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(nations, value);
+                    }
+                },
+                {
+                    field: 'idcard',
+                    title: '身份证号'
+                },
+                {
+                    field: 'mobile',
+                    title: '手机号'
+                },
+                {
+                    field: 'deptId',
+                    title: '部门'
+                },
+                {
+                    field: 'identityId',
+                    title: '身份'
+                },
+                {
+                    field: 'flag',
+                    title: '状态'
+                },
+                {
+                    field: 'updateBy',
+                    title: '修改人'
+                },
+                {
+                    field: 'updateTime',
+                    title: '修改时间'
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
 </body>
 </html>
