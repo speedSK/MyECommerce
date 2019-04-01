@@ -2,10 +2,12 @@ package com.ruoyi.project.monitor.job.task;
 
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.project.bank.TransOfABC;
 import com.ruoyi.project.bank.domain.TransVo;
+import com.ruoyi.project.business.account.mapper.AccountMapper;
 import com.ruoyi.project.business.merchantReport.domain.MerchantReport;
 import com.ruoyi.project.business.merchantReport.service.IMerchantReportService;
 import com.ruoyi.project.business.operReport.domain.OperReport;
@@ -41,6 +43,8 @@ public class RyTask {
     private IOperReportService operReportService;
     @Autowired
     private IPersonService personService;
+    @Autowired
+    private AccountMapper accountMapper;
 
     public void settleHistoryData(String params)
     {
@@ -79,8 +83,17 @@ public class RyTask {
         }
     }
 
-    public void batchQueryForRecharge() {
+    public void batchQueryForRecharge(String date) {
+        if (StringUtils.isEmpty(date)) {
+            date = DateUtils.dateTime(DateUtils.getBeforeDay(new Date()),DateUtils.YYYYMMDD);
+        }
         TransVo transVo = new TransVo();
+        transVo.setJourno(IdGen.getJourno());
+        transVo.setStartNumber("1000000001");
+        transVo.setEndNumber(accountMapper.selectMacAccount().getPersonAccount());
+        transVo.setStartTime(date);
+        transVo.setEndTime(date);
+        transVo.setContLast("");
         String msg = TransOfABC.transCommMsg(Constants.BANK_QUERY_CODE, transVo);
         String[] msgs = msg.split("@");
         if (msgs[0].equals("0000") && StringUtils.isNotEmpty(msgs[1])) {

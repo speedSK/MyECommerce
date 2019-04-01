@@ -61,21 +61,21 @@ public class TransOfABC {
 
 	private static String createPkgCMLT40(TransVo vo) {
 		String addXml = XmlUtils.createAddXml(vo);
-		String pkgLength = "0" + getRealString(1, getPackageLen(addXml), 6);
+		String pkgLength = "0" + getRealString(3, getPackageLen(addXml), 6);
 		return pkgLength + addXml;
 	}
 
 	private static String createPkgCQRD01(TransVo vo) {
 		String queryXml = XmlUtils.createQueryXml(vo);
-		String pkgLength = "0" + getRealString(1, getPackageLen(queryXml), 6);
+		String pkgLength = "0" + getRealString(3, getPackageLen(queryXml), 6);
 		return pkgLength + queryXml;
 	}
 
 	private static String dealMsgCMLT40(byte[] buf) {
 		String str = new String(buf);
-		int length = Integer.parseInt(StringUtils.substring(str, 1, 7).trim());
 		logger.info("dealMsgCMLT40:" + str);
-		Map<String, String> map = XmlUtils.readStringXmlOut(StringUtils.substring(str, 7, 7 + length));
+		String xml = StringUtils.substring(str, 7).trim();
+		Map<String, String> map = XmlUtils.readStringXmlOut(xml);
 		String responseCode = map.get("RespCode");
 		if (responseCode.equals("0000")) {
 			return responseCode;
@@ -87,9 +87,9 @@ public class TransOfABC {
 
 	private static String dealMsgCQRD01(byte[] buf, TransVo vo) {
 		String str = new String(buf);
-		int length = Integer.parseInt(StringUtils.substring(str, 1, 7).trim());
 		logger.info("dealMsgCQRD01:" + str);
-		Map<String, String> map = XmlUtils.readStringXmlOut(StringUtils.substring(str, 7, 7 + length));
+		String xml = StringUtils.substring(str, 7).trim();
+		Map<String, String> map = XmlUtils.readStringXmlOut(xml);
 		String responseCode = map.get("RespCode");
 		if (responseCode.equals("0000")) {
 			String contFlag = map.get("ContFlag");
@@ -97,12 +97,12 @@ public class TransOfABC {
 				vo.setContLast(map.get("ContLast"));
 				transCommMsg(Constants.BANK_QUERY_CODE, vo);
 			} else {
-				return responseCode + "@" + map.get("FileFlag");
+				return responseCode + "@" + map.get("BatchFileName");
 			}
 		} else {
 			logger.info("查询余额错误编码{}，错误信息{}:", responseCode, map.get("RespInfo"));
 		}
-		return responseCode + "@" + map.get("FileFlag");
+		return responseCode + "@" + map.get("BatchFileName");
 	}
 
 	private static String getRealString(int type, String oldString, int length) {

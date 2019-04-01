@@ -3,15 +3,10 @@ package com.ruoyi.project.business.person.service;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
-import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.support.Convert;
 import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
 import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.bank.TransOfABC;
 import com.ruoyi.project.bank.domain.TransVo;
@@ -19,7 +14,8 @@ import com.ruoyi.project.business.account.domain.Account;
 import com.ruoyi.project.business.account.mapper.AccountMapper;
 import com.ruoyi.project.business.closedPerson.domain.ClosedPerson;
 import com.ruoyi.project.business.closedPerson.mapper.ClosedPersonMapper;
-import com.ruoyi.project.business.settleDate.service.ISettleDateService;
+import com.ruoyi.project.business.person.domain.Person;
+import com.ruoyi.project.business.person.mapper.PersonMapper;
 import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
 import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import com.ruoyi.project.business.transactionRecord.domain.TransactionRecord;
@@ -35,10 +31,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.project.business.person.mapper.PersonMapper;
-import com.ruoyi.project.business.person.domain.Person;
-import com.ruoyi.common.support.Convert;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 人员管理 服务层实现
@@ -174,8 +171,10 @@ public class PersonServiceImpl implements IPersonService
 	public int saveCash(Person person) {
         int result = 0;
 		Person info = personMapper.selectPersonById(person.getId());
-        if (info.getBalance().add(person.getRecharge()).compareTo(new BigDecimal(0)) == -1) {
-            return result;
+        if (person.getRechargeType().equals("X")) {
+            if (info.getBalance().subtract(person.getRecharge()).compareTo(new BigDecimal(0)) == -1) {
+                return result;
+            }
         }
         BigDecimal oldBalance = info.getBalance();
         String deviceCode = deviceService.getDeviceCode();
@@ -208,7 +207,7 @@ public class PersonServiceImpl implements IPersonService
             record.setAfter(info.getBalance());
             record.setTxcode(Constants.TX_CODE_SINGLE_COST);
             record.setToAcc(merchant.getId().toString());
-            record.setRemark("手动消费");
+            record.setRemark("现金扣款");
         }
         result = tradeRecordService.insertTradeRecord(record);
         return result;

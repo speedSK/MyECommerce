@@ -52,6 +52,7 @@ public class GoodsServiceImpl implements IGoodsService
 	@Override
 	public List<Goods> selectGoodsList(Goods goods)
 	{
+		goods.setStatus(Constants.STATUS_ACTIVE);
 	    return goodsMapper.selectGoodsList(goods);
 	}
 	

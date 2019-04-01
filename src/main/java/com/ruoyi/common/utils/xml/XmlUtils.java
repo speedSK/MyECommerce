@@ -1,5 +1,6 @@
 package com.ruoyi.common.utils.xml;
 
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.SysConfigUtil;
 import com.ruoyi.project.bank.domain.TransVo;
 import org.dom4j.Document;
@@ -73,11 +74,11 @@ public class XmlUtils {
     public static String createQueryXml(TransVo vo) {
         StringBuilder xmlBuilder = new StringBuilder();
         xmlBuilder.append("<ap>");
-        xmlBuilder.append("<CCTransCode>CQRD02</CCTransCode>");
+        xmlBuilder.append("<CCTransCode>CQRD01</CCTransCode>");
         xmlBuilder.append("<ProductID>ICC</ProductID>");
         xmlBuilder.append("<ChannelType>ERP</ChannelType>");
         xmlBuilder.append("<CorpNo>" + CorpNo + "</CorpNo>");
-        xmlBuilder.append("<OpNo></OpNo>");
+        xmlBuilder.append("<OpNo>" + OpNo + "</OpNo>");
         xmlBuilder.append("<AuthNo></AuthNo>");
         xmlBuilder.append("<ReqSeqNo>" + vo.getJourno() + "</ReqSeqNo>");
         xmlBuilder.append("<ReqDate></ReqDate>");
@@ -94,9 +95,11 @@ public class XmlUtils {
         xmlBuilder.append("<StartDate>" + vo.getStartTime() + "</StartDate>");
         xmlBuilder.append("<EndDate>" + vo.getEndTime() + "</EndDate>");
         xmlBuilder.append("</Corp>");
-        xmlBuilder.append("<Cme>");
-        xmlBuilder.append("<ContLast>" + vo.getContLast() + "<ContLast>");
-        xmlBuilder.append("</Cme>");
+//        if (StringUtils.isNotEmpty(vo.getContLast())) {
+            xmlBuilder.append("<Cme>");
+            xmlBuilder.append("<ContLast>" + vo.getContLast() + "<ContLast>");
+            xmlBuilder.append("</Cme>");
+//        }
         return xmlBuilder.toString();
     }
 

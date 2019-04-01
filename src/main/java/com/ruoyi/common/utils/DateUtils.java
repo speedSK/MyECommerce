@@ -20,6 +20,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
 
     public static String YYYY_MM_DD = "yyyy-MM-dd";
 
+    public static String YYYYMMDD = "yyyyMMdd";
+
     public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
     public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
@@ -67,6 +69,11 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
     public static final String dateTime(final Date date)
     {
         return parseDateToStr(YYYY_MM_DD, date);
+    }
+
+    public static final String dateTime(final Date date, String df) {
+
+        return parseDateToStr(df, date);
     }
 
     public static final String parseDateToStr(final String format, final Date date)
