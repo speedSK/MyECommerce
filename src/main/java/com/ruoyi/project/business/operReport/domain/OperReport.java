@@ -24,6 +24,8 @@ public class OperReport extends BaseEntity
 	@Excel(name = "报表日期", width = 30, dateFormat = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date reportDate;
+	@Excel(name = "交易名称")
+	private String remark;
 	/** 交易码 */
 	private String tradeCode;
 	/** 交易笔数 */
@@ -33,8 +35,6 @@ public class OperReport extends BaseEntity
 	@Excel(name = "交易金额")
 	private BigDecimal tradeSum;
 	/**  */
-	@Excel(name = "交易名称")
-	private String remark;
 	private String status;
 	/**  */
 	private Date createTime;

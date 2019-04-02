@@ -25,6 +25,8 @@ public class MerchantReport extends BaseEntity
 	@Excel(name = "报表日期", width = 30, dateFormat = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date reportDate;
+	@Excel(name = "商户名称",targetAttr = "merchantName",type = Excel.Type.EXPORT)
+	private Merchant merchant;
 	/** 账户id */
 	private String accountCode;
 	/** 收入笔数 */
@@ -45,9 +47,6 @@ public class MerchantReport extends BaseEntity
 	private Date createTime;
 	/**  */
 	private Date updateTime;
-
-	@Excel(name = "账户编号",targetAttr = "merchantName",type = Excel.Type.EXPORT)
-	private Merchant merchant;
 
 	public Merchant getMerchant() {
 		return merchant;

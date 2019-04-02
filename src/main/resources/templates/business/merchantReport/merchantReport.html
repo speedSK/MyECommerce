@@ -70,7 +70,8 @@
 				},
 				{
 					field : 'reportDate', 
-					title : '报表日期' 
+					title : '报表日期',
+					sortable:true
 				},
 				{
 					field : 'merchant.merchantName',
@@ -91,18 +92,6 @@
 				{
 					field : 'outcomeSum', 
 					title : '支出金额' 
-				},
-				{
-					field : 'remark', 
-					title : '备注'
-				},
-				{
-					field : 'status', 
-					title : '状态'
-				},
-				{
-					field : 'createTime', 
-					title : '创建时间'
 				}]
             };
             $.table.init(options);

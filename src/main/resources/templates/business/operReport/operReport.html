@@ -3,103 +3,100 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    <div class="container-div">
-		<div class="col-sm-12 search-collapse">
-			<form id="operReport-form">
-				<div class="select-list">
-					<ul>
-						<li>
-							交易名称：<select name="tradeCode" th:with="type=${@dict.getType('bus_txcode')}">
-							<option value="">所有</option>
-							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-						</select>
-						</li>
-						<li class="select-time">
-							<label>日期： </label>
-							<input type="text" class="time-input" id="startTime" placeholder="开始日期" name="params[beginTime]"/>
-							<span>-</span>
-							<input type="text" class="time-input" id="endTime" placeholder="结束日期" name="params[endTime]"/>
-						</li>
-						<li>
-							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-						</li>
-					</ul>
-				</div>
-			</form>
-		</div>
-
-		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:operReport:export">
-				<i class="fa fa-download"></i> 导出
-			</a>
-		</div>
-			
-		<div class="col-sm-12 select-table table-striped">
-			<table id="bootstrap-table" data-mobile-responsive="true"></table>
-		</div>
+<div class="container-div">
+    <div class="col-sm-12 search-collapse">
+        <form id="operReport-form">
+            <div class="select-list">
+                <ul>
+                    <li>
+                        交易名称：<select name="tradeCode" th:with="type=${@dict.getType('bus_txcode')}">
+                        <option value="">所有</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                th:value="${dict.dictValue}"></option>
+                    </select>
+                    </li>
+                    <li class="select-time">
+                        <label>日期： </label>
+                        <input type="text" class="time-input" id="startTime" placeholder="开始日期"
+                               name="params[beginTime]"/>
+                        <span>-</span>
+                        <input type="text" class="time-input" id="endTime" placeholder="结束日期" name="params[endTime]"/>
+                    </li>
+                    <li>
+                        <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                class="fa fa-search"></i>&nbsp;搜索</a>
+                        <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                class="fa fa-refresh"></i>&nbsp;重置</a>
+                    </li>
+                </ul>
+            </div>
+        </form>
     </div>
-    <div th:include="include :: footer"></div>
-	<script th:src="@{/ajax/libs/select/select2.js}"></script>
-    <script th:inline="javascript">
-        var prefix = ctx + "business/operReport";
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-				uniqueId:"id",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "系统操作报",
-                columns: [{
-		            checkbox: true
-		        },
-				{
-					field : 'id', 
-					title : '序号',
-					visible:false
-				},
-				{
-					field: '',
-					title: '序号',
-					formatter: function (value, row, index) {
-						return index + 1;
-					}
-				},
-				{
-					field : 'reportDate', 
-					title : '报表日期' 
-				},
-				{
-					field : 'tradeCode', 
-					title : '交易代码',
-					visible:false
-				},
-				{
-					field : 'tradeNum', 
-					title : '交易笔数' 
-				},
-				{
-					field : 'tradeSum', 
-					title : '交易金额' 
-				},
-				{
-					field : 'remark', 
-					title : '交易名称'
-				},
-				{
-					field : 'status', 
-					title : '状态'
-				},
-				{
-					field : 'createTime', 
-					title : '创建时间'
-				}]
-            };
-            $.table.init(options);
-        });
-    </script>
+    <div class="btn-group-sm" id="toolbar" role="group">
+        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:operReport:export">
+            <i class="fa fa-download"></i> 导出
+        </a>
+    </div>
+
+    <div class="col-sm-12 select-table table-striped">
+        <table id="bootstrap-table" data-mobile-responsive="true"></table>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+<script th:inline="javascript">
+    var prefix = ctx + "business/operReport";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            uniqueId: "id",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "系统操作报",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '序号',
+                    visible: false
+                },
+                {
+                    field: '',
+                    title: '序号',
+                    formatter: function (value, row, index) {
+                        return index + 1;
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '交易名称'
+                },
+                {
+                    field: 'reportDate',
+                    title: '报表日期',
+                    sortable: true
+                },
+                {
+                    field: 'tradeCode',
+                    title: '交易代码',
+                    visible: false
+                },
+                {
+                    field: 'tradeNum',
+                    title: '交易笔数'
+                },
+                {
+                    field: 'tradeSum',
+                    title: '交易金额'
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
 </body>
 </html>
