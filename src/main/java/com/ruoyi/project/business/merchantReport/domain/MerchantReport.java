@@ -19,9 +19,7 @@ import java.util.Date;
 public class MerchantReport extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
-	/**  */
-	@Excel(name = "序号")
+
 	private Long id;
 	/** 报表日期 */
 	@Excel(name = "报表日期", width = 30, dateFormat = "yyyy-MM-dd")
@@ -41,11 +39,7 @@ public class MerchantReport extends BaseEntity
 	/** 支出金额 */
 	@Excel(name = "支出金额")
 	private BigDecimal outcomeSum;
-	/**  */
-	@Excel(name = "备注")
 	private String remark;
-	/**  */
-	@Excel(name = "状态")
 	private String status;
 	/**  */
 	private Date createTime;

@@ -89,8 +89,10 @@ public class RyTask {
         }
         TransVo transVo = new TransVo();
         transVo.setJourno(IdGen.getJourno());
+//        transVo.setStartNumber("1000000001");
+//        transVo.setEndNumber(accountMapper.selectMacAccount().getPersonAccount());
         transVo.setStartNumber("1000000001");
-        transVo.setEndNumber(accountMapper.selectMacAccount().getPersonAccount());
+        transVo.setEndNumber("1000000003");
         transVo.setStartTime(date);
         transVo.setEndTime(date);
         transVo.setContLast("");

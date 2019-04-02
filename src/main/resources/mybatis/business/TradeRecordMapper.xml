@@ -110,9 +110,7 @@
             <if test="remark != null  and remark != ''  ">remark,</if>
             <if test="status != null  and status != ''  ">status,</if>
             <if test="createBy != null  and createBy != ''  ">create_by,</if>
-            <if test="createTime != null  ">create_time,</if>
-            <if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-            <if test="updateTime != null  ">update_time,</if>
+            create_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  ">#{id},</if>
@@ -131,9 +129,7 @@
             <if test="remark != null  and remark != ''  ">#{remark},</if>
             <if test="status != null  and status != ''  ">#{status},</if>
             <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-            <if test="createTime != null  ">#{createTime},</if>
-            <if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-            <if test="updateTime != null  ">#{updateTime},</if>
+            sysdate()
         </trim>
     </insert>
 

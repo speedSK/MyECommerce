@@ -1,6 +1,6 @@
 package com.ruoyi.common.utils.xml;
 
-import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SysConfigUtil;
 import com.ruoyi.project.bank.domain.TransVo;
 import org.dom4j.Document;
@@ -27,6 +27,7 @@ public class XmlUtils {
 
     public static String createAddXml(TransVo vo) {
         StringBuilder xmlBuilder = new StringBuilder();
+        String dateTimeNow = DateUtils.dateTimeNow();
         xmlBuilder.append("<ap>");
         xmlBuilder.append("<CCTransCode>CMLT40</CCTransCode>");
         xmlBuilder.append("<ProductID>ICC</ProductID>");
@@ -35,8 +36,8 @@ public class XmlUtils {
         xmlBuilder.append("<OpNo>" + OpNo + "</OpNo>");
         xmlBuilder.append("<AuthNo></AuthNo>");
         xmlBuilder.append("<ReqSeqNo>" + vo.getJourno() + "</ReqSeqNo>");
-        xmlBuilder.append("<ReqDate></ReqDate>");
-        xmlBuilder.append("<ReqTime></ReqTime>");
+        xmlBuilder.append("<ReqDate>" + dateTimeNow.substring(0, 8) + "</ReqDate>");
+        xmlBuilder.append("<ReqTime>" + dateTimeNow.substring(8, 14) + "</ReqTime>");
         xmlBuilder.append("<Sign></Sign>");
 
         xmlBuilder.append("<Corp>");
@@ -73,6 +74,7 @@ public class XmlUtils {
 
     public static String createQueryXml(TransVo vo) {
         StringBuilder xmlBuilder = new StringBuilder();
+        String dateTimeNow = DateUtils.dateTimeNow();
         xmlBuilder.append("<ap>");
         xmlBuilder.append("<CCTransCode>CQRD01</CCTransCode>");
         xmlBuilder.append("<ProductID>ICC</ProductID>");
@@ -81,8 +83,8 @@ public class XmlUtils {
         xmlBuilder.append("<OpNo>" + OpNo + "</OpNo>");
         xmlBuilder.append("<AuthNo></AuthNo>");
         xmlBuilder.append("<ReqSeqNo>" + vo.getJourno() + "</ReqSeqNo>");
-        xmlBuilder.append("<ReqDate></ReqDate>");
-        xmlBuilder.append("<ReqTime></ReqTime>");
+        xmlBuilder.append("<ReqDate>" + dateTimeNow.substring(0, 8) + "</ReqDate>");
+        xmlBuilder.append("<ReqTime>" + dateTimeNow.substring(8, 14) + "</ReqTime>");
         xmlBuilder.append("<Sign></Sign>");
         xmlBuilder.append("<Cmp>");
         xmlBuilder.append("<DbProv>" + DbProv + "</DbProv>");
@@ -92,14 +94,15 @@ public class XmlUtils {
         xmlBuilder.append("<CrLogAccNo>" + vo.getEndNumber() + "</CrLogAccNo>");
         xmlBuilder.append("</Cmp>");
         xmlBuilder.append("<Corp>");
-        xmlBuilder.append("<StartDate>" + vo.getStartTime() + "</StartDate>");
-        xmlBuilder.append("<EndDate>" + vo.getEndTime() + "</EndDate>");
+//        xmlBuilder.append("<StartDate>" + vo.getStartTime() + "</StartDate>");
+//        xmlBuilder.append("<EndDate>" + vo.getEndTime() + "</EndDate>");
+        xmlBuilder.append("<StartDate>20181016</StartDate>");
+        xmlBuilder.append("<EndDate>20181016</EndDate>");
         xmlBuilder.append("</Corp>");
-//        if (StringUtils.isNotEmpty(vo.getContLast())) {
-            xmlBuilder.append("<Cme>");
-            xmlBuilder.append("<ContLast>" + vo.getContLast() + "<ContLast>");
-            xmlBuilder.append("</Cme>");
-//        }
+        xmlBuilder.append("<Cme>");
+        xmlBuilder.append("<ContLast>" + vo.getContLast() + "</ContLast>");
+        xmlBuilder.append("</Cme>");
+        xmlBuilder.append("</ap>");
         return xmlBuilder.toString();
     }
 

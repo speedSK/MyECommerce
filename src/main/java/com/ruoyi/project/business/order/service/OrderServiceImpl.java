@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.ruoyi.project.system.merchant.domain.Merchant;
+import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.apache.el.lang.ELArithmetic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,8 @@ public class OrderServiceImpl implements IOrderService
     private IDeviceService deviceService;
     @Autowired
     private ITradeRecordService tradeRecordService;
+	@Autowired
+	private IMerchantService merchantService;
 
 	/**
      * 查询订单信息
@@ -154,6 +158,7 @@ public class OrderServiceImpl implements IOrderService
 			//订单明细处理
 			for(int index=0; index < goodsId.length; index++){
 				Goods goods = goodsService.selectGoodsById(Long.valueOf(goodsId[index]));
+				Merchant merchant = merchantService.selectMerchantById(goods.getMerchantId());
 				OrderDetail orderDetail = new OrderDetail();
 				orderDetail.setOrderId(order.getId());
 				orderDetail.setMerchantId(goods.getMerchantId());
@@ -165,6 +170,8 @@ public class OrderServiceImpl implements IOrderService
 				//商品总价
 				BigDecimal goodSum = goods.getPrice().multiply(new BigDecimal(goodsNum[index]));
 				orderDetail.setMoney(goodSum);
+				merchant.setBalance(merchant.getBalance().add(goodSum));
+				merchantService.updateMerchant(merchant);
 				orderDetail.setFlag(Constants.ORDER_NORMAL);
 				orderDetail.setCreateBy(person.getNumber());
 				orderDetail.setCreateTime(new Date());

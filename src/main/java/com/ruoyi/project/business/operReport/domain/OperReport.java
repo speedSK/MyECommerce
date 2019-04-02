@@ -18,16 +18,13 @@ import java.util.Date;
 public class OperReport extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
-	/**  */
-	@Excel(name = "序号")
+
 	private Long id;
 	/** 报表日期 */
 	@Excel(name = "报表日期", width = 30, dateFormat = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date reportDate;
 	/** 交易码 */
-	@Excel(name = "交易码")
 	private String tradeCode;
 	/** 交易笔数 */
 	@Excel(name = "交易笔数")
@@ -36,10 +33,8 @@ public class OperReport extends BaseEntity
 	@Excel(name = "交易金额")
 	private BigDecimal tradeSum;
 	/**  */
-	@Excel(name = "备注")
+	@Excel(name = "交易名称")
 	private String remark;
-	/**  */
-	@Excel(name = "状态")
 	private String status;
 	/**  */
 	private Date createTime;
