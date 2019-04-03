@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="returnMessage != null  and returnMessage != ''  ">return_message,</if>
             <if test="bankIdserial != null  and bankIdserial != ''  ">bank_idserial,</if>
             <if test="createBy != null  and createBy != ''  ">create_by,</if>
-            createTime
+            create_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  ">#{id},</if>

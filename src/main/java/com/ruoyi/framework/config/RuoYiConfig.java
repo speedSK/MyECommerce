@@ -22,6 +22,18 @@ public class RuoYiConfig
     private static String profile;
     /** 获取地址开关 */
     private static boolean addressEnabled;
+    /**
+     * 银行文件位置
+     */
+    private static String bankFile;
+
+    public static String getBankFile() {
+        return bankFile;
+    }
+
+    public void setBankFile(String bankFile) {
+        RuoYiConfig.bankFile = bankFile;
+    }
 
     public String getName()
     {

@@ -94,10 +94,8 @@ public class XmlUtils {
         xmlBuilder.append("<CrLogAccNo>" + vo.getEndNumber() + "</CrLogAccNo>");
         xmlBuilder.append("</Cmp>");
         xmlBuilder.append("<Corp>");
-//        xmlBuilder.append("<StartDate>" + vo.getStartTime() + "</StartDate>");
-//        xmlBuilder.append("<EndDate>" + vo.getEndTime() + "</EndDate>");
-        xmlBuilder.append("<StartDate>20181016</StartDate>");
-        xmlBuilder.append("<EndDate>20181016</EndDate>");
+        xmlBuilder.append("<StartDate>" + vo.getStartTime() + "</StartDate>");
+        xmlBuilder.append("<EndDate>" + vo.getEndTime() + "</EndDate>");
         xmlBuilder.append("</Corp>");
         xmlBuilder.append("<Cme>");
         xmlBuilder.append("<ContLast>" + vo.getContLast() + "</ContLast>");

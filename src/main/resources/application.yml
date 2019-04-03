@@ -7,9 +7,11 @@ ruoyi:
   # 版权年份
   copyrightYear: 2019
   # 文件上传路径
-  profile: E:/profile/
+  profile: E:\profile\
   # 获取ip地址开关
   addressEnabled: true
+  # 银行mfs文件位置
+  bankFile: C:\Program Files\中国农业银行\中国农业银行银企通平台\detail\
 
 # 开发环境配置
 server:

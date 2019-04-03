@@ -44,14 +44,13 @@ public class TransOfABC {
 			DataInputStream datainputstream = new DataInputStream(socket.getInputStream());
 			byte[] buf = new byte[2048];
 			datainputstream.read(buf);
+			outputstream.close();
+			socket.close();
 			if (Constants.BANK_OPEN_CODE.equals(txCode)) {
 				backMsg = dealMsgCMLT40(buf);
 			} else if (Constants.BANK_QUERY_CODE.equals(txCode)) {
 				backMsg = dealMsgCQRD01(buf, vo);
 			}
-
-			outputstream.close();
-			socket.close();
 			return backMsg;
 		} catch (Exception e) {
 			logger.error("通讯失败！",e);
@@ -91,11 +90,12 @@ public class TransOfABC {
 		String xml = StringUtils.substring(str, 7).trim();
 		Map<String, String> map = XmlUtils.readStringXmlOut(xml);
 		String responseCode = map.get("RespCode");
+		logger.info("RespCode=" + responseCode);
 		if (responseCode.equals("0000")) {
 			String contFlag = map.get("ContFlag");
 			if (contFlag.equals("1")) {
 				vo.setContLast(map.get("ContLast"));
-				transCommMsg(Constants.BANK_QUERY_CODE, vo);
+				return transCommMsg(Constants.BANK_QUERY_CODE, vo);
 			} else {
 				return responseCode + "@" + map.get("BatchFileName");
 			}
@@ -163,10 +163,6 @@ public class TransOfABC {
 	private static String getPackageLen(String packageStr) {
 		int length = packageStr.getBytes().length;
 		return String.valueOf(length);
-	}
-
-	public static void main(String[] args) {
-		TransOfABC.transCommMsg("3002", new TransVo());
 	}
 
 }

@@ -1,7 +1,9 @@
 package com.ruoyi.project.system.merchant.mapper;
 
 import com.ruoyi.project.system.merchant.domain.Merchant;
-import java.util.List;	
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 商户 数据层
@@ -9,6 +11,7 @@ import java.util.List;
  * @author LiuNing
  * @date 2018-08-07
  */
+@Repository
 public interface MerchantMapper 
 {
 	/**

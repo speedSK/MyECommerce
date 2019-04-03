@@ -89,22 +89,20 @@ public class RyTask {
         }
         TransVo transVo = new TransVo();
         transVo.setJourno(IdGen.getJourno());
-//        transVo.setStartNumber("1000000001");
-//        transVo.setEndNumber(accountMapper.selectMacAccount().getPersonAccount());
         transVo.setStartNumber("1000000001");
-        transVo.setEndNumber("1000000003");
+        transVo.setEndNumber(accountMapper.selectMacAccount().getPersonAccount());
         transVo.setStartTime(date);
         transVo.setEndTime(date);
         transVo.setContLast("");
         String msg = TransOfABC.transCommMsg(Constants.BANK_QUERY_CODE, transVo);
         String[] msgs = msg.split("@");
         if (msgs[0].equals("0000") && StringUtils.isNotEmpty(msgs[1])) {
-            File file = new File(RuoYiConfig.getProfile());
+            File file = new File(RuoYiConfig.getBankFile() + msgs[1]);
             try {
                 List<String> strings = FileUtils.readLines(file, "UTF-8");
                 dealStrings(strings);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.info("读取银行文件异常", e);
             }
         }
     }
@@ -112,7 +110,7 @@ public class RyTask {
     private void dealStrings(List<String> strings) {
         if (StringUtils.isNotEmpty(strings)) {
             for (String string : strings) {
-                String[] split = StringUtils.split(string, "\\|");
+                String[] split = StringUtils.splitPreserveAllTokens(string, "\\|");
                 personService.bankBatchRecharge(split);
             }
         }

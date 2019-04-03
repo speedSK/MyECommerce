@@ -17,14 +17,17 @@ import com.ruoyi.project.business.closedPerson.mapper.ClosedPersonMapper;
 import com.ruoyi.project.business.person.domain.Person;
 import com.ruoyi.project.business.person.mapper.PersonMapper;
 import com.ruoyi.project.business.tradeRecord.domain.TradeRecord;
+import com.ruoyi.project.business.tradeRecord.mapper.TradeRecordMapper;
 import com.ruoyi.project.business.tradeRecord.service.ITradeRecordService;
 import com.ruoyi.project.business.transactionRecord.domain.TransactionRecord;
+import com.ruoyi.project.business.transactionRecord.mapper.TransactionRecordMapper;
 import com.ruoyi.project.business.transactionRecord.service.ITransactionRecordService;
 import com.ruoyi.project.system.config.service.IConfigService;
 import com.ruoyi.project.system.dept.domain.Dept;
 import com.ruoyi.project.system.dept.service.IDeptService;
 import com.ruoyi.project.system.device.service.IDeviceService;
 import com.ruoyi.project.system.merchant.domain.Merchant;
+import com.ruoyi.project.system.merchant.mapper.MerchantMapper;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +60,11 @@ public class PersonServiceImpl implements IPersonService
     @Autowired
     private ITradeRecordService tradeRecordService;
     @Autowired
+    private TradeRecordMapper tradeRecordMapper;
+    @Autowired
     private IMerchantService merchantService;
+    @Autowired
+    private MerchantMapper merchantMapper;
     @Autowired
     private IDeviceService deviceService;
     @Autowired
@@ -67,7 +74,7 @@ public class PersonServiceImpl implements IPersonService
     @Autowired
     private AccountMapper accountMapper;
     @Autowired
-    private ITransactionRecordService transactionRecordService;
+    private TransactionRecordMapper transactionRecordMapper;
 
 	/**
      * 查询人员管理信息
@@ -367,41 +374,42 @@ public class PersonServiceImpl implements IPersonService
     @Override
     public void bankBatchRecharge(String[] split) {
         Person person = personMapper.selectPersonByBankNumber(split[2]);
-        if (StringUtils.isNotNull(person)) {
-            BigDecimal recharge = new BigDecimal(split[14]);
+        TransactionRecord transactionRecord = new TransactionRecord();
+        transactionRecord.setBankIdserial(split[5].trim());
+        List<TransactionRecord> transactionRecords = transactionRecordMapper.selectTransactionRecordList(transactionRecord);
+        if (StringUtils.isNotNull(person)&&StringUtils.isEmpty(transactionRecords)) {
+            BigDecimal recharge = new BigDecimal(split[14].trim());
             person.setBalance(person.getBalance().add(recharge));
             TradeRecord record = new TradeRecord();
             record.setJourno(IdGen.getJourno());
             Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
             merchant.setBalance(merchant.getBalance().add(recharge));
-            merchantService.updateMerchant(merchant);
-            String deviceCode = deviceService.getDeviceCode();
             record.setMerchantCode(merchant.getId().toString());
             record.setJourno(IdGen.getJourno());
             record.setUserNumber(person.getId().toString());
             record.setTxcode(Constants.TX_CODE_BANK_RECHARGE);
             record.setTxamt(recharge);
             record.setToAcc(merchant.getId().toString());
-            record.setStationCode(deviceCode);
+            record.setStationCode("0");
             record.setCreateBy("system");
             record.setCreateTime(new Date());
             record.setRemark("银行充值");
-            TransactionRecord transactionRecord = new TransactionRecord();
             transactionRecord.setCode(Constants.TX_CODE_BANK_RECHARGE);
             transactionRecord.setIdNumber(person.getNumber());
             transactionRecord.setUserName(person.getName());
-            transactionRecord.setBankNumber(split[2]);
-            transactionRecord.setTransDate(split[4]+" "+split[6]);
-            transactionRecord.setAmount(split[14]);
-            transactionRecord.setBankCode(split[18]);
+            transactionRecord.setBankNumber(split[2].trim());
+            transactionRecord.setTransDate(split[4].trim()+" "+split[6].trim());
+            transactionRecord.setAmount(split[14].trim());
+            transactionRecord.setBankCode(split[18].trim());
             transactionRecord.setCreateBy("system");
-            bankRecharge(person, record, transactionRecord);
+            bankRecharge(person, record, transactionRecord,merchant);
         }
     }
     @Transactional
-    public void bankRecharge(Person person, TradeRecord record, TransactionRecord transactionRecord) {
+    public void bankRecharge(Person person, TradeRecord record, TransactionRecord transactionRecord, Merchant merchant) {
         personMapper.updatePerson(person);
-        tradeRecordService.insertTradeRecord(record);
-        transactionRecordService.insertTransactionRecord(transactionRecord);
+        tradeRecordMapper.insertTradeRecord(record);
+        transactionRecordMapper.insertTransactionRecord(transactionRecord);
+        merchantMapper.updateMerchant(merchant);
     }
 }
