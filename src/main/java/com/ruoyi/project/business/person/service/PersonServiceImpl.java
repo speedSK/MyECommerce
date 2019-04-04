@@ -395,7 +395,7 @@ public class PersonServiceImpl implements IPersonService
             record.setCreateTime(new Date());
             record.setRemark("银行充值");
             transactionRecord.setCode(Constants.TX_CODE_BANK_RECHARGE);
-            transactionRecord.setIdNumber(person.getNumber());
+            transactionRecord.setUserCode(person.getNumber());
             transactionRecord.setUserName(person.getName());
             transactionRecord.setBankNumber(split[2].trim());
             transactionRecord.setTransDate(split[4].trim()+" "+split[6].trim());
