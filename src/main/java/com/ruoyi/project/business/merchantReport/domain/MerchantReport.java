@@ -47,6 +47,17 @@ public class MerchantReport extends BaseEntity
 	private Date createTime;
 	/**  */
 	private Date updateTime;
+	/**应结算金额*/
+	@Excel(name = "结算金额")
+	private BigDecimal settleAmt;
+
+	public BigDecimal getSettleAmt() {
+		return settleAmt;
+	}
+
+	public void setSettleAmt(BigDecimal settleAmt) {
+		this.settleAmt = settleAmt;
+	}
 
 	public Merchant getMerchant() {
 		return merchant;

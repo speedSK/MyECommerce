@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectOrderByIds" parameterType="string" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         where o.id in
-        <foreach collection="array" item="dictCode" open="(" separator="," close=")">
+        <foreach collection="array" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </select>

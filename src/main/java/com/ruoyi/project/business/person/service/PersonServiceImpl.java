@@ -9,6 +9,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.bank.TransOfABC;
+import com.ruoyi.project.bank.domain.ReceiveFromBankInfo;
 import com.ruoyi.project.bank.domain.TransVo;
 import com.ruoyi.project.business.account.domain.Account;
 import com.ruoyi.project.business.account.mapper.AccountMapper;
@@ -347,8 +348,8 @@ public class PersonServiceImpl implements IPersonService
         transVo.setJourno(IdGen.getJourno());
         transVo.setAccNumber(newAccount);
         transVo.setAccName(person.getName());
-        String result = TransOfABC.transCommMsg(Constants.BANK_OPEN_CODE, transVo);
-        if (result.equals("0000")) {
+        ReceiveFromBankInfo receiveFromBankInfo = TransOfABC.transCommMsg(Constants.BANK_OPEN_CODE, transVo, new ReceiveFromBankInfo());
+        if (receiveFromBankInfo.getResponseCode().equals("0000")) {
             person.setBankCardNumber(newAccount);
             person.setUpdateBy(ShiroUtils.getLoginName());
             personMapper.updatePerson(person);

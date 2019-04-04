@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.xml.XmlUtils;
+import com.ruoyi.project.bank.domain.ReceiveFromBankInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,7 @@ public class TransOfABC {
 	private static String encodeType = "utf-8";
 
 
-	public static synchronized String transCommMsg(String txCode, TransVo vo) {
-		String backMsg = "";
+	public static synchronized ReceiveFromBankInfo transCommMsg(String txCode, TransVo vo, ReceiveFromBankInfo receiveFromBankInfo) {
 		String sendPackage = "";
 
 		try {
@@ -47,14 +47,14 @@ public class TransOfABC {
 			outputstream.close();
 			socket.close();
 			if (Constants.BANK_OPEN_CODE.equals(txCode)) {
-				backMsg = dealMsgCMLT40(buf);
+				receiveFromBankInfo = dealMsgCMLT40(buf, receiveFromBankInfo);
 			} else if (Constants.BANK_QUERY_CODE.equals(txCode)) {
-				backMsg = dealMsgCQRD01(buf, vo);
+				receiveFromBankInfo = dealMsgCQRD01(buf, vo, receiveFromBankInfo);
 			}
-			return backMsg;
+			return receiveFromBankInfo;
 		} catch (Exception e) {
-			logger.error("通讯失败！",e);
-			return "ERR01";
+			logger.error("通讯失败！", e);
+			return null;
 		}
 	}
 
@@ -70,39 +70,40 @@ public class TransOfABC {
 		return pkgLength + queryXml;
 	}
 
-	private static String dealMsgCMLT40(byte[] buf) {
+	private static ReceiveFromBankInfo dealMsgCMLT40(byte[] buf, ReceiveFromBankInfo receiveFromBankInfo) {
 		String str = new String(buf);
 		logger.info("dealMsgCMLT40:" + str);
 		String xml = StringUtils.substring(str, 7).trim();
 		Map<String, String> map = XmlUtils.readStringXmlOut(xml);
 		String responseCode = map.get("RespCode");
-		if (responseCode.equals("0000")) {
-			return responseCode;
-		} else {
+		receiveFromBankInfo.setResponseCode(responseCode);
+		if (!responseCode.equals("0000")) {
+			receiveFromBankInfo.setResponseInfo(map.get("RespInfo"));
 			logger.info("增加账簿号错误编码{}，错误信息{}:", responseCode, map.get("RespInfo"));
-			return responseCode;
 		}
+		return receiveFromBankInfo;
 	}
 
-	private static String dealMsgCQRD01(byte[] buf, TransVo vo) {
+	private static ReceiveFromBankInfo dealMsgCQRD01(byte[] buf, TransVo vo, ReceiveFromBankInfo receiveFromBankInfo) {
 		String str = new String(buf);
 		logger.info("dealMsgCQRD01:" + str);
 		String xml = StringUtils.substring(str, 7).trim();
 		Map<String, String> map = XmlUtils.readStringXmlOut(xml);
 		String responseCode = map.get("RespCode");
 		logger.info("RespCode=" + responseCode);
+		receiveFromBankInfo.setResponseCode(responseCode);
 		if (responseCode.equals("0000")) {
+			receiveFromBankInfo.setFileName(receiveFromBankInfo.getFileName() + "@" + map.get("BatchFileName"));
 			String contFlag = map.get("ContFlag");
 			if (contFlag.equals("1")) {
 				vo.setContLast(map.get("ContLast"));
-				return transCommMsg(Constants.BANK_QUERY_CODE, vo);
-			} else {
-				return responseCode + "@" + map.get("BatchFileName");
+				return transCommMsg(Constants.BANK_QUERY_CODE, vo, receiveFromBankInfo);
 			}
 		} else {
+			receiveFromBankInfo.setResponseInfo(map.get("RespInfo"));
 			logger.info("查询余额错误编码{}，错误信息{}:", responseCode, map.get("RespInfo"));
 		}
-		return responseCode + "@" + map.get("BatchFileName");
+		return receiveFromBankInfo;
 	}
 
 	private static String getRealString(int type, String oldString, int length) {

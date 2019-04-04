@@ -4,6 +4,7 @@ import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.security.ShiroUtils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -160,7 +161,9 @@ public class OrderDetailServiceImpl implements IOrderDetailService
         orderDetail.setUpdateBy(ShiroUtils.getLoginName());
         order.setMoney(order.getMoney().subtract(orderDetail.getMoney()));
         order.setUpdateBy(ShiroUtils.getLoginName());
-        this.updateOrderDetail(orderDetail);
+		if (order.getMoney().compareTo(new BigDecimal(0)) == 0) {
+			order.setFlag(Constants.ORDER_CANCEL);
+		}
         orderService.updateOrder(order);
 		Merchant merchant = merchantService.selectMerchantById(orderDetail.getMerchantId());
 		merchant.setBalance(merchant.getBalance().subtract(orderDetail.getMoney()));
@@ -180,6 +183,8 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 		record.setStationCode(deviceCode);
 		record.setCreateBy(ShiroUtils.getLoginName());
 		record.setRemark("商品退款");
+		orderDetail.setMoney(new BigDecimal(0));
+		this.updateOrderDetail(orderDetail);
 		return tradeRecordService.insertTradeRecord(record);
 	}
 }

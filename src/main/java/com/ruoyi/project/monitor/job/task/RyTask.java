@@ -6,6 +6,7 @@ import com.ruoyi.common.utils.IdGen;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.project.bank.TransOfABC;
+import com.ruoyi.project.bank.domain.ReceiveFromBankInfo;
 import com.ruoyi.project.bank.domain.TransVo;
 import com.ruoyi.project.business.account.mapper.AccountMapper;
 import com.ruoyi.project.business.merchantReport.domain.MerchantReport;
@@ -58,8 +59,15 @@ public class RyTask {
     public void settle()
     {
         String params = DateUtils.dateTime(DateUtils.getBeforeDay(new Date()));
-        createReport(params);
-        logger.info("自动生成商户报表&操作报表：" + params);
+        MerchantReport merchantReport = new MerchantReport();
+        merchantReport.setReportDate(DateUtils.dateTime(DateUtils.YYYY_MM_DD, params));
+        List<MerchantReport> merchantReports = merchantReportService.selectMerchantReportList(merchantReport);
+        if (StringUtils.isEmpty(merchantReports)) {
+            createReport(params);
+            logger.info("自动生成商户报表&操作报表：" + params);
+        } else {
+            logger.info("已经存在报表：" + params);
+        }
     }
 
     @Transactional
@@ -94,15 +102,17 @@ public class RyTask {
         transVo.setStartTime(date);
         transVo.setEndTime(date);
         transVo.setContLast("");
-        String msg = TransOfABC.transCommMsg(Constants.BANK_QUERY_CODE, transVo);
-        String[] msgs = msg.split("@");
-        if (msgs[0].equals("0000") && StringUtils.isNotEmpty(msgs[1])) {
-            File file = new File(RuoYiConfig.getBankFile() + msgs[1]);
-            try {
-                List<String> strings = FileUtils.readLines(file, "UTF-8");
-                dealStrings(strings);
-            } catch (IOException e) {
-                logger.info("读取银行文件异常", e);
+        ReceiveFromBankInfo receiveFromBankInfo = TransOfABC.transCommMsg(Constants.BANK_QUERY_CODE, transVo, new ReceiveFromBankInfo());
+        if (receiveFromBankInfo.getResponseCode().equals("0000") && StringUtils.isNotEmpty(receiveFromBankInfo.getFileName())) {
+            String[] fileNames = StringUtils.split(receiveFromBankInfo.getFileName(), "@");
+            for (String fileName : fileNames) {
+                File file = new File(RuoYiConfig.getBankFile() + fileName);
+                try {
+                    List<String> strings = FileUtils.readLines(file, "UTF-8");
+                    dealStrings(strings);
+                } catch (IOException e) {
+                    logger.info("读取银行文件异常", e);
+                }
             }
         }
     }

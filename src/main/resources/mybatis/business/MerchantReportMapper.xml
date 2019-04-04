@@ -17,6 +17,7 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
+        <result property="settleAmt" column="settle_amt"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <association property="merchant" column="account_code" javaType="Merchant" resultMap="MerchantResult"/>
@@ -46,7 +47,8 @@
                mr.status,
                mr.create_time,
                mr.update_time,
-               m.merchant_name
+               m.merchant_name,
+               (ifnull(mr.income_sum,0) - ifnull(mr.outcome_sum,0)) settle_amt
         from bus_merchant_report mr
                  left join bus_merchant m on mr.account_code = m.id
 
@@ -138,8 +140,8 @@
 
     <select id="selectOuting" parameterType="String" resultMap="MerchantReportResult">
         select from_acc                             account_code,
-               COUNT(from_acc)                      income_num,
-               SUM(txamt)                           income_sum,
+               COUNT(from_acc)                      outcome_num,
+               SUM(txamt)                           outcome_sum,
                DATE_FORMAT(create_time, '%Y-%m-%d') report_date
         from bus_trade_record
         where from_acc is not null
