@@ -702,7 +702,7 @@
                 }
                 $.modal.confirm("确认要完成选中的" + rows.length + "条数据吗?", function() {
                     var url = $.table._option.finishUrl;
-                    var data = { "ids": rows.join() };
+                    var data = { "ids": rows.join(),"visible":"finish" };
                     $.operate.submit(url, "post", "json", data);
                 });
             },
@@ -722,7 +722,7 @@
                 }
                 $.modal.confirm("确认要取消选中的" + rows.length + "条数据吗?", function() {
                     var url = $.table._option.cancelUrl;
-                    var data = { "ids": rows.join() };
+                    var data = { "ids": rows.join(),"visible":"cancel"  };
                     $.operate.submit(url, "post", "json", data);
                 });
             },

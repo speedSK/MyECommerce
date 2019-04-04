@@ -24,7 +24,8 @@ public interface OrderMapper
      * @return 订单信息
      */
 	public Order selectOrderById(Long id);
-	
+	public List<Order> selectOrderByIds(String[] ids);
+
 	/**
      * 查询订单列表
      * 

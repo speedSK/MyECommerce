@@ -129,9 +129,9 @@ public class OrderDetailServiceImpl implements IOrderDetailService
 	}
 
 	@Override
-	public int updateFlagByOrderId(String id,String flag) {
+	public int updateFlagByOrderId(long id,String flag) {
 		OrderDetail orderDetail = new OrderDetail();
-		orderDetail.setOrderId(Long.valueOf(id));
+		orderDetail.setOrderId(id);
 		if (flag.equals(Constants.ORDER_FINISH)) {
 			orderDetail.setFlag(Constants.ORDER_NORMAL);
 			List<OrderDetail> orderDetailList = orderDetailMapper.selectOrderDetailList(orderDetail);

@@ -81,6 +81,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where o.id = #{id}
     </select>
 
+    <select id="selectOrderByIds" parameterType="string" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where o.id in
+        <foreach collection="array" item="dictCode" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
         insert into bus_order
 		<trim prefix="(" suffix=")" suffixOverrides=",">

@@ -43,10 +43,10 @@
 		</div>
 
 		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-primary btn-edit disabled" onclick="$.operate.batFinish()" shiro:hasPermission="business:order:finish">
+			<a class="btn btn-primary btn-del disabled" onclick="$.operate.batFinish()" shiro:hasPermission="business:order:finish">
 				<i class="fa fa-edit"></i> 完成
 			</a>
-			<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.batCancel()" shiro:hasPermission="business:order:remove">
+			<a class="btn btn-danger btn-del disabled" onclick="$.operate.batCancel()" shiro:hasPermission="business:order:cancel">
 				<i class="fa fa-remove"></i> 取消
 			</a>
 			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="business:order:export">

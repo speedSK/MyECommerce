@@ -52,7 +52,7 @@ public interface IOrderDetailService
 	public int deleteOrderDetailByIds(String ids);
 
 
-	public int updateFlagByOrderId(String id,String flag);
+	public int updateFlagByOrderId(long id,String flag);
 
 	public int updateOrderDetailFlag(String id, String flag);
 }

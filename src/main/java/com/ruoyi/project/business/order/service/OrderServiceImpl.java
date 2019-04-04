@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.ruoyi.common.support.Convert;
 import com.ruoyi.project.system.merchant.domain.Merchant;
 import com.ruoyi.project.system.merchant.service.IMerchantService;
 import org.apache.el.lang.ELArithmetic;
@@ -110,21 +111,29 @@ public class OrderServiceImpl implements IOrderService
 	}
 
 	@Override
-	public int updateOrderFlag(String id, String flag) {
-        Order order = orderMapper.selectOrderById(Long.parseLong(id));
+	public int updateOrderFlag(String ids, String flag) {
+		List<Order> orderList = orderMapper.selectOrderByIds(Convert.toStrArray(ids));
+		for (Order order : orderList) {
+			updateOrderFlag(order, flag);
+		}
+		return 1;
+	}
+
+	@Transactional
+	public void updateOrderFlag(Order order, String flag) {
 		order.setUpdateBy(ShiroUtils.getLoginName());
 		switch (flag) {
 			case "finish":
 				order.setFlag(Constants.ORDER_FINISH);
 				//更新该订单下指定商品的状态
-				orderDetailService.updateFlagByOrderId(id,Constants.ORDER_FINISH);
+				orderDetailService.updateFlagByOrderId(order.getId(), Constants.ORDER_FINISH);
 				break;
 			case "cancel":
 				order.setFlag(Constants.ORDER_CANCEL);
-				orderDetailService.updateFlagByOrderId(id,Constants.ORDER_CANCEL);
-                break;
+				orderDetailService.updateFlagByOrderId(order.getId(), Constants.ORDER_CANCEL);
+				break;
 		}
-        return updateOrder(order);
+		updateOrder(order);
 	}
 
 	/**
