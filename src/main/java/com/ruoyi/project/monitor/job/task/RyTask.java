@@ -72,22 +72,38 @@ public class RyTask {
 
     @Transactional
     public void createReport(String params) {
+
         List<MerchantReport> outRecords = merchantReportService.selectOut(params);
-        for (MerchantReport or : outRecords) {
-            merchantReportService.insertMerchantReport(or);
-        }
+        createMerchantReport(outRecords);
         List<MerchantReport> comingRecords = merchantReportService.selectInComing(params);
-        for (MerchantReport cr : comingRecords) {
-            List<MerchantReport> reportList = merchantReportService.selectMerchantReportList(cr);
-            if (StringUtils.isEmpty(reportList)) {
-                merchantReportService.insertMerchantReport(cr);
-            } else {
-                merchantReportService.updateMerchantReport(cr);
-            }
-        }
+        createMerchantReport(comingRecords);
         List<OperReport> operRecords = operReportService.selectOperation(params);
         for (OperReport oper : operRecords) {
-            operReportService.insertOperReport(oper);
+            OperReport operReport = new OperReport();
+            operReport.setTradeCode(oper.getTradeCode());
+            operReport.setReportDate(oper.getReportDate());
+            List<OperReport> operReports = operReportService.selectOperReportList(operReport);
+            if (StringUtils.isEmpty(operReports)) {
+                operReportService.insertOperReport(oper);
+            } else {
+                operReportService.updateOperReport(oper);
+            }
+        }
+    }
+    @Transactional
+    public void createMerchantReport(List<MerchantReport> records) {
+        if (StringUtils.isNotEmpty(records)) {
+            MerchantReport merchantReport = new MerchantReport();
+            for (MerchantReport cr : records) {
+                merchantReport.setReportDate(cr.getReportDate());
+                merchantReport.setAccountCode(cr.getAccountCode());
+                List<MerchantReport> merchantReports = merchantReportService.selectMerchantReportList(merchantReport);
+                if (StringUtils.isEmpty(merchantReports)) {
+                    merchantReportService.insertMerchantReport(cr);
+                } else {
+                    merchantReportService.updateMerchantReport(cr);
+                }
+            }
         }
     }
 

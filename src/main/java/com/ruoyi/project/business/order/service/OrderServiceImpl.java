@@ -114,6 +114,9 @@ public class OrderServiceImpl implements IOrderService
 	public int updateOrderFlag(String ids, String flag) {
 		List<Order> orderList = orderMapper.selectOrderByIds(Convert.toStrArray(ids));
 		for (Order order : orderList) {
+			if (order.getFlag().equals(Constants.ORDER_CANCEL) || order.getFlag().equals(Constants.ORDER_FINISH)) {
+				continue;
+			}
 			updateOrderFlag(order, flag);
 		}
 		return 1;
