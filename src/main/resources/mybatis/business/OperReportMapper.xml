@@ -39,7 +39,7 @@
         <include refid="selectOperReportVo"/>
         <where>
             <if test="id != null and id != ''">and id = #{id}</if>
-            <if test="reportDate != null and reportDate != ''">and report_date = #{reportDate}</if>
+            <if test="reportDate != null">and report_date = #{reportDate}</if>
             <if test="tradeCode != null and tradeCode != ''">and trade_code = #{tradeCode}</if>
             <if test="tradeNum != null and tradeNum != ''">and trade_num = #{tradeNum}</if>
             <if test="tradeSum != null and tradeSum != ''">and trade_sum = #{tradeSum}</if>

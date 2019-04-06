@@ -86,6 +86,7 @@ public class RyTask {
             if (StringUtils.isEmpty(operReports)) {
                 operReportService.insertOperReport(oper);
             } else {
+                oper.setId(operReports.get(0).getId());
                 operReportService.updateOperReport(oper);
             }
         }
@@ -101,6 +102,7 @@ public class RyTask {
                 if (StringUtils.isEmpty(merchantReports)) {
                     merchantReportService.insertMerchantReport(cr);
                 } else {
+                    cr.setId(merchantReports.get(0).getId());
                     merchantReportService.updateMerchantReport(cr);
                 }
             }

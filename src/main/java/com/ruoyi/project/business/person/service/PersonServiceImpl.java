@@ -380,8 +380,10 @@ public class PersonServiceImpl implements IPersonService
         List<TransactionRecord> transactionRecords = transactionRecordMapper.selectTransactionRecordList(transactionRecord);
         if (StringUtils.isNotNull(person)&&StringUtils.isEmpty(transactionRecords)) {
             BigDecimal recharge = new BigDecimal(split[14].trim());
-            person.setBalance(person.getBalance().add(recharge));
             TradeRecord record = new TradeRecord();
+            record.setBefore(person.getBalance());
+            person.setBalance(person.getBalance().add(recharge));
+            record.setAfter(person.getBalance());
             record.setJourno(IdGen.getJourno());
             Merchant merchant = merchantService.selectMerchantById(Constants.ACCOUNT_ACTIVE_1_ID);
             merchant.setBalance(merchant.getBalance().add(recharge));
