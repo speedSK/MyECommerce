@@ -22,14 +22,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="personNumber"    column="number"    />
         <result property="deptName"    column="dept_name"    />
         <result property="orderCode"    column="order_code"    />
+        <result property="unit"    column="unit"    />
+        <result property="spec"    column="spec"    />
     </resultMap>
 	
 	<sql id="selectOrderDetailVo">
-        select od.*, p.number, d.dept_name, o.order_code
+        select od.*, p.number, d.dept_name, o.order_code, g.unit, g.spec
         from bus_order_detail od
+                 LEFT JOIN bus_goods g on od.goods_id = g.id
                  LEFT JOIN bus_order o on od.order_id = o.id
                  LEFT JOIN bus_person p on o.person_id = p.id
-                 LEFT JOIN sys_dept d on p.dept_id = d.dept_id
+                 LEFT JOIN sys_dept d on p.dept_id = d.dept_id;
     </sql>
 	
     <select id="selectOrderDetailList" parameterType="OrderDetail" resultMap="OrderDetailResult">

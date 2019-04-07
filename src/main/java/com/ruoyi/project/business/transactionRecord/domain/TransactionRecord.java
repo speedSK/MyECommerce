@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.transactionRecord.domain;
 
+import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -20,20 +21,26 @@ public class TransactionRecord extends BaseEntity
 	/** 交易码 */
 	private String code;
 	/** 银行交易码 */
+	@Excel(name = "银行交易码")
 	private String bankCode;
 	/** 转账日期 */
+	@Excel(name = "转账日期")
 	private String transDate;
 	/** 转账流水号 */
 	private String transIdserial;
 	/** 用户编号 */
+	@Excel(name = "用户编号")
 	private String userCode;
 	/** 用户姓名 */
+	@Excel(name = "用户姓名")
 	private String userName;
 	/** 身份证号 */
 	private String idNumber;
 	/** 银行卡号 */
+	@Excel(name = "银行卡号")
 	private String bankNumber;
 	/** 金额 */
+	@Excel(name = "转账金额")
 	private String amount;
 	/** 状态 */
 	private String status;
@@ -42,10 +49,12 @@ public class TransactionRecord extends BaseEntity
 	/** 返回信息 */
 	private String returnMessage;
 	/** 银行流水号 */
+	@Excel(name = "银行流水号")
 	private String bankIdserial;
 	/** 创建人 */
 	private String createBy;
 	/** 创建时间 */
+	@Excel(name = "创建时间",dateFormat = "yyyy-MM-dd")
 	private Date createTime;
 	/** 修改人 */
 	private String updateBy;

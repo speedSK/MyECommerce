@@ -41,6 +41,12 @@ public class OrderDetail extends BaseEntity
 	/** 商品单价 */
 	@Excel(name="商品单价")
 	private BigDecimal goodsPrice;
+	/** 规格 */
+	@Excel(name="商品规格")
+	private String spec;
+	/** 单位 */
+	@Excel(name="商品单位")
+	private String unit;
 	/** 数量 */
 	@Excel(name="商品数量")
 	private Integer num;
@@ -64,6 +70,22 @@ public class OrderDetail extends BaseEntity
 	@Override
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getSpec() {
+		return spec;
+	}
+
+	public void setSpec(String spec) {
+		this.spec = spec;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 	public String getOrderCode() {

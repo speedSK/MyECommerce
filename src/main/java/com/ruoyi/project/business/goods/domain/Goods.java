@@ -35,6 +35,12 @@ public class Goods extends BaseEntity
 	/** 价格 */
 	@Excel(name="商品价格")
 	private BigDecimal price;
+	/** 规格 */
+	@Excel(name="商品规格")
+	private String spec;
+	/** 单位 */
+	@Excel(name="商品单位")
+	private String unit;
 	/** 显示顺序 */
 	private Integer orderNum;
 	/** 商品数量，仅用于页面展示 **/
@@ -163,10 +169,24 @@ public class Goods extends BaseEntity
 	{
 		return price;
 	}
-	
-	/**
-	 * 设置：显示顺序
-	 */
+	public void setSpec(String spec)
+	{
+		this.spec = spec;
+	}
+
+	public String getSpec()
+	{
+		return spec;
+	}
+	public void setUnit(String unit)
+	{
+		this.unit = unit;
+	}
+
+	public String getUnit()
+	{
+		return unit;
+	}
 	public void setOrderNum(Integer orderNum) 
 	{
 		this.orderNum = orderNum;

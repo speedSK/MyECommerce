@@ -11,6 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="code"    column="code"    />
         <result property="name"    column="name"    />
         <result property="price"    column="price"    />
+        <result property="spec"    column="spec"    />
+        <result property="unit"    column="unit"    />
         <result property="orderNum"    column="order_num"    />
         <result property="image"    column="image"    />
         <result property="visible"    column="visible"    />
@@ -44,12 +46,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 	<sql id="selectGoodsVo">
-        select g.id, g.category_id, g.merchant_id, g.code, g.name, g.price, g.order_num, g.image,
-               g.visible, g.status , g.remark , g.create_by, g.create_time, g.update_by, g.update_time,
-               gc.id,gc.ancestors,gc.category_name,gc.parent_id,gc.order_num,gc.visible,gc.status,
-               m.id,m.merchant_code,m.merchant_name,m.status
+        select g.id,
+               g.category_id,
+               g.merchant_id,
+               g.code,
+               g.name,
+               g.price,
+               g.unit,
+               g.spec,
+               g.order_num,
+               g.image,
+               g.visible,
+               g.status,
+               g.remark,
+               g.create_by,
+               g.create_time,
+               g.update_by,
+               g.update_time,
+               gc.id,
+               gc.ancestors,
+               gc.category_name,
+               gc.parent_id,
+               gc.order_num,
+               gc.visible,
+               gc.status,
+               m.id,
+               m.merchant_code,
+               m.merchant_name,
+               m.status
         FROM bus_goods g
-                 LEFT JOIN bus_good_category gc on g.category_id=gc.id
+                 LEFT JOIN bus_good_category gc on g.category_id = gc.id
                  LEFT JOIN bus_merchant m on g.merchant_id = m.id
     </sql>
 	
