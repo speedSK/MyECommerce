@@ -19,4 +19,7 @@ public class CommonConstant {
     /** 服刑人员登录地址 **/
     public static final String LOGIN_PERSON_URL= "/prisonLogin";
     
+    /** 管理人员登录地址 **/
+    public static final String LOGIN_URL= "/login";
+    
 }
